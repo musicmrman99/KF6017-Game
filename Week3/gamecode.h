@@ -34,6 +34,18 @@ private:
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
+	PictureIndex image;
+
+	Vector2D rot;
+	float rotVel;
+
+	Vector2D pos;
+	Vector2D vel;
+	Vector2D accel;
+
+	float rotateThrust;
+	float engineThrust;
+
 	// Disable:
 	Game();            // no-arg constructor
 	Game(Game& other); // copy constructor

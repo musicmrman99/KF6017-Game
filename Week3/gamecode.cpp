@@ -1,5 +1,8 @@
 // GameCode.cpp        
 
+#define _USE_MATH_DEFINES
+#define FPS 60
+
 #include "gamecode.h"
 #include "mydrawengine.h"
 #include "mysoundengine.h"
@@ -9,6 +12,8 @@
 #include "errorlogger.h"
 #include <math.h>
 #include "shapes.h"
+
+const float RPS = 2 * M_PI / FPS;
 
 Game::Game() {}
 Game::~Game() {}
@@ -240,8 +245,18 @@ ErrorType Game::StartOfGame() {
     gt.mark();
     gt.mark();
 
-    // Your game setup
-    // TODO
+    // Game setup
+    image = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
+
+    rot.setBearing(0.0f, 0.0f);
+    rotVel = 0.0f;
+
+    pos.set(300, 300);
+    vel.set(0, 0);
+    accel.set(0, 0);
+
+    rotateThrust = 0.3 * RPS;
+    engineThrust = 0.1;
 
     return SUCCESS;
 }
@@ -253,7 +268,7 @@ ErrorType Game::StartOfGame() {
  * This will be used by the gameplay programmer to clean up.
  */
 ErrorType Game::EndOfGame() {
-    // Your game shutdown
+    // Game shutdown
     // TODO
 
     return SUCCESS;
@@ -280,8 +295,41 @@ ErrorType Game::Update() {
     // Tick the timer
     gt.mark();
 
-    // Your game code
-    // TODO
+    /* Game code
+    -------------------------------------------------- */
+
+    /* Input
+    -------------------- */
+
+    MyInputs* input = MyInputs::GetInstance();
+    input->SampleKeyboard();
+
+    rotVel = 0.0f;
+    if (input->KeyPressed(DIK_A)) {
+        rotVel -= rotateThrust;
+    }
+    if (input->KeyPressed(DIK_D)) {
+        rotVel += rotateThrust;
+    }
+
+    accel.set(0, 0);
+    if (input->KeyPressed(DIK_W)) {
+        accel += rot * engineThrust;
+    }
+
+    /* Physics
+    -------------------- */
+
+    rot.setBearing(rot.angle() + rotVel, 1);
+
+    vel += accel;
+    pos += vel;
+
+    /* Draw
+    -------------------- */
+
+    MyDrawEngine* graphics = MyDrawEngine::GetInstance();
+    graphics->DrawAt(pos, image, 1.0f, rot.angle(), 0.0f);
 
     return SUCCESS;
 }
