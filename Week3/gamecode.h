@@ -11,6 +11,8 @@
 #include "mydrawengine.h"
 #include "gametimer.h"
 
+#include "Ship.h"
+
 // This is a hack for reading keyboard in situations where you don't want to
 // use a full input system.
 // Note that this makes the class windows-specific, but it already includes
@@ -34,17 +36,7 @@ private:
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
-	PictureIndex image;
-
-	Vector2D rot;
-	float rotVel;
-
-	Vector2D pos;
-	Vector2D vel;
-	Vector2D accel;
-
-	float rotateThrust;
-	float engineThrust;
+	Ship* player;
 
 	// Disable:
 	Game();            // no-arg constructor

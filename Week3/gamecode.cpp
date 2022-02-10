@@ -1,8 +1,5 @@
 // GameCode.cpp        
 
-#define _USE_MATH_DEFINES
-#define FPS 60
-
 #include "gamecode.h"
 #include "mydrawengine.h"
 #include "mysoundengine.h"
@@ -10,10 +7,7 @@
 #include <time.h>
 #include "gametimer.h"
 #include "errorlogger.h"
-#include <math.h>
 #include "shapes.h"
-
-const float RPS = 2 * M_PI / FPS;
 
 Game::Game() {}
 Game::~Game() {}
@@ -246,17 +240,10 @@ ErrorType Game::StartOfGame() {
     gt.mark();
 
     // Game setup
-    image = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-
-    rot.setBearing(0.0f, 0.0f);
-    rotVel = 0.0f;
-
-    pos.set(300, 300);
-    vel.set(0, 0);
-    accel.set(0, 0);
-
-    rotateThrust = 0.3 * RPS;
-    engineThrust = 0.1;
+    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
+    Vector2D playerPosition(0, 0);
+    Vector2D playerVelocity(0, 0);
+    player = new Ship(playerPosition, playerVelocity, playerSprite);
 
     return SUCCESS;
 }
@@ -269,7 +256,7 @@ ErrorType Game::StartOfGame() {
  */
 ErrorType Game::EndOfGame() {
     // Game shutdown
-    // TODO
+    delete player;
 
     return SUCCESS;
 }
@@ -298,38 +285,29 @@ ErrorType Game::Update() {
     /* Game code
     -------------------------------------------------- */
 
-    /* Input
+    /* ???
     -------------------- */
 
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
-    rotVel = 0.0f;
+    player->beforeActions();
+
+    if (input->KeyPressed(DIK_W)) {
+        player->mainThrust();
+    }
+
     if (input->KeyPressed(DIK_A)) {
-        rotVel -= rotateThrust;
+        player->turnLeftThrust();
     }
     if (input->KeyPressed(DIK_D)) {
-        rotVel += rotateThrust;
+        player->turnRightThrust();
     }
 
-    accel.set(0, 0);
-    if (input->KeyPressed(DIK_W)) {
-        accel += rot * engineThrust;
-    }
+    player->afterActions();
 
-    /* Physics
-    -------------------- */
-
-    rot.setBearing(rot.angle() + rotVel, 1);
-
-    vel += accel;
-    pos += vel;
-
-    /* Draw
-    -------------------- */
-
-    MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-    graphics->DrawAt(pos, image, 1.0f, rot.angle(), 0.0f);
+    player->physUpdate();
+    player->draw();
 
     return SUCCESS;
 }
