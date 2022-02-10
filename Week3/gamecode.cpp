@@ -247,6 +247,19 @@ ErrorType Game::StartOfGame() {
 }
 
 /*
+ * Called when the player ends the game, before returning to main menu.
+ * Currently this is done from the PAUSED state, when returning to the main menu,
+ * but could be done by the gameplay programmer in other situations.
+ * This will be used by the gameplay programmer to clean up.
+ */
+ErrorType Game::EndOfGame() {
+    // Your game shutdown
+    // TODO
+
+    return SUCCESS;
+}
+
+/*
  * Called each frame when in the RUNNING state.
  * Checks for user pressing escape (which puts the game in the PAUSED state).
  * Flips and clears the back buffer.
@@ -268,19 +281,6 @@ ErrorType Game::Update() {
     gt.mark();
 
     // Your game code
-    // TODO
-
-    return SUCCESS;
-}
-
-/*
- * Called when the player ends the game, before returning to main menu.
- * Currently this is done from the PAUSED state, when returning to the main menu,
- * but could be done by the gameplay programmer in other situations.
- * This will be used by the gameplay programmer to clean up.
- */
-ErrorType Game::EndOfGame() {
-    // Your game shutdown
     // TODO
 
     return SUCCESS;
