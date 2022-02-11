@@ -1,6 +1,7 @@
 // GameCode.cpp        
 
 #include "gamecode.h"
+
 #include "mydrawengine.h"
 #include "mysoundengine.h"
 #include "myinputs.h"
@@ -240,10 +241,19 @@ ErrorType Game::StartOfGame() {
     gt.mark();
 
     // Game setup
+
+    // Player
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
     Vector2D playerPosition(0, 0);
     Vector2D playerVelocity(0, 0);
     player = new Ship(playerPosition, playerVelocity, playerSprite);
+
+    // Player Keymap
+    playerKeymap = new KeyMap<Ship::Action>();
+    playerKeymap->bindKey(ControlType::HOLD, DIK_W, Ship::Action::MAIN_THRUST);
+    playerKeymap->bindKey(ControlType::HOLD, DIK_A, Ship::Action::TURN_LEFT_THRUST);
+    playerKeymap->bindKey(ControlType::HOLD, DIK_D, Ship::Action::TURN_RIGHT_THRUST);
+    player->setActionSource(playerKeymap);
 
     return SUCCESS;
 }
@@ -257,6 +267,7 @@ ErrorType Game::StartOfGame() {
 ErrorType Game::EndOfGame() {
     // Game shutdown
     delete player;
+    delete playerKeymap;
 
     return SUCCESS;
 }
@@ -292,6 +303,7 @@ ErrorType Game::Update() {
     input->SampleKeyboard();
 
     player->beforeActions();
+    player->runActions();
 
     if (input->KeyHeld(DIK_W)) {
         player->mainThrust();
@@ -304,10 +316,13 @@ ErrorType Game::Update() {
         player->turnRightThrust();
     }
 
-    player->afterActions();
+    player->beforePhys();
+    player->phys();
 
-    player->physUpdate();
+    player->beforeDraw();
     player->draw();
+
+    player->afterFrame();
 
     return SUCCESS;
 }

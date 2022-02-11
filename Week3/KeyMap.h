@@ -3,28 +3,27 @@
 
 #include <map>
 
+enum class ControlType {
+    HOLD,
+    PRESS,
+    RELEASE
+};
+
+enum class MouseButton {
+    LEFT,
+    RIGHT,
+    MIDDLE
+};
+
+enum class Scroll {
+    UP,
+    DOWN,
+    EITHER,
+    RANGE
+};
+
 template <class Action>
 class KeyMap : public ActionSource<Action> {
-public:
-    enum class ControlType {
-        HOLD,
-        PRESS,
-        RELEASE
-    };
-
-    enum class MouseButton {
-        LEFT,
-        RIGHT,
-        MIDDLE
-    };
-
-    enum class Scroll {
-        UP,
-        DOWN,
-        EITHER,
-        RANGE
-    };
-
 private:
     // Controls are held/iterated in insertion order,
     // which may impact the order of actions.

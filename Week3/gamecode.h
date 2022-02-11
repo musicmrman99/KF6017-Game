@@ -12,6 +12,7 @@
 #include "gametimer.h"
 
 #include "Ship.h"
+#include "KeyMap.h"
 
 // This is a hack for reading keyboard in situations where you don't want to
 // use a full input system.
@@ -37,6 +38,7 @@ private:
 	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
 	Ship* player;
+	KeyMap<Ship::Action>* playerKeymap;
 
 	// Disable:
 	Game();            // no-arg constructor
