@@ -76,6 +76,8 @@ public:
 	struct PurchasableUpgrade {
 		Upgrade upgrade;
 		bool purchased;
+
+		bool operator== (const PurchasableUpgrade& other) const;
 	};
 
 	class UpgradeAction : public Action {
@@ -111,8 +113,9 @@ private:
 public:
 	void setActionSource(ActionSource<Action>* actionSource);
 
-	// Util
+	// Utils
 	Node<PurchasableUpgrade>* addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade);
+	Node<PurchasableUpgrade>* findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
 
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);

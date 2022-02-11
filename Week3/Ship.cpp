@@ -1,12 +1,27 @@
 #include "Ship.h"
 
 #include <vector>
+#include <functional>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 #define FPS 60
 const float RPS = 2 * M_PI / FPS;
+
+/* Upgrades
+-------------------------------------------------- */
+
+bool Ship::PurchasableUpgrade::operator==(const PurchasableUpgrade& other) const {
+    return upgrade == other.upgrade && purchased == other.purchased;
+}
+
+// A comparator for just the upgrade, ignoring whether it's purchased.
+struct NestedUpgradeComparator {
+    bool operator() (const Ship::PurchasableUpgrade& a, const Ship::PurchasableUpgrade& b) const {
+        return a.upgrade == b.upgrade;
+    }
+};
 
 /* Actions
 -------------------------------------------------- */
@@ -24,20 +39,31 @@ void Ship::TurnRightThrustAction::perform(Ship* ship) const {
 }
 
 void Ship::UpgradeAction::perform(Ship* ship) const {
-    //
-}
-
-void Ship::setActionSource(ActionSource<Action>* actionSource) {
-    this->actionSource = actionSource;
+    PurchasableUpgrade purchUpgrade{ upgrade, false };
+    ship->upgradeTree->find<NestedUpgradeComparator>(&purchUpgrade);
 }
 
 /* Lifecycle
 -------------------------------------------------- */
 
-// Util
+// Action Source
+
+void Ship::setActionSource(ActionSource<Action>* actionSource) {
+    this->actionSource = actionSource;
+}
+
+// Utils
+
 Node<Ship::PurchasableUpgrade>* Ship::addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade) {
     return parent->addChild(new PurchasableUpgrade{ upgrade, false });
 }
+
+Node<Ship::PurchasableUpgrade>* Ship::findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade) {
+    PurchasableUpgrade wrapUpgrade{ upgrade, false }; // false is ignored
+    return root->find<NestedUpgradeComparator>(&wrapUpgrade);
+}
+
+// Lifecycle
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : pos(pos), rot(rot), image(image), actionSource(nullptr)
