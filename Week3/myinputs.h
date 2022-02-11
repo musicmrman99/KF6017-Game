@@ -224,8 +224,9 @@ public:
 		//		DIK_UP		Up arrow
 		//		DIK_DOWN	Down arrow
 		//		.... YOU GET THE IDEA
+	bool KeyHeld(unsigned char key);
 	bool KeyPressed(unsigned char key);
-	bool NewKeyPressed(unsigned char key);
+	bool KeyReleased(unsigned char key);
 
 	// Returns true if the keyboard is available and has been initialised.
 	bool KeyboardIsAvailable();

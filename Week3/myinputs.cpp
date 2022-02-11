@@ -509,17 +509,24 @@ char* MyInputs::GetKeyboardState()
 	return mrgcKeystate;
 }
 
-bool MyInputs::KeyPressed(unsigned char key)
+bool MyInputs::KeyHeld(unsigned char key)
 {
 	return ((mrgcKeystate[key]&0x80)>0);	// Return true if 0x80 bit set (set if key was pressed)
 }
 
-bool MyInputs::NewKeyPressed(unsigned char key)
+bool MyInputs::KeyPressed(unsigned char key)
 {
 	bool kp = (mrgcKeystate[key]&0x80)>0;
 	bool okp = (mrgcOldKeystate[key]&0x80)>0;
 
 	return (kp && !okp);	// Return true if 0x80 bit set (set if key was pressed)
+}
+
+bool MyInputs::KeyReleased(unsigned char key) {
+	bool kp = (mrgcKeystate[key] & 0x80) > 0;
+	bool okp = (mrgcOldKeystate[key] & 0x80) > 0;
+
+	return (!kp && okp);	// Return true if 0x80 bit set (set if key was pressed)
 }
 
 

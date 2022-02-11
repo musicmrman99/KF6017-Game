@@ -136,11 +136,11 @@ ErrorType Game::MainMenu() {
     // Get user input
     pInputs->SampleKeyboard();
 
-    if (pInputs->NewKeyPressed(DIK_UP)) {
+    if (pInputs->KeyPressed(DIK_UP)) {
         m_menuOption--;
     }
 
-    if (pInputs->NewKeyPressed(DIK_DOWN)) {
+    if (pInputs->KeyPressed(DIK_DOWN)) {
         m_menuOption++;
     }
 
@@ -152,7 +152,7 @@ ErrorType Game::MainMenu() {
     }
 
     // User selects an option
-    if (pInputs->NewKeyPressed(DIK_RETURN)) {
+    if (pInputs->KeyPressed(DIK_RETURN)) {
         // Play
         if (m_menuOption == 0) {
             StartOfGame();        // Initialise the game
@@ -194,11 +194,11 @@ ErrorType Game::PauseMenu() {
     pInputs->SampleKeyboard();
 
     // Move choice up and down
-    if (pInputs->NewKeyPressed(DIK_UP)) {
+    if (pInputs->KeyPressed(DIK_UP)) {
         m_menuOption--;
     }
 
-    if (pInputs->NewKeyPressed(DIK_DOWN)) {
+    if (pInputs->KeyPressed(DIK_DOWN)) {
         m_menuOption++;
     }
 
@@ -209,7 +209,7 @@ ErrorType Game::PauseMenu() {
     }
 
     // If player chooses an option
-    if (pInputs->NewKeyPressed(DIK_RETURN)) {
+    if (pInputs->KeyPressed(DIK_RETURN)) {
         if (m_menuOption == 0) {  // Resume
             ChangeState(RUNNING); // Go back to running the game
         }
@@ -293,14 +293,14 @@ ErrorType Game::Update() {
 
     player->beforeActions();
 
-    if (input->KeyPressed(DIK_W)) {
+    if (input->KeyHeld(DIK_W)) {
         player->mainThrust();
     }
 
-    if (input->KeyPressed(DIK_A)) {
+    if (input->KeyHeld(DIK_A)) {
         player->turnLeftThrust();
     }
-    if (input->KeyPressed(DIK_D)) {
+    if (input->KeyHeld(DIK_D)) {
         player->turnRightThrust();
     }
 

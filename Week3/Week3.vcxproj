@@ -145,6 +145,7 @@
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="gamecode.cpp" />
     <ClCompile Include="gametimer.cpp" />
+    <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
     <ClCompile Include="mysoundengine.cpp" />
@@ -154,11 +155,13 @@
     <ClCompile Include="wincode.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionSource.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="errortype.h" />
     <ClInclude Include="gamecode.h" />
     <ClInclude Include="gametimer.h" />
+    <ClInclude Include="KeyMap.h" />
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
     <ClInclude Include="mysoundengine.h" />
