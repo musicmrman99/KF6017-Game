@@ -102,31 +102,36 @@ public:
 class ScrollControl : public Control {
 private:
     const Scroll direction;
-    int minDelta;
-    int maxDelta;
+    const int minDelta;
+    const int maxDelta;
 
 public:
     ScrollControl(const int index, const Scroll direction, const int minDelta, const int maxDelta)
-        : Control(index), direction(direction) {
-        switch (direction) {
-        case Scroll::DOWN:
-            this->minDelta = -abs(minDelta);
-            this->maxDelta = -abs(maxDelta);
-
-        case Scroll::UP:
-            this->minDelta = abs(minDelta);
-            this->maxDelta = abs(maxDelta);
-
-        case Scroll::EITHER:
-            this->minDelta = abs(minDelta);
-            this->maxDelta = abs(maxDelta);
-            // Must also abs() the actual delta
-
-        case Scroll::RANGE:
-            this->minDelta = minDelta;
-            this->maxDelta = maxDelta;
-        }
+        : Control(index),
+        direction(direction),
+        minDelta(minDeltaFor(minDelta, direction)),
+        maxDelta(maxDeltaFor(maxDelta, direction)) {
     }
+
+    int minDeltaFor(int minDelta, const Scroll direction) {
+        switch (direction) {
+            case Scroll::DOWN: minDelta = -abs(minDelta);
+            case Scroll::UP: minDelta = abs(minDelta);
+            case Scroll::EITHER: minDelta = abs(minDelta); // Must also abs() the actual delta
+            case Scroll::RANGE: break;// as-is
+        }
+        return minDelta;
+    }
+    int maxDeltaFor(int maxDelta, const Scroll direction) {
+        switch (direction) {
+        case Scroll::DOWN: maxDelta = -abs(maxDelta);
+        case Scroll::UP: maxDelta = abs(maxDelta);
+        case Scroll::EITHER: maxDelta = abs(maxDelta); // Must also abs() the actual delta
+        case Scroll::RANGE: break; // as-is
+        }
+        return maxDelta;
+    }
+
     virtual bool isActive() const {
         static MyInputs* myInputs = MyInputs::GetInstance();
 
@@ -228,12 +233,12 @@ private:
     // Controls are held/iterated in insertion order,
     // which may impact the order of actions.
     int nextIndex;
-    std::map<Control*, Action, ControlComparator> map;
+    std::map<Control*, Action*, ControlComparator> map;
 
 public:
     KeyMap() : nextIndex(0) {}
     ~KeyMap() {
-        for (std::pair<Control*, Action> mapping : map) {
+        for (std::pair<Control*, Action*> mapping : map) {
             if (mapping.first) {
                 delete mapping.first;
             }
@@ -241,9 +246,9 @@ public:
     }
 
     // Implement ActionSource<Action>
-    virtual std::vector<Action> getActions() {
-        std::vector<Action> actions;
-        for (std::pair<Control*, Action> mapping : map) {
+    virtual std::vector<Action*> getActions() {
+        std::vector<Action*> actions;
+        for (std::pair<Control*, Action*> mapping : map) {
             if (mapping.first->isActive()) {
                 actions.push_back(mapping.second);
             }
@@ -251,25 +256,34 @@ public:
         return actions;
     }
 
-    // KeyMap
-    void bindKey(ControlType controlType, unsigned char key, Action action) {
-        KeyboardControl* control = new KeyboardControl(nextIndex++, controlType, key);
+    // Bind
+    void bind(Control* control, Action* action) {
         map.insert({ control, action });
     }
 
-    void bindMouseButton(ControlType controlType, MouseButton button, Action action) {
-        MouseButtonControl* control = new MouseButtonControl(nextIndex++, controlType, button);
-        map.insert({ control, action });
+    // Control factories for this KeyMap
+    Control* keyControl(ControlType controlType, unsigned char key) {
+        return new KeyboardControl(nextIndex++, controlType, key);
     }
 
-    void bindScroll(Scroll direction, int minDelta, int maxDelta, Action action) {
-        ScrollControl* control = new ScrollControl(nextIndex++, direction, minDelta, minDelta);
-        map.insert({ control, action });
+    Control* mouseButtonControl(ControlType controlType, MouseButton button) {
+        return new MouseButtonControl(nextIndex++, controlType, button);
     }
-    void bindScroll(Scroll direction, int maxDelta, Action action) {
-        KeyMap<Action>::bindScroll(direction, 0, maxDelta, action);
+
+    Control* scrollControl(Scroll direction, int minDelta, int maxDelta) {
+        return new ScrollControl(nextIndex++, direction, minDelta, minDelta);
     }
-    void bindScroll(Scroll direction, Action action) {
-        KeyMap<Action>::bindScroll(direction, 0, action);
+    Control* scrollControl(Scroll direction, int maxDelta) {
+        return KeyMap<Action>::scrollControl(direction, 0, maxDelta);
+    }
+    Control* scrollControl(Scroll direction, Action* action) {
+        return KeyMap<Action>::scrollControl(direction, 0);
+    }
+    
+    Control* compositeControl(const std::vector<Control*>& controls, CompositeControl::Combinator combinator) {
+        return new CompositeControl(nextIndex++, controls, combinator);
+    }
+    Control* compositeControl(const std::vector<Control*>& controls) {
+        return new CompositeControl(nextIndex++, controls);
     }
 };

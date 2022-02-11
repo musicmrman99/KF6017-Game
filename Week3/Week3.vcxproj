@@ -164,6 +164,7 @@
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
     <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="objecttypes.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />

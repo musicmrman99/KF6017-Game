@@ -250,9 +250,9 @@ ErrorType Game::StartOfGame() {
 
     // Player Keymap
     playerKeymap = new KeyMap<Ship::Action>();
-    playerKeymap->bindKey(ControlType::HOLD, DIK_W, Ship::Action::MAIN_THRUST);
-    playerKeymap->bindKey(ControlType::HOLD, DIK_A, Ship::Action::TURN_LEFT_THRUST);
-    playerKeymap->bindKey(ControlType::HOLD, DIK_D, Ship::Action::TURN_RIGHT_THRUST);
+    playerKeymap->bind(playerKeymap->keyControl(ControlType::HOLD, DIK_W), new Ship::MainThrustAction());
+    playerKeymap->bind(playerKeymap->keyControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustAction());
+    playerKeymap->bind(playerKeymap->keyControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustAction());
     player->setActionSource(playerKeymap);
 
     return SUCCESS;
