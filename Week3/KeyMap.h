@@ -43,10 +43,11 @@ public:
 };
 
 class KeyboardControl : public Control {
-public:
+private:
     const ControlType type;
     const unsigned char key;
 
+public:
     KeyboardControl(const int index, const ControlType type, const unsigned char key)
         : Control(index), type(type), key(key) {
     };
@@ -62,10 +63,12 @@ public:
 };
 
 class MouseButtonControl : public Control {
-public:
+private:
+private:
     const ControlType type;
     const MouseButton button;
 
+public:
     MouseButtonControl(const int index, const ControlType type, const MouseButton button)
         : Control(index), type(type), button(button) {}
     virtual bool isActive() const {
@@ -97,10 +100,12 @@ public:
 };
 
 class ScrollControl : public Control {
+private:
     const Scroll direction;
     int minDelta;
     int maxDelta;
 
+public:
     ScrollControl(const int index, const Scroll direction, const int minDelta, const int maxDelta)
         : Control(index), direction(direction) {
         switch (direction) {
@@ -146,6 +151,68 @@ class ScrollControl : public Control {
         }
 
         return false;
+    }
+};
+
+class CompositeControl : public Control {
+public:
+    enum class Combinator {
+        NONE,      // = 0
+        ANY,       // > 0
+        ONLY_SOME, // > 0 && < n
+        NOT_ALL,   // < n
+        ALL,       // = n
+    };
+
+private:
+    std::vector<Control*> controls;
+    Combinator combinator;
+
+public:
+    CompositeControl(const int index, const std::vector<Control*>& controls, Combinator combinator)
+        : Control(index), controls(controls), combinator(combinator) {
+    }
+    CompositeControl(const int index, const std::vector<Control*>& controls)
+        : CompositeControl(index, controls, Combinator::ALL) {
+    }
+    virtual bool isActive() const {
+        // These are used for different things in different contexts, but have a common pattern.
+        bool some = false;
+        bool all = true;
+        
+        switch (combinator) {
+        case Combinator::NONE:
+            for (Control* control : controls) {
+                if (control->isActive()) { all = false; break; }
+            }
+            return all;
+
+        case Combinator::ANY:
+            for (Control* control : controls) {
+                if (control->isActive()) { some = true; break; }
+            }
+            return some;
+
+        case Combinator::ONLY_SOME:
+            for (Control* control : controls) {
+                if (control->isActive()) some = true;
+                if (!control->isActive()) all = false;
+                if (some && !all) break;
+            }
+            return some && !all;
+
+        case Combinator::NOT_ALL:
+            for (Control* control : controls) {
+                if (!control->isActive()) { some = true; break; }
+            }
+            return some;
+
+        case Combinator::ALL:
+            for (Control* control : controls) {
+                if (!control->isActive()) { all = false; break; }
+            }
+            return all;
+        }
     }
 };
 
