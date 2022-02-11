@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 
 template <class T>
 class Node {
@@ -24,11 +25,23 @@ public:
         }
     }
 
-    T* getValue() {
+    T* getValue() const {
         return value;
     }
-    std::vector<Node<T>*> getChildren() {
+    std::vector<Node<T>*> getChildren() const {
         return children;
+    }
+
+    template <class C = std::equal_to<T>>
+    Node<T>* find(const T* value) {
+        static C comparator;
+        if (comparator(*this->value, *value)) return this;
+        Node<T>* found;
+        for (Node<T>* node : children) {
+            found = node->find(value);
+            if (found) return found;
+        }
+        return nullptr;
     }
 
     Node<T>* addChild(T* child) {
