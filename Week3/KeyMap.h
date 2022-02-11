@@ -33,10 +33,10 @@ public:
     }
 
     bool operator==(const Control& other) const {
-        return index == index;
+        return index == other.index;
     }
     bool operator<(const Control& other) const {
-        return index < index;
+        return index < other.index;
     }
 
     virtual bool isActive() const = 0;
@@ -187,17 +187,17 @@ public:
     // KeyMap
     void bindKey(ControlType controlType, unsigned char key, Action action) {
         KeyboardControl* control = new KeyboardControl(nextIndex++, controlType, key);
-        map.insert(std::pair<Control*, Action>(control, action));
+        map.insert({ control, action });
     }
 
     void bindMouseButton(ControlType controlType, MouseButton button, Action action) {
         MouseButtonControl* control = new MouseButtonControl(nextIndex++, controlType, button);
-        map.insert(std::pair<Control*, Action>(control, action));
+        map.insert({ control, action });
     }
 
     void bindScroll(Scroll direction, int minDelta, int maxDelta, Action action) {
         ScrollControl* control = new ScrollControl(nextIndex++, direction, minDelta, minDelta);
-        map.insert(std::pair<Control*, Action>(control, action));
+        map.insert({ control, action });
     }
     void bindScroll(Scroll direction, int maxDelta, Action action) {
         KeyMap<Action>::bindScroll(direction, 0, maxDelta, action);

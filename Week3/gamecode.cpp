@@ -305,17 +305,6 @@ ErrorType Game::Update() {
     player->beforeActions();
     player->runActions();
 
-    if (input->KeyHeld(DIK_W)) {
-        player->mainThrust();
-    }
-
-    if (input->KeyHeld(DIK_A)) {
-        player->turnLeftThrust();
-    }
-    if (input->KeyHeld(DIK_D)) {
-        player->turnRightThrust();
-    }
-
     player->beforePhys();
     player->phys();
 
