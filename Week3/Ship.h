@@ -118,6 +118,7 @@ public:
 	static Node<PurchasableUpgrade>* addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade);
 	static Node<PurchasableUpgrade>* findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
 	static Node<PurchasableUpgrade>* findParentUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
+	std::wstring strDump(Node<PurchasableUpgrade>* node, int indent) const;
 
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);

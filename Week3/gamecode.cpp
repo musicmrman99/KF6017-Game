@@ -253,6 +253,8 @@ ErrorType Game::StartOfGame() {
     playerKeymap->bind(playerKeymap->keyControl(ControlType::HOLD, DIK_W), new Ship::MainThrustAction());
     playerKeymap->bind(playerKeymap->keyControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustAction());
     playerKeymap->bind(playerKeymap->keyControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustAction());
+    playerKeymap->bind(playerKeymap->keyControl(ControlType::PRESS, DIK_O), new Ship::UpgradeAction(Ship::Upgrade::REAR_THRUSTERS));
+    playerKeymap->bind(playerKeymap->keyControl(ControlType::PRESS, DIK_P), new Ship::UpgradeAction(Ship::Upgrade::FRONT_THRUSTERS));
     player->setActionSource(playerKeymap);
 
     return SUCCESS;

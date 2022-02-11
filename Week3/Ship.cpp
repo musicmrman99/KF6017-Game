@@ -2,9 +2,11 @@
 
 #include <vector>
 #include <functional>
+#include <string>
 
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <iostream>
 
 #define FPS 60
 const float RPS = 2 * M_PI / FPS;
@@ -71,6 +73,20 @@ Node<Ship::PurchasableUpgrade>* Ship::findParentUpgrade(Node<PurchasableUpgrade>
     return root->findParent<NestedUpgradeComparator>(&wrapUpgrade);
 }
 
+std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent = 0) const {
+    if (!node) node = upgradeTree;
+
+    std::wstring ret = std::to_wstring((int)node->getValue()->upgrade) + L" - " + std::to_wstring(node->getValue()->purchased) + L" {";
+    auto children = node->getChildren();
+    if (!children.empty()) ret += L"\n";
+    for (Node<PurchasableUpgrade>* subNode : children) {
+        ret += strDump(subNode);
+    }
+    if (!children.empty()) ret += L"\n";
+    ret += L"},\n";
+    return ret;
+}
+
 // Lifecycle
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
@@ -135,6 +151,7 @@ void Ship::beforeDraw() {}
 void Ship::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
     graphics->DrawAt(pos, image, 1.0f, rot.angle(), 0.0f);
+    MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), strDump(upgradeTree).c_str(), MyDrawEngine::CYAN);
 }
 
 void Ship::afterFrame() {}
