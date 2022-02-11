@@ -296,14 +296,11 @@ ErrorType Game::Update() {
     /* Game code
     -------------------------------------------------- */
 
-    /* ???
-    -------------------- */
-
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
     player->beforeActions();
-    player->runActions();
+    player->actions();
 
     player->beforePhys();
     player->phys();

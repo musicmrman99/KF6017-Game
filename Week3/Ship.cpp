@@ -48,7 +48,7 @@ void Ship::beforeActions() {
     accel.set(0.0f, 0.0f);
     rotVel = 0.0f;
 }
-void Ship::runActions() {
+void Ship::actions() {
     for (Action action : actionSource->getActions()) {
         switch (action) {
             case Ship::Action::MAIN_THRUST: mainThrust(); break;

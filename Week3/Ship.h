@@ -46,7 +46,7 @@ public:
 	~Ship();
 
 	void beforeActions();
-	void runActions();
+	void actions();
 
 	void beforePhys();
 	void phys();
