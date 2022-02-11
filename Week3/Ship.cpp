@@ -39,8 +39,11 @@ void Ship::TurnRightThrustAction::perform(Ship* ship) const {
 }
 
 void Ship::UpgradeAction::perform(Ship* ship) const {
-    PurchasableUpgrade purchUpgrade{ upgrade, false };
-    ship->upgradeTree->find<NestedUpgradeComparator>(&purchUpgrade);
+    Node<PurchasableUpgrade>* parentUpgradeNode = findParentUpgrade(ship->upgradeTree, upgrade);
+    if (parentUpgradeNode->getValue()->purchased) {
+        Node<PurchasableUpgrade>* upgradeNode = findUpgrade(parentUpgradeNode, upgrade);
+        upgradeNode->setValue(new PurchasableUpgrade{ upgrade, true });
+    }
 }
 
 /* Lifecycle
@@ -61,6 +64,11 @@ Node<Ship::PurchasableUpgrade>* Ship::addUpgrade(Node<PurchasableUpgrade>* paren
 Node<Ship::PurchasableUpgrade>* Ship::findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade) {
     PurchasableUpgrade wrapUpgrade{ upgrade, false }; // false is ignored
     return root->find<NestedUpgradeComparator>(&wrapUpgrade);
+}
+
+Node<Ship::PurchasableUpgrade>* Ship::findParentUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade) {
+    PurchasableUpgrade wrapUpgrade{ upgrade, false }; // false is ignored
+    return root->findParent<NestedUpgradeComparator>(&wrapUpgrade);
 }
 
 // Lifecycle

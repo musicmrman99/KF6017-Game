@@ -28,6 +28,12 @@ public:
     T* getValue() const {
         return value;
     }
+    void setValue(T* value) {
+        // Delete before loosing track if needed
+        if (this->value && this->value != value) delete this->value;
+        this->value = value;
+    }
+
     std::vector<Node<T>*> getChildren() const {
         return children;
     }
@@ -39,6 +45,23 @@ public:
         Node<T>* found;
         for (Node<T>* node : children) {
             found = node->find(value);
+            if (found) return found;
+        }
+        return nullptr;
+    }
+
+    template <class C = std::equal_to<T>>
+    Node<T>* findParent(const T* value) {
+        return findParent(value, nullptr);
+    }
+
+    template <class C = std::equal_to<T>>
+    Node<T>* findParent(const T* value, Node<T>* parent) {
+        static C comparator;
+        if (comparator(*this->value, *value)) return parent;
+        Node<T>* found;
+        for (Node<T>* node : children) {
+            found = node->findParent(value, this);
             if (found) return found;
         }
         return nullptr;

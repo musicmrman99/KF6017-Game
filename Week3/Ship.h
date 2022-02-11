@@ -30,21 +30,21 @@ public:
 	particular instance, requiring the instance (ship) to which the action is to be applied to be
 	passed to the Action.
 	*/
-	class Action {
+	static class Action {
 	public:
 		virtual void perform(Ship* ship) const = 0;
 	};
 
 	// Movement
-	class MainThrustAction : public Action {
+	static class MainThrustAction : public Action {
 	public:
 		virtual void perform(Ship* ship) const;
 	};
-	class TurnLeftThrustAction : public Action {
+	static class TurnLeftThrustAction : public Action {
 	public:
 		virtual void perform(Ship* ship) const;
 	};
-	class TurnRightThrustAction : public Action {
+	static class TurnRightThrustAction : public Action {
 	public:
 		virtual void perform(Ship* ship) const;
 	};
@@ -80,7 +80,7 @@ public:
 		bool operator== (const PurchasableUpgrade& other) const;
 	};
 
-	class UpgradeAction : public Action {
+	static class UpgradeAction : public Action {
 	private:
 		const Upgrade upgrade;
 
@@ -111,11 +111,13 @@ private:
 	float rotateThrust;
 
 public:
+	// Action Source
 	void setActionSource(ActionSource<Action>* actionSource);
 
 	// Utils
-	Node<PurchasableUpgrade>* addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade);
-	Node<PurchasableUpgrade>* findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
+	static Node<PurchasableUpgrade>* addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade);
+	static Node<PurchasableUpgrade>* findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
+	static Node<PurchasableUpgrade>* findParentUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
 
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
