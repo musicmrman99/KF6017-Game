@@ -12,7 +12,7 @@ class Ship {
 public:
 	// Game Actions
 	/*
-	Implementation notes:
+	Design Reasoning:
 
 	An ActionSource provides Actions of the appropriate type (Ship::Action) for this type (Ship)
 	that it requests a particular instance of this type (a Ship) to perform - without any knowledge
