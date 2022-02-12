@@ -1333,7 +1333,7 @@ AngledRectangle2D::AngledRectangle2D()
 // Constructs an AngledRectangle2D at rotation 0, with the given height
 // and width and centre
 AngledRectangle2D::AngledRectangle2D(Vector2D centre, float height, float width)
-   :mWidth(width), mHeight(height), mCentre(centre)
+   : mWidth(width), mHeight(height), mCentre(centre)
 {
    UpdateTrivialRejector();
    mLocalRectangle.PlaceAt(mHeight / 2, -mWidth / 2, -mHeight / 2, mWidth / 2);

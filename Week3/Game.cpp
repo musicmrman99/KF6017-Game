@@ -11,7 +11,12 @@
 #include "GameTimer.h"
 #include "shapes.h"
 
-Game::Game() {}
+Game::Game() :
+    m_currentState(GameState::MENU),
+    m_menuOption(0),
+    player(nullptr),
+    playerKeymap(nullptr) {
+}
 Game::~Game() {}
 
 Game Game::instance; // Singleton instance

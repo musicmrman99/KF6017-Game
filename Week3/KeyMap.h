@@ -35,8 +35,7 @@ private:
 
 public:
     KeyboardControl(const ControlType type, const unsigned char key)
-        : type(type), key(key) {
-    };
+        : type(type), key(key) {};
     virtual bool isActive() const {
         static MyInputs* myInputs = MyInputs::GetInstance();
         switch (type) {

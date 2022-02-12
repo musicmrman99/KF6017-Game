@@ -89,7 +89,7 @@ MyInputs* MyInputs::GetInstance()
 }
 
 MyInputs::MyInputs(HINSTANCE hinst, HWND hwnd)
-:mkiMaxJoystickAxis(100)
+	: mkiMaxJoystickAxis(100)
 {
 	lpdi=nullptr;
 
