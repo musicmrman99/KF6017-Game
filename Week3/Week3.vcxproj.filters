@@ -22,14 +22,17 @@
     <Filter Include="Header Files\Utils">
       <UniqueIdentifier>{88c21be6-dbcc-4e3c-8163-346507775882}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Actions">
-      <UniqueIdentifier>{72e339ce-8eab-4ffb-b04c-15dd2fc9eca1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Objects">
       <UniqueIdentifier>{3c46ebf7-e194-42e1-8c43-df0eaf8cb0d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{58f68cb5-ea56-400e-84f2-384989514c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ActionSources">
+      <UniqueIdentifier>{72e339ce-8eab-4ffb-b04c-15dd2fc9eca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ActionSources">
+      <UniqueIdentifier>{b4375402-7cc9-49ff-a2ed-e6fed722bd62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="Ship.cpp">
       <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\ActionSources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,13 +108,22 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="ActionSource.h">
-      <Filter>Header Files\Actions</Filter>
+      <Filter>Header Files\ActionSources</Filter>
     </ClInclude>
     <ClInclude Include="KeyMap.h">
-      <Filter>Header Files\Actions</Filter>
+      <Filter>Header Files\ActionSources</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Combinator.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BooleanCombinators.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\ActionSources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

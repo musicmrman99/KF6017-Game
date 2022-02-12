@@ -11,6 +11,8 @@
 #include "GameTimer.h"
 #include "shapes.h"
 
+#include "KeyMap.h"
+
 Game::Game() :
     m_currentState(GameState::MENU),
     m_menuOption(0),
