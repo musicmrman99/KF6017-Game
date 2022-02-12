@@ -14,13 +14,13 @@
 #include <d3d9.h>		// directX draw
 #include <d3dx9.h>		// extra directX draw stuff   
 #include "errorlogger.h"
-#include "vector2d.h"
+#include "Vector2d.h"
 #include "shapes.h"
 #include <vector>
 #include <map>
-#include "errortype.h"
+#include "ErrorType.h"
 #include "string"
-#include "camera.h"
+#include "Camera.h"
 
 
 // Macros ***************************************************

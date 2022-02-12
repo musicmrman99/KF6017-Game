@@ -3,7 +3,7 @@
 // Chris Rook
 // Last modified 20/09/2018
 
-#include "myinputs.h"
+#include "MyInputs.h"
 #include "errorlogger.h"
 
 // *************************************************************************************

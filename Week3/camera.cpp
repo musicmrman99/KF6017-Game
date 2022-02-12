@@ -5,8 +5,8 @@
 
 #pragma once
 
-#include "mydrawengine.h"
-#include "camera.h"
+#include "MyDrawEngine.h"
+#include "Camera.h"
 
 
 // Sets the camera with an intial position at 0,0 with 

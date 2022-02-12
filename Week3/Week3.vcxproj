@@ -143,7 +143,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
-    <ClCompile Include="GameCode.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="MyDrawEngine.cpp" />
     <ClCompile Include="MyInputs.cpp" />
@@ -155,20 +155,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionSource.h" />
-    <ClInclude Include="camera.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ErrorLogger.h" />
-    <ClInclude Include="errortype.h" />
-    <ClInclude Include="gamecode.h" />
-    <ClInclude Include="gametimer.h" />
+    <ClInclude Include="ErrorType.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameTimer.h" />
     <ClInclude Include="KeyMap.h" />
-    <ClInclude Include="mydrawengine.h" />
-    <ClInclude Include="myinputs.h" />
-    <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="MyDrawEngine.h" />
+    <ClInclude Include="MyInputs.h" />
+    <ClInclude Include="MySoundEngine.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="objecttypes.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />
-    <ClInclude Include="vector2D.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

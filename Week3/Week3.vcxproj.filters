@@ -18,7 +18,7 @@
     <ClCompile Include="ErrorLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameCode.cpp">
+    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GameTimer.cpp">
@@ -50,37 +50,34 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h">
+    <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ErrorLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="errortype.h">
+    <ClInclude Include="ErrorType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gamecode.h">
+    <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gametimer.h">
+    <ClInclude Include="GameTimer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mydrawengine.h">
+    <ClInclude Include="MyDrawEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="myinputs.h">
+    <ClInclude Include="MyInputs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mysoundengine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="objecttypes.h">
+    <ClInclude Include="MySoundEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shapes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vector2D.h">
+    <ClInclude Include="Vector2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">

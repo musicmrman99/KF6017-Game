@@ -2,7 +2,7 @@
 // The definition file for the methods in MySoundEngine, declared in mysoundengine.h
 #define DSBCAPS_CTRLDEFAULT 0x000000E0
 
-#include "mysoundengine.h"
+#include "MySoundEngine.h"
 #include "errorlogger.h"
 
 

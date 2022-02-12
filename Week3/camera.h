@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include "vector2D.h"
+#include "Vector2D.h"
 
 // The camera class is used to transform world coordinates to/from screen coordinates
 // Can also transform Cirle2D, Rectangle2D and Segment2D objects

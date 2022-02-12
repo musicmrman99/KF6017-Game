@@ -6,10 +6,10 @@
 
 
 #pragma once
-#include "errortype.h"
+#include "ErrorType.h"
 #include "windows.h"
-#include "mydrawengine.h"
-#include "gametimer.h"
+#include "MyDrawEngine.h"
+#include "GameTimer.h"
 
 #include "Ship.h"
 #include "KeyMap.h"

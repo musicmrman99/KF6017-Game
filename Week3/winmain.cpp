@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 
-#include "errortype.h"
-#include "gamecode.h"
+#include "ErrorType.h"
+#include "Game.h"
 #include "errorlogger.h"
 
 

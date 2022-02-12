@@ -14,7 +14,7 @@
 
 #include <string>
 #include <dsound.h>		// directX draw
-#include "errortype.h"
+#include "ErrorType.h"
 #include <map>
 
 typedef unsigned int SoundIndex;

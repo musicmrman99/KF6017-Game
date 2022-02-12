@@ -1,12 +1,12 @@
 // GameCode.cpp        
 
-#include "gamecode.h"
+#include "Game.h"
 
-#include "mydrawengine.h"
-#include "mysoundengine.h"
-#include "myinputs.h"
+#include "MyDrawEngine.h"
+#include "MySoundEngine.h"
+#include "MyInputs.h"
 #include <time.h>
-#include "gametimer.h"
+#include "GameTimer.h"
 #include "errorlogger.h"
 #include "shapes.h"
 

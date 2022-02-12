@@ -9,7 +9,7 @@
 //		Updating LoadPicture, FindPicture, AddFont to const wchar_t to support string literals in parameters
 
 
-#include "mydrawengine.h"
+#include "MyDrawEngine.h"
 #include <algorithm>			// Using find() in DeregisterPicture
 
 MyDrawEngine* MyDrawEngine::instance=nullptr;

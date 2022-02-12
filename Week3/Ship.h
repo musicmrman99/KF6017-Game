@@ -2,8 +2,8 @@
 
 #include <vector>
 
-#include "mydrawengine.h"
-#include "myinputs.h"
+#include "MyDrawEngine.h"
+#include "MyInputs.h"
 
 #include "Node.h"
 #include "ActionSource.h"
