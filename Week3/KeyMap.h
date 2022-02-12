@@ -23,22 +23,7 @@ enum class Scroll {
 };
 
 class Control {
-private:
-    const int index;
-
 public:
-    Control(const int index) : index(index) {}
-    int getIndex() const {
-        return index;
-    }
-
-    bool operator==(const Control& other) const {
-        return index == other.index;
-    }
-    bool operator<(const Control& other) const {
-        return index < other.index;
-    }
-
     virtual bool isActive() const = 0;
 };
 
@@ -48,8 +33,8 @@ private:
     const unsigned char key;
 
 public:
-    KeyboardControl(const int index, const ControlType type, const unsigned char key)
-        : Control(index), type(type), key(key) {
+    KeyboardControl(const ControlType type, const unsigned char key)
+        : type(type), key(key) {
     };
     virtual bool isActive() const {
         static MyInputs* myInputs = MyInputs::GetInstance();
@@ -69,8 +54,8 @@ private:
     const MouseButton button;
 
 public:
-    MouseButtonControl(const int index, const ControlType type, const MouseButton button)
-        : Control(index), type(type), button(button) {}
+    MouseButtonControl(const ControlType type, const MouseButton button)
+        : type(type), button(button) {}
     virtual bool isActive() const {
         static MyInputs* myInputs = MyInputs::GetInstance();
         switch (type) {
@@ -106,9 +91,8 @@ private:
     const int maxDelta;
 
 public:
-    ScrollControl(const int index, const Scroll direction, const int minDelta, const int maxDelta)
-        : Control(index),
-        direction(direction),
+    ScrollControl(const Scroll direction, const int minDelta, const int maxDelta)
+        : direction(direction),
         minDelta(minDeltaFor(minDelta, direction)),
         maxDelta(maxDeltaFor(maxDelta, direction)) {
     }
@@ -174,11 +158,11 @@ private:
     Combinator combinator;
 
 public:
-    CompositeControl(const int index, const std::vector<Control*>& controls, Combinator combinator)
-        : Control(index), controls(controls), combinator(combinator) {
+    CompositeControl(const std::vector<Control*>& controls, Combinator combinator)
+        : controls(controls), combinator(combinator) {
     }
-    CompositeControl(const int index, const std::vector<Control*>& controls)
-        : CompositeControl(index, controls, Combinator::ALL) {
+    CompositeControl(const std::vector<Control*>& controls)
+        : CompositeControl(controls, Combinator::ALL) {
     }
     virtual bool isActive() const {
         // These are used for different things in different contexts, but have a common pattern.
@@ -221,22 +205,15 @@ public:
     }
 };
 
-struct ControlComparator : std::binary_function<const Control*, const Control*, bool> {
-    bool operator() (const Control* a, const Control* b) const {
-        return *a < *b;
-    }
-};
-
 template <class Action>
 class KeyMap : public ActionSource<Action> {
 private:
     // Controls are held/iterated in insertion order,
     // which may impact the order of actions.
-    int nextIndex;
-    std::map<Control*, Action*, ControlComparator> map;
+    std::vector<std::pair<Control*, Action*>> map;
 
 public:
-    KeyMap() : nextIndex(0) {}
+    KeyMap() {}
     ~KeyMap() {
         for (std::pair<Control*, Action*> mapping : map) {
             if (mapping.first) {
@@ -248,9 +225,9 @@ public:
     // Implement ActionSource<Action>
     virtual std::vector<Action*> getActions() {
         std::vector<Action*> actions;
-        for (std::pair<Control*, Action*> mapping : map) {
-            if (mapping.first->isActive()) {
-                actions.push_back(mapping.second);
+        for (std::pair<Control*, Action*> binding : map) {
+            if (binding.first->isActive()) {
+                actions.push_back(binding.second);
             }
         }
         return actions;
@@ -258,32 +235,6 @@ public:
 
     // Bind
     void bind(Control* control, Action* action) {
-        map.insert({ control, action });
-    }
-
-    // Control factories for this KeyMap
-    Control* keyControl(ControlType controlType, unsigned char key) {
-        return new KeyboardControl(nextIndex++, controlType, key);
-    }
-
-    Control* mouseButtonControl(ControlType controlType, MouseButton button) {
-        return new MouseButtonControl(nextIndex++, controlType, button);
-    }
-
-    Control* scrollControl(Scroll direction, int minDelta, int maxDelta) {
-        return new ScrollControl(nextIndex++, direction, minDelta, minDelta);
-    }
-    Control* scrollControl(Scroll direction, int maxDelta) {
-        return KeyMap<Action>::scrollControl(direction, 0, maxDelta);
-    }
-    Control* scrollControl(Scroll direction, Action* action) {
-        return KeyMap<Action>::scrollControl(direction, 0);
-    }
-    
-    Control* compositeControl(const std::vector<Control*>& controls, CompositeControl::Combinator combinator) {
-        return new CompositeControl(nextIndex++, controls, combinator);
-    }
-    Control* compositeControl(const std::vector<Control*>& controls) {
-        return new CompositeControl(nextIndex++, controls);
+        map.push_back(std::pair<Control*, Action*>(control, action));
     }
 };
