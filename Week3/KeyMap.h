@@ -1,7 +1,8 @@
 #pragma once
-#include "ActionSource.h"
 
 #include <map>
+
+#include "ActionSource.h"
 
 enum class ControlType {
     HOLD,

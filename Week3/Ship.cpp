@@ -6,7 +6,6 @@
 
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include <iostream>
 
 #define FPS 60.0f
 const float RPS = 2 * (float) M_PI / FPS;

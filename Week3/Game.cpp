@@ -2,12 +2,13 @@
 
 #include "Game.h"
 
+#include <time.h>
+
+#include "ErrorLogger.h"
 #include "MyDrawEngine.h"
 #include "MySoundEngine.h"
 #include "MyInputs.h"
-#include <time.h>
 #include "GameTimer.h"
-#include "errorlogger.h"
 #include "shapes.h"
 
 Game::Game() {}

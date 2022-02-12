@@ -3,7 +3,8 @@
 #define DSBCAPS_CTRLDEFAULT 0x000000E0
 
 #include "MySoundEngine.h"
-#include "errorlogger.h"
+
+#include "ErrorLogger.h"
 
 
 MySoundEngine* MySoundEngine::instance=nullptr;

@@ -8,11 +8,12 @@
 #pragma once
 #pragma comment(lib, "dinput8.lib")
 
-#include <windows.h>			// Windows headers all-in-one
+#include <windows.h> // Windows headers all-in-one
+
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-#include "ErrorType.h"
 
+#include "ErrorType.h"
 
 
 // Class to manage input from keyboard, mouse and joystick

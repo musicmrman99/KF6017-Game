@@ -10,16 +10,19 @@
 #pragma once
 #pragma comment(lib, "d3d9.lib")
 #pragma comment(lib, "d3dx9.lib")
-#pragma comment(lib, "dxguid.lib")  
-#include <d3d9.h>		// directX draw
-#include <d3dx9.h>		// extra directX draw stuff   
-#include "errorlogger.h"
-#include "Vector2d.h"
-#include "shapes.h"
+#pragma comment(lib, "dxguid.lib")
+
 #include <vector>
 #include <map>
+#include <string>
+
+#include <d3d9.h>  // directX draw
+#include <d3dx9.h> // directX draw (extra)
+
 #include "ErrorType.h"
-#include "string"
+#include "ErrorLogger.h"
+#include "Vector2D.h"
+#include "Shapes.h"
 #include "Camera.h"
 
 

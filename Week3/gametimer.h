@@ -5,7 +5,6 @@
 // Added experimental throttle component to gradually restore frame rate after a dip
 //	Intention is to smooth frame rate osscilation
 
-
 #pragma once
 
 #include <windows.h>

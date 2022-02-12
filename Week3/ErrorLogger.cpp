@@ -3,7 +3,8 @@
 // Chris Rook
 // Last modified 20/09/2018
 
-#include "errorlogger.h"
+#include "ErrorLogger.h"
+
 #include <math.h>
 
 const wchar_t ErrorLogger::Filename[]=L"error.log";

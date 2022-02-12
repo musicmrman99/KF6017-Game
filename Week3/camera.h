@@ -3,7 +3,6 @@
 // Chris Rook
 // Last modified 20/09/2018
 
-
 #pragma once
 
 #include "Vector2D.h"
@@ -58,4 +57,3 @@ public:
 	// Sets the camera zoom
 	void SetZoom(float zoom);
 };
-

@@ -4,10 +4,11 @@
 // Last modified 25/09/2018
 //   Update to prevent game loop from flipping twice
 
-
 #pragma once
+
+#include <windows.h>
+
 #include "ErrorType.h"
-#include "windows.h"
 #include "MyDrawEngine.h"
 #include "GameTimer.h"
 

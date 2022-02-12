@@ -12,10 +12,12 @@
 
 #pragma once
 
-#include <string>
-#include <dsound.h>		// directX draw
-#include "ErrorType.h"
 #include <map>
+#include <string>
+
+#include <dsound.h> // directX draw
+
+#include "ErrorType.h"
 
 typedef unsigned int SoundIndex;
 typedef unsigned int MusicIndex;

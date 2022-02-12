@@ -1,13 +1,14 @@
-
 // Shapes.cpp
 // Chris Rook
 // Last modified 06/11/2018
 //	Added AngledRectangle2D and Intersects(AngledRectangle2D) method for other classes
 
 #include "Shapes.h"
+
 #include <limits.h>
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 

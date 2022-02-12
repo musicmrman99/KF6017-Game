@@ -5,14 +5,13 @@
 //		Updating to const wchar_t to support string literals in parameters
 //	Added assumption of windowed when in DEBUG config, using _DEBUG macro in WinMain
 
-
 #define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
 
 #include "ErrorType.h"
+#include "ErrorLogger.h"
 #include "Game.h"
-#include "errorlogger.h"
 
 
 // Includes *************************************************************************************

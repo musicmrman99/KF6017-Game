@@ -1,12 +1,12 @@
-
 // shapes.h
 // Shell engine version 2020
 // Chris Rook
 // Last modified 06/11/2018
 //	Added AngledRectangle2D and Intersects(AngledRectangle2D) method for other classes
 
-#include "Vector2D.h"
 #pragma once
+
+#include "Vector2D.h"
 
 // Abstract 2D shape
 class IShape2D

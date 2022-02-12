@@ -10,7 +10,8 @@
 
 
 #include "MyDrawEngine.h"
-#include <algorithm>			// Using find() in DeregisterPicture
+
+#include <algorithm> // Using find() in DeregisterPicture
 
 MyDrawEngine* MyDrawEngine::instance=nullptr;
 

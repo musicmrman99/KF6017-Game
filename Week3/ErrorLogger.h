@@ -3,7 +3,6 @@
 // Chris Rook
 // Last modified 20/09/2018
 
-
 #pragma once
 
 #include <fstream>

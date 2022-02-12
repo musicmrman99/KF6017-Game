@@ -5,9 +5,8 @@
 
 #pragma once
 
-#include "MyDrawEngine.h"
+#include "MyDrawEngine.h" // Has side-effects - must come first
 #include "Camera.h"
-
 
 // Sets the camera with an intial position at 0,0 with 
 // a scale to make the screen have a height of 2000 using world coordinates.

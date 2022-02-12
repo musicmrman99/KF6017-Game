@@ -2,10 +2,11 @@
 
 #include <vector>
 
+#include "Node.h"
+
 #include "MyDrawEngine.h"
 #include "MyInputs.h"
 
-#include "Node.h"
 #include "ActionSource.h"
 
 class Ship {
