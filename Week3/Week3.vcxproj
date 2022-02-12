@@ -148,7 +148,7 @@
     <ClCompile Include="MyDrawEngine.cpp" />
     <ClCompile Include="MyInputs.cpp" />
     <ClCompile Include="MySoundEngine.cpp" />
-    <ClCompile Include="shapes.cpp" />
+    <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="winmain.cpp" />

@@ -29,7 +29,7 @@ class Point2D:public IShape2D
 	friend Segment2D;
 	friend Circle2D;
 	friend Rectangle2D;
-   friend AngledRectangle2D;
+    friend AngledRectangle2D;
 private:
 	Vector2D mPosition;     // The position of the point
 public:
@@ -115,7 +115,7 @@ class Segment2D:public IShape2D
 	friend Point2D;
 	friend Circle2D;
 	friend Rectangle2D;
-   friend AngledRectangle2D;
+    friend AngledRectangle2D;
 private:
 	Vector2D mStart;
 	Vector2D mEnd;
@@ -255,7 +255,7 @@ class Circle2D:public IShape2D
 	friend Point2D;
 	friend Segment2D;
 	friend Rectangle2D;
-   friend AngledRectangle2D;
+    friend AngledRectangle2D;
 private:
 	Vector2D mCentre;    // Position of the centre
 	float mdRadius;      // Radius
@@ -331,9 +331,9 @@ public:
 	// false otherwise
 	bool Intersects(const Rectangle2D &other) const;
 
-   // Returns true if the circle intersects the angled rectangle
-   // false otherwise
-   bool Intersects(const AngledRectangle2D &other) const;
+    // Returns true if the circle intersects the angled rectangle
+    // false otherwise
+    bool Intersects(const AngledRectangle2D &other) const;
 
 	// Returns the distance from the edge of the circle
 	// to the rectangle.
@@ -374,7 +374,7 @@ class Rectangle2D:public IShape2D
 	friend Point2D;
 	friend Segment2D;
 	friend Circle2D;
-   friend AngledRectangle2D;
+    friend AngledRectangle2D;
 private:
 	Vector2D mCorner1;		// Bottom left assuming regular cartesian
 	Vector2D mCorner2;		// Top right assuming regular cartesian
@@ -578,5 +578,4 @@ public:
    bool Intersects(const Segment2D& other) const;
    bool Intersects(const Rectangle2D& other) const;
    bool Intersects(const AngledRectangle2D& other) const;
-
 };
