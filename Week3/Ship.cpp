@@ -8,8 +8,8 @@
 #include <math.h>
 #include <iostream>
 
-#define FPS 60
-const float RPS = 2 * M_PI / FPS;
+#define FPS 60.0f
+const float RPS = 2 * (float) M_PI / FPS;
 
 /* Upgrades
 -------------------------------------------------- */
@@ -96,8 +96,8 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     accel.set(0, 0);
     rotVel = 0.0f;
 
-    engineThrust = 0.1;
-    rotateThrust = 0.3 * RPS;
+    engineThrust = 0.1f;
+    rotateThrust = 0.3f * RPS;
 
     // Formatted the same as tree itself is structured for ease of reading
     upgradeTree = new Tree<PurchasableUpgrade>(

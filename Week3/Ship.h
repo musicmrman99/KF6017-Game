@@ -30,21 +30,21 @@ public:
 	particular instance, requiring the instance (ship) to which the action is to be applied to be
 	passed to the Action.
 	*/
-	static class Action {
+	class Action {
 	public:
 		virtual void perform(Ship* ship) const = 0;
 	};
 
 	// Movement
-	static class MainThrustAction : public Action {
+	class MainThrustAction : public Action {
 	public:
 		virtual void perform(Ship* ship) const;
 	};
-	static class TurnLeftThrustAction : public Action {
+	class TurnLeftThrustAction : public Action {
 	public:
 		virtual void perform(Ship* ship) const;
 	};
-	static class TurnRightThrustAction : public Action {
+	class TurnRightThrustAction : public Action {
 	public:
 		virtual void perform(Ship* ship) const;
 	};
@@ -80,7 +80,7 @@ public:
 		bool operator== (const PurchasableUpgrade& other) const;
 	};
 
-	static class UpgradeAction : public Action {
+	class UpgradeAction : public Action {
 	private:
 		const Upgrade upgrade;
 
