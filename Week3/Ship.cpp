@@ -27,7 +27,8 @@ struct NestedUpgradeComparator {
 /* Actions
 -------------------------------------------------- */
 
-// Movement Action
+/* Movement Actions
+-------------------- */
 
 Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
     ship.accel += ship.rot * ship.engineThrust;
@@ -41,12 +42,16 @@ Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
     ship.rotVel += ship.rotateThrust;
 };
 
-// Upgrade Action
+/* Upgrade Action
+-------------------- */
 
+// Create an action to purchase the given upgrade.
 Ship::UpgradeAction::UpgradeAction(const Upgrade& upgrade) : upgrade(upgrade) {}
 
+// The set of all UpgradeActions.
 std::map<Ship::Upgrade, Ship::UpgradeAction*> Ship::UpgradeAction::allUpgradeActions = std::map<Ship::Upgrade, Ship::UpgradeAction*>();
 
+// Create an action to purchase the given upgrade. Memoised.
 Ship::UpgradeAction* Ship::UpgradeAction::create(const Upgrade& upgrade) {
     const std::map<Upgrade, UpgradeAction*>::iterator existingAction = allUpgradeActions.find(upgrade);
     if (existingAction != allUpgradeActions.end()) {
@@ -58,6 +63,7 @@ Ship::UpgradeAction* Ship::UpgradeAction::create(const Upgrade& upgrade) {
     return newAction;
 }
 
+// Delete all UpgradeAction instances.
 void Ship::UpgradeAction::deleteAll() {
     for (std::pair<const Upgrade, UpgradeAction*>& upgradeAction : allUpgradeActions) {
         delete upgradeAction.second;
@@ -66,9 +72,11 @@ void Ship::UpgradeAction::deleteAll() {
     allUpgradeActions.clear();
 }
 
+// Try to add the upgrade this action is for.
 void Ship::UpgradeAction::operator() (Ship& ship) const {
+    // Warning: Assumes all declared upgrades (in Ship::Upgrade) are in the tree
     Node<PurchasableUpgrade>* parentUpgradeNode = findParentUpgrade(ship.upgradeTree, upgrade);
-    if (parentUpgradeNode && parentUpgradeNode->getValue()->purchased) {
+    if (!parentUpgradeNode || parentUpgradeNode->getValue()->purchased) {
         Node<PurchasableUpgrade>* upgradeNode = findUpgrade(parentUpgradeNode, upgrade);
         upgradeNode->setValue(new PurchasableUpgrade{ upgrade, true });
     }
@@ -108,13 +116,15 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent 
 /* Lifecycle
 -------------------------------------------------- */
 
-// Action Source
+/* Action Source
+-------------------- */
 
 void Ship::setActionSource(ActionSource<Action>* actionSource) {
     this->actionSource = actionSource;
 }
 
-// Lifecycle
+/* Lifecycle
+-------------------- */
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : pos(pos), rot(rot), image(image), actionSource(nullptr)
