@@ -261,8 +261,6 @@ ErrorType Game::StartOfGame() {
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), &Ship::MAIN_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), &Ship::TURN_LEFT_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), &Ship::TURN_RIGHT_THRUST);
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_O), Ship::UpgradeAction::create(Ship::Upgrade::REAR_THRUSTERS));
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), Ship::UpgradeAction::create(Ship::Upgrade::FRONT_THRUSTERS));
     player->setActionSource(playerKeymap);
 
     return SUCCESS;
