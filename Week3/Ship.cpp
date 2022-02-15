@@ -31,15 +31,15 @@ struct NestedUpgradeComparator {
 -------------------- */
 
 Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
-    ship.accel += ship.rot * ship.engineThrust;
+    ship.physModel.shiftAccel(ship.physModel.rot() * ship.engineThrust);
 };
 
 Ship::Action Ship::TURN_LEFT_THRUST = [](Ship& ship) {
-    ship.rotAccel -= ship.rotateThrust;
+    ship.physModel.shiftRotAccel(-ship.rotateThrust);
 };
 
 Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
-    ship.rotAccel += ship.rotateThrust;
+    ship.physModel.shiftRotAccel(ship.rotateThrust);
 };
 
 /* Upgrade Action
@@ -127,18 +127,17 @@ void Ship::setActionSource(ActionSource<Action>* actionSource) {
 -------------------- */
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
-    : pos(pos), rot(rot), image(image), actionSource(nullptr)
-{
-    vel.set(0, 0);
-    accel.set(0, 0);
-    rotVel = 0.0f;
-    rotAccel = 0.0f;
+    : physModel(NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f)),
+    image(image),
+    actionSource(nullptr),
+    upgradeTree(buildUpgradeTree()),
+    engineThrust(0.1f),
+    rotateThrust(0.01f * RPS) {
+}
 
-    engineThrust = 0.1f;
-    rotateThrust = 0.01f * RPS;
-
+Tree<Ship::PurchasableUpgrade>* Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
-    upgradeTree = new Tree<PurchasableUpgrade>(
+    Tree<Ship::PurchasableUpgrade>* upgradeTree = new Tree<PurchasableUpgrade>(
         new PurchasableUpgrade{ Upgrade::SHIP, true }
     );
     auto loadOptimisation = addUpgrade(upgradeTree, Upgrade::LOAD_OPTIMISATION);
@@ -160,6 +159,8 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
         addUpgrade(workerDrone, Upgrade::ARMOURED_DRONE);
         auto mine = addUpgrade(workerDrone, Upgrade::MINE);
             addUpgrade(mine, Upgrade::FIGHTER_DRONE);
+
+    return upgradeTree;
 }
 
 Ship::~Ship() {
@@ -168,8 +169,8 @@ Ship::~Ship() {
 }
 
 void Ship::beforeActions() {
-    accel.set(0.0f, 0.0f);
-    rotAccel = 0.0f;
+    physModel.setAccel(Vector2D(0.0f, 0.0f));
+    physModel.setRotAccel(0.0f);
 }
 void Ship::actions() {
     for (Action* action : actionSource->getActions()) {
@@ -179,17 +180,13 @@ void Ship::actions() {
 
 void Ship::beforePhys() {}
 void Ship::phys() {
-    rotVel += rotAccel;
-    rot.setBearing(rot.angle() + rotVel, 1);
-
-    vel += accel;
-    pos += vel;
+    physModel.run();
 }
 
 void Ship::beforeDraw() {}
 void Ship::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-    graphics->DrawAt(pos, image, 1.0f, rot.angle(), 0.0f);
+    graphics->DrawAt(physModel.pos(), image, 1.0f, physModel.rot().angle(), 0.0f);
     MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), strDump(upgradeTree).c_str(), MyDrawEngine::CYAN);
 }
 

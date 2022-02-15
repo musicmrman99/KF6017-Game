@@ -252,9 +252,9 @@ ErrorType Game::StartOfGame() {
 
     // Player
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-    Vector2D playerPosition(0, 0);
-    Vector2D playerVelocity(0, 0);
-    player = new Ship(playerPosition, playerVelocity, playerSprite);
+    Vector2D playerPosition(0.0f, 0.0f);
+    Vector2D playerRotation(0.0f, 1.0f);
+    player = new Ship(playerPosition, playerRotation, playerSprite);
 
     // Player Keymap
     playerKeymap = new KeyMap<Ship::Action>();

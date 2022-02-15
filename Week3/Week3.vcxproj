@@ -148,6 +148,7 @@
     <ClCompile Include="MyDrawEngine.cpp" />
     <ClCompile Include="MyInputs.cpp" />
     <ClCompile Include="MySoundEngine.cpp" />
+    <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
@@ -168,7 +169,9 @@
     <ClInclude Include="MyDrawEngine.h" />
     <ClInclude Include="MyInputs.h" />
     <ClInclude Include="MySoundEngine.h" />
+    <ClInclude Include="NewtonianPhysModel.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="PhysModel.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Vector2D.h" />

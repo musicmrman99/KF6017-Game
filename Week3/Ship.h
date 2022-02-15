@@ -8,6 +8,8 @@
 #include "MyDrawEngine.h"
 #include "MyInputs.h"
 
+#include "NewtonianPhysModel.h"
+
 #include "ActionSource.h"
 
 class Ship {
@@ -104,22 +106,13 @@ public:
 	};
 
 private:
-	// Graphical Representation
-	PictureIndex image;
-
-	// Logical Representation
-	Vector2D pos;
-	Vector2D vel;
-	Vector2D accel;
-
-	Vector2D rot;
-	float rotVel;
-	float rotAccel;
+	NewtonianPhysModel physModel; // Physical Representation
+	PictureIndex image;           // Graphical Representation
 
 	// Action Source
 	ActionSource<Action>* actionSource;
 
-	// Gameplay Quantities & Upgrades
+	// Gameplay
 	Tree<PurchasableUpgrade>* upgradeTree;
 	
 	float engineThrust;
@@ -138,6 +131,7 @@ public:
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
 	~Ship();
+	static Tree<Ship::PurchasableUpgrade>* buildUpgradeTree();
 
 	void beforeActions();
 	void actions();

@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\Engine">
-      <UniqueIdentifier>{830c95d3-c6b9-4a93-a488-acb911522cb9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine">
       <UniqueIdentifier>{ce04855b-aaf3-405b-8376-8abde9fbbfa5}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="Source Files\ActionSources">
       <UniqueIdentifier>{b4375402-7cc9-49ff-a2ed-e6fed722bd62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{830c95d3-c6b9-4a93-a488-acb911522cb9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="Controls.cpp">
       <Filter>Source Files\ActionSources</Filter>
+    </ClCompile>
+    <ClCompile Include="NewtonianPhysModel.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="Controls.h">
       <Filter>Header Files\ActionSources</Filter>
+    </ClInclude>
+    <ClInclude Include="NewtonianPhysModel.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysModel.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
