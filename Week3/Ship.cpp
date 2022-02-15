@@ -35,11 +35,11 @@ Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
 };
 
 Ship::Action Ship::TURN_LEFT_THRUST = [](Ship& ship) {
-    ship.rotVel -= ship.rotateThrust;
+    ship.rotAccel -= ship.rotateThrust;
 };
 
 Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
-    ship.rotVel += ship.rotateThrust;
+    ship.rotAccel += ship.rotateThrust;
 };
 
 /* Upgrade Action
@@ -132,9 +132,10 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     vel.set(0, 0);
     accel.set(0, 0);
     rotVel = 0.0f;
+    rotAccel = 0.0f;
 
     engineThrust = 0.1f;
-    rotateThrust = 0.3f * RPS;
+    rotateThrust = 0.01f * RPS;
 
     // Formatted the same as tree itself for ease of reading
     upgradeTree = new Tree<PurchasableUpgrade>(
@@ -168,7 +169,7 @@ Ship::~Ship() {
 
 void Ship::beforeActions() {
     accel.set(0.0f, 0.0f);
-    rotVel = 0.0f;
+    rotAccel = 0.0f;
 }
 void Ship::actions() {
     for (Action* action : actionSource->getActions()) {
@@ -178,6 +179,7 @@ void Ship::actions() {
 
 void Ship::beforePhys() {}
 void Ship::phys() {
+    rotVel += rotAccel;
     rot.setBearing(rot.angle() + rotVel, 1);
 
     vel += accel;

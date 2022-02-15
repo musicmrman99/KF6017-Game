@@ -114,6 +114,7 @@ private:
 
 	Vector2D rot;
 	float rotVel;
+	float rotAccel;
 
 	// Action Source
 	ActionSource<Action>* actionSource;
