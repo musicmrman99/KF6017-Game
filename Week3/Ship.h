@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <map>
 
 #include "Node.h"
 
@@ -11,46 +12,48 @@
 
 class Ship {
 public:
-	// Game Actions
 	/*
 	Design Reasoning:
 
-	An ActionSource provides Actions of the appropriate type (Ship::Action) for this type (Ship)
-	that it requests a particular instance of this type (a Ship) to perform - without any knowledge
-	of which type of object it is providing actions for. This class can provide its supported actions
-	(to be bound to a KeyMap/ActionSource elsewhere) either as data, or as executable code. It must be
-	parameterisable, eg. for purchasing a particular upgrade. It can be defined as data (a class; enums
-	don't support the parameterised command pattern), or as a polymorphic function object. If data, we
-	would have to parse the type of command, then manually dispatch to the right method based on the
-	data. We would rather automatically dynamically dispatch using C++'s type system. However, to access
-	a particular ship's data (remember, the Actions are instance-independent by design) requires either
-	binding the Action objects to a particular ship (which causes a bind cycle - a ship is bound to a
-	keymap, whose actions are bound to the ship - which is bad design), or ...
+	An ActionSource provides Actions of a type (Ship::Action) that is appropriate for this type (Ship).
+	Each instance of this type (Ship) requests Actions (Ship::Actions) from its source, which provides
+	those Actions without any knowledge of which object it is providing them to.
+	
+	Constraint: Actions must be parameterisable (eg. for purchasing a particular upgrade).
 
-	Couple the Actions to the Ship class (as they are actions any Ship can perform), rather than a
-	particular instance, requiring the instance (ship) to which the action is to be applied to be
-	passed to the Action.
+	This class could provide its supported actions (to be bound to a KeyMap/AI elsewhere) either as data
+	(and define methods that correspond to each action), or as executable code. These would mean either
+	defining Action as a class (as enums don't support the parameters / the command pattern), or as a
+	polymorphic function type.
+	
+	If defined as data, Ship would have to parse the type of each action requested and manually dispatch
+	to the right method based on the data (after explicit casting, as different kinds of actions contain
+	different data). We would rather dynamically dispatch to the right action using C++'s type system, as
+	it reduces maintainance burden. This rules out defining an Action as data to be interpreted.
+	
+	If defined as a function, it would need to access a particular ship's data, which requires either
+	binding the Action objects to a particular ship (which causes a bind cycle - a ship is bound to a
+	keymap, whose actions are bound to the ship - which is bad design), or defining them to take a Ship
+	as a parameter. The latter option was chosen.
+
+	Solution:
+	
+	Couple the Actions to the Ship class (rather than a particular instance) and require passing the Ship
+	to apply the Action to.
 	*/
-	class Action {
-	public:
-		virtual void perform(Ship* ship) const = 0;
-	};
+
+	// An action that can be applied to a ship.
+	using Action = const std::function<void (Ship& ship)>;
 
 	// Movement
-	class MainThrustAction : public Action {
-	public:
-		virtual void perform(Ship* ship) const;
-	};
-	class TurnLeftThrustAction : public Action {
-	public:
-		virtual void perform(Ship* ship) const;
-	};
-	class TurnRightThrustAction : public Action {
-	public:
-		virtual void perform(Ship* ship) const;
-	};
+
+	static Action MAIN_THRUST;
+	static Action TURN_LEFT_THRUST;
+	static Action TURN_RIGHT_THRUST;
 
 	// Upgrades
+
+	// An upgrade that a ship can make.
 	enum class Upgrade {
 		SHIP,
 
@@ -74,6 +77,8 @@ public:
 		MINE,
 		FIGHTER_DRONE
 	};
+
+	// An upgrade and whether it has been purchased for this ship.
 	struct PurchasableUpgrade {
 		Upgrade upgrade;
 		bool purchased;
@@ -81,13 +86,21 @@ public:
 		bool operator== (const PurchasableUpgrade& other) const;
 	};
 
+	// A template for an action to upgrade the ship.
+	// See Ship::Upgrade.
 	class UpgradeAction : public Action {
 	private:
 		const Upgrade upgrade;
+		static std::map<Upgrade, UpgradeAction*> allUpgradeActions;
+
+		UpgradeAction(const Upgrade& upgrade);
 
 	public:
-		UpgradeAction(const Upgrade upgrade) : upgrade(upgrade) {}
-		virtual void perform(Ship* ship) const;
+		// Memoised factory for upgrade actions.
+		static UpgradeAction* create(const Upgrade& upgrade);
+		static void deleteAll();
+
+		virtual void operator() (Ship& ship) const;
 	};
 
 private:

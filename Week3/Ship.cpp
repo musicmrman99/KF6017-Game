@@ -17,7 +17,7 @@ bool Ship::PurchasableUpgrade::operator==(const PurchasableUpgrade& other) const
     return upgrade == other.upgrade && purchased == other.purchased;
 }
 
-// A comparator for just the upgrade, ignoring whether it's purchased.
+// A comparator for just the upgrade of a purchasable upgrade, ignoring whether it's purchased.
 struct NestedUpgradeComparator {
     bool operator() (const Ship::PurchasableUpgrade& a, const Ship::PurchasableUpgrade& b) const {
         return a.upgrade == b.upgrade;
@@ -27,36 +27,51 @@ struct NestedUpgradeComparator {
 /* Actions
 -------------------------------------------------- */
 
-void Ship::MainThrustAction::perform(Ship* ship) const {
-    ship->accel += ship->rot * ship->engineThrust;
+Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
+    ship.accel += ship.rot * ship.engineThrust;
+};
+
+Ship::Action Ship::TURN_LEFT_THRUST = [](Ship& ship) {
+    ship.rotVel -= ship.rotateThrust;
+};
+
+Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
+    ship.rotVel += ship.rotateThrust;
+};
+
+Ship::UpgradeAction::UpgradeAction(const Upgrade& upgrade) : upgrade(upgrade) {}
+
+std::map<Ship::Upgrade, Ship::UpgradeAction*> Ship::UpgradeAction::allUpgradeActions = std::map<Ship::Upgrade, Ship::UpgradeAction*>();
+
+Ship::UpgradeAction* Ship::UpgradeAction::create(const Upgrade& upgrade) {
+    const std::map<Upgrade, UpgradeAction*>::iterator existingAction = allUpgradeActions.find(upgrade);
+    if (existingAction != allUpgradeActions.end()) {
+        return existingAction->second;
+    }
+
+    UpgradeAction* newAction = new UpgradeAction(upgrade);
+    allUpgradeActions.insert({ upgrade, newAction });
+    return newAction;
 }
 
-void Ship::TurnLeftThrustAction::perform(Ship* ship) const {
-    ship->rotVel -= ship->rotateThrust;
+void Ship::UpgradeAction::deleteAll() {
+    for (std::pair<const Upgrade, UpgradeAction*>& upgradeAction : allUpgradeActions) {
+        delete upgradeAction.second;
+        upgradeAction.second = nullptr;
+    }
+    allUpgradeActions.clear();
 }
 
-void Ship::TurnRightThrustAction::perform(Ship* ship) const {
-    ship->rotVel += ship->rotateThrust;
-}
-
-void Ship::UpgradeAction::perform(Ship* ship) const {
-    Node<PurchasableUpgrade>* parentUpgradeNode = findParentUpgrade(ship->upgradeTree, upgrade);
+void Ship::UpgradeAction::operator() (Ship& ship) const {
+    Node<PurchasableUpgrade>* parentUpgradeNode = findParentUpgrade(ship.upgradeTree, upgrade);
     if (parentUpgradeNode->getValue()->purchased) {
         Node<PurchasableUpgrade>* upgradeNode = findUpgrade(parentUpgradeNode, upgrade);
         upgradeNode->setValue(new PurchasableUpgrade{ upgrade, true });
     }
 }
 
-/* Lifecycle
+/* Utils
 -------------------------------------------------- */
-
-// Action Source
-
-void Ship::setActionSource(ActionSource<Action>* actionSource) {
-    this->actionSource = actionSource;
-}
-
-// Utils
 
 Node<Ship::PurchasableUpgrade>* Ship::addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade) {
     return parent->addChild(new PurchasableUpgrade{ upgrade, false });
@@ -86,6 +101,15 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent 
     return ret;
 }
 
+/* Lifecycle
+-------------------------------------------------- */
+
+// Action Source
+
+void Ship::setActionSource(ActionSource<Action>* actionSource) {
+    this->actionSource = actionSource;
+}
+
 // Lifecycle
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
@@ -98,7 +122,7 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     engineThrust = 0.1f;
     rotateThrust = 0.3f * RPS;
 
-    // Formatted the same as tree itself is structured for ease of reading
+    // Formatted the same as tree itself for ease of reading
     upgradeTree = new Tree<PurchasableUpgrade>(
         new PurchasableUpgrade{ Upgrade::SHIP, true }
     );
@@ -134,7 +158,7 @@ void Ship::beforeActions() {
 }
 void Ship::actions() {
     for (Action* action : actionSource->getActions()) {
-        action->perform(this);
+        (*action)(*this); // I know, it's ugly. But it's only one line.
     }
 }
 

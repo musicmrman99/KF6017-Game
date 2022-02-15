@@ -258,11 +258,11 @@ ErrorType Game::StartOfGame() {
 
     // Player Keymap
     playerKeymap = new KeyMap<Ship::Action>();
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new Ship::MainThrustAction());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustAction());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustAction());
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_O), new Ship::UpgradeAction(Ship::Upgrade::REAR_THRUSTERS));
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new Ship::UpgradeAction(Ship::Upgrade::FRONT_THRUSTERS));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), &Ship::MAIN_THRUST);
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), &Ship::TURN_LEFT_THRUST);
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), &Ship::TURN_RIGHT_THRUST);
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_O), Ship::UpgradeAction::create(Ship::Upgrade::REAR_THRUSTERS));
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), Ship::UpgradeAction::create(Ship::Upgrade::FRONT_THRUSTERS));
     player->setActionSource(playerKeymap);
 
     return SUCCESS;
@@ -278,6 +278,7 @@ ErrorType Game::EndOfGame() {
     // Game shutdown
     delete player;
     delete playerKeymap;
+    Ship::UpgradeAction::deleteAll(); // Now the keymap is gone, no other references to these should exist.
 
     return SUCCESS;
 }
