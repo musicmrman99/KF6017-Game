@@ -27,7 +27,7 @@ public:
     }
 
     // Implement ActionSource<Action>
-    virtual std::vector<Action*> getActions() {
+    virtual std::vector<Action*> getActions() const {
         std::vector<Action*> actions;
         for (std::pair<Control*, Action*> binding : map) {
             if (binding.first->isActive()) {
