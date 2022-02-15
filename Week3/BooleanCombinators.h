@@ -9,14 +9,10 @@ class None : public Combinator<Collection, bool> {
     {
         static Predicate predicate;
 
-        bool all = true;
         for (const auto& item : collection) {
-            if (predicate(item)) {
-                all = false;
-                break;
-            }
+            if (predicate(item)) return false;
         }
-        return all;
+        return true;
     }
 };
 
@@ -27,14 +23,10 @@ class Any : public Combinator<Collection, bool> {
     {
         static Predicate predicate;
 
-        bool some = false;
         for (const auto& item : collection) {
-            if (predicate(item)) {
-                some = true;
-                break;
-            }
+            if (predicate(item)) return true;
         }
-        return some;
+        return false;
     }
 };
 
@@ -64,14 +56,10 @@ class NotAll : public Combinator<Collection, bool> {
     {
         static Predicate predicate;
 
-        bool some = false;
         for (const auto& item : collection) {
-            if (!predicate(item)) {
-                some = true;
-                break;
-            }
+            if (!predicate(item)) return true;
         }
-        return some;
+        return false;
     }
 };
 
@@ -82,13 +70,9 @@ class All : public Combinator<Collection, bool> {
     {
         static Predicate predicate;
 
-        bool all = true;
         for (const auto& item : collection) {
-            if (!predicate(item)) {
-                all = false;
-                break;
-            }
+            if (!predicate(item)) return false;
         }
-        return all;
+        return true;
     }
 };
