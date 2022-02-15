@@ -27,6 +27,8 @@ struct NestedUpgradeComparator {
 /* Actions
 -------------------------------------------------- */
 
+// Movement Action
+
 Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
     ship.accel += ship.rot * ship.engineThrust;
 };
@@ -38,6 +40,8 @@ Ship::Action Ship::TURN_LEFT_THRUST = [](Ship& ship) {
 Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
     ship.rotVel += ship.rotateThrust;
 };
+
+// Upgrade Action
 
 Ship::UpgradeAction::UpgradeAction(const Upgrade& upgrade) : upgrade(upgrade) {}
 
@@ -64,7 +68,7 @@ void Ship::UpgradeAction::deleteAll() {
 
 void Ship::UpgradeAction::operator() (Ship& ship) const {
     Node<PurchasableUpgrade>* parentUpgradeNode = findParentUpgrade(ship.upgradeTree, upgrade);
-    if (parentUpgradeNode->getValue()->purchased) {
+    if (parentUpgradeNode && parentUpgradeNode->getValue()->purchased) {
         Node<PurchasableUpgrade>* upgradeNode = findUpgrade(parentUpgradeNode, upgrade);
         upgradeNode->setValue(new PurchasableUpgrade{ upgrade, true });
     }
