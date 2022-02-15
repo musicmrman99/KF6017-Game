@@ -116,20 +116,12 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent 
 /* Lifecycle
 -------------------------------------------------- */
 
-/* Action Source
--------------------- */
-
-void Ship::setActionSource(ActionSource<Action>* actionSource) {
-    this->actionSource = actionSource;
-}
-
 /* Lifecycle
 -------------------- */
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : physModel(NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f)),
     image(image),
-    actionSource(nullptr),
     upgradeTree(buildUpgradeTree()),
     engineThrust(0.1f),
     rotateThrust(0.01f * RPS) {
@@ -173,7 +165,7 @@ void Ship::beforeActions() {
     physModel.setRotAccel(0.0f);
 }
 void Ship::actions() {
-    for (Action* action : actionSource->getActions()) {
+    for (Action* action : actionSource().getActions()) {
         (*action)(*this); // I know, it's ugly. But it's only one line.
     }
 }

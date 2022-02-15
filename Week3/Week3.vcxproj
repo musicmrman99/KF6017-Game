@@ -165,6 +165,7 @@
     <ClInclude Include="Combinator.h" />
     <ClInclude Include="BooleanCombinators.h" />
     <ClInclude Include="Controls.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="KeyMap.h" />
     <ClInclude Include="MyDrawEngine.h" />
     <ClInclude Include="MyInputs.h" />

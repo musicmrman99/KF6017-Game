@@ -134,5 +134,8 @@
     <ClInclude Include="PhysModel.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

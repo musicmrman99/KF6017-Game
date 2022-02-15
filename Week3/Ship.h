@@ -8,11 +8,11 @@
 #include "MyDrawEngine.h"
 #include "MyInputs.h"
 
+#include "GameObject.h"
 #include "NewtonianPhysModel.h"
-
 #include "ActionSource.h"
 
-class Ship {
+class Ship : public GameObject<Ship> {
 public:
 	/*
 	Design Reasoning:
@@ -43,9 +43,6 @@ public:
 	Couple the Actions to the Ship class (rather than a particular instance) and require passing the Ship
 	to apply the Action to.
 	*/
-
-	// An action that can be applied to a ship.
-	using Action = const std::function<void (Ship& ship)>;
 
 	// Movement
 
@@ -109,9 +106,6 @@ private:
 	NewtonianPhysModel physModel; // Physical Representation
 	PictureIndex image;           // Graphical Representation
 
-	// Action Source
-	ActionSource<Action>* actionSource;
-
 	// Gameplay
 	Tree<PurchasableUpgrade>* upgradeTree;
 	
@@ -119,9 +113,6 @@ private:
 	float rotateThrust;
 
 public:
-	// Action Source
-	void setActionSource(ActionSource<Action>* actionSource);
-
 	// Utils
 	static Node<PurchasableUpgrade>* addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade);
 	static Node<PurchasableUpgrade>* findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
