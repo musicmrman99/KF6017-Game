@@ -75,6 +75,12 @@
     <ClCompile Include="NewtonianPhysModel.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="NoAI.cpp">
+      <Filter>Source Files\ActionSources</Filter>
+    </ClCompile>
+    <ClCompile Include="NoPhysModel.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -136,6 +142,15 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Derived.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="NoAI.h">
+      <Filter>Header Files\ActionSources</Filter>
+    </ClInclude>
+    <ClInclude Include="NoPhysModel.h">
+      <Filter>Header Files\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

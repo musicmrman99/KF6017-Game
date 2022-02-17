@@ -31,15 +31,15 @@ struct NestedUpgradeComparator {
 -------------------- */
 
 Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
-    ship.physModel.shiftAccel(ship.physModel.rot() * ship.engineThrust);
+    ship.physModel().shiftAccel(ship.physModel().rot() * ship.engineThrust);
 };
 
 Ship::Action Ship::TURN_LEFT_THRUST = [](Ship& ship) {
-    ship.physModel.shiftRotAccel(-ship.rotateThrust);
+    ship.physModel().shiftRotAccel(-ship.rotateThrust);
 };
 
 Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
-    ship.physModel.shiftRotAccel(ship.rotateThrust);
+    ship.physModel().shiftRotAccel(ship.rotateThrust);
 };
 
 /* Upgrade Action
@@ -120,11 +120,11 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent 
 -------------------- */
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
-    : physModel(NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f)),
-    image(image),
+    : image(image),
     upgradeTree(buildUpgradeTree()),
     engineThrust(0.1f),
     rotateThrust(0.01f * RPS) {
+    setPhysModel(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f));
 }
 
 Tree<Ship::PurchasableUpgrade>* Ship::buildUpgradeTree() {
@@ -161,8 +161,8 @@ Ship::~Ship() {
 }
 
 void Ship::beforeActions() {
-    physModel.setAccel(Vector2D(0.0f, 0.0f));
-    physModel.setRotAccel(0.0f);
+    physModel().setAccel(Vector2D(0.0f, 0.0f));
+    physModel().setRotAccel(0.0f);
 }
 void Ship::actions() {
     for (Action* action : actionSource().getActions()) {
@@ -172,13 +172,13 @@ void Ship::actions() {
 
 void Ship::beforePhys() {}
 void Ship::phys() {
-    physModel.run();
+    physModel().run();
 }
 
 void Ship::beforeDraw() {}
 void Ship::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-    graphics->DrawAt(physModel.pos(), image, 1.0f, physModel.rot().angle(), 0.0f);
+    graphics->DrawAt(physModel().pos(), image, 1.0f, physModel().rot().angle(), 0.0f);
     MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), strDump(upgradeTree).c_str(), MyDrawEngine::CYAN);
 }
 

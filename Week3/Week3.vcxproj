@@ -149,6 +149,8 @@
     <ClCompile Include="MyInputs.cpp" />
     <ClCompile Include="MySoundEngine.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
+    <ClCompile Include="NoAI.cpp" />
+    <ClCompile Include="NoPhysModel.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
@@ -158,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="ActionSource.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Derived.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="ErrorType.h" />
     <ClInclude Include="Game.h" />
@@ -171,7 +174,9 @@
     <ClInclude Include="MyInputs.h" />
     <ClInclude Include="MySoundEngine.h" />
     <ClInclude Include="NewtonianPhysModel.h" />
+    <ClInclude Include="NoAI.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="NoPhysModel.h" />
     <ClInclude Include="PhysModel.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />

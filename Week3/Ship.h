@@ -12,7 +12,7 @@
 #include "NewtonianPhysModel.h"
 #include "ActionSource.h"
 
-class Ship : public GameObject<Ship> {
+class Ship : public GameObject<Ship, NewtonianPhysModel> {
 public:
 	/*
 	Design Reasoning:
@@ -43,7 +43,7 @@ public:
 	Couple the Actions to the Ship class (rather than a particular instance) and require passing the Ship
 	to apply the Action to.
 	*/
-
+	
 	// Movement
 
 	static Action MAIN_THRUST;
@@ -103,7 +103,6 @@ public:
 	};
 
 private:
-	NewtonianPhysModel physModel; // Physical Representation
 	PictureIndex image;           // Graphical Representation
 
 	// Gameplay
