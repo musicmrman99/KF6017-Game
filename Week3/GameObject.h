@@ -28,10 +28,7 @@ public:
 
     GameObject() : GameObject(new NoAI<Action>(), new TPhysModel()) {}
 
-    virtual ~GameObject() {
-        delete _actionSource;
-        delete _physModel;
-    }
+    virtual ~GameObject() {}
 
     virtual ActionSource<Action>& actionSource() { return *_actionSource; }
     virtual TPhysModel& physModel() { return *_physModel; }
