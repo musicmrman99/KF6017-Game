@@ -30,8 +30,8 @@ public:
 
     virtual ~GameObject() {}
 
-    virtual ActionSource<Action>& actionSource() { return *_actionSource; }
-    virtual TPhysModel& physModel() { return *_physModel; }
+    ActionSource<Action>& actionSource() { return *_actionSource; }
+    TPhysModel& physModel() { return *_physModel; }
 
     void setActionSource(ActionSource<Action>* actionSource) {
         if (actionSource) _actionSource = actionSource;
