@@ -251,7 +251,7 @@ ErrorType Game::StartOfGame() {
     // Game setup
 
     // Player Keymap
-    playerKeymap = new KeyMap<Ship::Action>();
+    playerKeymap = std::shared_ptr<KeyMap<Ship::Action>>(new KeyMap<Ship::Action>());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), &Ship::MAIN_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), &Ship::TURN_LEFT_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), &Ship::TURN_RIGHT_THRUST);
@@ -275,7 +275,6 @@ ErrorType Game::StartOfGame() {
 ErrorType Game::EndOfGame() {
     // Game shutdown
     delete player;
-    delete playerKeymap;
     Ship::UpgradeAction::deleteAll(); // Now the keymap is gone, no other references to these should exist.
 
     return SUCCESS;

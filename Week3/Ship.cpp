@@ -120,11 +120,14 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent 
 -------------------- */
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
-    : image(image),
+    : GameObject(
+        std::shared_ptr<NoAI<Action>>(new NoAI<Action>()),
+        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+    ),
+    image(image),
     upgradeTree(buildUpgradeTree()),
     engineThrust(0.1f),
     rotateThrust(0.01f * RPS) {
-    setPhysModel(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f));
 }
 
 Tree<Ship::PurchasableUpgrade>* Ship::buildUpgradeTree() {

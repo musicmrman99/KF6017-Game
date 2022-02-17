@@ -7,6 +7,7 @@
 #pragma once
 
 #include <windows.h>
+#include <memory>
 
 #include "ErrorType.h"
 #include "MyDrawEngine.h"
@@ -38,7 +39,7 @@ private:
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
-	KeyMap<Ship::Action>* playerKeymap;
+	std::shared_ptr<KeyMap<Ship::Action>> playerKeymap;
 	Ship* player;
 
 	// Disable:

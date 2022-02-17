@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 
 #include "Derived.h"
 
@@ -17,26 +18,25 @@ public:
     using Action = const std::function<void(T& gameObject)>;
 
 private:
-    ActionSource<Action>* _actionSource;
-    Derived<TPhysModel, PhysModel>* _physModel;
+    std::shared_ptr<ActionSource<Action>> _actionSource;
+    std::shared_ptr<Derived<TPhysModel, PhysModel>> _physModel;
 
 public:
-    GameObject(ActionSource<Action>* actionSource, TPhysModel* physModel) {
+    // You must give an actual actionSource and TPhysModel
+    GameObject(std::shared_ptr<ActionSource<Action>> actionSource, std::shared_ptr<TPhysModel> physModel) {
         setActionSource(actionSource);
         setPhysModel(physModel);
     }
-
-    GameObject() : GameObject(new NoAI<Action>(), new TPhysModel()) {}
 
     virtual ~GameObject() {}
 
     ActionSource<Action>& actionSource() { return *_actionSource; }
     TPhysModel& physModel() { return *_physModel; }
 
-    void setActionSource(ActionSource<Action>* actionSource) {
+    void setActionSource(std::shared_ptr<ActionSource<Action>> actionSource) {
         if (actionSource) _actionSource = actionSource;
     }
-    void setPhysModel(TPhysModel* physModel) {
+    void setPhysModel(std::shared_ptr<TPhysModel> physModel) {
         if (physModel) _physModel = physModel;
     }
 };
