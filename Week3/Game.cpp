@@ -250,17 +250,17 @@ ErrorType Game::StartOfGame() {
 
     // Game setup
 
-    // Player
-    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-    Vector2D playerPosition(0.0f, 0.0f);
-    Vector2D playerRotation(0.0f, 1.0f);
-    player = new Ship(playerPosition, playerRotation, playerSprite);
-
     // Player Keymap
     playerKeymap = new KeyMap<Ship::Action>();
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), &Ship::MAIN_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), &Ship::TURN_LEFT_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), &Ship::TURN_RIGHT_THRUST);
+
+    // Player
+    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
+    Vector2D playerPosition(0.0f, 0.0f);
+    Vector2D playerRotation(0.0f, 1.0f);
+    player = new Ship(playerPosition, playerRotation, playerSprite);
     player->setActionSource(playerKeymap);
 
     return SUCCESS;
