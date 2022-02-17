@@ -6,4 +6,5 @@ template <class Action>
 class ActionSource {
 public:
     virtual std::vector<Action*> getActions() const = 0;
+    virtual ~ActionSource() {};
 };
