@@ -16,8 +16,7 @@
 Game::Game() :
     m_currentState(GameState::MENU),
     m_menuOption(0),
-    player(nullptr),
-    playerKeymap(nullptr) {
+    player(nullptr) {
 }
 Game::~Game() {}
 
@@ -250,17 +249,21 @@ ErrorType Game::StartOfGame() {
 
     // Game setup
 
+    // Load Resources
+    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
+
     // Player Keymap
-    playerKeymap = std::shared_ptr<KeyMap<Ship::Action>>(new KeyMap<Ship::Action>());
+    std::shared_ptr<KeyMap<Ship::Action>> playerKeymap = std::shared_ptr<KeyMap<Ship::Action>>(new KeyMap<Ship::Action>());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), &Ship::MAIN_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), &Ship::TURN_LEFT_THRUST);
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), &Ship::TURN_RIGHT_THRUST);
 
     // Player
-    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-    Vector2D playerPosition(0.0f, 0.0f);
-    Vector2D playerRotation(0.0f, 1.0f);
-    player = std::unique_ptr<Ship>(new Ship(playerPosition, playerRotation, playerSprite));
+    player = std::unique_ptr<Ship>(new Ship(
+        Vector2D(0.0f, 0.0f), // Centre of the world
+        Vector2D(0.0f, 1.0f), // Facing up
+        playerSprite
+    ));
     player->setActionSource(playerKeymap);
 
     return SUCCESS;
@@ -273,9 +276,6 @@ ErrorType Game::StartOfGame() {
  * This will be used by the gameplay programmer to clean up.
  */
 ErrorType Game::EndOfGame() {
-    // Game shutdown
-    Ship::UpgradeAction::deleteAll(); // Now the keymap is gone, no other references to these should exist.
-
     return SUCCESS;
 }
 

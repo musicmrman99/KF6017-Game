@@ -39,7 +39,6 @@ private:
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
-	std::shared_ptr<KeyMap<Ship::Action>> playerKeymap;
 	std::unique_ptr<Ship> player;
 
 	// Disable:
