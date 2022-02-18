@@ -260,7 +260,7 @@ ErrorType Game::StartOfGame() {
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
     Vector2D playerPosition(0.0f, 0.0f);
     Vector2D playerRotation(0.0f, 1.0f);
-    player = new Ship(playerPosition, playerRotation, playerSprite);
+    player = std::unique_ptr<Ship>(new Ship(playerPosition, playerRotation, playerSprite));
     player->setActionSource(playerKeymap);
 
     return SUCCESS;
@@ -274,7 +274,6 @@ ErrorType Game::StartOfGame() {
  */
 ErrorType Game::EndOfGame() {
     // Game shutdown
-    delete player;
     Ship::UpgradeAction::deleteAll(); // Now the keymap is gone, no other references to these should exist.
 
     return SUCCESS;

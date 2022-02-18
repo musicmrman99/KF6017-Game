@@ -40,7 +40,7 @@ private:
 	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
 	std::shared_ptr<KeyMap<Ship::Action>> playerKeymap;
-	Ship* player;
+	std::unique_ptr<Ship> player;
 
 	// Disable:
 	Game();            // no-arg constructor
