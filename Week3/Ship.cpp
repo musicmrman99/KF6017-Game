@@ -49,27 +49,18 @@ Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
 Ship::UpgradeAction::UpgradeAction(const Upgrade& upgrade) : upgrade(upgrade) {}
 
 // The set of all UpgradeActions.
-std::map<Ship::Upgrade, Ship::UpgradeAction*> Ship::UpgradeAction::allUpgradeActions = std::map<Ship::Upgrade, Ship::UpgradeAction*>();
+std::map<Ship::Upgrade, std::shared_ptr<Ship::UpgradeAction>> Ship::UpgradeAction::allUpgradeActions = std::map<Ship::Upgrade, std::shared_ptr<Ship::UpgradeAction>>();
 
-// Create an action to purchase the given upgrade. Memoised.
-Ship::UpgradeAction* Ship::UpgradeAction::create(const Upgrade& upgrade) {
-    const std::map<Upgrade, UpgradeAction*>::iterator existingAction = allUpgradeActions.find(upgrade);
+// Create an action to purchase the given upgrade. Memoised / strong-cached.
+std::shared_ptr<Ship::UpgradeAction> Ship::UpgradeAction::create(const Upgrade& upgrade) {
+    const std::map<Upgrade, std::shared_ptr<Ship::UpgradeAction>>::iterator existingAction = allUpgradeActions.find(upgrade);
     if (existingAction != allUpgradeActions.end()) {
         return existingAction->second;
     }
 
-    UpgradeAction* newAction = new UpgradeAction(upgrade);
+    std::shared_ptr<Ship::UpgradeAction> newAction = std::shared_ptr<Ship::UpgradeAction>(new UpgradeAction(upgrade));
     allUpgradeActions.insert({ upgrade, newAction });
     return newAction;
-}
-
-// Delete all UpgradeAction instances.
-void Ship::UpgradeAction::deleteAll() {
-    for (std::pair<const Upgrade, UpgradeAction*>& upgradeAction : allUpgradeActions) {
-        delete upgradeAction.second;
-        upgradeAction.second = nullptr;
-    }
-    allUpgradeActions.clear();
 }
 
 // Try to add the upgrade this action is for.

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <map>
+#include <memory>
 
 #include "Node.h"
 
@@ -90,15 +91,15 @@ public:
 	class UpgradeAction : public Action {
 	private:
 		const Upgrade upgrade;
-		static std::map<Upgrade, UpgradeAction*> allUpgradeActions;
+		static std::map<Upgrade, std::shared_ptr<Ship::UpgradeAction>> allUpgradeActions;
 
 		UpgradeAction(const Upgrade& upgrade);
 
 	public:
 		// Memoised factory for upgrade actions.
-		static UpgradeAction* create(const Upgrade& upgrade);
-		static void deleteAll();
+		static std::shared_ptr<Ship::UpgradeAction> create(const Upgrade& upgrade);
 
+		// Attempt to purchase this upgrade for the given ship.
 		virtual void operator() (Ship& ship) const;
 	};
 
