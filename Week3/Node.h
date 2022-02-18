@@ -41,12 +41,18 @@ public:
     template <class C = std::equal_to<T>>
     Node<T>* find(const T* value) {
         static C comparator;
+
+        // Base case
         if (comparator(*this->value, *value)) return this;
+
+        // Recursive case
         Node<T>* found;
         for (Node<T>* node : children) {
             found = node->find(value);
             if (found) return found;
         }
+
+        // Not found in this branch
         return nullptr;
     }
 
@@ -58,12 +64,18 @@ public:
     template <class C = std::equal_to<T>>
     Node<T>* findParent(const T* value, Node<T>* parent) {
         static C comparator;
+
+        // Base case
         if (comparator(*this->value, *value)) return parent;
+
+        // Recursive case
         Node<T>* found;
         for (Node<T>* node : children) {
             found = node->findParent(value, this);
             if (found) return found;
         }
+
+        // Not found in this branch
         return nullptr;
     }
 
