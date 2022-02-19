@@ -168,6 +168,8 @@ Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
     return upgradeTree;
 }
 
+Ship::~Ship() {}
+
 void Ship::beforeActions() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
@@ -178,16 +180,12 @@ void Ship::actions() {
     }
 }
 
-void Ship::beforePhys() {}
 void Ship::phys() {
     physModel().run();
 }
 
-void Ship::beforeDraw() {}
 void Ship::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
     graphics->DrawAt(physModel().pos(), image, 1.0f, physModel().rot().angle(), 0.0f);
     MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), strDump(upgradeTree).c_str(), MyDrawEngine::CYAN);
 }
-
-void Ship::afterFrame() {}

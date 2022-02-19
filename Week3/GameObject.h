@@ -39,4 +39,15 @@ public:
     void setPhysModel(std::shared_ptr<TPhysModel> physModel) {
         if (physModel) _physModel = physModel;
     }
+
+    virtual void beforeActions() {};
+    virtual void actions() {};
+
+    virtual void beforePhys() {};
+    virtual void phys() {};
+
+    virtual void beforeDraw() {};
+    virtual void draw() {};
+
+    virtual void afterFrame() {};
 };

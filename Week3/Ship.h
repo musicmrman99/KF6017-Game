@@ -122,15 +122,10 @@ public:
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
 	static Node<Ship::PurchasableUpgrade>::NodePtr buildUpgradeTree();
+	~Ship();
 
-	void beforeActions();
-	void actions();
-
-	void beforePhys();
-	void phys();
-
-	void beforeDraw();
-	void draw();
-
-	void afterFrame();
+	virtual void beforeActions() override;
+	virtual void actions() override;
+	virtual void phys() override;
+	virtual void draw() override;
 };
