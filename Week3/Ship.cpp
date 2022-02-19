@@ -65,42 +65,61 @@ std::shared_ptr<Ship::UpgradeAction> Ship::UpgradeAction::create(const Upgrade& 
 
 // Try to add the upgrade this action is for.
 void Ship::UpgradeAction::operator() (Ship& ship) const {
-    // Warning: Assumes all declared upgrades (in Ship::Upgrade) are in the tree
-    Node<PurchasableUpgrade>* parentUpgradeNode = findParentUpgrade(ship.upgradeTree, upgrade);
-    if (!parentUpgradeNode || parentUpgradeNode->getValue()->purchased) {
-        Node<PurchasableUpgrade>* upgradeNode = findUpgrade(parentUpgradeNode, upgrade);
-        upgradeNode->setValue(new PurchasableUpgrade{ upgrade, true });
+    // Get upgrade
+    std::optional<Node<PurchasableUpgrade>::NodePtr> maybeUpgradeNode = findUpgrade(ship.upgradeTree, upgrade);
+    if (!maybeUpgradeNode) return; // Cannot purchase upgrade not in the tree
+    Node<PurchasableUpgrade>::NodePtr upgradeNode = maybeUpgradeNode.value();
+
+    // Check parent
+    bool canPurchase = false;
+    std::optional<Node<PurchasableUpgrade>::NodePtr> parentUpgradeNode = findParentUpgrade(ship.upgradeTree, upgrade);
+    // Note: parentUpgradeNode != std::nullopt, as we know the node exists.
+    if (
+        parentUpgradeNode.value() &&                      // If there is a parent node (you can always purchase the root node, which has no parent)
+        !parentUpgradeNode.value()->getValue()->purchased // Parent node isn't yet purchased
+    ) {
+        return; // Cannot purchase upgrade with unmet dependencies
     }
+
+    // Purchase upgrade
+    upgradeNode->getValue()->purchased = true;
 }
 
 /* Utils
 -------------------------------------------------- */
 
-Node<Ship::PurchasableUpgrade>* Ship::addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade) {
+Node<Ship::PurchasableUpgrade>::NodePtr Ship::addUpgrade(Node<PurchasableUpgrade>::NodePtr parent, Upgrade upgrade) {
     return parent->addChild(new PurchasableUpgrade{ upgrade, false });
 }
 
-Node<Ship::PurchasableUpgrade>* Ship::findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade) {
-    PurchasableUpgrade wrapUpgrade{ upgrade, false }; // false is ignored
-    return root->find<NestedUpgradeComparator>(&wrapUpgrade);
+std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade) {
+    return root->find<NestedUpgradeComparator>(new PurchasableUpgrade{ upgrade, false });
 }
 
-Node<Ship::PurchasableUpgrade>* Ship::findParentUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade) {
-    PurchasableUpgrade wrapUpgrade{ upgrade, false }; // false is ignored
-    return root->findParent<NestedUpgradeComparator>(&wrapUpgrade);
+std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findParentUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade) {
+    return root->findParent<NestedUpgradeComparator>(new PurchasableUpgrade{ upgrade, false }); // false is ignored
 }
 
-std::wstring Ship::strDump(Node<PurchasableUpgrade>* node = nullptr, int indent = 0) const {
+std::wstring Ship::strDump(Node<PurchasableUpgrade>::NodePtr node = nullptr, int indent = 0) const {
     if (!node) node = upgradeTree;
 
-    std::wstring ret = std::to_wstring((int)node->getValue()->upgrade) + L" - " + std::to_wstring(node->getValue()->purchased) + L" {";
+    // Open
+    std::wstring upgradeName = std::to_wstring((int)node->getValue()->upgrade);
+    std::wstring purchased = node->getValue()->purchased ? L"Purchased" : L"Not Purchased";
+    std::wstring ret = upgradeName + L" (" + purchased + L") {";
+
+    // Children
     auto children = node->getChildren();
     if (!children.empty()) ret += L"\n";
-    for (Node<PurchasableUpgrade>* subNode : children) {
+    for (const Node<PurchasableUpgrade>::NodePtr& subNode : children) {
         ret += strDump(subNode);
     }
     if (!children.empty()) ret += L"\n";
+
+    // Close
     ret += L"},\n";
+
+    // Return
     return ret;
 }
 
@@ -121,9 +140,9 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     rotateThrust(0.01f * RPS) {
 }
 
-Tree<Ship::PurchasableUpgrade>* Ship::buildUpgradeTree() {
+Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
-    Tree<Ship::PurchasableUpgrade>* upgradeTree = new Tree<PurchasableUpgrade>(
+    auto upgradeTree = Node<PurchasableUpgrade>::create(
         new PurchasableUpgrade{ Upgrade::SHIP, true }
     );
     auto loadOptimisation = addUpgrade(upgradeTree, Upgrade::LOAD_OPTIMISATION);
@@ -147,11 +166,6 @@ Tree<Ship::PurchasableUpgrade>* Ship::buildUpgradeTree() {
             addUpgrade(mine, Upgrade::FIGHTER_DRONE);
 
     return upgradeTree;
-}
-
-Ship::~Ship() {
-    delete upgradeTree;
-    upgradeTree = nullptr;
 }
 
 void Ship::beforeActions() {

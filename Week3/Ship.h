@@ -107,22 +107,21 @@ private:
 	PictureIndex image;           // Graphical Representation
 
 	// Gameplay
-	Tree<PurchasableUpgrade>* upgradeTree;
+	Node<PurchasableUpgrade>::NodePtr upgradeTree;
 	
 	float engineThrust;
 	float rotateThrust;
 
 public:
 	// Utils
-	static Node<PurchasableUpgrade>* addUpgrade(Node<PurchasableUpgrade>* parent, Upgrade upgrade);
-	static Node<PurchasableUpgrade>* findUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
-	static Node<PurchasableUpgrade>* findParentUpgrade(Node<PurchasableUpgrade>* root, Upgrade upgrade);
-	std::wstring strDump(Node<PurchasableUpgrade>* node, int indent) const;
+	static Node<PurchasableUpgrade>::NodePtr addUpgrade(Node<PurchasableUpgrade>::NodePtr parent, Upgrade upgrade);
+	static std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> findUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade);
+	static std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> findParentUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade);
+	std::wstring strDump(Node<PurchasableUpgrade>::NodePtr node, int indent) const;
 
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
-	~Ship();
-	static Tree<Ship::PurchasableUpgrade>* buildUpgradeTree();
+	static Node<Ship::PurchasableUpgrade>::NodePtr buildUpgradeTree();
 
 	void beforeActions();
 	void actions();
