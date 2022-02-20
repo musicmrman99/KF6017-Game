@@ -1,8 +1,5 @@
 #pragma once
 
-//#define NDEBUG
-#include <cassert>
-
 #include <vector>
 #include <functional>
 #include <optional>
@@ -119,21 +116,20 @@ public:
     static std::optional<NodePtr> find(const NodePtr& root, const ValuePtr& value) {
         static C comparator;
 
-        // Cannot find in NodePtr(nullptr)
-        assert(root);
+        if (root) {
+            // Base case - found
+            if (
+                !root->value && !value ||
+                root->value && value && comparator(*root->value, *value)
+                ) {
+                return root; // Copy up to N (= depth of tree) times
+            }
 
-        // Base case - found
-        if (
-            !root->value && !value ||
-            root->value && value && comparator(*root->value, *value)
-            ) {
-            return root; // Copy up to N (= depth of tree) times
-        }
-
-        // Recursive case
-        for (const NodePtr& node : root->children) {
-            const std::optional<NodePtr>& found = find(node, value);
-            if (found) return found;
+            // Recursive case
+            for (const NodePtr& node : root->children) {
+                const std::optional<NodePtr>& found = find(node, value);
+                if (found) return found;
+            }
         }
 
         // Base case - not found (in this branch of the tree)
@@ -157,21 +153,20 @@ private:
     static std::optional<NodePtr> findParent(const NodePtr& root, const ValuePtr& value, const NodePtr& parent) {
         static C comparator;
 
-        // Cannot find in NodePtr(nullptr)
-        assert(root);
+        if (root) {
+            // Base case - found
+            if (
+                !root->value && !value ||
+                root->value && value && comparator(*root->value, *value)
+                ) {
+                return parent;
+            }
 
-        // Base case - found
-        if (
-            !root->value && !value ||
-            root->value && value && comparator(*root->value, *value)
-            ) {
-            return parent;
-        }
-
-        // Recursive case
-        for (const NodePtr& node : root->children) {
-            const std::optional<NodePtr>& found = findParent(node, value, root);
-            if (found) return found;
+            // Recursive case
+            for (const NodePtr& node : root->children) {
+                const std::optional<NodePtr>& found = findParent(node, value, root);
+                if (found) return found;
+            }
         }
 
         // Base case - not found (in this branch of the tree)
