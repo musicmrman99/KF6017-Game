@@ -93,11 +93,11 @@ Node<Ship::PurchasableUpgrade>::NodePtr Ship::addUpgrade(Node<PurchasableUpgrade
 }
 
 std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade) {
-    return root->find<NestedUpgradeComparator>(new PurchasableUpgrade{ upgrade, false });
+    return Node<PurchasableUpgrade>::find<NestedUpgradeComparator>(root, new PurchasableUpgrade{ upgrade, false });
 }
 
 std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findParentUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade) {
-    return root->findParent<NestedUpgradeComparator>(new PurchasableUpgrade{ upgrade, false }); // false is ignored
+    return Node<PurchasableUpgrade>::findParent<NestedUpgradeComparator>(root, new PurchasableUpgrade{ upgrade, false }); // false is ignored
 }
 
 std::wstring Ship::strDump(Node<PurchasableUpgrade>::NodePtr node = nullptr, int indent = 0) const {
