@@ -47,10 +47,21 @@ public:
     -------------------- */
 
     virtual void beforeActions() {};
-    virtual void actions() {};
+    void actions() {
+        static std::queue<Event> events;
+
+        controller().emit(events);
+        while (!events.empty()) {
+            const Event& event = events.front();
+            handle(event);
+            events.pop();
+        }
+    }
 
     virtual void beforePhys() {};
-    virtual void phys() {};
+    void phys() {
+        physModel().run();
+    }
 
     virtual void beforeDraw() {};
     virtual void draw() {};

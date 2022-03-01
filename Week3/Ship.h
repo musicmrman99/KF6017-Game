@@ -102,7 +102,5 @@ public:
 	virtual void handle(const Event& e) override;
 
 	virtual void beforeActions() override;
-	virtual void actions() override;
-	virtual void phys() override;
 	virtual void draw() override;
 };

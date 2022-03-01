@@ -189,21 +189,6 @@ void Ship::beforeActions() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
 }
-void Ship::actions() {
-    static std::queue<Event> events;
-
-    controller().emit(events);
-    while (!events.empty()) {
-        const Event& event = events.front();
-        handle(event);
-        events.pop();
-    }
-}
-
-void Ship::phys() {
-    physModel().run();
-}
-
 void Ship::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
     graphics->DrawAt(physModel().pos(), image, 1.0f, physModel().rot().angle(), 0.0f);
