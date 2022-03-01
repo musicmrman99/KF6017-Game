@@ -30,53 +30,60 @@ struct NestedUpgradeComparator {
 /* Movement Actions
 -------------------- */
 
-Ship::Action Ship::MAIN_THRUST = [](Ship& ship) {
-    ship.physModel().shiftAccel(ship.physModel().rot() * ship.engineThrust);
+const EventTypePtr Ship::MAIN_THRUST = EventTypeManager::create()->getValue();
+const EventTypePtr Ship::TURN_LEFT_THRUST = EventTypeManager::create()->getValue();
+const EventTypePtr Ship::TURN_RIGHT_THRUST = EventTypeManager::create()->getValue();
+
+void Ship::mainThrust() {
+    physModel().shiftAccel(physModel().rot() * engineThrust);
 };
 
-Ship::Action Ship::TURN_LEFT_THRUST = [](Ship& ship) {
-    ship.physModel().shiftRotAccel(-ship.rotateThrust);
+void Ship::turnLeftThrust() {
+    physModel().shiftRotAccel(-rotateThrust);
 };
 
-Ship::Action Ship::TURN_RIGHT_THRUST = [](Ship& ship) {
-    ship.physModel().shiftRotAccel(ship.rotateThrust);
+void Ship::turnRightThrust() {
+    physModel().shiftRotAccel(rotateThrust);
 };
 
-/* Upgrade Action
+/* Upgrade Action (and Event Type)
 -------------------- */
 
-// Create an action to purchase the given upgrade.
-Ship::UpgradeAction::UpgradeAction(const Upgrade& upgrade) : upgrade(upgrade) {}
+const EventTypePtr Ship::UPGRADE = EventTypeManager::create()->getValue();
 
-// The set of all UpgradeActions.
-std::map<Ship::Upgrade, std::shared_ptr<Ship::UpgradeAction>> Ship::UpgradeAction::allUpgradeActions = std::map<Ship::Upgrade, std::shared_ptr<Ship::UpgradeAction>>();
+Ship::UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
 
-// Create an action to purchase the given upgrade. Memoised / strong-cached.
-std::shared_ptr<Ship::UpgradeAction> Ship::UpgradeAction::create(const Upgrade& upgrade) {
-    const std::map<Upgrade, std::shared_ptr<Ship::UpgradeAction>>::iterator existingAction = allUpgradeActions.find(upgrade);
-    if (existingAction != allUpgradeActions.end()) {
-        return existingAction->second;
+// Create an event type for purchasing the given upgrade. Memoised / strong-cached.
+const EventTypePtr& Ship::UpgradeEventType::get(const Upgrade& upgrade) {
+    // The set of all UpgradeEventTypes
+    static std::map<Upgrade, const EventTypePtr> allUpgradeEventTypes = std::map<Upgrade, const EventTypePtr>();
+
+    // If exists, return
+    const std::map<Upgrade, const EventTypePtr>::iterator existingEventType = allUpgradeEventTypes.find(upgrade);
+    if (existingEventType != allUpgradeEventTypes.end()) {
+        return existingEventType->second;
     }
 
-    std::shared_ptr<Ship::UpgradeAction> newAction = std::shared_ptr<Ship::UpgradeAction>(new UpgradeAction(upgrade));
-    allUpgradeActions.insert({ upgrade, newAction });
-    return newAction;
+    // If not, create and return
+    EventTypePtr newAction = EventTypeManager::create()->getValue();
+    allUpgradeEventTypes.insert({ upgrade, newAction });
+    return allUpgradeEventTypes.find(upgrade)->second; // Return a reference to the one in the full list, not the one on the stack
 }
 
 // Try to add the upgrade this action is for.
-void Ship::UpgradeAction::operator() (Ship& ship) const {
+void Ship::purchaseUpgrade(const Upgrade& upgrade) {
     // Get upgrade
-    std::optional<Node<PurchasableUpgrade>::NodePtr> maybeUpgradeNode = findUpgrade(ship.upgradeTree, upgrade);
+    std::optional<Node<PurchasableUpgrade>::NodePtr> maybeUpgradeNode = findUpgrade(upgradeTree, upgrade);
     if (!maybeUpgradeNode) return; // Cannot purchase upgrade not in the tree
     Node<PurchasableUpgrade>::NodePtr upgradeNode = maybeUpgradeNode.value();
 
     // Check parent
     bool canPurchase = false;
-    std::optional<Node<PurchasableUpgrade>::NodePtr> parentUpgradeNode = findParentUpgrade(ship.upgradeTree, upgrade);
+    std::optional<Node<PurchasableUpgrade>::NodePtr> parentUpgradeNode = findParentUpgrade(upgradeTree, upgrade);
     // Note: parentUpgradeNode != std::nullopt, as we know the node exists.
     if (
         parentUpgradeNode.value() &&                      // If there is a parent node (you can always purchase the root node, which has no parent)
-        !parentUpgradeNode.value()->getValue()->purchased // Parent node isn't yet purchased
+        !parentUpgradeNode.value()->getValue()->purchased // and it isn't yet purchased
     ) {
         return; // Cannot purchase upgrade with unmet dependencies
     }
@@ -131,7 +138,7 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>::NodePtr node = nullptr, int
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : GameObject(
-        std::shared_ptr<NoAI<Action>>(new NoAI<Action>()),
+        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
         std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
     ),
     image(image),
@@ -170,13 +177,26 @@ Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
 
 Ship::~Ship() {}
 
+void Ship::handle(const Event& e) {
+         if (EventTypeManager::isOfType(e.type, MAIN_THRUST)) mainThrust();
+    else if (EventTypeManager::isOfType(e.type, TURN_LEFT_THRUST)) turnLeftThrust();
+    else if (EventTypeManager::isOfType(e.type, TURN_RIGHT_THRUST)) turnRightThrust();
+    
+    else if (EventTypeManager::isOfType(e.type, UPGRADE)) purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
+}
+
 void Ship::beforeActions() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
 }
 void Ship::actions() {
-    for (Action* action : actionSource().getActions()) {
-        (*action)(*this); // I know, it's ugly. But it's only one line.
+    static std::queue<Event> events;
+
+    controller().emit(events);
+    while (!events.empty()) {
+        const Event& event = events.front();
+        handle(event);
+        events.pop();
     }
 }
 

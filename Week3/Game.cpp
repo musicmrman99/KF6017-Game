@@ -253,10 +253,10 @@ ErrorType Game::StartOfGame() {
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
 
     // Player Keymap
-    std::shared_ptr<KeyMap<Ship::Action>> playerKeymap = std::shared_ptr<KeyMap<Ship::Action>>(new KeyMap<Ship::Action>());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), &Ship::MAIN_THRUST);
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), &Ship::TURN_LEFT_THRUST);
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), &Ship::TURN_RIGHT_THRUST);
+    std::shared_ptr<KeyMap> playerKeymap = std::shared_ptr<KeyMap>(new KeyMap());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicEventEmitter(Ship::MAIN_THRUST));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicEventEmitter(Ship::TURN_LEFT_THRUST));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
 
     // Player
     player = std::unique_ptr<Ship>(new Ship(
@@ -264,7 +264,7 @@ ErrorType Game::StartOfGame() {
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite
     ));
-    player->setActionSource(playerKeymap);
+    player->setController(playerKeymap);
 
     return SUCCESS;
 }

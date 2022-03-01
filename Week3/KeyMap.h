@@ -2,43 +2,40 @@
 
 #include <vector>
 
-#include "ActionSource.h"
+#include "Event.h"
 #include "Controls.h"
 
 /*
- * Maps Controls to the given type of Actionsand collates which actions should be
- * run on each frame on whichever actor(s) this KeyMap is set as the ActionSource for.
+ * Maps Controls to the given type of Events and collates which actions should be
+ * run on each frame on whichever actor(s) this KeyMap is set as the EventEmitter for.
  */
-template <class Action>
-class KeyMap : public ActionSource<Action> {
+class KeyMap : public EventEmitter {
 private:
     // Controls are held/iterated in insertion order,
     // which may impact the order of actions.
-    std::vector<std::pair<Control*, Action*>> map;
+    std::vector<std::pair<Control*, EventEmitter*>> map;
 
 public:
     KeyMap() {}
     ~KeyMap() {
-        for (std::pair<Control*, Action*> mapping : map) {
+        for (std::pair<Control*, EventEmitter*> mapping : map) {
             if (mapping.first) {
                 delete mapping.first;
             }
         }
     }
 
-    // Implement ActionSource<Action>
-    virtual std::vector<Action*> getActions() const {
-        std::vector<Action*> actions;
-        for (std::pair<Control*, Action*> binding : map) {
+    // Implement EventEmitter
+    virtual void emit(std::queue<Event>& events) override {
+        for (std::pair<Control*, EventEmitter*> binding : map) {
             if (binding.first->isActive()) {
-                actions.push_back(binding.second);
+                binding.second->emit(events);
             }
         }
-        return actions;
     }
 
     // Bind
-    void bind(Control* control, Action* action) {
-        map.push_back(std::pair<Control*, Action*>(control, action));
+    void bind(Control* control, EventEmitter* action) {
+        map.push_back(std::pair<Control*, EventEmitter*>(control, action));
     }
 };

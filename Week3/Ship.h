@@ -11,45 +11,18 @@
 
 #include "GameObject.h"
 #include "NewtonianPhysModel.h"
-#include "ActionSource.h"
+#include "Event.h"
 
-class Ship : public GameObject<Ship, NewtonianPhysModel> {
+class Ship : public GameObject<NewtonianPhysModel> {
 public:
-	/*
-	Design Reasoning:
-
-	An ActionSource provides Actions of a type (Ship::Action) that is appropriate for this type (Ship).
-	Each instance of this type (Ship) requests Actions (Ship::Actions) from its source, which provides
-	those Actions without any knowledge of which object it is providing them to.
-	
-	Constraint: Actions must be parameterisable (eg. for purchasing a particular upgrade).
-
-	This class could provide its supported actions (to be bound to a KeyMap/AI elsewhere) either as data
-	(and define methods that correspond to each action), or as executable code. These would mean either
-	defining Action as a class (as enums don't support the parameters / the command pattern), or as a
-	polymorphic function type.
-	
-	If defined as data, Ship would have to parse the type of each action requested and manually dispatch
-	to the right method based on the data (after explicit casting, as different kinds of actions contain
-	different data). We would rather dynamically dispatch to the right action using C++'s type system, as
-	it reduces maintainance burden. This rules out defining an Action as data to be interpreted.
-	
-	If defined as a function, it would need to access a particular ship's data, which requires either
-	binding the Action objects to a particular ship (which causes a bind cycle - a ship is bound to a
-	keymap, whose actions are bound to the ship - which is bad design), or defining them to take a Ship
-	as a parameter. The latter option was chosen.
-
-	Solution:
-	
-	Couple the Actions to the Ship class (rather than a particular instance) and require passing the Ship
-	to apply the Action to.
-	*/
-	
 	// Movement
+	static const EventTypePtr MAIN_THRUST;
+	static const EventTypePtr TURN_LEFT_THRUST;
+	static const EventTypePtr TURN_RIGHT_THRUST;
 
-	static Action MAIN_THRUST;
-	static Action TURN_LEFT_THRUST;
-	static Action TURN_RIGHT_THRUST;
+	void mainThrust();
+	void turnLeftThrust();
+	void turnRightThrust();
 
 	// Upgrades
 
@@ -86,25 +59,27 @@ public:
 		bool operator== (const PurchasableUpgrade& other) const;
 	};
 
-	// A template for an action to upgrade the ship.
-	// See Ship::Upgrade.
-	class UpgradeAction : public Action {
-	private:
-		const Upgrade upgrade;
-		static std::map<Upgrade, std::shared_ptr<Ship::UpgradeAction>> allUpgradeActions;
+	// Upgrade action
+	static const EventTypePtr UPGRADE;
 
-		UpgradeAction(const Upgrade& upgrade);
+	// A template for the event types that upgrade the ship.
+	// See Ship::Upgrade.
+	class UpgradeEventType : public BaseEventType {
+	private:
+		UpgradeEventType(const Upgrade& upgrade);
 
 	public:
-		// Memoised factory for upgrade actions.
-		static std::shared_ptr<Ship::UpgradeAction> create(const Upgrade& upgrade);
+		const Upgrade upgrade;
 
-		// Attempt to purchase this upgrade for the given ship.
-		virtual void operator() (Ship& ship) const;
+		// Memoised factory for upgrade event types.
+		static const EventTypePtr& get(const Upgrade& upgrade);
 	};
 
+	// Attempt to purchase the given upgrade for this ship.
+	void purchaseUpgrade(const Upgrade& upgrade);
+
 private:
-	PictureIndex image;           // Graphical Representation
+	PictureIndex image; // Graphical Representation
 
 	// Gameplay
 	Node<PurchasableUpgrade>::NodePtr upgradeTree;
@@ -123,6 +98,8 @@ public:
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
 	static Node<Ship::PurchasableUpgrade>::NodePtr buildUpgradeTree();
 	~Ship();
+
+	virtual void handle(const Event& e) override;
 
 	virtual void beforeActions() override;
 	virtual void actions() override;

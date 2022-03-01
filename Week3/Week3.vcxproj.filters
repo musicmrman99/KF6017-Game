@@ -25,14 +25,14 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{58f68cb5-ea56-400e-84f2-384989514c65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\ActionSources">
-      <UniqueIdentifier>{72e339ce-8eab-4ffb-b04c-15dd2fc9eca1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ActionSources">
-      <UniqueIdentifier>{b4375402-7cc9-49ff-a2ed-e6fed722bd62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{830c95d3-c6b9-4a93-a488-acb911522cb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controllers">
+      <UniqueIdentifier>{72e339ce-8eab-4ffb-b04c-15dd2fc9eca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controllers">
+      <UniqueIdentifier>{b4375402-7cc9-49ff-a2ed-e6fed722bd62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,16 +70,16 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Controls.cpp">
-      <Filter>Source Files\ActionSources</Filter>
+      <Filter>Source Files\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="NewtonianPhysModel.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="NoAI.cpp">
-      <Filter>Source Files\ActionSources</Filter>
-    </ClCompile>
     <ClCompile Include="NoPhysModel.cpp">
       <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Controllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +116,11 @@
     <ClInclude Include="Node.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ActionSource.h">
-      <Filter>Header Files\ActionSources</Filter>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="KeyMap.h">
-      <Filter>Header Files\ActionSources</Filter>
+      <Filter>Header Files\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
       <Filter>Header Files\Objects</Filter>
@@ -130,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="BooleanCombinators.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls.h">
-      <Filter>Header Files\ActionSources</Filter>
     </ClInclude>
     <ClInclude Include="NewtonianPhysModel.h">
       <Filter>Header Files\Engine</Filter>
@@ -146,11 +143,14 @@
     <ClInclude Include="Derived.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="NoAI.h">
-      <Filter>Header Files\ActionSources</Filter>
-    </ClInclude>
     <ClInclude Include="NoPhysModel.h">
       <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

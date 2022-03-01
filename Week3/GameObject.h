@@ -1,44 +1,50 @@
 #pragma once
 
-#include <functional>
 #include <memory>
 
 #include "Derived.h"
 
-#include "ActionSource.h"
-#include "NoAI.h"
-
+#include "Event.h"
 #include "PhysModel.h"
-#include "NoPhysModel.h"
 
-template <class T, class TPhysModel>
-class GameObject {
-public:
-    // An action that can be applied to a game object.
-    using Action = const std::function<void(T& gameObject)>;
-
+template <class TPhysModel>
+class GameObject : EventHandler {
 private:
-    std::shared_ptr<ActionSource<Action>> _actionSource;
-    std::shared_ptr<Derived<TPhysModel, PhysModel>> _physModel;
+    using Controller = EventEmitter;
+    using PhysModel = Derived<TPhysModel, PhysModel>;
+
+    std::shared_ptr<Controller> _controller;
+    std::shared_ptr<PhysModel> _physModel;
 
 public:
-    // You must give an actual actionSource and TPhysModel
-    GameObject(std::shared_ptr<ActionSource<Action>> actionSource, std::shared_ptr<TPhysModel> physModel) {
-        setActionSource(actionSource);
+    /* Components
+    -------------------- */
+
+    // You must give an actual controller and TPhysModel
+    GameObject(std::shared_ptr<Controller> controller, std::shared_ptr<PhysModel> physModel) {
+        setController(controller);
         setPhysModel(physModel);
     }
 
     virtual ~GameObject() {}
 
-    ActionSource<Action>& actionSource() { return *_actionSource; }
-    TPhysModel& physModel() { return *_physModel; }
+    Controller& controller() { return *_controller; }
+    PhysModel& physModel() { return *_physModel; }
 
-    void setActionSource(std::shared_ptr<ActionSource<Action>> actionSource) {
-        if (actionSource) _actionSource = actionSource;
+    void setController(std::shared_ptr<Controller> controller) {
+        if (controller) _controller = controller;
     }
-    void setPhysModel(std::shared_ptr<TPhysModel> physModel) {
+    void setPhysModel(std::shared_ptr<PhysModel> physModel) {
         if (physModel) _physModel = physModel;
     }
+
+    /* Events
+    -------------------- */
+
+    virtual void handle(const Event& e) override {};
+
+    /* Lifecycle
+    -------------------- */
 
     virtual void beforeActions() {};
     virtual void actions() {};
