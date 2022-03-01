@@ -65,7 +65,7 @@ const EventTypePtr& Ship::UpgradeEventType::get(const Upgrade& upgrade) {
     }
 
     // If not, create and return
-    EventTypePtr newAction = EventTypeManager::create()->getValue();
+    EventTypePtr newAction = EventTypeManager::create(UPGRADE)->getValue();
     allUpgradeEventTypes.insert({ upgrade, newAction });
     return allUpgradeEventTypes.find(upgrade)->second; // Return a reference to the one in the full list, not the one on the stack
 }
