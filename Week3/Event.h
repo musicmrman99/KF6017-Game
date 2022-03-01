@@ -50,7 +50,7 @@ private:
 	EventTypeManager();
 
 public:
-	static const EventTypeNodePtr& getAllEventTypes();
+	static const EventTypeNodePtr& getRootEventType();
 
 	static EventTypeNodePtr create(const EventType::ValuePtr& parentEventType);
 	static EventTypeNodePtr create();

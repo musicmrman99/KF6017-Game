@@ -21,7 +21,7 @@ EventTypeNodePtr EventTypeManager::eventTypeRoot = EventType::create(new BaseEve
 
 EventTypeManager::EventTypeManager() {}
 
-const EventTypeNodePtr& EventTypeManager::getAllEventTypes() {
+const EventTypeNodePtr& EventTypeManager::getRootEventType() {
 	return eventTypeRoot;
 }
 
