@@ -243,4 +243,57 @@ public:
     static std::optional<std::vector<NodePtr>> findPath(const NodePtr& root, T* value) {
         return findPath(root, ValuePtr(value));
     }
+
+    /* Find Value Path
+    -------------------- */
+
+private:
+    // Find the node containing the given value.
+    // Return an empty optional if no node in the tree contains the given value.
+    template <class C = std::equal_to<T>>
+    static void findValuePath(const NodePtr& root, const ValuePtr& value, std::optional<std::vector<ValuePtr>>& path) {
+        static C comparator;
+
+        if (root) {
+            // Base case - found
+            if (
+                !root->value && !value ||
+                root->value && value && comparator(*root->value, *value)
+                ) {
+                path = { root->getValue() };
+                return;
+            }
+
+            // Recursive case
+            for (const NodePtr& node : root->children) {
+                findValuePath(node, value, path);
+                if (path) {
+                    path.value().push_back(root->getValue());
+                    return;
+                };
+            }
+        }
+
+        // Base case - not found (in this branch of the tree)
+        path = std::nullopt;
+    }
+
+public:
+    template <class C = std::equal_to<T>>
+    static std::optional<std::vector<ValuePtr>> findValuePath(const NodePtr& root, const ValuePtr& value) {
+        std::optional<std::vector<ValuePtr>> path = std::nullopt;
+        findValuePath(root, value, path);
+        if (path) {
+            std::reverse(path.value().begin(), path.value().end());
+        }
+        return path;
+    }
+
+    // Overload for ease of directly passing `new`-ed objects.
+    // Creates a smart pointer from value, so always deallocates given object.
+    // See `std::optional<NodePtr> find(const ConstValuePtr)` for details;
+    template <class C = std::equal_to<T>>
+    static std::optional<std::vector<ValuePtr>> findValuePath(const NodePtr& root, T* value) {
+        return findValuePath(root, ValuePtr(value));
+    }
 };

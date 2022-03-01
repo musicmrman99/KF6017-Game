@@ -43,15 +43,9 @@ EventTypeNodePtr EventTypeManager::create() {
 }
 
 bool EventTypeManager::isOfType(const EventTypePtr& type, const EventTypePtr& against) {
-	std::optional<std::vector<EventTypeNodePtr>> path = EventType::findPath(eventTypeRoot, type);
-
+	std::optional<std::vector<EventTypePtr>> path = EventType::findValuePath(eventTypeRoot, type);
 	if (!path) return false; // No such type
-
-	std::vector<EventTypePtr> valuePath;
-	for (const EventTypeNodePtr& node : path.value()) {
-		valuePath.push_back(node->getValue());
-	}
-	return std::find(valuePath.rbegin(), valuePath.rend(), against) != valuePath.rend(); // More likely to find it at the end, so iterate backwards
+	return std::find(path->rbegin(), path->rend(), against) != path->rend(); // More likely to find it at the end, so iterate backwards
 }
 
 /* Common Implementations
