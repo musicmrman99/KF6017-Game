@@ -19,9 +19,8 @@ public:
     KeyMap() {}
     ~KeyMap() {
         for (std::pair<Control*, EventEmitter*> mapping : map) {
-            if (mapping.first) {
-                delete mapping.first;
-            }
+            if (mapping.first) delete mapping.first;
+            if (mapping.second) delete mapping.second;
         }
     }
 
