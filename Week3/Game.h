@@ -11,7 +11,6 @@
 
 #include "ErrorType.h"
 #include "MyDrawEngine.h"
-#include "GameTimer.h"
 
 #include "Ship.h"
 #include "KeyMap.h"
@@ -37,7 +36,6 @@ private:
 	GameState m_currentState;
 
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
-	GameTimer gt;     // Tracks the time between time marks (for getting FPS)
 
 	std::unique_ptr<Ship> player;
 

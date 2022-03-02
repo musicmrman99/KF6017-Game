@@ -242,10 +242,9 @@ Game Lifecycle
  * Use this to initialise the core game.
  */
 ErrorType Game::StartOfGame() {
-    // Tick the timer
-    // Why twice?
-    gt.mark();
-    gt.mark();
+    // Tick the timer (twice consecutively to initialise to 0 difference)
+    PhysModel::gt.mark();
+    PhysModel::gt.mark();
 
     // Game setup
 
@@ -298,7 +297,7 @@ ErrorType Game::Update() {
     }
 
     // Tick the timer
-    gt.mark();
+    PhysModel::gt.mark();
 
     /* Game code
     -------------------------------------------------- */

@@ -152,6 +152,7 @@
     <ClCompile Include="MySoundEngine.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="NoPhysModel.cpp" />
+    <ClCompile Include="PhysModel.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />

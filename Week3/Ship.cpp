@@ -4,12 +4,6 @@
 #include <functional>
 #include <string>
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-
-#define FPS 60.0f
-const float RPS = 2 * (float) M_PI / FPS;
-
 /* Upgrades
 -------------------------------------------------- */
 
@@ -35,15 +29,15 @@ const EventTypePtr Ship::TURN_LEFT_THRUST = EventTypeManager::create()->getValue
 const EventTypePtr Ship::TURN_RIGHT_THRUST = EventTypeManager::create()->getValue();
 
 void Ship::mainThrust() {
-    physModel().shiftAccel(physModel().rot() * engineThrust);
+    physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));
 };
 
 void Ship::turnLeftThrust() {
-    physModel().shiftRotAccel(-rotateThrust);
+    physModel().shiftRotAccel(-physModel().toRPS(rotateThrust));
 };
 
 void Ship::turnRightThrust() {
-    physModel().shiftRotAccel(rotateThrust);
+    physModel().shiftRotAccel(physModel().toRPS(rotateThrust));
 };
 
 /* Upgrade Action (and Event Type)
@@ -143,9 +137,9 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     ),
     image(image),
     upgradeTree(buildUpgradeTree()),
-    engineThrust(0.1f),
-    rotateThrust(0.01f * RPS) {
-}
+    engineThrust(0.2f), // Distance units / second^2
+    rotateThrust(0.01f) // Revolutions / second^2
+{}
 
 Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
