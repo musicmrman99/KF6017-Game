@@ -13,9 +13,15 @@
 #include "NewtonianPhysModel.h"
 #include "Event.h"
 
-class Ship : public GameObject<NewtonianPhysModel> {
+class Ship : public GameObject {
 public:
+	// Get/Set the right types
+
+	virtual NewtonianPhysModel& physModel() override;
+	virtual void setPhysModel(PhysModelPtr physModel) override;
+
 	// Movement
+
 	static const EventTypePtr MAIN_THRUST;
 	static const EventTypePtr TURN_LEFT_THRUST;
 	static const EventTypePtr TURN_RIGHT_THRUST;

@@ -18,6 +18,18 @@ struct NestedUpgradeComparator {
     }
 };
 
+/* Get/Set the right types
+-------------------------------------------------- */
+
+NewtonianPhysModel& Ship::physModel() {
+    return static_cast<NewtonianPhysModel&>(GameObject::physModel());
+}
+void Ship::setPhysModel(PhysModelPtr physModel) {
+    if (physModel && dynamic_cast<NewtonianPhysModel*>(physModel.get())) {
+        GameObject::setPhysModel(physModel);
+    }
+}
+
 /* Actions
 -------------------------------------------------- */
 

@@ -12,8 +12,7 @@
 #include "ErrorType.h"
 #include "MyDrawEngine.h"
 
-#include "Ship.h"
-#include "KeyMap.h"
+#include "ObjectManager.h"
 
 // This is a hack for reading keyboard in situations where you don't want to
 // use a full input system.
@@ -37,7 +36,7 @@ private:
 
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 
-	std::unique_ptr<Ship> player;
+	ObjectManager objectManager;
 
 	// Disable:
 	Game();            // no-arg constructor

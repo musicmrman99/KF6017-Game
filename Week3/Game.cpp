@@ -11,12 +11,12 @@
 #include "GameTimer.h"
 #include "shapes.h"
 
+#include "Ship.h"
 #include "KeyMap.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
-    m_menuOption(0),
-    player(nullptr) {
+    m_menuOption(0) {
 }
 Game::~Game() {}
 
@@ -258,12 +258,13 @@ ErrorType Game::StartOfGame() {
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
 
     // Player
-    player = std::unique_ptr<Ship>(new Ship(
+    ObjectManager::GameObjectPtr player = ObjectManager::GameObjectPtr(new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite
     ));
     player->setController(playerKeymap);
+    objectManager.addObject(player);
 
     return SUCCESS;
 }
@@ -305,16 +306,7 @@ ErrorType Game::Update() {
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
-    player->beforeActions();
-    player->actions();
-
-    player->beforePhys();
-    player->phys();
-
-    player->beforeDraw();
-    player->draw();
-
-    player->afterFrame();
+    objectManager.run();
 
     return SUCCESS;
 }
