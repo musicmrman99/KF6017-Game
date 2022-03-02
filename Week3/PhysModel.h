@@ -5,6 +5,9 @@
 
 #include "GameTimer.h"
 
+/* Phys Model
+-------------------------------------------------- */
+
 class PhysModel {
 private:
     static constexpr float TWO_PI = 2.0f * (float) M_PI; // 2 * pi
@@ -19,4 +22,12 @@ public:
 
     float toDUPS(float mpf); // To distance units/second
     float toRPS(float rpf);  // To revolutions/second
+};
+
+/* Null Phys Model
+-------------------------------------------------- */
+
+class NullPhysModel : public PhysModel {
+public:
+    virtual void run() override;
 };

@@ -75,9 +75,6 @@
     <ClCompile Include="NewtonianPhysModel.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="NoPhysModel.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\Controllers</Filter>
     </ClCompile>
@@ -145,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="Derived.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="NoPhysModel.h">
-      <Filter>Header Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Controls.h">
       <Filter>Header Files\Controllers</Filter>

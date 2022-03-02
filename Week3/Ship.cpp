@@ -127,9 +127,6 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>::NodePtr node = nullptr, int
 /* Lifecycle
 -------------------------------------------------- */
 
-/* Lifecycle
--------------------- */
-
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : GameObject(
         std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
@@ -137,9 +134,9 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     ),
     image(image),
     upgradeTree(buildUpgradeTree()),
-    engineThrust(0.2f), // Distance units / second^2
-    rotateThrust(0.01f) // Revolutions / second^2
-{}
+    engineThrust(0.2f),   // Distance units / second^2
+    rotateThrust(0.01f) { // Revolutions / second^2
+}
 
 Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading

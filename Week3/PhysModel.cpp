@@ -1,6 +1,7 @@
 #include "PhysModel.h"
 
-#include "mydrawengine.h"
+/* Phys Model
+-------------------------------------------------- */
 
 GameTimer PhysModel::gt;
 
@@ -13,3 +14,9 @@ float PhysModel::toDUPS(float mpf) {
 float PhysModel::toRPS(float rpf) {
 	return rpf * TWO_PI * (float) gt.mdFrameTime;
 }
+
+/* Null Phys Model
+-------------------------------------------------- */
+
+// Do nothing.
+void NullPhysModel::run() {}
