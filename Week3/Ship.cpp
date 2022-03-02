@@ -1,22 +1,8 @@
 #include "Ship.h"
 
-#include <vector>
-#include <functional>
 #include <string>
 
-/* Upgrades
--------------------------------------------------- */
-
-bool Ship::PurchasableUpgrade::operator==(const PurchasableUpgrade& other) const {
-    return upgrade == other.upgrade && purchased == other.purchased;
-}
-
-// A comparator for just the upgrade of a purchasable upgrade, ignoring whether it's purchased.
-struct NestedUpgradeComparator {
-    bool operator() (const Ship::PurchasableUpgrade& a, const Ship::PurchasableUpgrade& b) const {
-        return a.upgrade == b.upgrade;
-    }
-};
+#include "UpgradeTreeUI.h"
 
 /* Get/Set the right types
 -------------------------------------------------- */
@@ -52,120 +38,19 @@ void Ship::turnRightThrust() {
     physModel().shiftRotAccel(physModel().toRPS(rotateThrust));
 };
 
-/* Upgrade Action (and Event Type)
--------------------- */
-
-const EventTypePtr Ship::UPGRADE = EventTypeManager::create()->getValue();
-
-Ship::UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
-
-// Create an event type for purchasing the given upgrade. Memoised / strong-cached.
-const EventTypePtr& Ship::UpgradeEventType::get(const Upgrade& upgrade) {
-    // The set of all UpgradeEventTypes
-    static std::map<Upgrade, const EventTypePtr> allUpgradeEventTypes = std::map<Upgrade, const EventTypePtr>();
-
-    // If exists, return
-    const std::map<Upgrade, const EventTypePtr>::iterator existingEventType = allUpgradeEventTypes.find(upgrade);
-    if (existingEventType != allUpgradeEventTypes.end()) {
-        return existingEventType->second;
-    }
-
-    // If not, create and return
-    EventTypePtr newAction = EventTypeManager::create(UPGRADE)->getValue();
-    allUpgradeEventTypes.insert({ upgrade, newAction });
-    return allUpgradeEventTypes.find(upgrade)->second; // Return a reference to the one in the full list, not the one on the stack
-}
-
-// Try to add the upgrade this action is for.
-void Ship::purchaseUpgrade(const Upgrade& upgrade) {
-    // Get upgrade
-    std::optional<Node<PurchasableUpgrade>::NodePtr> maybeUpgradeNode = findUpgrade(upgradeTree, upgrade);
-    if (!maybeUpgradeNode) return; // Cannot purchase upgrade not in the tree
-    Node<PurchasableUpgrade>::NodePtr upgradeNode = maybeUpgradeNode.value();
-
-    // Check parent
-    bool canPurchase = false;
-    std::optional<Node<PurchasableUpgrade>::NodePtr> parentUpgradeNode = findParentUpgrade(upgradeTree, upgrade);
-    // Note: parentUpgradeNode != std::nullopt, as we know the node exists.
-    if (
-        parentUpgradeNode.value() &&                      // If there is a parent node (you can always purchase the root node, which has no parent)
-        !parentUpgradeNode.value()->getValue()->purchased // and it isn't yet purchased
-    ) {
-        return; // Cannot purchase upgrade with unmet dependencies
-    }
-
-    // Purchase upgrade
-    upgradeNode->getValue()->purchased = true;
-}
-
-/* Utils
--------------------------------------------------- */
-
-Node<Ship::PurchasableUpgrade>::NodePtr Ship::addUpgrade(Node<PurchasableUpgrade>::NodePtr parent, Upgrade upgrade) {
-    return parent->addChild(new PurchasableUpgrade{ upgrade, false });
-}
-
-std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade) {
-    return Node<PurchasableUpgrade>::find<NestedUpgradeComparator>(root, new PurchasableUpgrade{ upgrade, false });
-}
-
-std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findParentUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade) {
-    return Node<PurchasableUpgrade>::findParent<NestedUpgradeComparator>(root, new PurchasableUpgrade{ upgrade, false }); // false is ignored
-}
-
-/* Upgrade Tree UI
--------------------------------------------------- */
-
-class UpgradeTreeUI : public GraphicsModel {
-private:
-    using NodePtr = Node<Ship::PurchasableUpgrade>::NodePtr;
-
-    NodePtr tree;
-
-public:
-    UpgradeTreeUI(NodePtr tree) : tree(tree) {}
-
-    virtual void draw() override {
-        MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-        MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), formatTree(tree).c_str(), MyDrawEngine::CYAN);
-    }
-
-    std::wstring formatTree(NodePtr node, int indent = 0) const {
-        // Open
-        std::wstring upgradeName = std::to_wstring((int) node->getValue()->upgrade);
-        std::wstring purchased = node->getValue()->purchased ? L"Purchased" : L"Not Purchased";
-        std::wstring ret = upgradeName + L" (" + purchased + L") {";
-
-        // Children
-        auto children = node->getChildren();
-        if (!children.empty()) ret += L"\n";
-        for (const NodePtr& subNode : children) {
-            ret += formatTree(subNode);
-        }
-        if (!children.empty()) ret += L"\n";
-
-        // Close
-        ret += L"},\n";
-
-        // Return
-        return ret;
-    }
-};
-
 /* Lifecycle
 -------------------------------------------------- */
 
 Ship::Ship(
     Vector2D pos, Vector2D rot, PictureIndex image,
-    std::shared_ptr<NewtonianPhysModel> physModel,
-    Node<PurchasableUpgrade>::NodePtr upgradeTree
+    std::shared_ptr<NewtonianPhysModel> physModel
 ) : GameObject(
         std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
         physModel,
         std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
         std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
     ),
-    upgradeTree(upgradeTree),
+    upgradeTree(UpgradeTree(L"Ship")),
     engineThrust(0.2f),   // Distance units / second^2
     rotateThrust(0.01f) { // Revolutions / second^2
 }
@@ -173,37 +58,52 @@ Ship::Ship(
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : Ship(
         pos, rot, image,
-        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f)),
-        buildUpgradeTree()
+        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
     ) {
+    buildUpgradeTree();
 }
 
-Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
-    // Formatted the same as tree itself for ease of reading
-    auto upgradeTree = Node<PurchasableUpgrade>::create(
-        new PurchasableUpgrade{ Upgrade::SHIP, true }
-    );
-    auto loadOptimisation = addUpgrade(upgradeTree, Upgrade::LOAD_OPTIMISATION);
-        addUpgrade(loadOptimisation, Upgrade::SPACIAL_COMPRESSION);
-        auto cooperation = addUpgrade(loadOptimisation, Upgrade::COOPERATION);
-            addUpgrade(cooperation, Upgrade::OPTIMAL_SELECTION);
-                
-    auto rearThrusters = addUpgrade(upgradeTree, Upgrade::REAR_THRUSTERS);
-        addUpgrade(rearThrusters, Upgrade::FRONT_THRUSTERS);
-        auto overdrive = addUpgrade(rearThrusters, Upgrade::OVERDRIVE);
-            addUpgrade(overdrive, Upgrade::HYPER_JUMP);
-                
-    auto heavyShells = addUpgrade(upgradeTree, Upgrade::HEAVY_SHELLS);
-        addUpgrade(heavyShells, Upgrade::IONIC_SHELLS);
-        auto frontAutoCannons = addUpgrade(heavyShells, Upgrade::FRONT_AUTO_CANNONS);
-            addUpgrade(frontAutoCannons, Upgrade::REAR_AUTO_CANNONS);
-                
-    auto workerDrone = addUpgrade(upgradeTree, Upgrade::WORKER_DRONE);
-        addUpgrade(workerDrone, Upgrade::ARMOURED_DRONE);
-        auto mine = addUpgrade(workerDrone, Upgrade::MINE);
-            addUpgrade(mine, Upgrade::FIGHTER_DRONE);
+const Upgrade Ship::LOAD_OPTIMISATION(L"Load Optimisation");
+const Upgrade Ship::SPACIAL_COMPRESSION(L"Spacial Compression");
+const Upgrade Ship::COOPERATION(L"Cooperation");
+const Upgrade Ship::OPTIMAL_SELECTION(L"Optimal Selection");
 
-    return upgradeTree;
+const Upgrade Ship::FRONT_THRUSTERS(L"Front Thrusters");
+const Upgrade Ship::REAR_THRUSTERS(L"Rear Thrusters");
+const Upgrade Ship::OVERDRIVE(L"Overdrive");
+const Upgrade Ship::HYPER_JUMP(L"Hyper Jump");
+
+const Upgrade Ship::HEAVY_SHELLS(L"Heavy Shells");
+const Upgrade Ship::FRONT_AUTO_CANNONS(L"Front Auto-Cannons");
+const Upgrade Ship::REAR_AUTO_CANNONS(L"Rear Auto-Cannons");
+const Upgrade Ship::IONIC_SHELLS(L"Ionic Shells");
+
+const Upgrade Ship::WORKER_DRONE(L"Worker Drone");
+const Upgrade Ship::ARMOURED_DRONE(L"Armoured Drone");
+const Upgrade Ship::MINE(L"Mine");
+const Upgrade Ship::FIGHTER_DRONE(L"Fighter Drone");
+
+void Ship::buildUpgradeTree() {
+    // Formatted the same as tree itself for ease of reading
+    const auto& loadOptimisation = upgradeTree.addUpgrade(LOAD_OPTIMISATION);
+        upgradeTree.addUpgrade(loadOptimisation, SPACIAL_COMPRESSION);
+        const auto& cooperation = upgradeTree.addUpgrade(loadOptimisation, COOPERATION);
+            upgradeTree.addUpgrade(cooperation, OPTIMAL_SELECTION);
+            
+    const auto& rearThrusters = upgradeTree.addUpgrade(REAR_THRUSTERS);
+        upgradeTree.addUpgrade(rearThrusters, FRONT_THRUSTERS);
+        const auto& overdrive = upgradeTree.addUpgrade(rearThrusters, OVERDRIVE);
+            upgradeTree.addUpgrade(overdrive, HYPER_JUMP);
+
+    const auto& heavyShells = upgradeTree.addUpgrade(HEAVY_SHELLS);
+        upgradeTree.addUpgrade(heavyShells, IONIC_SHELLS);
+        const auto& frontAutoCannons = upgradeTree.addUpgrade(heavyShells, FRONT_AUTO_CANNONS);
+            upgradeTree.addUpgrade(frontAutoCannons, REAR_AUTO_CANNONS);
+
+    const auto& workerDrone = upgradeTree.addUpgrade(WORKER_DRONE);
+        upgradeTree.addUpgrade(workerDrone, ARMOURED_DRONE);
+        const auto& mine = upgradeTree.addUpgrade(workerDrone, MINE);
+            upgradeTree.addUpgrade(mine, FIGHTER_DRONE);
 }
 
 Ship::~Ship() {}
@@ -213,7 +113,7 @@ void Ship::handle(const Event& e) {
     else if (EventTypeManager::isOfType(e.type, TURN_LEFT_THRUST)) turnLeftThrust();
     else if (EventTypeManager::isOfType(e.type, TURN_RIGHT_THRUST)) turnRightThrust();
     
-    else if (EventTypeManager::isOfType(e.type, UPGRADE)) purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
+    else if (EventTypeManager::isOfType(e.type, upgradeTree.UPGRADE)) upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
 }
 
 void Ship::beforeActions() {

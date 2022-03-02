@@ -158,6 +158,8 @@
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="UpgradeTree.cpp" />
+    <ClCompile Include="UpgradeTreeUI.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
@@ -186,6 +188,8 @@
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Symbol.h" />
+    <ClInclude Include="UpgradeTree.h" />
+    <ClInclude Include="UpgradeTreeUI.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
