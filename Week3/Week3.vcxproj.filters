@@ -170,12 +170,6 @@
     <ClInclude Include="MyInputs.h">
       <Filter>Header Files\Engine\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2D.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Shapes.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="PhysModel.h">
       <Filter>Header Files\Engine\Physics</Filter>
     </ClInclude>
@@ -202,6 +196,12 @@
     </ClInclude>
     <ClInclude Include="UpgradeTree.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Header Files\Engine\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes.h">
+      <Filter>Header Files\Engine\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

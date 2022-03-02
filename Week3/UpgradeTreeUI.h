@@ -3,6 +3,7 @@
 #include "Node.h"
 
 #include "MyDrawEngine.h"
+#include "Shapes.h"
 #include "GraphicsModel.h"
 
 #include "UpgradeTree.h"
@@ -16,7 +17,7 @@ public:
 
     virtual void draw() override {
         MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-        MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), formatTree(tree.getRootUpgrade()).c_str(), MyDrawEngine::CYAN);
+        MyDrawEngine::GetInstance()->WriteText(graphics->GetViewport().GetTopLeft(), formatTree(tree.getRootUpgrade()).c_str(), MyDrawEngine::CYAN);
     }
 
     std::wstring formatTree(UpgradeTree::NodePtr node, int indent = 0) const {
