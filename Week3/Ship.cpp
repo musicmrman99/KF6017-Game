@@ -113,41 +113,59 @@ std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> Ship::findParentUpgrade(N
     return Node<PurchasableUpgrade>::findParent<NestedUpgradeComparator>(root, new PurchasableUpgrade{ upgrade, false }); // false is ignored
 }
 
-std::wstring Ship::strDump(Node<PurchasableUpgrade>::NodePtr node = nullptr, int indent = 0) const {
-    if (!node) node = upgradeTree;
+/* Upgrade Tree UI
+-------------------------------------------------- */
 
-    // Open
-    std::wstring upgradeName = std::to_wstring((int)node->getValue()->upgrade);
-    std::wstring purchased = node->getValue()->purchased ? L"Purchased" : L"Not Purchased";
-    std::wstring ret = upgradeName + L" (" + purchased + L") {";
+class UpgradeTreeUI : public GraphicsModel {
+private:
+    using NodePtr = Node<Ship::PurchasableUpgrade>::NodePtr;
 
-    // Children
-    auto children = node->getChildren();
-    if (!children.empty()) ret += L"\n";
-    for (const Node<PurchasableUpgrade>::NodePtr& subNode : children) {
-        ret += strDump(subNode);
+    NodePtr tree;
+
+public:
+    UpgradeTreeUI(NodePtr tree) : tree(tree) {}
+
+    virtual void draw() override {
+        MyDrawEngine* graphics = MyDrawEngine::GetInstance();
+        MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), formatTree(tree).c_str(), MyDrawEngine::CYAN);
     }
-    if (!children.empty()) ret += L"\n";
 
-    // Close
-    ret += L"},\n";
+    std::wstring formatTree(NodePtr node, int indent = 0) const {
+        // Open
+        std::wstring upgradeName = std::to_wstring((int) node->getValue()->upgrade);
+        std::wstring purchased = node->getValue()->purchased ? L"Purchased" : L"Not Purchased";
+        std::wstring ret = upgradeName + L" (" + purchased + L") {";
 
-    // Return
-    return ret;
-}
+        // Children
+        auto children = node->getChildren();
+        if (!children.empty()) ret += L"\n";
+        for (const NodePtr& subNode : children) {
+            ret += formatTree(subNode);
+        }
+        if (!children.empty()) ret += L"\n";
+
+        // Close
+        ret += L"},\n";
+
+        // Return
+        return ret;
+    }
+};
 
 /* Lifecycle
 -------------------------------------------------- */
 
 Ship::Ship(
     Vector2D pos, Vector2D rot, PictureIndex image,
-    std::shared_ptr<NullEventEmitter> eventEmitter, std::shared_ptr<NewtonianPhysModel> physModel
+    std::shared_ptr<NewtonianPhysModel> physModel,
+    Node<PurchasableUpgrade>::NodePtr upgradeTree
 ) : GameObject(
-        eventEmitter,
+        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
         physModel,
-        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image))
+        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
+        std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
     ),
-    upgradeTree(buildUpgradeTree()),
+    upgradeTree(upgradeTree),
     engineThrust(0.2f),   // Distance units / second^2
     rotateThrust(0.01f) { // Revolutions / second^2
 }
@@ -155,8 +173,8 @@ Ship::Ship(
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     : Ship(
         pos, rot, image,
-        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
-        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f)),
+        buildUpgradeTree()
     ) {
 }
 
@@ -201,10 +219,4 @@ void Ship::handle(const Event& e) {
 void Ship::beforeActions() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
-}
-void Ship::draw() {
-    GameObject::draw();
-
-    MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-    MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), strDump(upgradeTree).c_str(), MyDrawEngine::CYAN);
 }

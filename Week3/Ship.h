@@ -94,7 +94,8 @@ private:
 
 	Ship(
 		Vector2D pos, Vector2D rot, PictureIndex image,
-		std::shared_ptr<NullEventEmitter> eventEmitter, std::shared_ptr<NewtonianPhysModel> physModel
+		std::shared_ptr<NewtonianPhysModel> physModel,
+		Node<PurchasableUpgrade>::NodePtr upgradeTree
 	);
 
 public:
@@ -102,7 +103,6 @@ public:
 	static Node<PurchasableUpgrade>::NodePtr addUpgrade(Node<PurchasableUpgrade>::NodePtr parent, Upgrade upgrade);
 	static std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> findUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade);
 	static std::optional<Node<Ship::PurchasableUpgrade>::NodePtr> findParentUpgrade(Node<PurchasableUpgrade>::NodePtr root, Upgrade upgrade);
-	std::wstring strDump(Node<PurchasableUpgrade>::NodePtr node, int indent) const;
 
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
@@ -111,5 +111,4 @@ public:
 
 	virtual void beforeActions() override;
 	virtual void handle(const Event& e) override;
-	virtual void draw() override;
 };

@@ -18,16 +18,17 @@ private:
     EventEmitterPtr _controller;
     PhysModelPtr _physModel;
     GraphicsModelPtr _graphicsModel;
+    GraphicsModelPtr _uiGraphicsModel;
 
 public:
     /* Components
     -------------------- */
 
-    // You must give an actual controller and TPhysModel
-    GameObject(EventEmitterPtr controller, PhysModelPtr physModel, GraphicsModelPtr graphModel) {
+    GameObject(EventEmitterPtr controller, PhysModelPtr physModel, GraphicsModelPtr graphicsModel, GraphicsModelPtr uiGraphicsModel) {
         setController(controller);
         setPhysModel(physModel);
-        setGraphicsModel(graphModel);
+        setGraphicsModel(graphicsModel);
+        setUIGraphicsModel(uiGraphicsModel);
     }
 
     virtual ~GameObject() {}
@@ -48,6 +49,12 @@ public:
     virtual GraphicsModel& graphicsModel() const { return *_graphicsModel; }
     virtual void setGraphicsModel(GraphicsModelPtr graphicsModel) {
         if (graphicsModel) _graphicsModel = graphicsModel;
+    }
+
+    virtual GraphicsModel& uiGraphicsModel() { return *_uiGraphicsModel; }
+    virtual GraphicsModel& uiGraphicsModel() const { return *_uiGraphicsModel; }
+    virtual void setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel) {
+        if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
     }
 
     /* Events
@@ -78,6 +85,11 @@ public:
     virtual void beforeDraw() {};
     virtual void draw() {
         graphicsModel().draw();
+    };
+
+    virtual void beforeDrawUI() {};
+    virtual void drawUI() {
+        uiGraphicsModel().draw();
     };
 
     virtual void afterFrame() {};

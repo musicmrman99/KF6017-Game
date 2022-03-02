@@ -14,5 +14,8 @@ void ObjectManager::run() {
     for (GameObjectPtr& object : objects) object->beforeDraw();
     for (GameObjectPtr& object : objects) object->draw();
 
+    for (GameObjectPtr& object : objects) object->beforeDrawUI();
+    for (GameObjectPtr& object : objects) object->drawUI();
+
     for (GameObjectPtr& object : objects) object->afterFrame();
 }
