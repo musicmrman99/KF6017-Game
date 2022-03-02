@@ -108,6 +108,12 @@
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -178,6 +184,12 @@
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsModel.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGraphicsModel.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

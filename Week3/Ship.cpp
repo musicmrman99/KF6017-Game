@@ -139,15 +139,25 @@ std::wstring Ship::strDump(Node<PurchasableUpgrade>::NodePtr node = nullptr, int
 /* Lifecycle
 -------------------------------------------------- */
 
-Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
-    : GameObject(
-        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
-        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+Ship::Ship(
+    Vector2D pos, Vector2D rot, PictureIndex image,
+    std::shared_ptr<NullEventEmitter> eventEmitter, std::shared_ptr<NewtonianPhysModel> physModel
+) : GameObject(
+        eventEmitter,
+        physModel,
+        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image))
     ),
-    image(image),
     upgradeTree(buildUpgradeTree()),
     engineThrust(0.2f),   // Distance units / second^2
     rotateThrust(0.01f) { // Revolutions / second^2
+}
+
+Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
+    : Ship(
+        pos, rot, image,
+        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
+        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+    ) {
 }
 
 Node<Ship::PurchasableUpgrade>::NodePtr Ship::buildUpgradeTree() {
@@ -193,7 +203,8 @@ void Ship::beforeActions() {
     physModel().setRotAccel(0.0f);
 }
 void Ship::draw() {
+    GameObject::draw();
+
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-    graphics->DrawAt(physModel().pos(), image, 1.0f, physModel().rot().angle(), 0.0f);
     MyDrawEngine::GetInstance()->WriteText(Vector2D(-1000, 700), strDump(upgradeTree).c_str(), MyDrawEngine::CYAN);
 }

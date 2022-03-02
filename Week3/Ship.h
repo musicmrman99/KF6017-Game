@@ -10,8 +10,9 @@
 #include "MyInputs.h"
 
 #include "GameObject.h"
-#include "NewtonianPhysModel.h"
 #include "Event.h"
+#include "NewtonianPhysModel.h"
+#include "ImageGraphicsModel.h"
 
 class Ship : public GameObject {
 public:
@@ -85,13 +86,16 @@ public:
 	void purchaseUpgrade(const Upgrade& upgrade);
 
 private:
-	PictureIndex image; // Graphical Representation
-
 	// Gameplay
 	Node<PurchasableUpgrade>::NodePtr upgradeTree;
 	
 	float engineThrust;
 	float rotateThrust;
+
+	Ship(
+		Vector2D pos, Vector2D rot, PictureIndex image,
+		std::shared_ptr<NullEventEmitter> eventEmitter, std::shared_ptr<NewtonianPhysModel> physModel
+	);
 
 public:
 	// Utils
@@ -103,10 +107,9 @@ public:
 	// Lifecycle
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
 	static Node<Ship::PurchasableUpgrade>::NodePtr buildUpgradeTree();
-	~Ship();
-
-	virtual void handle(const Event& e) override;
+	virtual ~Ship();
 
 	virtual void beforeActions() override;
+	virtual void handle(const Event& e) override;
 	virtual void draw() override;
 };

@@ -10,7 +10,6 @@
 #include <memory>
 
 #include "ErrorType.h"
-#include "MyDrawEngine.h"
 
 #include "ObjectManager.h"
 
