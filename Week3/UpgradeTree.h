@@ -31,7 +31,7 @@ public:
 	static const EventTypePtr UPGRADE;
 
 	// Memoised factory for upgrade event types.
-	static const EventTypePtr& get(const Upgrade& upgrade);
+	static const EventTypePtr& of(const Upgrade& upgrade);
 };
 
 // A tree of upgrades
@@ -55,9 +55,6 @@ private:
 	NodePtr upgradeTree;
 
 public:
-	// Upgrade action specific to this tree. For use by clients of this class.
-	const EventTypePtr UPGRADE;
-
 	// Constructor
 	UpgradeTree(std::wstring typeName);
 

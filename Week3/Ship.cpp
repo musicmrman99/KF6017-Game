@@ -38,6 +38,13 @@ void Ship::turnRightThrust() {
     physModel().shiftRotAccel(physModel().toRPS(rotateThrust));
 };
 
+/* Getters
+-------------------------------------------------- */
+
+const UpgradeTree& Ship::getUpgradeTree() {
+    return upgradeTree;
+}
+
 /* Lifecycle
 -------------------------------------------------- */
 
@@ -113,7 +120,9 @@ void Ship::handle(const Event& e) {
     else if (EventTypeManager::isOfType(e.type, TURN_LEFT_THRUST)) turnLeftThrust();
     else if (EventTypeManager::isOfType(e.type, TURN_RIGHT_THRUST)) turnRightThrust();
     
-    else if (EventTypeManager::isOfType(e.type, upgradeTree.UPGRADE)) upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
+    else if (EventTypeManager::isOfType(e.type, UpgradeEventType::UPGRADE)) {
+        upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
+    }
 }
 
 void Ship::beforeActions() {

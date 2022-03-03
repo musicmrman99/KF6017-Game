@@ -27,13 +27,24 @@ UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
 
 const EventTypePtr UpgradeEventType::UPGRADE = EventTypeManager::create()->getValue();
 
+// A comparator for just the upgrade of a purchasable upgrade, ignoring whether it's purchased.
+template <class T>
+struct ReferenceWrapperLess {
+    bool operator() (const std::reference_wrapper<T>& a, const std::reference_wrapper<T>& b) const {
+        return a.get() < b.get();
+    }
+};
+
+using UpgradeKey = std::reference_wrapper<const Upgrade>;
+using UpgradeEventTypeMap = std::map<UpgradeKey, const EventTypePtr, ReferenceWrapperLess<const Upgrade>>;
+
 // Create an event type for purchasing the given upgrade. Memoised / strong-cached.
-const EventTypePtr& UpgradeEventType::get(const Upgrade& upgrade) {
+const EventTypePtr& UpgradeEventType::of(const Upgrade& upgrade) {
     // The set of all UpgradeEventTypes
-    static std::map<Upgrade, const EventTypePtr> allUpgradeEventTypes = std::map<Upgrade, const EventTypePtr>();
+    static UpgradeEventTypeMap allUpgradeEventTypes = UpgradeEventTypeMap();
 
     // If exists, return
-    const std::map<Upgrade, const EventTypePtr>::iterator existingEventType = allUpgradeEventTypes.find(upgrade);
+    const UpgradeEventTypeMap::iterator existingEventType = allUpgradeEventTypes.find(UpgradeKey(upgrade));
     if (existingEventType != allUpgradeEventTypes.end()) {
         return existingEventType->second;
     }
@@ -48,8 +59,7 @@ const EventTypePtr& UpgradeEventType::get(const Upgrade& upgrade) {
 -------------------------------------------------- */
 
 UpgradeTree::UpgradeTree(std::wstring typeName)
-    : upgradeTree(Node<PurchasableUpgrade>::create(new PurchasableUpgrade { Upgrade(typeName), true})),
-    UPGRADE(EventTypeManager::create()->getValue()) {
+    : upgradeTree(Node<PurchasableUpgrade>::create(new PurchasableUpgrade { Upgrade(typeName), true})) {
 }
 
 // Try to add the upgrade this action is for.
