@@ -257,8 +257,6 @@ ErrorType Game::StartOfGame() {
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicEventEmitter(Ship::TURN_LEFT_THRUST));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
 
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new BasicEventEmitter(UpgradeEventType::of(Ship::LOAD_OPTIMISATION)));
-
     // Player
     ObjectManager::GameObjectPtr player = ObjectManager::GameObjectPtr(new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
