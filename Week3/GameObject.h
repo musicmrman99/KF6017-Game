@@ -31,7 +31,7 @@ public:
         GraphicsModelPtr uiGraphicsModel
     );
 
-    virtual ~GameObject() {}
+    virtual ~GameObject();
 
     virtual EventEmitter& controller();
     virtual EventEmitter& controller() const;
@@ -57,7 +57,7 @@ public:
     /* Lifecycle
     -------------------- */
 
-    virtual void beforeActions() {};
+    virtual void beforeActions();
     virtual void actions();
 
     virtual void beforePhys();

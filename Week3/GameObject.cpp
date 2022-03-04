@@ -15,6 +15,8 @@ GameObject::GameObject(
     setUIGraphicsModel(uiGraphicsModel);
 }
 
+GameObject::~GameObject() {}
+
 EventEmitter& GameObject::controller() { return *_controller; }
 EventEmitter& GameObject::controller() const { return *_controller; }
 void GameObject::setController(EventEmitterPtr controller) {
