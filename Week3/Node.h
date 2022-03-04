@@ -127,7 +127,7 @@ public:
 
             // Recursive case
             for (const NodePtr& node : root->children) {
-                const std::optional<NodePtr>& found = find(node, value);
+                const std::optional<NodePtr>& found = find<C>(node, value);
                 if (found) return found;
             }
         }
@@ -141,7 +141,7 @@ public:
     // See `std::optional<NodePtr> find(const ConstValuePtr)` for details;
     template <class C = std::equal_to<T>>
     static std::optional<NodePtr> find(const NodePtr& root, T* value) {
-        return find(root, ValuePtr(value));
+        return find<C>(root, ValuePtr(value));
     }
 
     /* Find Parent
@@ -164,7 +164,7 @@ private:
 
             // Recursive case
             for (const NodePtr& node : root->children) {
-                const std::optional<NodePtr>& found = findParent(node, value, root);
+                const std::optional<NodePtr>& found = findParent<C>(node, value, root);
                 if (found) return found;
             }
         }
@@ -180,7 +180,7 @@ public:
     // the given value (ie. the value was found, but the root node has no parent).
     template <class C = std::equal_to<T>>
     static std::optional<NodePtr> findParent(const NodePtr& root, const ValuePtr& value) {
-        return findParent(root, value, nullptr);
+        return findParent<C>(root, value, nullptr);
     }
 
     // Overload for ease of directly passing `new`-ed objects.
@@ -188,7 +188,7 @@ public:
     // See `std::optional<NodePtr> findParent(const ConstValuePtr)` for details.
     template <class C = std::equal_to<T>>
     static std::optional<NodePtr> findParent(const NodePtr& root, T* value) {
-        return findParent(root, ValuePtr(value));
+        return findParent<C>(root, ValuePtr(value));
     }
 
     /* Find Path
@@ -213,7 +213,7 @@ private:
 
             // Recursive case
             for (const NodePtr& node : root->children) {
-                findPath(node, value, path);
+                findPath<C>(node, value, path);
                 if (path) {
                     path.value().push_back(root);
                     return;
@@ -229,7 +229,7 @@ public:
     template <class C = std::equal_to<T>>
     static std::optional<std::vector<NodePtr>> findPath(const NodePtr& root, const ValuePtr& value) {
         std::optional<std::vector<NodePtr>> path = std::nullopt;
-        findPath(root, value, path);
+        findPath<C>(root, value, path);
         if (path) {
             std::reverse(path.value().begin(), path.value().end());
         }
@@ -241,7 +241,7 @@ public:
     // See `std::optional<NodePtr> find(const ConstValuePtr)` for details;
     template <class C = std::equal_to<T>>
     static std::optional<std::vector<NodePtr>> findPath(const NodePtr& root, T* value) {
-        return findPath(root, ValuePtr(value));
+        return findPath<C>(root, ValuePtr(value));
     }
 
     /* Find Value Path
@@ -266,7 +266,7 @@ private:
 
             // Recursive case
             for (const NodePtr& node : root->children) {
-                findValuePath(node, value, path);
+                findValuePath<C>(node, value, path);
                 if (path) {
                     path.value().push_back(root->getValue());
                     return;
@@ -282,7 +282,7 @@ public:
     template <class C = std::equal_to<T>>
     static std::optional<std::vector<ValuePtr>> findValuePath(const NodePtr& root, const ValuePtr& value) {
         std::optional<std::vector<ValuePtr>> path = std::nullopt;
-        findValuePath(root, value, path);
+        findValuePath<C>(root, value, path);
         if (path) {
             std::reverse(path.value().begin(), path.value().end());
         }
@@ -294,6 +294,6 @@ public:
     // See `std::optional<NodePtr> find(const ConstValuePtr)` for details;
     template <class C = std::equal_to<T>>
     static std::optional<std::vector<ValuePtr>> findValuePath(const NodePtr& root, T* value) {
-        return findValuePath(root, ValuePtr(value));
+        return findValuePath<C>(root, ValuePtr(value));
     }
 };
