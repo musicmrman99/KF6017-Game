@@ -58,6 +58,18 @@
     <Filter Include="Source Files\Engine\Objects">
       <UniqueIdentifier>{877b4e12-121f-4bb8-a63f-cd4743a4cb06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Objects\Components">
+      <UniqueIdentifier>{fb7d78e2-3a46-4a21-88a1-7376634d9cda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{dc47a1bd-3deb-45ec-a91c-391ad7662e3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{6f3c0585-0dfd-4cad-ae81-8a743171b9a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\Components">
+      <UniqueIdentifier>{59c467ad-de00-48a6-b1db-12d84d078616}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -99,12 +111,6 @@
     <ClCompile Include="PhysModel.cpp">
       <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="Shapes.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2D.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
@@ -114,11 +120,23 @@
     <ClCompile Include="ImageGraphicsModel.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="UpgradeTreeUI.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="KeyMap.cpp">
+      <Filter>Source Files\Engine\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Source Files\Engine\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="Shapes.cpp">
+      <Filter>Source Files\Engine\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTree.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Objects\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeTreeUI.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,17 +209,17 @@
     <ClInclude Include="ImageGraphicsModel.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="UpgradeTreeUI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UpgradeTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>Header Files\Engine\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="Shapes.h">
       <Filter>Header Files\Engine\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeTree.h">
+      <Filter>Header Files\Objects\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeTreeUI.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

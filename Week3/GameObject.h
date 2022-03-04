@@ -24,73 +24,50 @@ public:
     /* Components
     -------------------- */
 
-    GameObject(EventEmitterPtr controller, PhysModelPtr physModel, GraphicsModelPtr graphicsModel, GraphicsModelPtr uiGraphicsModel) {
-        setController(controller);
-        setPhysModel(physModel);
-        setGraphicsModel(graphicsModel);
-        setUIGraphicsModel(uiGraphicsModel);
-    }
+    GameObject(
+        EventEmitterPtr controller,
+        PhysModelPtr physModel,
+        GraphicsModelPtr graphicsModel,
+        GraphicsModelPtr uiGraphicsModel
+    );
 
     virtual ~GameObject() {}
 
-    virtual EventEmitter& controller() { return *_controller; }
-    virtual EventEmitter& controller() const { return *_controller; }
-    virtual void setController(EventEmitterPtr controller) {
-        if (controller) _controller = controller;
-    }
+    virtual EventEmitter& controller();
+    virtual EventEmitter& controller() const;
+    virtual void setController(EventEmitterPtr controller);
 
-    virtual PhysModel& physModel() { return *_physModel; }
-    virtual PhysModel& physModel() const { return *_physModel; }
-    virtual void setPhysModel(PhysModelPtr physModel) {
-        if (physModel) _physModel = physModel;
-    }
+    virtual PhysModel& physModel();
+    virtual PhysModel& physModel() const;
+    virtual void setPhysModel(PhysModelPtr physModel);
 
-    virtual GraphicsModel& graphicsModel() { return *_graphicsModel; }
-    virtual GraphicsModel& graphicsModel() const { return *_graphicsModel; }
-    virtual void setGraphicsModel(GraphicsModelPtr graphicsModel) {
-        if (graphicsModel) _graphicsModel = graphicsModel;
-    }
+    virtual GraphicsModel& graphicsModel();
+    virtual GraphicsModel& graphicsModel() const;
+    virtual void setGraphicsModel(GraphicsModelPtr graphicsModel);
 
-    virtual GraphicsModel& uiGraphicsModel() { return *_uiGraphicsModel; }
-    virtual GraphicsModel& uiGraphicsModel() const { return *_uiGraphicsModel; }
-    virtual void setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel) {
-        if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
-    }
+    virtual GraphicsModel& uiGraphicsModel();
+    virtual GraphicsModel& uiGraphicsModel() const;
+    virtual void setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel);
 
     /* Events
     -------------------- */
 
-    virtual void handle(const Event& e) override {};
+    virtual void handle(const Event& e) override;
 
     /* Lifecycle
     -------------------- */
 
     virtual void beforeActions() {};
-    void actions() {
-        static std::queue<Event> events;
+    virtual void actions();
 
-        controller().emit(events);
-        while (!events.empty()) {
-            const Event& event = events.front();
-            handle(event);
-            events.pop();
-        }
-    }
+    virtual void beforePhys();
+    virtual void phys();
 
-    virtual void beforePhys() {};
-    void phys() {
-        physModel().run();
-    }
+    virtual void beforeDraw();
+    virtual void draw();
 
-    virtual void beforeDraw() {};
-    virtual void draw() {
-        graphicsModel().draw();
-    };
+    virtual void beforeDrawUI();
+    virtual void drawUI();
 
-    virtual void beforeDrawUI() {};
-    virtual void drawUI() {
-        uiGraphicsModel().draw();
-    };
-
-    virtual void afterFrame() {};
+    virtual void afterFrame();
 };

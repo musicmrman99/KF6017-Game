@@ -146,9 +146,11 @@
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
+    <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="MyDrawEngine.cpp" />
     <ClCompile Include="MyInputs.cpp" />
     <ClCompile Include="MySoundEngine.cpp" />
