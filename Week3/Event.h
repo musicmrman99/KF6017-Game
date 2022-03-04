@@ -52,8 +52,10 @@ private:
 public:
 	static const EventTypeNodePtr& getRootEventType();
 
-	static EventTypeNodePtr create(const EventType::ValuePtr& parentEventType);
-	static EventTypeNodePtr create();
+	static EventTypeNodePtr registerNewType(BaseEventType* newEventType, const EventType::ValuePtr& parentEventType);
+	static EventTypeNodePtr registerNewType(BaseEventType* newEventType);
+	static EventTypeNodePtr registerNewType(const EventType::ValuePtr& parentEventType);
+	static EventTypeNodePtr registerNewType();
 
 	static bool isOfType(const EventTypePtr& type, const EventTypePtr& against);
 };

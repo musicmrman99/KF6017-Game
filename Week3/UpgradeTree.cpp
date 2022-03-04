@@ -27,7 +27,7 @@ struct UpgradeTree::NestedUpgradeComparator {
 
 UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
 
-const EventTypePtr UpgradeEventType::UPGRADE = EventTypeManager::create()->getValue();
+const EventTypePtr UpgradeEventType::UPGRADE = EventTypeManager::registerNewType()->getValue();
 
 // A comparator for just the upgrade of a purchasable upgrade, ignoring whether it's purchased.
 template <class T>
@@ -52,7 +52,7 @@ const EventTypePtr& UpgradeEventType::of(const Upgrade& upgrade) {
     }
 
     // If not, create and return
-    EventTypePtr newAction = EventTypeManager::create(UPGRADE)->getValue();
+    EventTypePtr newAction = EventTypeManager::registerNewType(new UpgradeEventType(upgrade), UPGRADE)->getValue();
     allUpgradeEventTypes.insert({ upgrade, newAction });
     return allUpgradeEventTypes.find(upgrade)->second; // Return a reference to the one in the full list, not the one on the stack
 }

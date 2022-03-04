@@ -22,9 +22,9 @@ void Ship::setPhysModel(PhysModelPtr physModel) {
 /* Movement Actions
 -------------------- */
 
-const EventTypePtr Ship::MAIN_THRUST = EventTypeManager::create()->getValue();
-const EventTypePtr Ship::TURN_LEFT_THRUST = EventTypeManager::create()->getValue();
-const EventTypePtr Ship::TURN_RIGHT_THRUST = EventTypeManager::create()->getValue();
+const EventTypePtr Ship::MAIN_THRUST = EventTypeManager::registerNewType()->getValue();
+const EventTypePtr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType()->getValue();
+const EventTypePtr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType()->getValue();
 
 void Ship::mainThrust() {
     physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));

@@ -25,8 +25,8 @@ const EventTypeNodePtr& EventTypeManager::getRootEventType() {
 	return eventTypeRoot;
 }
 
-EventTypeNodePtr EventTypeManager::create(const EventType::ValuePtr& parentEventType) {
-	EventTypeNodePtr node = EventType::create(new BaseEventType());
+EventTypeNodePtr EventTypeManager::registerNewType(BaseEventType* newEventType, const EventType::ValuePtr& parentEventType) {
+	EventTypeNodePtr node = EventType::create(newEventType);
 
 	std::optional<EventTypeNodePtr> maybeParent = EventType::find(eventTypeRoot, parentEventType);
 	if (maybeParent) {
@@ -36,10 +36,18 @@ EventTypeNodePtr EventTypeManager::create(const EventType::ValuePtr& parentEvent
 	return node;
 }
 
-EventTypeNodePtr EventTypeManager::create() {
-	EventTypeNodePtr node = EventType::create(new BaseEventType());
+EventTypeNodePtr EventTypeManager::registerNewType(const EventType::ValuePtr& parentEventType) {
+	return registerNewType(new BaseEventType(), parentEventType);
+}
+
+EventTypeNodePtr EventTypeManager::registerNewType(BaseEventType* newEventType) {
+	EventTypeNodePtr node = EventType::create(newEventType);
 	eventTypeRoot->addChild(node);
 	return node;
+}
+
+EventTypeNodePtr EventTypeManager::registerNewType() {
+	return registerNewType(new BaseEventType());
 }
 
 bool EventTypeManager::isOfType(const EventTypePtr& type, const EventTypePtr& against) {
