@@ -60,8 +60,8 @@ const EventTypePtr& UpgradeEventType::of(const Upgrade& upgrade) {
 /* Upgrade Tree
 -------------------------------------------------- */
 
-UpgradeTree::UpgradeTree(std::wstring typeName)
-    : upgradeTree(Node<PurchasableUpgrade>::create(new PurchasableUpgrade { Upgrade(typeName), true})) {
+UpgradeTree::UpgradeTree(const Upgrade& rootUpgrade)
+    : upgradeTree(Node<PurchasableUpgrade>::create(new PurchasableUpgrade { rootUpgrade, true})) {
 }
 
 // Try to add the upgrade this action is for.
@@ -78,7 +78,7 @@ void UpgradeTree::purchaseUpgrade(const Upgrade& upgrade) {
     if (
         parentUpgradeNode.value() &&                      // If there is a parent node (you can always purchase the root node, which has no parent)
         !parentUpgradeNode.value()->getValue()->purchased // and it isn't yet purchased
-        ) {
+    ) {
         return; // Cannot purchase upgrade with unmet dependencies
     }
 

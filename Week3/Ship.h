@@ -35,6 +35,8 @@ public:
 
 	// Upgrades
 
+	static const Upgrade SHIP; // Root Upgrade
+
 	static const Upgrade LOAD_OPTIMISATION;
 	static const Upgrade COOPERATION;
 	static const Upgrade OPTIMAL_SELECTION;

@@ -48,27 +48,7 @@ const UpgradeTree& Ship::getUpgradeTree() {
 /* Lifecycle
 -------------------------------------------------- */
 
-Ship::Ship(
-    Vector2D pos, Vector2D rot, PictureIndex image,
-    std::shared_ptr<NewtonianPhysModel> physModel
-) : GameObject(
-        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
-        physModel,
-        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
-        std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
-    ),
-    upgradeTree(UpgradeTree(L"Ship")),
-    engineThrust(0.2f),   // Distance units / second^2
-    rotateThrust(0.01f) { // Revolutions / second^2
-}
-
-Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
-    : Ship(
-        pos, rot, image,
-        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
-    ) {
-    buildUpgradeTree();
-}
+const Upgrade Ship::SHIP(L"Ship");
 
 const Upgrade Ship::LOAD_OPTIMISATION(L"Load Optimisation");
 const Upgrade Ship::SPACIAL_COMPRESSION(L"Spacial Compression");
@@ -89,6 +69,28 @@ const Upgrade Ship::WORKER_DRONE(L"Worker Drone");
 const Upgrade Ship::ARMOURED_DRONE(L"Armoured Drone");
 const Upgrade Ship::MINE(L"Mine");
 const Upgrade Ship::FIGHTER_DRONE(L"Fighter Drone");
+
+Ship::Ship(
+    Vector2D pos, Vector2D rot, PictureIndex image,
+    std::shared_ptr<NewtonianPhysModel> physModel
+) : GameObject(
+        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
+        physModel,
+        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
+        std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
+    ),
+    upgradeTree(UpgradeTree(SHIP)),
+    engineThrust(0.2f),   // Distance units / second^2
+    rotateThrust(0.01f) { // Revolutions / second^2
+}
+
+Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
+    : Ship(
+        pos, rot, image,
+        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+    ) {
+    buildUpgradeTree();
+}
 
 void Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
@@ -121,6 +123,9 @@ void Ship::handle(const Event& e) {
     else if (EventTypeManager::isOfType(e.type, TURN_RIGHT_THRUST)) turnRightThrust();
     
     else if (EventTypeManager::isOfType(e.type, UpgradeEventType::UPGRADE)) {
+        // If e.type == UpgradeEventType::UPGRADE, then you are an itiot (and this static_cast<> will break badly).
+        // TODO: make UpgradeEventType::UPGRADE 'abstract' (ie. not accepted by Event as a valid instantiation type).
+        // TODO: also make all the other abstract types abstract.
         upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
     }
 }

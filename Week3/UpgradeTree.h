@@ -25,7 +25,7 @@ private:
 
 public:
 	// The upgrade this type of event will lead to attempting to purchase.
-	const Upgrade upgrade;
+	const Upgrade& upgrade;
 
 	// The root event type of all events of the UpgradeEventType.
 	static const EventTypePtr UPGRADE;
@@ -39,7 +39,7 @@ class UpgradeTree {
 private:
 	// An upgrade and whether it has been purchased for this ship.
 	struct PurchasableUpgrade {
-		Upgrade upgrade;
+		const Upgrade& upgrade;
 		bool purchased;
 
 		bool operator== (const PurchasableUpgrade& other) const;
@@ -56,7 +56,7 @@ private:
 
 public:
 	// Constructor
-	UpgradeTree(std::wstring typeName);
+	UpgradeTree(const Upgrade& rootUpgrade);
 
 	// Get, Set, and Find
 	const NodePtr& getRootUpgrade() const;
