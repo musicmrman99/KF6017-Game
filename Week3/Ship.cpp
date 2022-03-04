@@ -38,15 +38,8 @@ void Ship::turnRightThrust() {
     physModel().shiftRotAccel(physModel().toRPS(rotateThrust));
 };
 
-/* Getters
--------------------------------------------------- */
-
-const UpgradeTree& Ship::getUpgradeTree() {
-    return upgradeTree;
-}
-
-/* Lifecycle
--------------------------------------------------- */
+/* Upgrades
+-------------------- */
 
 const Upgrade Ship::SHIP(L"Ship");
 
@@ -70,6 +63,41 @@ const Upgrade Ship::ARMOURED_DRONE(L"Armoured Drone");
 const Upgrade Ship::MINE(L"Mine");
 const Upgrade Ship::FIGHTER_DRONE(L"Fighter Drone");
 
+void Ship::buildUpgradeTree() {
+    // Formatted the same as tree itself for ease of reading
+    const auto& loadOptimisation = upgradeTree.addUpgrade(LOAD_OPTIMISATION);
+    upgradeTree.addUpgrade(loadOptimisation, SPACIAL_COMPRESSION);
+    const auto& cooperation = upgradeTree.addUpgrade(loadOptimisation, COOPERATION);
+    upgradeTree.addUpgrade(cooperation, OPTIMAL_SELECTION);
+
+    const auto& rearThrusters = upgradeTree.addUpgrade(REAR_THRUSTERS);
+    upgradeTree.addUpgrade(rearThrusters, FRONT_THRUSTERS);
+    const auto& overdrive = upgradeTree.addUpgrade(rearThrusters, OVERDRIVE);
+    upgradeTree.addUpgrade(overdrive, HYPER_JUMP);
+
+    const auto& heavyShells = upgradeTree.addUpgrade(HEAVY_SHELLS);
+    upgradeTree.addUpgrade(heavyShells, IONIC_SHELLS);
+    const auto& frontAutoCannons = upgradeTree.addUpgrade(heavyShells, FRONT_AUTO_CANNONS);
+    upgradeTree.addUpgrade(frontAutoCannons, REAR_AUTO_CANNONS);
+
+    const auto& workerDrone = upgradeTree.addUpgrade(WORKER_DRONE);
+    upgradeTree.addUpgrade(workerDrone, ARMOURED_DRONE);
+    const auto& mine = upgradeTree.addUpgrade(workerDrone, MINE);
+    upgradeTree.addUpgrade(mine, FIGHTER_DRONE);
+}
+
+// Use UpgradeEventType::of() to get the upgrade event type for these upgrades.
+
+/* Getters
+-------------------------------------------------- */
+
+const UpgradeTree& Ship::getUpgradeTree() {
+    return upgradeTree;
+}
+
+/* Lifecycle
+-------------------------------------------------- */
+
 Ship::Ship(
     Vector2D pos, Vector2D rot, PictureIndex image,
     std::shared_ptr<NewtonianPhysModel> physModel
@@ -92,30 +120,12 @@ Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
     buildUpgradeTree();
 }
 
-void Ship::buildUpgradeTree() {
-    // Formatted the same as tree itself for ease of reading
-    const auto& loadOptimisation = upgradeTree.addUpgrade(LOAD_OPTIMISATION);
-        upgradeTree.addUpgrade(loadOptimisation, SPACIAL_COMPRESSION);
-        const auto& cooperation = upgradeTree.addUpgrade(loadOptimisation, COOPERATION);
-            upgradeTree.addUpgrade(cooperation, OPTIMAL_SELECTION);
-            
-    const auto& rearThrusters = upgradeTree.addUpgrade(REAR_THRUSTERS);
-        upgradeTree.addUpgrade(rearThrusters, FRONT_THRUSTERS);
-        const auto& overdrive = upgradeTree.addUpgrade(rearThrusters, OVERDRIVE);
-            upgradeTree.addUpgrade(overdrive, HYPER_JUMP);
-
-    const auto& heavyShells = upgradeTree.addUpgrade(HEAVY_SHELLS);
-        upgradeTree.addUpgrade(heavyShells, IONIC_SHELLS);
-        const auto& frontAutoCannons = upgradeTree.addUpgrade(heavyShells, FRONT_AUTO_CANNONS);
-            upgradeTree.addUpgrade(frontAutoCannons, REAR_AUTO_CANNONS);
-
-    const auto& workerDrone = upgradeTree.addUpgrade(WORKER_DRONE);
-        upgradeTree.addUpgrade(workerDrone, ARMOURED_DRONE);
-        const auto& mine = upgradeTree.addUpgrade(workerDrone, MINE);
-            upgradeTree.addUpgrade(mine, FIGHTER_DRONE);
-}
-
 Ship::~Ship() {}
+
+void Ship::beforeActions() {
+    physModel().setAccel(Vector2D(0.0f, 0.0f));
+    physModel().setRotAccel(0.0f);
+}
 
 void Ship::handle(const Event& e) {
          if (EventTypeManager::isOfType(e.type, MAIN_THRUST)) mainThrust();
@@ -125,9 +135,4 @@ void Ship::handle(const Event& e) {
     else if (EventTypeManager::isOfType(e.type, UpgradeEventType::UPGRADE)) {
         upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
     }
-}
-
-void Ship::beforeActions() {
-    physModel().setAccel(Vector2D(0.0f, 0.0f));
-    physModel().setRotAccel(0.0f);
 }

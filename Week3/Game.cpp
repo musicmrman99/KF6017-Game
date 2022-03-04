@@ -260,7 +260,7 @@ ErrorType Game::StartOfGame() {
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new BasicEventEmitter(UpgradeEventType::of(Ship::LOAD_OPTIMISATION)));
 
     // Player
-    ObjectManager::GameObjectPtr player = ObjectManager::GameObjectPtr(new Ship(
+    GameObject::Ptr player = GameObject::Ptr(new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite

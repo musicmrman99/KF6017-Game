@@ -51,8 +51,6 @@ void GameObject::handle(const Event& e) {};
 
 void GameObject::beforeActions() {};
 void GameObject::actions() {
-    static std::queue<Event> events;
-
     controller().emit(events);
     while (!events.empty()) {
         const Event& event = events.front();
@@ -60,6 +58,8 @@ void GameObject::actions() {
         events.pop();
     }
 }
+
+void GameObject::emit(std::queue<Event>& globalEvents) {}
 
 void GameObject::beforePhys() {};
 void GameObject::phys() {

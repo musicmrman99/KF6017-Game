@@ -74,6 +74,7 @@ public:
 	const UpgradeTree& getUpgradeTree();
 
 	// Lifecycle
+
 	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
 	void buildUpgradeTree();
 	virtual ~Ship();

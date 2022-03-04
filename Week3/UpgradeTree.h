@@ -1,8 +1,6 @@
 #pragma once
 
 #include <string>
-#include <map>
-#include <optional>
 
 #include "Event.h"
 #include "Symbol.h"

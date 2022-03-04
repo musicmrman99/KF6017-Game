@@ -8,8 +8,9 @@
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
-class GameObject : EventHandler {
+class GameObject : EventHandler, EventEmitter {
 public:
+    using Ptr = std::shared_ptr<GameObject>;
     using EventEmitterPtr = std::shared_ptr<EventEmitter>;
     using PhysModelPtr = std::shared_ptr<PhysModel>;
     using GraphicsModelPtr = std::shared_ptr<GraphicsModel>;
@@ -19,6 +20,8 @@ private:
     PhysModelPtr _physModel;
     GraphicsModelPtr _graphicsModel;
     GraphicsModelPtr _uiGraphicsModel;
+
+    std::queue<Event> events;
 
 public:
     /* Components
@@ -53,6 +56,7 @@ public:
     -------------------- */
 
     virtual void handle(const Event& e) override;
+    virtual void emit(std::queue<Event>& events) override;
 
     /* Lifecycle
     -------------------- */

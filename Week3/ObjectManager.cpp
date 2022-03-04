@@ -1,21 +1,32 @@
 #include "ObjectManager.h"
 
-void ObjectManager::addObject(const GameObjectPtr gameObject) {
+void ObjectManager::addObject(const GameObject::Ptr gameObject) {
     objects.push_back(gameObject);
 }
 
 void ObjectManager::run() {
-    for (GameObjectPtr& object : objects) object->beforeActions();
-    for (GameObjectPtr& object : objects) object->actions();
+    // Handle actions
+    for (GameObject::Ptr& object : objects) object->beforeActions();
+    for (GameObject::Ptr& object : objects) object->actions();
 
-    for (GameObjectPtr& object : objects) object->beforePhys();
-    for (GameObjectPtr& object : objects) object->phys();
+    // Handle global events
+    for (GameObject::Ptr& object : objects) object->emit(events);
+    while (!events.empty()) {
+        const Event& event = events.front();
+        for (GameObject::Ptr& object : objects) object->handle(event);
+        events.pop();
+    }
 
-    for (GameObjectPtr& object : objects) object->beforeDraw();
-    for (GameObjectPtr& object : objects) object->draw();
+    // Handle physics and graphics
+    for (GameObject::Ptr& object : objects) object->beforePhys();
+    for (GameObject::Ptr& object : objects) object->phys();
 
-    for (GameObjectPtr& object : objects) object->beforeDrawUI();
-    for (GameObjectPtr& object : objects) object->drawUI();
+    for (GameObject::Ptr& object : objects) object->beforeDraw();
+    for (GameObject::Ptr& object : objects) object->draw();
 
-    for (GameObjectPtr& object : objects) object->afterFrame();
+    for (GameObject::Ptr& object : objects) object->beforeDrawUI();
+    for (GameObject::Ptr& object : objects) object->drawUI();
+
+    // Anything else
+    for (GameObject::Ptr& object : objects) object->afterFrame();
 }

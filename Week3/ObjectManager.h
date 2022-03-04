@@ -6,14 +6,12 @@
 #include "GameObject.h"
 
 class ObjectManager {
-public:
-	using GameObjectPtr = std::shared_ptr<GameObject>;
-
 private:
-	std::list<GameObjectPtr> objects;
+	std::list<GameObject::Ptr> objects;
+	std::queue<Event> events;
 
 public:
-	void addObject(const GameObjectPtr gameObject);
+	void addObject(const GameObject::Ptr gameObject);
 
 	void run();
 };

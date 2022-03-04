@@ -1,3 +1,7 @@
+#include <map>
+
+#include "ReferenceWrapperUtils.h"
+
 #include "UpgradeTree.h"
 
 /* Upgrade
@@ -28,14 +32,6 @@ struct UpgradeTree::NestedUpgradeComparator {
 UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
 
 const EventCategoryVPtr UpgradeEventType::UPGRADE = EventTypeManager::registerNewCategory();
-
-// A comparator for just the upgrade of a purchasable upgrade, ignoring whether it's purchased.
-template <class T>
-struct ReferenceWrapperLess {
-    bool operator() (const std::reference_wrapper<T>& a, const std::reference_wrapper<T>& b) const {
-        return a.get() < b.get();
-    }
-};
 
 using UpgradeKey = std::reference_wrapper<const Upgrade>;
 using UpgradeEventTypeMap = std::map<UpgradeKey, const EventTypeVPtr, ReferenceWrapperLess<const Upgrade>>;
