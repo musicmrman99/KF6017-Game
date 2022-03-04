@@ -26,13 +26,11 @@ const EventTypeNodePtr& EventTypeManager::getRootEventType() {
 }
 
 EventTypeNodePtr EventTypeManager::registerNewType(BaseEventType* newEventType, const EventType::ValuePtr& parentEventType) {
-	EventTypeNodePtr node = EventType::create(newEventType);
-
 	std::optional<EventTypeNodePtr> maybeParent = EventType::find(eventTypeRoot, parentEventType);
-	if (maybeParent) {
-		(*maybeParent)->addChild(node);
-	}
+	if (!maybeParent) return nullptr; // Should never happen if you use registerEventType() for all types
 
+	EventTypeNodePtr node = EventType::create(newEventType);
+	(*maybeParent)->addChild(node);
 	return node;
 }
 
@@ -41,6 +39,7 @@ EventTypeNodePtr EventTypeManager::registerNewType(const EventType::ValuePtr& pa
 }
 
 EventTypeNodePtr EventTypeManager::registerNewType(BaseEventType* newEventType) {
+	// Re-implement for efficiency (only 3 lines)
 	EventTypeNodePtr node = EventType::create(newEventType);
 	eventTypeRoot->addChild(node);
 	return node;
