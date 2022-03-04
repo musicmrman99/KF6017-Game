@@ -15,7 +15,7 @@ private:
 public:
 	Upgrade(const std::wstring name);
 
-	const std::wstring& getName() { return name; }
+	const std::wstring& getName() const;
 };
 
 // A template for the event types for the type of upgrade.

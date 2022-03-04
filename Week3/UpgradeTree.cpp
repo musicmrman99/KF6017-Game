@@ -5,6 +5,8 @@
 
 Upgrade::Upgrade(const std::wstring name) : name(name) {}
 
+const std::wstring& Upgrade::getName() const { return name; }
+
 /* Purchasable Upgrade
 -------------------------------------------------- */
 
