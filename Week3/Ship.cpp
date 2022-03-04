@@ -22,9 +22,9 @@ void Ship::setPhysModel(PhysModelPtr physModel) {
 /* Movement Actions
 -------------------- */
 
-const EventTypePtr Ship::MAIN_THRUST = EventTypeManager::registerNewType()->getValue();
-const EventTypePtr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType()->getValue();
-const EventTypePtr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType()->getValue();
+const EventTypeVPtr Ship::MAIN_THRUST = EventTypeManager::registerNewType();
+const EventTypeVPtr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType();
+const EventTypeVPtr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType();
 
 void Ship::mainThrust() {
     physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));
@@ -123,9 +123,6 @@ void Ship::handle(const Event& e) {
     else if (EventTypeManager::isOfType(e.type, TURN_RIGHT_THRUST)) turnRightThrust();
     
     else if (EventTypeManager::isOfType(e.type, UpgradeEventType::UPGRADE)) {
-        // If e.type == UpgradeEventType::UPGRADE, then you are an itiot (and this static_cast<> will break badly).
-        // TODO: make UpgradeEventType::UPGRADE 'abstract' (ie. not accepted by Event as a valid instantiation type).
-        // TODO: also make all the other abstract types abstract.
         upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
     }
 }

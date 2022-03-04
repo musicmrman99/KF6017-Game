@@ -19,7 +19,7 @@ public:
 };
 
 // A template for the event types for the type of upgrade.
-class UpgradeEventType : public BaseEventType {
+class UpgradeEventType : public EventType {
 private:
 	UpgradeEventType(const Upgrade& upgrade);
 
@@ -28,10 +28,10 @@ public:
 	const Upgrade& upgrade;
 
 	// The root event type of all events of the UpgradeEventType.
-	static const EventTypePtr UPGRADE;
+	static const EventCategoryVPtr UPGRADE;
 
 	// Memoised factory for upgrade event types.
-	static const EventTypePtr& of(const Upgrade& upgrade);
+	static const EventTypeVPtr& of(const Upgrade& upgrade);
 };
 
 // A tree of upgrades

@@ -25,9 +25,9 @@ public:
 
 	// Movement
 
-	static const EventTypePtr MAIN_THRUST;
-	static const EventTypePtr TURN_LEFT_THRUST;
-	static const EventTypePtr TURN_RIGHT_THRUST;
+	static const EventTypeVPtr MAIN_THRUST;
+	static const EventTypeVPtr TURN_LEFT_THRUST;
+	static const EventTypeVPtr TURN_RIGHT_THRUST;
 
 	void mainThrust();
 	void turnLeftThrust();

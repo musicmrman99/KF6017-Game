@@ -9,22 +9,32 @@
 /* Core Concepts
 -------------------------------------------------- */
 
-// EventType
-class BaseEventType : public Symbol {
+// An Event cannot be created with an abstract event type, but 
+class EventCategory : public Symbol {
 public:
-	BaseEventType();
-	virtual ~BaseEventType();
+	EventCategory();
+	virtual ~EventCategory();
 };
 
-using EventType = Node<BaseEventType>;
-using EventTypePtr = Node<BaseEventType>::ValuePtr;
-using EventTypeNodePtr = Node<BaseEventType>::NodePtr;
+class EventType : public EventCategory {
+public:
+	EventType();
+	virtual ~EventType();
+};
+
+using EventCategoryN = Node<EventCategory>;
+using EventCategoryNPtr = EventCategoryN::NodePtr;
+using EventCategoryVPtr = EventCategoryN::ValuePtr;
+
+using EventTypeN = Node<EventType>;
+using EventTypeNPtr = EventTypeN::NodePtr;
+using EventTypeVPtr = EventTypeN::ValuePtr;
 
 // Event
 class Event {
 public:
-	const EventTypePtr& type;
-	Event(const EventTypePtr& type);
+	const EventTypeVPtr& type;
+	Event(const EventTypeVPtr& type);
 };
 
 // Event Emitter
@@ -45,19 +55,24 @@ public:
 // Hacky global state (would be better if it were compile-time checked)
 class EventTypeManager final {
 private:
-	static EventTypeNodePtr eventTypeRoot;
+	static EventCategoryNPtr eventTypeRoot;
 
 	EventTypeManager();
 
 public:
-	static const EventTypeNodePtr& getRootEventType();
+	static const EventCategoryVPtr getRootEventType();
 
-	static EventTypeNodePtr registerNewType(BaseEventType* newEventType, const EventType::ValuePtr& parentEventType);
-	static EventTypeNodePtr registerNewType(BaseEventType* newEventType);
-	static EventTypeNodePtr registerNewType(const EventType::ValuePtr& parentEventType);
-	static EventTypeNodePtr registerNewType();
+	static EventCategoryVPtr registerNewCategory(EventCategory* newEventCategory, const EventCategoryVPtr& parentCategory);
+	static EventCategoryVPtr registerNewCategory(EventCategory* newEventCategory);
+	static EventCategoryVPtr registerNewCategory(const EventCategoryVPtr& parentCategory);
+	static EventCategoryVPtr registerNewCategory();
 
-	static bool isOfType(const EventTypePtr& type, const EventTypePtr& against);
+	static EventTypeVPtr registerNewType(EventType* newEventType, const EventCategoryVPtr& category);
+	static EventTypeVPtr registerNewType(EventType* newEventType);
+	static EventTypeVPtr registerNewType(const EventCategoryVPtr& category);
+	static EventTypeVPtr registerNewType();
+
+	static bool isOfType(const EventCategoryVPtr& type, const EventCategoryVPtr& against);
 };
 
 /* Common Implementations
@@ -70,9 +85,9 @@ public:
 
 class BasicEventEmitter : public EventEmitter {
 private:
-	const EventTypePtr eventType;
+	const EventTypeVPtr eventType;
 
 public:
-	BasicEventEmitter(const EventTypePtr& eventType);
+	BasicEventEmitter(const EventTypeVPtr& eventType);
 	virtual void emit(std::queue<Event>& events);
 };
