@@ -3,4 +3,9 @@
 #include <queue>
 
 template <class T>
-void shiftQueue(std::queue<T>& a, std::queue<T>& b);
+void shiftInto(std::queue<T>& a, std::queue<T>& b) {
+	while (!a.empty()) {
+		b.push(a.front());
+		a.pop();
+	}
+}
