@@ -61,7 +61,7 @@ public:
 	virtual void handle(const Event& e) = 0;
 };
 
-class TargettedEvent : Event {
+class TargettedEvent : public Event {
 public:
 	using TargetPtr = std::weak_ptr<EventHandler>;
 

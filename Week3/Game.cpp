@@ -259,14 +259,16 @@ ErrorType Game::StartOfGame() {
 
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new BasicEventEmitter(UpgradeEventType::of(Ship::LOAD_OPTIMISATION)));
 
-    // Player
-    GameObject::Ptr player = GameObject::Ptr(new Ship(
+    // Objects
+    objectManager = ObjectManager::Ptr(new ObjectManager());
+
+    GameObject* player = new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite
-    ));
+    );
     player->setController(playerKeymap);
-    objectManager.addObject(player);
+    objectManager->addObject(player);
 
     return SUCCESS;
 }
@@ -308,7 +310,7 @@ ErrorType Game::Update() {
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
-    objectManager.run();
+    objectManager->run();
 
     return SUCCESS;
 }

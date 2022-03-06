@@ -1,7 +1,21 @@
 #include "ObjectManager.h"
 
-void ObjectManager::addObject(const GameObject::Ptr gameObject) {
-    objects.push_back(gameObject);
+/* Object Manager
+-------------------------------------------------- */
+
+void ObjectManager::addObject(GameObject* gameObject) {
+    objects.push_back(GameObject::Ptr(gameObject));
+}
+
+void ObjectManager::deleteObject(GameObject* gameObject) {
+    // Can use `objects.remove_if()` on a std::list since C++17
+    std::list<GameObject::Ptr>::iterator removeStart = std::remove_if(
+        objects.begin(), objects.end(),
+        [gameObject](const GameObject::Ptr& object) {
+            return object.get() == gameObject;
+        }
+    );
+    objects.erase(removeStart, objects.end());
 }
 
 void ObjectManager::run() {
@@ -21,7 +35,7 @@ void ObjectManager::run() {
         }
         events.pop();
 
-        // Any more to handle?
+        // Any more events to handle?
         for (GameObject::Ptr& object : objects) object->emit(events);
     }
 
@@ -37,4 +51,23 @@ void ObjectManager::run() {
 
     // Anything else
     for (GameObject::Ptr& object : objects) object->afterFrame();
+}
+
+void ObjectManager::handle(const Event& e) {
+    if (EventTypeManager::isOfType(e.type, ObjectEvent::RELEASE)) {
+        addObject(static_cast<const ObjectEvent&>(e).object);
+    }
+    else if (EventTypeManager::isOfType(e.type, ObjectEvent::DESTROY)) {
+        deleteObject(static_cast<const ObjectEvent&>(e).object);
+    }
+}
+
+/* Events
+-------------------------------------------------- */
+
+const EventTypeVPtr ObjectEvent::RELEASE = EventTypeManager::registerNewType();
+const EventTypeVPtr ObjectEvent::DESTROY = EventTypeManager::registerNewType();
+
+ObjectEvent::ObjectEvent(ObjectManager::Ptr objectManager, const EventTypeVPtr& type, GameObject* object)
+    : TargettedEvent(type, std::static_pointer_cast<EventHandler>(objectManager)), object(object) {
 }
