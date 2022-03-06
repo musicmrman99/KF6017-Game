@@ -9,12 +9,16 @@ void ObjectManager::run() {
     for (GameObject::Ptr& object : objects) object->beforeActions();
     for (GameObject::Ptr& object : objects) object->actions();
 
-    // Handle global events
+    // Handle Global Events
     for (GameObject::Ptr& object : objects) object->emit(events);
     while (!events.empty()) {
+        // Handle Event
         const Event& event = events.front();
         for (GameObject::Ptr& object : objects) object->handle(event);
         events.pop();
+
+        // Any more to handle?
+        for (GameObject::Ptr& object : objects) object->emit(events);
     }
 
     // Handle physics and graphics

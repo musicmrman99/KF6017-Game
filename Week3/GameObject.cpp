@@ -41,11 +41,6 @@ void GameObject::setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel) {
     if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
 }
 
-/* Events
--------------------- */
-
-void GameObject::handle(const Event& e) {};
-
 /* Lifecycle
 -------------------- */
 
@@ -59,6 +54,7 @@ void GameObject::actions() {
     }
 }
 
+void GameObject::handle(const Event& e) {}
 void GameObject::emit(std::queue<Event>& globalEvents) {}
 
 void GameObject::beforePhys() {};

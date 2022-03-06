@@ -55,15 +55,18 @@ public:
     /* Events
     -------------------- */
 
-    virtual void handle(const Event& e) override;
-    virtual void emit(std::queue<Event>& events) override;
-
     /* Lifecycle
     -------------------- */
 
+    // Action Handling
     virtual void beforeActions();
     virtual void actions();
 
+    // Event Handling
+    virtual void handle(const Event& e) override;
+    virtual void emit(std::queue<Event>& events) override;
+
+    // Run other Model Phase
     virtual void beforePhys();
     virtual void phys();
 
