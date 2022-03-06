@@ -13,8 +13,12 @@ void ObjectManager::run() {
     for (GameObject::Ptr& object : objects) object->emit(events);
     while (!events.empty()) {
         // Handle Event
-        const Event& event = events.front();
-        for (GameObject::Ptr& object : objects) object->handle(event);
+        const Event* event = &events.front();
+        if (const TargettedEvent* targettedEvent = dynamic_cast<const TargettedEvent*>(event)) {
+            if (auto ptr = targettedEvent->target.lock()) ptr->handle(*event);
+        } else {
+            for (GameObject::Ptr& object : objects) object->handle(*event);
+        }
         events.pop();
 
         // Any more to handle?

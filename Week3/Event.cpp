@@ -21,7 +21,15 @@ EventType::~EventType() {}
 /* Event
 -------------------- */
 
-Event::Event(const EventTypeVPtr& type) : type(type) {};
+Event::Event(const EventTypeVPtr& type) : type(type) {}
+Event::~Event() {}
+
+/* Targetted Event
+-------------------- */
+
+TargettedEvent::TargettedEvent(const EventTypeVPtr& type, const TargetPtr target)
+	: Event(type), target(target) {
+}
 
 /* Event Type Manager
 -------------------------------------------------- */

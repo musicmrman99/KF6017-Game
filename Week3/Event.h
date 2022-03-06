@@ -46,6 +46,7 @@ class Event {
 public:
 	const EventTypeVPtr& type;
 	Event(const EventTypeVPtr& type);
+	virtual ~Event();
 };
 
 // Event Emitter
@@ -58,6 +59,14 @@ public:
 class EventHandler : public Symbol {
 public:
 	virtual void handle(const Event& e) = 0;
+};
+
+class TargettedEvent : Event {
+public:
+	using TargetPtr = std::weak_ptr<EventHandler>;
+
+	const TargetPtr target;
+	TargettedEvent(const EventTypeVPtr& type, const TargetPtr target);
 };
 
 /* Event Type Manager
