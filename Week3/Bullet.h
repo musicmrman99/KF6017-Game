@@ -8,7 +8,7 @@
 
 class Bullet : public GameObject {
 private:
-	static constexpr float SPEED = 1.0f;
+	static constexpr float SPEED = 40.0f;
 
 	// 2nd phase constructor
 	Bullet(

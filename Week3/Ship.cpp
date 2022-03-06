@@ -2,7 +2,10 @@
 
 #include <string>
 
+#include "QueueUtils.h"
+
 #include "UpgradeTreeUI.h"
+#include "Bullet.h"
 
 /* Get/Set the right types
 -------------------------------------------------- */
@@ -37,6 +40,16 @@ void Ship::turnLeftThrust() {
 void Ship::turnRightThrust() {
     physModel().shiftRotAccel(physModel().toRPS(rotateThrust));
 };
+
+/* Attack
+-------------------- */
+
+const EventType::Ptr Ship::FIRE = EventTypeManager::registerNewType();
+
+void Ship::fire() {
+    Bullet* bullet = new Bullet(physModel().pos(), physModel().rot(), bulletImage);
+    globalEventBuffer.push(ObjectEvent::Ptr(new ObjectEvent(objectManager, ObjectEvent::RELEASE, bullet)));
+}
 
 /* Upgrades
 -------------------- */
@@ -99,7 +112,7 @@ const UpgradeTree& Ship::getUpgradeTree() {
 -------------------------------------------------- */
 
 Ship::Ship(
-    Vector2D pos, Vector2D rot, PictureIndex image,
+    Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager,
     std::shared_ptr<NewtonianPhysModel> physModel
 ) : GameObject(
         std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
@@ -107,14 +120,16 @@ Ship::Ship(
         std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
         std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
     ),
+    objectManager(objectManager),
+    bulletImage(bulletImage),
     upgradeTree(UpgradeTree(SHIP)),
     engineThrust(0.2f),   // Distance units / second^2
     rotateThrust(0.01f) { // Revolutions / second^2
 }
 
-Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image)
+Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager)
     : Ship(
-        pos, rot, image,
+        pos, rot, image, bulletImage, objectManager,
         std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
     ) {
     buildUpgradeTree();
@@ -127,11 +142,17 @@ void Ship::beforeActions() {
     physModel().setRotAccel(0.0f);
 }
 
+void Ship::emit(std::queue<Event::Ptr>& globalEvents) {
+    shiftInto(globalEventBuffer, globalEvents);
+}
+
 void Ship::handle(const Event::Ptr e) {
          if (EventTypeManager::isOfType(e->type, MAIN_THRUST)) mainThrust();
     else if (EventTypeManager::isOfType(e->type, TURN_LEFT_THRUST)) turnLeftThrust();
     else if (EventTypeManager::isOfType(e->type, TURN_RIGHT_THRUST)) turnRightThrust();
 
+    else if (EventTypeManager::isOfType(e->type, FIRE)) fire();
+    
     else if (EventTypeManager::isOfType(e->type, UpgradeEventType::UPGRADE)) {
         upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEventType>(e->type)->upgrade);
     }
