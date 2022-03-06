@@ -8,7 +8,7 @@
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
-class GameObject : EventHandler, EventEmitter {
+class GameObject : public EventHandler, public EventEmitter {
 public:
     using Ptr = std::shared_ptr<GameObject>;
     using EventEmitterPtr = std::shared_ptr<EventEmitter>;
