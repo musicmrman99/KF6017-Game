@@ -52,9 +52,6 @@ public:
     virtual GraphicsModel& uiGraphicsModel() const;
     virtual void setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel);
 
-    /* Events
-    -------------------- */
-
     /* Lifecycle
     -------------------- */
 
