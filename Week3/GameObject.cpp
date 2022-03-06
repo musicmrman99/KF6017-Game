@@ -48,14 +48,14 @@ void GameObject::beforeActions() {};
 void GameObject::actions() {
     controller().emit(events);
     while (!events.empty()) {
-        const Event& event = events.front();
+        const Event::Ptr& event = events.front();
         handle(event);
         events.pop();
     }
 }
 
-void GameObject::handle(const Event& e) {}
-void GameObject::emit(std::queue<Event>& globalEvents) {}
+void GameObject::handle(const Event::Ptr e) {}
+void GameObject::emit(std::queue<Event::Ptr>& globalEvents) {}
 
 void GameObject::beforePhys() {};
 void GameObject::phys() {

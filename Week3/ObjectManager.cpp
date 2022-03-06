@@ -27,11 +27,11 @@ void ObjectManager::run() {
     for (GameObject::Ptr& object : objects) object->emit(events);
     while (!events.empty()) {
         // Handle Event
-        const Event* event = &events.front();
-        if (const TargettedEvent* targettedEvent = dynamic_cast<const TargettedEvent*>(event)) {
-            if (auto ptr = targettedEvent->target.lock()) ptr->handle(*event);
+        const Event::Ptr& event = events.front();
+        if (const TargettedEvent::Ptr targettedEvent = std::dynamic_pointer_cast<TargettedEvent>(event)) {
+            if (auto ptr = targettedEvent->target.lock()) ptr->handle(event);
         } else {
-            for (GameObject::Ptr& object : objects) object->handle(*event);
+            for (GameObject::Ptr& object : objects) object->handle(event);
         }
         events.pop();
 
@@ -53,21 +53,21 @@ void ObjectManager::run() {
     for (GameObject::Ptr& object : objects) object->afterFrame();
 }
 
-void ObjectManager::handle(const Event& e) {
-    if (EventTypeManager::isOfType(e.type, ObjectEvent::RELEASE)) {
-        addObject(static_cast<const ObjectEvent&>(e).object);
+void ObjectManager::handle(const Event::Ptr e) {
+    if (EventTypeManager::isOfType(e->type, ObjectEvent::RELEASE)) {
+        addObject(std::static_pointer_cast<const ObjectEvent>(e)->object);
     }
-    else if (EventTypeManager::isOfType(e.type, ObjectEvent::DESTROY)) {
-        deleteObject(static_cast<const ObjectEvent&>(e).object);
+    else if (EventTypeManager::isOfType(e->type, ObjectEvent::DESTROY)) {
+        deleteObject(std::static_pointer_cast<const ObjectEvent>(e)->object);
     }
 }
 
 /* Events
 -------------------------------------------------- */
 
-const EventTypeVPtr ObjectEvent::RELEASE = EventTypeManager::registerNewType();
-const EventTypeVPtr ObjectEvent::DESTROY = EventTypeManager::registerNewType();
+const EventType::Ptr ObjectEvent::RELEASE = EventTypeManager::registerNewType();
+const EventType::Ptr ObjectEvent::DESTROY = EventTypeManager::registerNewType();
 
-ObjectEvent::ObjectEvent(ObjectManager::Ptr objectManager, const EventTypeVPtr& type, GameObject* object)
+ObjectEvent::ObjectEvent(ObjectManager::Ptr objectManager, const EventType::Ptr& type, GameObject* object)
     : TargettedEvent(type, std::static_pointer_cast<EventHandler>(objectManager)), object(object) {
 }

@@ -7,7 +7,7 @@ KeyMap::~KeyMap() {
     }
 }
 
-void KeyMap::emit(std::queue<Event>& events) {
+void KeyMap::emit(std::queue<Event::Ptr>& events) {
     for (std::pair<Control*, EventEmitter*> binding : map) {
         if (binding.first->isActive()) {
             binding.second->emit(events);

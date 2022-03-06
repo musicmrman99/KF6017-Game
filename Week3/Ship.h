@@ -25,9 +25,9 @@ public:
 
 	// Movement
 
-	static const EventTypeVPtr MAIN_THRUST;
-	static const EventTypeVPtr TURN_LEFT_THRUST;
-	static const EventTypeVPtr TURN_RIGHT_THRUST;
+	static const EventType::Ptr MAIN_THRUST;
+	static const EventType::Ptr TURN_LEFT_THRUST;
+	static const EventType::Ptr TURN_RIGHT_THRUST;
 
 	void mainThrust();
 	void turnLeftThrust();
@@ -80,5 +80,5 @@ public:
 	virtual ~Ship();
 
 	virtual void beforeActions() override;
-	virtual void handle(const Event& e) override;
+	virtual void handle(const Event::Ptr e) override;
 };

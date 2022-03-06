@@ -22,9 +22,9 @@ void Ship::setPhysModel(PhysModelPtr physModel) {
 /* Movement Actions
 -------------------- */
 
-const EventTypeVPtr Ship::MAIN_THRUST = EventTypeManager::registerNewType();
-const EventTypeVPtr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType();
-const EventTypeVPtr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType();
+const EventType::Ptr Ship::MAIN_THRUST = EventTypeManager::registerNewType();
+const EventType::Ptr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType();
+const EventType::Ptr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType();
 
 void Ship::mainThrust() {
     physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));
@@ -127,12 +127,12 @@ void Ship::beforeActions() {
     physModel().setRotAccel(0.0f);
 }
 
-void Ship::handle(const Event& e) {
-         if (EventTypeManager::isOfType(e.type, MAIN_THRUST)) mainThrust();
-    else if (EventTypeManager::isOfType(e.type, TURN_LEFT_THRUST)) turnLeftThrust();
-    else if (EventTypeManager::isOfType(e.type, TURN_RIGHT_THRUST)) turnRightThrust();
-    
-    else if (EventTypeManager::isOfType(e.type, UpgradeEventType::UPGRADE)) {
-        upgradeTree.purchaseUpgrade(static_cast<UpgradeEventType*>(e.type.get())->upgrade);
+void Ship::handle(const Event::Ptr e) {
+         if (EventTypeManager::isOfType(e->type, MAIN_THRUST)) mainThrust();
+    else if (EventTypeManager::isOfType(e->type, TURN_LEFT_THRUST)) turnLeftThrust();
+    else if (EventTypeManager::isOfType(e->type, TURN_RIGHT_THRUST)) turnRightThrust();
+
+    else if (EventTypeManager::isOfType(e->type, UpgradeEventType::UPGRADE)) {
+        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEventType>(e->type)->upgrade);
     }
 }

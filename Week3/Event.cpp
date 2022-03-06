@@ -21,13 +21,13 @@ EventType::~EventType() {}
 /* Event
 -------------------- */
 
-Event::Event(const EventTypeVPtr& type) : type(type) {}
+Event::Event(const EventType::Ptr& type) : type(type) {}
 Event::~Event() {}
 
 /* Targetted Event
 -------------------- */
 
-TargettedEvent::TargettedEvent(const EventTypeVPtr& type, const TargetPtr target)
+TargettedEvent::TargettedEvent(const EventType::Ptr& type, const TargetPtr target)
 	: Event(type), target(target) {
 }
 
@@ -38,13 +38,13 @@ BaseEventTypeNPtr EventTypeManager::ANY_EVENT_TYPE = BaseEventTypeN::create(new 
 
 EventTypeManager::EventTypeManager() {}
 
-const EventCategoryVPtr EventTypeManager::getRootEventType() {
+const EventCategory::Ptr EventTypeManager::getRootEventType() {
 	return std::static_pointer_cast<EventCategory>(ANY_EVENT_TYPE->getValue());
 }
 
 // Create new category/type nodes (private)
 
-BaseEventTypeVPtr EventTypeManager::registerNew(BaseEventType* newBaseEventType, const BaseEventTypeVPtr& parentCategory) {
+BaseEventType::Ptr EventTypeManager::registerNew(BaseEventType* newBaseEventType, const BaseEventType::Ptr& parentCategory) {
 	std::optional<BaseEventTypeNPtr> maybeParentCategory = BaseEventTypeN::find(ANY_EVENT_TYPE, parentCategory);
 	if (!maybeParentCategory) return nullptr; // Should never happen if you use registerBaseEventType() for all categories
 
@@ -52,7 +52,7 @@ BaseEventTypeVPtr EventTypeManager::registerNew(BaseEventType* newBaseEventType,
 	(*maybeParentCategory)->addChild(node);
 	return node->getValue();
 }
-BaseEventTypeVPtr EventTypeManager::registerNew(BaseEventType* newBaseEventType) {
+BaseEventType::Ptr EventTypeManager::registerNew(BaseEventType* newBaseEventType) {
 	// Re-implement for efficiency (only 3 lines of duplication)
 	BaseEventTypeNPtr node = BaseEventTypeN::create(newBaseEventType);
 	ANY_EVENT_TYPE->addChild(node);
@@ -61,38 +61,38 @@ BaseEventTypeVPtr EventTypeManager::registerNew(BaseEventType* newBaseEventType)
 
 // Create new categories
 
-EventCategoryVPtr EventTypeManager::registerNewCategory(EventCategory* newEventCategory, const EventCategoryVPtr& parentCategory) {
+EventCategory::Ptr EventTypeManager::registerNewCategory(EventCategory* newEventCategory, const EventCategory::Ptr& parentCategory) {
 	return std::static_pointer_cast<EventCategory>(registerNew(newEventCategory, parentCategory));
 }
-EventCategoryVPtr EventTypeManager::registerNewCategory(EventCategory* newEventCategory) {
+EventCategory::Ptr EventTypeManager::registerNewCategory(EventCategory* newEventCategory) {
 	return std::static_pointer_cast<EventCategory>(registerNew(newEventCategory));
 }
-EventCategoryVPtr EventTypeManager::registerNewCategory(const EventCategoryVPtr& parentCategory) {
+EventCategory::Ptr EventTypeManager::registerNewCategory(const EventCategory::Ptr& parentCategory) {
 	return std::static_pointer_cast<EventCategory>(registerNew(new EventCategory(), parentCategory));
 }
-EventCategoryVPtr EventTypeManager::registerNewCategory() {
+EventCategory::Ptr EventTypeManager::registerNewCategory() {
 	return std::static_pointer_cast<EventCategory>(registerNew(new EventCategory()));
 }
 
 // Create new types
 
-EventTypeVPtr EventTypeManager::registerNewType(EventType* newEventCategory, const EventCategoryVPtr& parentCategory) {
+EventType::Ptr EventTypeManager::registerNewType(EventType* newEventCategory, const EventCategory::Ptr& parentCategory) {
 	return std::static_pointer_cast<EventType>(registerNew(newEventCategory, parentCategory));
 }
-EventTypeVPtr EventTypeManager::registerNewType(EventType* newEventCategory) {
+EventType::Ptr EventTypeManager::registerNewType(EventType* newEventCategory) {
 	return std::static_pointer_cast<EventType>(registerNew(newEventCategory));
 }
-EventTypeVPtr EventTypeManager::registerNewType(const EventCategoryVPtr& parentCategory) {
+EventType::Ptr EventTypeManager::registerNewType(const EventCategory::Ptr& parentCategory) {
 	return std::static_pointer_cast<EventType>(registerNew(new EventType(), parentCategory));
 }
-EventTypeVPtr EventTypeManager::registerNewType() {
+EventType::Ptr EventTypeManager::registerNewType() {
 	return std::static_pointer_cast<EventType>(registerNew(new EventType()));
 }
 
 // Type checker
 
-bool EventTypeManager::isOfType(const BaseEventTypeVPtr& type, const BaseEventTypeVPtr& against) {
-	std::optional<std::vector<BaseEventTypeVPtr>> path = BaseEventTypeN::findValuePath(ANY_EVENT_TYPE, type);
+bool EventTypeManager::isOfType(const BaseEventType::Ptr& type, const BaseEventType::Ptr& against) {
+	std::optional<std::vector<BaseEventType::Ptr>> path = BaseEventTypeN::findValuePath(ANY_EVENT_TYPE, type);
 	if (!path) return false; // No such type
 	return std::find(path->rbegin(), path->rend(), against) != path->rend(); // More likely to find it at the end, so iterate backwards
 }
@@ -103,12 +103,12 @@ bool EventTypeManager::isOfType(const BaseEventTypeVPtr& type, const BaseEventTy
 /* Null Event Emitter
 -------------------- */
 
-void NullEventEmitter::emit(std::queue<Event>& events) {}
+void NullEventEmitter::emit(std::queue<Event::Ptr>& events) {}
 
 /* Basic Event Emitter
 -------------------- */
 
-BasicEventEmitter::BasicEventEmitter(const EventTypeVPtr& eventType) : eventType(eventType) {}
-void BasicEventEmitter::emit(std::queue<Event>& events) {
-	events.push(Event(eventType));
+BasicEventEmitter::BasicEventEmitter(const EventType::Ptr& eventType) : eventType(eventType) {}
+void BasicEventEmitter::emit(std::queue<Event::Ptr>& events) {
+	events.push(Event::Ptr(new Event(eventType)));
 }

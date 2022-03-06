@@ -8,7 +8,7 @@
 class ObjectManager : public EventHandler {
 private:
 	std::list<GameObject::Ptr> objects;
-	std::queue<Event> events;
+	std::queue<Event::Ptr> events;
 
 public:
 	using Ptr = std::shared_ptr<ObjectManager>;
@@ -16,15 +16,15 @@ public:
 	void addObject(GameObject* gameObject);
 	void deleteObject(GameObject* gameObject);
 
-	virtual void handle(const Event& e) override;
+	virtual void handle(const Event::Ptr e) override;
 	void run();
 };
 
 class ObjectEvent : public TargettedEvent {
 public:
-	static const EventTypeVPtr RELEASE;
-	static const EventTypeVPtr DESTROY;
+	static const EventType::Ptr RELEASE;
+	static const EventType::Ptr DESTROY;
 
 	GameObject* object;
-	ObjectEvent(ObjectManager::Ptr objectManager, const EventTypeVPtr& type, GameObject* object);
+	ObjectEvent(ObjectManager::Ptr objectManager, const EventType::Ptr& type, GameObject* object);
 };

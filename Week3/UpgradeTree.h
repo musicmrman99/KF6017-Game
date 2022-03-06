@@ -26,10 +26,10 @@ public:
 	const Upgrade& upgrade;
 
 	// The root event type of all events of the UpgradeEventType.
-	static const EventCategoryVPtr UPGRADE;
+	static const EventCategory::Ptr UPGRADE;
 
 	// Memoised factory for upgrade event types.
-	static const EventTypeVPtr& of(const Upgrade& upgrade);
+	static const EventType::Ptr& of(const Upgrade& upgrade);
 };
 
 // A tree of upgrades
