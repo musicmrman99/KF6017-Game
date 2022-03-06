@@ -9,18 +9,29 @@
 /* Core Concepts
 -------------------------------------------------- */
 
-// An Event cannot be created with an abstract event type, but 
-class EventCategory : public Symbol {
+class BaseEventType : public Symbol {
+public:
+	BaseEventType();
+	virtual ~BaseEventType();
+};
+
+// A category of event types akin to an 'abstract' event type. Cannot be used to create an event
+class EventCategory : public BaseEventType {
 public:
 	EventCategory();
 	virtual ~EventCategory();
 };
 
-class EventType : public EventCategory {
+// An event type.
+class EventType : public BaseEventType {
 public:
 	EventType();
 	virtual ~EventType();
 };
+
+using BaseEventTypeN = Node<BaseEventType>;
+using BaseEventTypeNPtr = BaseEventTypeN::NodePtr;
+using BaseEventTypeVPtr = BaseEventTypeN::ValuePtr;
 
 using EventCategoryN = Node<EventCategory>;
 using EventCategoryNPtr = EventCategoryN::NodePtr;
@@ -55,9 +66,12 @@ public:
 // Hacky global state (would be better if it were compile-time checked)
 class EventTypeManager final {
 private:
-	static EventCategoryNPtr eventTypeRoot;
+	static BaseEventTypeNPtr ANY_EVENT_TYPE; // The root event type category
 
 	EventTypeManager();
+
+	static BaseEventTypeVPtr registerNew(BaseEventType* newBaseEventType, const BaseEventTypeVPtr& parentCategory);
+	static BaseEventTypeVPtr registerNew(BaseEventType* newBaseEventType);
 
 public:
 	static const EventCategoryVPtr getRootEventType();
@@ -72,7 +86,7 @@ public:
 	static EventTypeVPtr registerNewType(const EventCategoryVPtr& category);
 	static EventTypeVPtr registerNewType();
 
-	static bool isOfType(const EventCategoryVPtr& type, const EventCategoryVPtr& against);
+	static bool isOfType(const BaseEventTypeVPtr& type, const BaseEventTypeVPtr& against);
 };
 
 /* Common Implementations
