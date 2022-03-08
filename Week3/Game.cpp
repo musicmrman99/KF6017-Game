@@ -14,6 +14,8 @@
 #include "Ship.h"
 #include "KeyMap.h"
 
+constexpr auto SHOWFPS = true;
+
 Game::Game() :
     m_currentState(GameState::MENU),
     m_menuOption(0) {
@@ -310,6 +312,24 @@ ErrorType Game::Update() {
 
     // Tick the timer
     gt.mark();
+
+    // Show the framerate
+    static int fpsUpdateRate = 20 - 1;
+    static int fpsUpdateCountdown = fpsUpdateRate;
+    static float fpsAvg = 0.0f;
+    static float fps = 0.0f;
+    if (SHOWFPS) {
+        if (fpsUpdateCountdown == 0) {
+            fpsUpdateCountdown = fpsUpdateRate;
+            fps = fpsAvg;
+            fpsAvg = 0.0f;
+        }
+        fpsAvg += 1.0f / (float)gt.mdFrameTime;
+        fpsUpdateCountdown--;
+        MyDrawEngine* draw = MyDrawEngine::GetInstance();
+        const Rectangle2D& viewport = draw->GetViewport();
+        draw->WriteDouble(viewport.GetTopRight() - Vector2D(40, 0), fps / fpsUpdateRate, MyDrawEngine::CYAN);
+    }
 
     /* Game code
     -------------------------------------------------- */
