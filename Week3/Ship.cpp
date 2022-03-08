@@ -25,9 +25,15 @@ void Ship::setPhysModel(PhysModelPtr physModel) {
 /* Movement Actions
 -------------------- */
 
-const EventType::Ptr Ship::MAIN_THRUST = EventTypeManager::registerNewType();
-const EventType::Ptr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType();
-const EventType::Ptr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType();
+void Ship::MainThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(MainThrustEvent::Ptr(new MainThrustEvent()));
+}
+void Ship::TurnLeftThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(TurnLeftThrustEvent::Ptr(new TurnLeftThrustEvent()));
+}
+void Ship::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(TurnRightThrustEvent::Ptr(new TurnRightThrustEvent()));
+}
 
 void Ship::mainThrust() {
     physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));
@@ -44,16 +50,21 @@ void Ship::turnRightThrust() {
 /* Attack
 -------------------- */
 
-const EventType::Ptr Ship::FIRE = EventTypeManager::registerNewType();
+void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(FireEvent::Ptr(new FireEvent()));
+}
 
 void Ship::fire() {
     Bullet::UPtr bullet = Bullet::UPtr(new Bullet(physModel().pos(), physModel().rot(), bulletImage));
-    globalEventBuffer.push(ReleaseObjectEvent::Ptr(new ReleaseObjectEvent(objectManager, move(bullet))));
+    globalEventBuffer.push(ReleaseObjectEvent::create(objectManager, move(bullet)));
 }
 
 /* Upgrades
 -------------------- */
 
+// Use the generic UpgradeEvent type / UpgradeEventEmitter for Ship upgrades.
+
+// Define what upgrades are available.
 const Upgrade Ship::SHIP(L"Ship");
 
 const Upgrade Ship::LOAD_OPTIMISATION(L"Load Optimisation");
@@ -76,6 +87,7 @@ const Upgrade Ship::ARMOURED_DRONE(L"Armoured Drone");
 const Upgrade Ship::MINE(L"Mine");
 const Upgrade Ship::FIGHTER_DRONE(L"Fighter Drone");
 
+// Organise the available upgrades into a tree.
 void Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
     const auto& loadOptimisation = upgradeTree.addUpgrade(LOAD_OPTIMISATION);
@@ -98,8 +110,6 @@ void Ship::buildUpgradeTree() {
     const auto& mine = upgradeTree.addUpgrade(workerDrone, MINE);
     upgradeTree.addUpgrade(mine, FIGHTER_DRONE);
 }
-
-// Use UpgradeEventType::of() to get the upgrade event type for these upgrades.
 
 /* Getters
 -------------------------------------------------- */
@@ -147,13 +157,13 @@ void Ship::emit(std::queue<Event::Ptr>& globalEvents) {
 }
 
 void Ship::handle(const Event::Ptr e) {
-         if (EventTypeManager::isOfType(e->type, MAIN_THRUST)) mainThrust();
-    else if (EventTypeManager::isOfType(e->type, TURN_LEFT_THRUST)) turnLeftThrust();
-    else if (EventTypeManager::isOfType(e->type, TURN_RIGHT_THRUST)) turnRightThrust();
+         if (std::dynamic_pointer_cast<MainThrustEvent>(e)) mainThrust();
+    else if (std::dynamic_pointer_cast<TurnLeftThrustEvent>(e)) turnLeftThrust();
+    else if (std::dynamic_pointer_cast<TurnRightThrustEvent>(e)) turnRightThrust();
 
-    else if (EventTypeManager::isOfType(e->type, FIRE)) fire();
+    else if (std::dynamic_pointer_cast<FireEvent>(e)) fire();
     
-    else if (EventTypeManager::isOfType(e->type, UpgradeEventType::UPGRADE)) {
-        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEventType>(e->type)->upgrade);
+    else if (auto ue = std::dynamic_pointer_cast<UpgradeEvent>(e)) {
+        upgradeTree.purchaseUpgrade(ue->upgrade);
     }
 }

@@ -26,17 +26,30 @@ public:
 
 	// Movement
 
-	static const EventType::Ptr MAIN_THRUST;
-	static const EventType::Ptr TURN_LEFT_THRUST;
-	static const EventType::Ptr TURN_RIGHT_THRUST;
+	class MainThrustEvent final : public Event {};
+	class TurnLeftThrustEvent final : public Event {};
+	class TurnRightThrustEvent final : public Event {};
+
+	class MainThrustEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
+	class TurnLeftThrustEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
+	class TurnRightThrustEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
 
 	void mainThrust();
 	void turnLeftThrust();
 	void turnRightThrust();
 
 	// Attack
-	
-	static const EventType::Ptr FIRE;
+
+	class FireEvent final : public Event {};
+	class FireEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
 	void fire();
 
 	// Upgrades

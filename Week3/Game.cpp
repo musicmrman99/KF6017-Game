@@ -258,13 +258,13 @@ ErrorType Game::StartOfGame() {
 
     // Player Keymap
     KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicEventEmitter(Ship::MAIN_THRUST));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicEventEmitter(Ship::TURN_LEFT_THRUST));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new Ship::MainThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustEventEmitter());
 
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new BasicEventEmitter(Ship::FIRE));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new Ship::FireEventEmitter());
 
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new BasicEventEmitter(UpgradeEventType::of(Ship::LOAD_OPTIMISATION)));
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(Ship::LOAD_OPTIMISATION));
 
     // Objects
     objectManager = ObjectManager::Ptr(new ObjectManager());

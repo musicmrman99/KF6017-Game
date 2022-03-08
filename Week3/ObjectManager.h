@@ -5,6 +5,7 @@
 
 #include "GameObject.h"
 
+// Object Manager
 class ObjectManager final : public EventHandler {
 private:
 	std::list<GameObject::Ptr> objects;
@@ -28,18 +29,30 @@ public:
 	void run();
 };
 
-class ReleaseObjectEvent final : public TargettedEvent {
+// Release Object Event
+class ReleaseObjectEvent final : public Event {
+private:
+	ReleaseObjectEvent(GameObject::UPtr object);
+
 public:
-	static const EventType::Ptr EVENT_TYPE;
+	using Ptr = std::shared_ptr<ReleaseObjectEvent>;
+	using UPtr = std::unique_ptr<ReleaseObjectEvent>;
+	using WPtr = std::weak_ptr<ReleaseObjectEvent>;
 
 	GameObject::UPtr object;
-	ReleaseObjectEvent(ObjectManager::Ptr objectManager, GameObject::UPtr object);
+	static TargettedEvent::UPtr create(ObjectManager::Ptr objectManager, GameObject::UPtr object);
 };
 
-class DestroyObjectEvent final : public TargettedEvent {
+// Destroy Object Event
+class DestroyObjectEvent final : public Event {
+private:
+	DestroyObjectEvent(GameObject* object);
+
 public:
-	static const EventType::Ptr EVENT_TYPE;
+	using Ptr = std::shared_ptr<DestroyObjectEvent>;
+	using UPtr = std::unique_ptr<DestroyObjectEvent>;
+	using WPtr = std::weak_ptr<DestroyObjectEvent>;
 
 	GameObject* object;
-	DestroyObjectEvent(ObjectManager::Ptr objectManager, GameObject* object);
+	static TargettedEvent::UPtr create(ObjectManager::Ptr objectManager, GameObject* object);
 };

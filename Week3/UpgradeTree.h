@@ -16,20 +16,21 @@ public:
 	const std::wstring& getName() const;
 };
 
-// A template for the event types for the type of upgrade.
-class UpgradeEventType final : public EventType {
-private:
-	UpgradeEventType(const Upgrade& upgrade);
-
+// A generic upgrade event type.
+class UpgradeEvent final : public Event {
 public:
-	// The upgrade this type of event will lead to attempting to purchase.
+	const Upgrade& upgrade;
+	UpgradeEvent(const Upgrade& upgrade);
+};
+
+// A generic upgrade event emitter.
+class UpgradeEventEmitter final : public EventEmitter {
+private:
 	const Upgrade& upgrade;
 
-	// The root event type of all events of the UpgradeEventType.
-	static const EventCategory::Ptr UPGRADE;
-
-	// Memoised factory for upgrade event types.
-	static const EventType::Ptr& of(const Upgrade& upgrade);
+public:
+	UpgradeEventEmitter(const Upgrade& upgrade);
+	virtual void emit(std::queue<Event::Ptr>& events) override;
 };
 
 // A tree of upgrades

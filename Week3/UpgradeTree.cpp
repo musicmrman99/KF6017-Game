@@ -26,31 +26,16 @@ struct UpgradeTree::NestedUpgradeComparator {
     }
 };
 
-/* Upgrade Event Type
+/* Upgrade Event and Emitter
 -------------------------------------------------- */
 
-UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
+// Upgrade Event
+UpgradeEvent::UpgradeEvent(const Upgrade& upgrade) : upgrade(upgrade) {}
 
-const EventCategory::Ptr UpgradeEventType::UPGRADE = EventTypeManager::registerNewCategory();
-
-using UpgradeKey = std::reference_wrapper<const Upgrade>;
-using UpgradeEventTypeMap = std::map<UpgradeKey, const EventType::Ptr, ReferenceWrapperLess<const Upgrade>>;
-
-// Create an event type for purchasing the given upgrade. Memoised / strong-cached.
-const EventType::Ptr& UpgradeEventType::of(const Upgrade& upgrade) {
-    // The set of all UpgradeEventTypes
-    static UpgradeEventTypeMap allUpgradeEventTypes = UpgradeEventTypeMap();
-
-    // If exists, return
-    const UpgradeEventTypeMap::iterator existingEventType = allUpgradeEventTypes.find(UpgradeKey(upgrade));
-    if (existingEventType != allUpgradeEventTypes.end()) {
-        return existingEventType->second;
-    }
-
-    // If not, create and return
-    EventType::Ptr newAction = EventTypeManager::registerNewType(new UpgradeEventType(upgrade), UPGRADE);
-    allUpgradeEventTypes.insert({ upgrade, newAction });
-    return allUpgradeEventTypes.find(upgrade)->second; // Return a reference to the one in the full list, not the one on the stack
+// Upgrade Event Emitter
+UpgradeEventEmitter::UpgradeEventEmitter(const Upgrade& upgrade) : upgrade(upgrade) {}
+void UpgradeEventEmitter::UpgradeEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(UpgradeEvent::Ptr(new UpgradeEvent(upgrade)));
 }
 
 /* Upgrade Tree

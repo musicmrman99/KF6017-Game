@@ -26,7 +26,7 @@ void ObjectManager::run() {
         // Handle Event
         const Event::Ptr& event = events.front();
         if (const TargettedEvent::Ptr targettedEvent = std::dynamic_pointer_cast<TargettedEvent>(event)) {
-            if (auto ptr = targettedEvent->target.lock()) ptr->handle(event);
+            if (auto ptr = targettedEvent->target.lock()) ptr->handle(move(targettedEvent->event));
         } else {
             for (GameObject::Ptr& object : objects) object->handle(event);
         }
@@ -51,31 +51,41 @@ void ObjectManager::run() {
 }
 
 void ObjectManager::handle(const Event::Ptr e) {
-    if (EventTypeManager::isOfType(e->type, ReleaseObjectEvent::EVENT_TYPE)) {
-        addObject(move(std::static_pointer_cast<ReleaseObjectEvent>(e)->object));
+    if (auto roe = std::dynamic_pointer_cast<ReleaseObjectEvent>(e)) {
+        addObject(move(roe->object));
     }
-    else if (EventTypeManager::isOfType(e->type, DestroyObjectEvent::EVENT_TYPE)) {
-        deleteObject(std::static_pointer_cast<const DestroyObjectEvent>(e)->object);
+    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) {
+        deleteObject(roe->object);
     }
 }
 
 /* Events
 -------------------------------------------------- */
 
-const EventType::Ptr ReleaseObjectEvent::EVENT_TYPE = EventTypeManager::registerNewType();
-ReleaseObjectEvent::ReleaseObjectEvent(ObjectManager::Ptr objectManager, GameObject::UPtr object)
-    : TargettedEvent(
-        ReleaseObjectEvent::EVENT_TYPE,
-        std::static_pointer_cast<EventHandler>(objectManager)
-    ),
-    object(move(object)) {
+// Release Object Event
+ReleaseObjectEvent::ReleaseObjectEvent(GameObject::UPtr object)
+    : Event(), object(move(object)) {
 }
 
-const EventType::Ptr DestroyObjectEvent::EVENT_TYPE = EventTypeManager::registerNewType();
-DestroyObjectEvent::DestroyObjectEvent(ObjectManager::Ptr objectManager, GameObject* object)
-    : TargettedEvent(
-        DestroyObjectEvent::EVENT_TYPE,
+TargettedEvent::UPtr ReleaseObjectEvent::create(ObjectManager::Ptr objectManager, GameObject::UPtr object) {
+    return TargettedEvent::UPtr(new TargettedEvent(
+        ReleaseObjectEvent::UPtr(new ReleaseObjectEvent(
+            move(object)
+        )),
         std::static_pointer_cast<EventHandler>(objectManager)
-    ),
-    object(object) {
+    ));
+}
+
+// Destroy Object Event
+DestroyObjectEvent::DestroyObjectEvent(GameObject* object)
+    : Event(), object(object) {
+}
+
+TargettedEvent::UPtr DestroyObjectEvent::create(ObjectManager::Ptr objectManager, GameObject* object) {
+    return TargettedEvent::UPtr(new TargettedEvent(
+        DestroyObjectEvent::UPtr(new DestroyObjectEvent(
+            object
+        )),
+        std::static_pointer_cast<EventHandler>(objectManager)
+    ));
 }
