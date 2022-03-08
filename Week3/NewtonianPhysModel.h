@@ -4,7 +4,7 @@
 
 #include "PhysModel.h"
 
-class NewtonianPhysModel : public PhysModel {
+class NewtonianPhysModel final : public PhysModel {
 private:
 	Vector2D _pos;
 	Vector2D _vel;
@@ -15,6 +15,9 @@ private:
 	float _rotAccel;
 
 public:
+	using Ptr = std::shared_ptr<NewtonianPhysModel>;
+	using UPtr = std::unique_ptr<NewtonianPhysModel>;
+
 	// Constructors
 
 	NewtonianPhysModel(Vector2D pos, Vector2D vel, Vector2D accel, Vector2D rot, float rotVel, float rotAccel);

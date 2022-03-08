@@ -20,19 +20,24 @@ enum class ControlType {
 // An input or set of inputs that can be bound to an action.
 class Control {
 public:
+    using UPtr = std::unique_ptr<Control>;
+
     virtual bool isActive() const = 0;
+    virtual ~Control();
 };
 
 /* Keyboard Control
 -------------------- */
 
 // The state of a key.
-class KeyboardControl : public Control {
+class KeyboardControl final : public Control {
 private:
     const ControlType type;
     const unsigned char key;
 
 public:
+    using UPtr = std::unique_ptr<KeyboardControl>;
+
     KeyboardControl(const ControlType type, const unsigned char key);
     virtual bool isActive() const;
 };
@@ -48,12 +53,14 @@ enum class MouseButton {
 };
 
 // The state of a mouse button.
-class MouseButtonControl : public Control {
+class MouseButtonControl final : public Control {
 private:
     const ControlType type;
     const MouseButton button;
 
 public:
+    using UPtr = std::unique_ptr<MouseButtonControl>;
+
     MouseButtonControl(const ControlType type, const MouseButton button);
     virtual bool isActive() const;
 };
@@ -71,13 +78,15 @@ enum class Scroll {
 
 // The difference between the position of the scroll wheel on the last frame and on this frame.
 // Allows checking for various commonly used situations.
-class ScrollControl : public Control {
+class ScrollControl final : public Control {
 private:
     const Scroll direction;
     const int minDelta;
     const int maxDelta;
 
 public:
+    using UPtr = std::unique_ptr<ScrollControl>;
+
     ScrollControl(const Scroll direction, const int minDelta, const int maxDelta);
 
     int minDeltaFor(int minDelta, const Scroll direction);
@@ -90,8 +99,10 @@ public:
 -------------------- */
 
 // Multiple other controls in some pattern (ie. combined in some way).
-class CompositeControl : public Control {
+class CompositeControl final : public Control {
 public:
+    using UPtr = std::unique_ptr<CompositeControl>;
+
     using Combinator = Combinator<std::vector<Control*>, bool>;
     using Predicate = std::function<bool(Control*)>;
 

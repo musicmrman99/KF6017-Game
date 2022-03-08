@@ -49,7 +49,7 @@ typedef int FontIndex;
 
 
 // Class to handle 2D drawing on screen
-class MyDrawEngine 
+class MyDrawEngine final
 {
 
 private:

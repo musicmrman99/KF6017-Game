@@ -42,7 +42,7 @@ int main() {
 
 // Represents a node in a tree of nodes.
 template <class T>
-class Node {
+class Node final {
 public:
     using ValuePtr = std::shared_ptr<T>;
     using NodePtr = std::shared_ptr<Node<T>>;

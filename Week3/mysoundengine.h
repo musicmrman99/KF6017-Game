@@ -28,7 +28,7 @@ typedef unsigned int MusicIndex;
 const int NUMBUFFERCOPIES = 4;		// The number of copies of each sound buffer. Effectively the number of times the same sound can be played simultaneously
 
 // Class to load an play .wav files
-class MySoundEngine
+class MySoundEngine final
 {
 	class MySound
 	{

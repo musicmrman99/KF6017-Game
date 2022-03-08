@@ -13,9 +13,13 @@
 NewtonianPhysModel& Ship::physModel() {
     return static_cast<NewtonianPhysModel&>(GameObject::physModel());
 }
-void Ship::setPhysModel(PhysModelPtr physModel) {
-    if (physModel && dynamic_cast<NewtonianPhysModel*>(physModel.get())) {
-        GameObject::setPhysModel(physModel);
+// Can't enforce uniqueness - GameObject interface requires shared_ptr.
+void Ship::setPhysModel(PhysModel::Ptr physModel) {
+    if (physModel) {
+        if (auto newtonianPhysModel = std::dynamic_pointer_cast<NewtonianPhysModel>(physModel)) {
+            GameObject::setPhysModel(physModel);
+            static_cast<ImageGraphicsModel&>(GameObject::graphicsModel()).setPhysModel(newtonianPhysModel);
+        }
     }
 }
 
@@ -25,9 +29,15 @@ void Ship::setPhysModel(PhysModelPtr physModel) {
 /* Movement Actions
 -------------------- */
 
-const EventType::Ptr Ship::MAIN_THRUST = EventTypeManager::registerNewType();
-const EventType::Ptr Ship::TURN_LEFT_THRUST = EventTypeManager::registerNewType();
-const EventType::Ptr Ship::TURN_RIGHT_THRUST = EventTypeManager::registerNewType();
+void Ship::MainThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(MainThrustEvent::Ptr(new MainThrustEvent()));
+}
+void Ship::TurnLeftThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(TurnLeftThrustEvent::Ptr(new TurnLeftThrustEvent()));
+}
+void Ship::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(TurnRightThrustEvent::Ptr(new TurnRightThrustEvent()));
+}
 
 void Ship::mainThrust() {
     physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));
@@ -44,16 +54,21 @@ void Ship::turnRightThrust() {
 /* Attack
 -------------------- */
 
-const EventType::Ptr Ship::FIRE = EventTypeManager::registerNewType();
+void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
+    events.push(FireEvent::Ptr(new FireEvent()));
+}
 
 void Ship::fire() {
-    Bullet* bullet = new Bullet(physModel().pos(), physModel().rot(), bulletImage);
-    globalEventBuffer.push(ObjectEvent::Ptr(new ObjectEvent(objectManager, ObjectEvent::RELEASE, bullet)));
+    Bullet::UPtr bullet = Bullet::UPtr(new Bullet(physModel().pos(), physModel().rot(), bulletImage));
+    globalEventBuffer.push(ReleaseObjectEvent::create(objectManager, move(bullet)));
 }
 
 /* Upgrades
 -------------------- */
 
+// Use the generic UpgradeEvent type / UpgradeEventEmitter for Ship upgrades.
+
+// Define what upgrades are available.
 const Upgrade Ship::SHIP(L"Ship");
 
 const Upgrade Ship::LOAD_OPTIMISATION(L"Load Optimisation");
@@ -76,6 +91,7 @@ const Upgrade Ship::ARMOURED_DRONE(L"Armoured Drone");
 const Upgrade Ship::MINE(L"Mine");
 const Upgrade Ship::FIGHTER_DRONE(L"Fighter Drone");
 
+// Organise the available upgrades into a tree.
 void Ship::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
     const auto& loadOptimisation = upgradeTree.addUpgrade(LOAD_OPTIMISATION);
@@ -99,8 +115,6 @@ void Ship::buildUpgradeTree() {
     upgradeTree.addUpgrade(mine, FIGHTER_DRONE);
 }
 
-// Use UpgradeEventType::of() to get the upgrade event type for these upgrades.
-
 /* Getters
 -------------------------------------------------- */
 
@@ -112,13 +126,13 @@ const UpgradeTree& Ship::getUpgradeTree() {
 -------------------------------------------------- */
 
 Ship::Ship(
-    Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager,
-    std::shared_ptr<NewtonianPhysModel> physModel
+    Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
+    NewtonianPhysModel::Ptr physModel
 ) : GameObject(
-        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
+        NullEventEmitter::UPtr(new NullEventEmitter()),
         physModel,
-        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
-        std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+        UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
     ),
     objectManager(objectManager),
     bulletImage(bulletImage),
@@ -127,10 +141,10 @@ Ship::Ship(
     rotateThrust(0.01f) { // Revolutions / second^2
 }
 
-Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager)
+Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager)
     : Ship(
         pos, rot, image, bulletImage, objectManager,
-        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+        NewtonianPhysModel::UPtr(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
     ) {
     buildUpgradeTree();
 }
@@ -147,13 +161,13 @@ void Ship::emit(std::queue<Event::Ptr>& globalEvents) {
 }
 
 void Ship::handle(const Event::Ptr e) {
-         if (EventTypeManager::isOfType(e->type, MAIN_THRUST)) mainThrust();
-    else if (EventTypeManager::isOfType(e->type, TURN_LEFT_THRUST)) turnLeftThrust();
-    else if (EventTypeManager::isOfType(e->type, TURN_RIGHT_THRUST)) turnRightThrust();
+         if (std::dynamic_pointer_cast<MainThrustEvent>(e)) mainThrust();
+    else if (std::dynamic_pointer_cast<TurnLeftThrustEvent>(e)) turnLeftThrust();
+    else if (std::dynamic_pointer_cast<TurnRightThrustEvent>(e)) turnRightThrust();
 
-    else if (EventTypeManager::isOfType(e->type, FIRE)) fire();
+    else if (std::dynamic_pointer_cast<FireEvent>(e)) fire();
     
-    else if (EventTypeManager::isOfType(e->type, UpgradeEventType::UPGRADE)) {
-        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEventType>(e->type)->upgrade);
+    else if (auto ue = std::dynamic_pointer_cast<UpgradeEvent>(e)) {
+        upgradeTree.purchaseUpgrade(ue->upgrade);
     }
 }

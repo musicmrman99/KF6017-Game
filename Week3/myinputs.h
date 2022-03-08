@@ -17,7 +17,7 @@
 
 
 // Class to manage input from keyboard, mouse and joystick
-class MyInputs
+class MyInputs final
 {
 private:
 	static MyInputs* instance;			// Singleton

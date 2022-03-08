@@ -8,11 +8,15 @@
 
 #include "UpgradeTree.h"
 
-class UpgradeTreeUI : public GraphicsModel {
+class UpgradeTreeUI final : public GraphicsModel {
 private:
     const UpgradeTree& tree;
 
 public:
+    using Ptr = std::shared_ptr<UpgradeTreeUI>;
+    using UPtr = std::unique_ptr<UpgradeTreeUI>;
+    using WPtr = std::weak_ptr<UpgradeTreeUI>;
+
     UpgradeTreeUI(const UpgradeTree& tree) : tree(tree) {}
 
     virtual void draw() override;

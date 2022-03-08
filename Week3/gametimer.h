@@ -11,7 +11,7 @@
 
 // This class will allow you to measure the frame time.
 // Can also be used to measure any other short intervals.
-class GameTimer
+class GameTimer final
 {
 private:
 	LARGE_INTEGER freq;		// Stores the frequency of the performance counter ("ticks" per second)

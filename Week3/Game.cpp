@@ -13,6 +13,7 @@
 
 #include "Ship.h"
 #include "KeyMap.h"
+#include "GlobalUI.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
@@ -21,6 +22,8 @@ Game::Game() :
 Game::~Game() {}
 
 Game Game::instance; // Singleton instance
+
+GameTimer Game::gt; // Public static instance
 
 /*
 ==================================================
@@ -243,8 +246,8 @@ Game Lifecycle
  */
 ErrorType Game::StartOfGame() {
     // Tick the timer (twice consecutively to initialise to 0 difference)
-    PhysModel::gt.mark();
-    PhysModel::gt.mark();
+    gt.mark();
+    gt.mark();
 
     // Game setup
 
@@ -253,27 +256,31 @@ ErrorType Game::StartOfGame() {
     PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
     // Player Keymap
-    std::shared_ptr<KeyMap> playerKeymap = std::shared_ptr<KeyMap>(new KeyMap());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicEventEmitter(Ship::MAIN_THRUST));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicEventEmitter(Ship::TURN_LEFT_THRUST));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
+    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new Ship::MainThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustEventEmitter());
 
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new BasicEventEmitter(Ship::FIRE));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new Ship::FireEventEmitter());
 
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new BasicEventEmitter(UpgradeEventType::of(Ship::LOAD_OPTIMISATION)));
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(Ship::LOAD_OPTIMISATION));
 
     // Objects
     objectManager = ObjectManager::Ptr(new ObjectManager());
 
-    GameObject* player = new Ship(
+      // Player
+    GameObject::UPtr player = GameObject::UPtr(new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite,
         bulletSprite,
         objectManager
-    );
-    player->setController(playerKeymap);
-    objectManager->addObject(player);
+    ));
+    player->setController(move(playerKeymap));
+    objectManager->addObject(move(player));
+
+      // Global UI
+    objectManager->addObject(GameObject::UPtr(new GlobalUI()));
 
     return SUCCESS;
 }
@@ -307,7 +314,7 @@ ErrorType Game::Update() {
     }
 
     // Tick the timer
-    PhysModel::gt.mark();
+    gt.mark();
 
     /* Game code
     -------------------------------------------------- */

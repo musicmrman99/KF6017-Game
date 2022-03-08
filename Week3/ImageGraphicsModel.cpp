@@ -1,8 +1,12 @@
 #include "ImageGraphicsModel.h"
 #include "NewtonianPhysModel.h"
 
-ImageGraphicsModel::ImageGraphicsModel(const NewtonianPhysModelPtr physModel, PictureIndex image)
+ImageGraphicsModel::ImageGraphicsModel(const NewtonianPhysModel::Ptr physModel, PictureIndex image)
 	: image(image), physModel(physModel) {
+}
+
+void ImageGraphicsModel::setPhysModel(const NewtonianPhysModel::Ptr physModel) {
+	this->physModel = physModel;
 }
 
 void ImageGraphicsModel::draw() {

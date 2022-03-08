@@ -3,7 +3,7 @@
 #include "Combinator.h"
 
 template <class Collection, class Predicate>
-class None : public Combinator<Collection, bool> {
+class None final : public Combinator<Collection, bool> {
     virtual auto combine(const Collection& collection) const
         -> decltype(std::begin(collection), std::end(collection), true)
     {
@@ -17,7 +17,7 @@ class None : public Combinator<Collection, bool> {
 };
 
 template <class Collection, class Predicate>
-class Any : public Combinator<Collection, bool> {
+class Any final : public Combinator<Collection, bool> {
     virtual auto combine(const Collection& collection) const
         -> decltype(std::begin(collection), std::end(collection), true)
     {
@@ -32,7 +32,7 @@ class Any : public Combinator<Collection, bool> {
 
 // Any && NotAll
 template <class Collection, class Predicate>
-class OnlySome : public Combinator<Collection, bool> {
+class OnlySome final : public Combinator<Collection, bool> {
     virtual auto combine(const Collection& collection) const
         -> decltype(std::begin(collection), std::end(collection), true)
     {
@@ -50,7 +50,7 @@ class OnlySome : public Combinator<Collection, bool> {
 };
 
 template <class Collection, class Predicate>
-class NotAll : public Combinator<Collection, bool> {
+class NotAll final : public Combinator<Collection, bool> {
     virtual auto combine(const Collection& collection) const
         -> decltype(std::begin(collection), std::end(collection), true)
     {
@@ -64,7 +64,7 @@ class NotAll : public Combinator<Collection, bool> {
 };
 
 template <class Collection, class Predicate>
-class All : public Combinator<Collection, bool> {
+class All final : public Combinator<Collection, bool> {
     virtual auto combine(const Collection& collection) const
         -> decltype(std::begin(collection), std::end(collection), true)
     {

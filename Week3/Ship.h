@@ -17,26 +17,39 @@
 
 #include "UpgradeTree.h"
 
-class Ship : public GameObject {
+class Ship final : public GameObject {
 public:
 	// Get/Set the right types
 
 	virtual NewtonianPhysModel& physModel() override;
-	virtual void setPhysModel(PhysModelPtr physModel) override;
+	virtual void setPhysModel(PhysModel::Ptr physModel) override;
 
 	// Movement
 
-	static const EventType::Ptr MAIN_THRUST;
-	static const EventType::Ptr TURN_LEFT_THRUST;
-	static const EventType::Ptr TURN_RIGHT_THRUST;
+	class MainThrustEvent final : public Event {};
+	class TurnLeftThrustEvent final : public Event {};
+	class TurnRightThrustEvent final : public Event {};
+
+	class MainThrustEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
+	class TurnLeftThrustEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
+	class TurnRightThrustEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
 
 	void mainThrust();
 	void turnLeftThrust();
 	void turnRightThrust();
 
 	// Attack
-	
-	static const EventType::Ptr FIRE;
+
+	class FireEvent final : public Event {};
+	class FireEventEmitter final : public EventEmitter {
+		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
 	void fire();
 
 	// Upgrades
@@ -72,12 +85,12 @@ private:
 
 	// 2nd phase constructor
 	Ship(
-		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager,
-		std::shared_ptr<NewtonianPhysModel> physModel
+		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
+		NewtonianPhysModel::Ptr physModel
 	);
 
 	std::queue<Event::Ptr> globalEventBuffer;
-	ObjectManager::Ptr objectManager;
+	ObjectManager::WPtr objectManager;
 	PictureIndex bulletImage;
 
 public:
@@ -85,7 +98,7 @@ public:
 
 	// Lifecycle
 
-	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager);
+	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager);
 	void buildUpgradeTree();
 	virtual ~Ship();
 
