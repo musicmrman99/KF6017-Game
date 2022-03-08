@@ -23,29 +23,32 @@ NewtonianPhysModel::NewtonianPhysModel()
 // Getters, setters, and shifters
 
 const Vector2D& NewtonianPhysModel::pos() const { return _pos; }
-const Vector2D& NewtonianPhysModel::vel() const { return _vel; }
-const Vector2D& NewtonianPhysModel::accel() const { return _accel; }
+const Vector2D NewtonianPhysModel::vel() const { return toDUPS(_vel); }
+const Vector2D NewtonianPhysModel::accel() const { return toDUPS(_accel); }
 const Vector2D& NewtonianPhysModel::rot() const { return _rot; }
-const float& NewtonianPhysModel::rotVel() const { return _rotVel; }
-const float& NewtonianPhysModel::rotAccel() const { return _rotAccel; }
+const float NewtonianPhysModel::rotVel() const { return toRPS(_rotVel); }
+const float NewtonianPhysModel::rotAccel() const { return toRPS(_rotAccel); }
 
 void NewtonianPhysModel::setPos(const Vector2D& value) { _pos = value; }
-void NewtonianPhysModel::setVel(const Vector2D& value) { _vel = value; }
-void NewtonianPhysModel::setAccel(const Vector2D& value) { _accel = value; }
+void NewtonianPhysModel::setVel(const Vector2D& value) { _vel = fromDUPS(value); }
+void NewtonianPhysModel::setAccel(const Vector2D& value) { _accel = fromDUPS(value); }
 void NewtonianPhysModel::setRot(const Vector2D& value) { _rot = value; }
-void NewtonianPhysModel::setRotVel(const float& value) { _rotVel = value; }
-void NewtonianPhysModel::setRotAccel(const float& value) { _rotAccel = value; }
+void NewtonianPhysModel::setRotVel(const float& value) { _rotVel = fromRPS(value); }
+void NewtonianPhysModel::setRotAccel(const float& value) { _rotAccel = fromRPS(value); }
 
 void NewtonianPhysModel::shiftPos(const Vector2D& value) { _pos += value; }
-void NewtonianPhysModel::shiftVel(const Vector2D& value) { _vel += value; }
-void NewtonianPhysModel::shiftAccel(const Vector2D& value) { _accel += value; }
+void NewtonianPhysModel::shiftVel(const Vector2D& value) { _vel += fromDUPS(value); }
+void NewtonianPhysModel::shiftAccel(const Vector2D& value) { _accel += fromDUPS(value); }
 void NewtonianPhysModel::shiftRot(const Vector2D& value) { _rot += value; }
-void NewtonianPhysModel::shiftRotVel(const float& value) { _rotVel += value; }
-void NewtonianPhysModel::shiftRotAccel(const float& value) { _rotAccel += value; }
+void NewtonianPhysModel::shiftRotVel(const float& value) { _rotVel += fromRPS(value); }
+void NewtonianPhysModel::shiftRotAccel(const float& value) { _rotAccel += fromRPS(value); }
 
 // Implement PhysModel
 
 void NewtonianPhysModel::run() {
+    // It's faster to store it in raw units and convert as needed because
+    // running the model must be done every frame, whereas get/set/shift may not be.
+
     _rotVel += _rotAccel;
     _rot.setBearing(_rot.angle() + _rotVel, 1);
 

@@ -30,11 +30,11 @@ public:
 	// Getters, setters, and shifters
 
 	const Vector2D& pos() const;
-	const Vector2D& vel() const;
-	const Vector2D& accel() const;
+	const Vector2D vel() const;
+	const Vector2D accel() const;
 	const Vector2D& rot() const;
-	const float& rotVel() const;
-	const float& rotAccel() const;
+	const float rotVel() const;
+	const float rotAccel() const;
 
 	void setPos(const Vector2D& value);
 	void setVel(const Vector2D& value);

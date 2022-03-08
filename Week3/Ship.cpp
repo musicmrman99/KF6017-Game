@@ -40,15 +40,15 @@ void Ship::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
 }
 
 void Ship::mainThrust() {
-    physModel().shiftAccel(physModel().rot() * physModel().toDUPS(engineThrust));
+    physModel().shiftAccel(physModel().rot() * engineThrust);
 };
 
 void Ship::turnLeftThrust() {
-    physModel().shiftRotAccel(-physModel().toRPS(rotateThrust));
+    physModel().shiftRotAccel(-rotateThrust);
 };
 
 void Ship::turnRightThrust() {
-    physModel().shiftRotAccel(physModel().toRPS(rotateThrust));
+    physModel().shiftRotAccel(rotateThrust);
 };
 
 /* Attack
@@ -137,8 +137,8 @@ Ship::Ship(
     objectManager(objectManager),
     bulletImage(bulletImage),
     upgradeTree(UpgradeTree(SHIP)),
-    engineThrust(0.2f),   // Distance units / second^2
-    rotateThrust(0.01f) { // Revolutions / second^2
+    engineThrust(0.1f),    // Distance units / second^2
+    rotateThrust(0.008f) { // Revolutions / second^2
 }
 
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager)
