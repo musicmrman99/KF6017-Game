@@ -33,7 +33,6 @@ public:
         GraphicsModelPtr graphicsModel,
         GraphicsModelPtr uiGraphicsModel
     );
-
     virtual ~GameObject();
 
     virtual EventEmitter& controller();

@@ -6,7 +6,7 @@
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
-class Bullet : public GameObject {
+class Bullet final : public GameObject {
 private:
 	static constexpr float SPEED = 40.0f;
 

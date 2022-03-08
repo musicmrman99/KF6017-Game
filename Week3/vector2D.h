@@ -10,7 +10,7 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-class Vector2D
+class Vector2D final
 {
 public:
 	float XValue;

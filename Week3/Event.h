@@ -58,12 +58,14 @@ public:
 class EventEmitter : public Symbol {
 public:
 	virtual void emit(std::queue<Event::Ptr>& events) = 0;
+	virtual ~EventEmitter();
 };
 
 // Event Handler
 class EventHandler : public Symbol {
 public:
 	virtual void handle(const Event::Ptr e) = 0;
+	virtual ~EventHandler();
 };
 
 class TargettedEvent : public Event {
@@ -73,6 +75,7 @@ public:
 
 	const TargetPtr target;
 	TargettedEvent(const EventType::Ptr& type, const TargetPtr target);
+	virtual ~TargettedEvent();
 };
 
 /* Event Type Manager
@@ -81,9 +84,9 @@ public:
 // Hacky global state (would be better if it were compile-time checked)
 class EventTypeManager final {
 private:
-	static BaseEventTypeNPtr ANY_EVENT_TYPE; // The root event type category
+	EventTypeManager(); // Never used
 
-	EventTypeManager();
+	static BaseEventTypeNPtr ANY_EVENT_TYPE; // The root event type category
 
 	static BaseEventType::Ptr registerNew(BaseEventType* newBaseEventType, const BaseEventType::Ptr& parentCategory);
 	static BaseEventType::Ptr registerNew(BaseEventType* newBaseEventType);
@@ -107,12 +110,12 @@ public:
 /* Common Implementations
 -------------------------------------------------- */
 
-class NullEventEmitter : public EventEmitter {
+class NullEventEmitter final : public EventEmitter {
 public:
 	virtual void emit(std::queue<Event::Ptr>& events) override;
 };
 
-class BasicEventEmitter : public EventEmitter {
+class BasicEventEmitter final : public EventEmitter {
 private:
 	const EventType::Ptr& eventType;
 

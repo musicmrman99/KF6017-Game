@@ -4,7 +4,7 @@
 
 #include "PhysModel.h"
 
-class NewtonianPhysModel : public PhysModel {
+class NewtonianPhysModel final : public PhysModel {
 private:
 	Vector2D _pos;
 	Vector2D _vel;

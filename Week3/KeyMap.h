@@ -9,7 +9,7 @@
  * Maps Controls to the given type of Events and collates which actions should be
  * run on each frame on whichever actor(s) this KeyMap is set as the EventEmitter for.
  */
-class KeyMap : public EventEmitter {
+class KeyMap final : public EventEmitter {
 private:
     // Controls are held/iterated in insertion order,
     // which will impact the order of emitted events.

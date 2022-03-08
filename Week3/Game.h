@@ -24,7 +24,7 @@
 // Manages a game loop, as well as menu and paused states.
 // The class is not very cohesive - it really needs to be refactored into
 // a few separate classes, but this keeps it simple.
-class Game {
+class Game final {
 private:
 	// MENU     = start menu
 	// PAUSED   = paused

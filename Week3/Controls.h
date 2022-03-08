@@ -21,13 +21,14 @@ enum class ControlType {
 class Control {
 public:
     virtual bool isActive() const = 0;
+    virtual ~Control();
 };
 
 /* Keyboard Control
 -------------------- */
 
 // The state of a key.
-class KeyboardControl : public Control {
+class KeyboardControl final : public Control {
 private:
     const ControlType type;
     const unsigned char key;
@@ -48,7 +49,7 @@ enum class MouseButton {
 };
 
 // The state of a mouse button.
-class MouseButtonControl : public Control {
+class MouseButtonControl final : public Control {
 private:
     const ControlType type;
     const MouseButton button;
@@ -71,7 +72,7 @@ enum class Scroll {
 
 // The difference between the position of the scroll wheel on the last frame and on this frame.
 // Allows checking for various commonly used situations.
-class ScrollControl : public Control {
+class ScrollControl final : public Control {
 private:
     const Scroll direction;
     const int minDelta;
@@ -90,7 +91,7 @@ public:
 -------------------- */
 
 // Multiple other controls in some pattern (ie. combined in some way).
-class CompositeControl : public Control {
+class CompositeControl final : public Control {
 public:
     using Combinator = Combinator<std::vector<Control*>, bool>;
     using Predicate = std::function<bool(Control*)>;

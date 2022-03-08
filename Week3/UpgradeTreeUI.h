@@ -8,7 +8,7 @@
 
 #include "UpgradeTree.h"
 
-class UpgradeTreeUI : public GraphicsModel {
+class UpgradeTreeUI final : public GraphicsModel {
 private:
     const UpgradeTree& tree;
 

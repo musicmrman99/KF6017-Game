@@ -17,7 +17,7 @@
 
 #include "UpgradeTree.h"
 
-class Ship : public GameObject {
+class Ship final : public GameObject {
 public:
 	// Get/Set the right types
 

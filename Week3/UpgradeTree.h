@@ -6,7 +6,7 @@
 #include "Symbol.h"
 
 // An upgrade
-class Upgrade : public Symbol {
+class Upgrade final : public Symbol {
 private:
 	const std::wstring name;
 
@@ -17,7 +17,7 @@ public:
 };
 
 // A template for the event types for the type of upgrade.
-class UpgradeEventType : public EventType {
+class UpgradeEventType final : public EventType {
 private:
 	UpgradeEventType(const Upgrade& upgrade);
 
@@ -33,7 +33,7 @@ public:
 };
 
 // A tree of upgrades
-class UpgradeTree {
+class UpgradeTree final {
 private:
 	// An upgrade and whether it has been purchased for this ship.
 	struct PurchasableUpgrade {

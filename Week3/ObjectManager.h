@@ -5,7 +5,7 @@
 
 #include "GameObject.h"
 
-class ObjectManager : public EventHandler {
+class ObjectManager final : public EventHandler {
 private:
 	std::list<GameObject::Ptr> objects;
 	std::queue<Event::Ptr> events;
@@ -20,7 +20,7 @@ public:
 	void run();
 };
 
-class ObjectEvent : public TargettedEvent {
+class ObjectEvent final : public TargettedEvent {
 public:
 	static const EventType::Ptr RELEASE;
 	static const EventType::Ptr DESTROY;

@@ -5,7 +5,7 @@
 #include "GraphicsModel.h"
 #include "NewtonianPhysModel.h"
 
-class ImageGraphicsModel : public GraphicsModel {
+class ImageGraphicsModel final : public GraphicsModel {
 private:
 	using NewtonianPhysModelPtr = std::shared_ptr<NewtonianPhysModel>;
 

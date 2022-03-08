@@ -25,7 +25,7 @@
 // Due to changes in DirectX messaging, some features of the log system
 // have been removed from earlier versions.
 // See errorlogger.cpp for the file name of the log file (probably "error.log")
-class ErrorLogger
+class ErrorLogger final
 {
 private:
 	static ErrorLogger instance;		// Errorlogger is a singleton

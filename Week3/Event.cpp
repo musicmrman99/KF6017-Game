@@ -24,12 +24,23 @@ EventType::~EventType() {}
 Event::Event(const EventType::Ptr& type) : type(type) {}
 Event::~Event() {}
 
+/* Event Emitter
+-------------------- */
+
+EventEmitter::~EventEmitter() {}
+
+/* Event Handler
+-------------------- */
+
+EventHandler::~EventHandler() {}
+
 /* Targetted Event
 -------------------- */
 
 TargettedEvent::TargettedEvent(const EventType::Ptr& type, const TargetPtr target)
 	: Event(type), target(target) {
 }
+TargettedEvent::~TargettedEvent() {}
 
 /* Event Type Manager
 -------------------------------------------------- */

@@ -7,7 +7,7 @@ public:
     virtual void draw() = 0;
 };
 
-class NullGraphicsModel : public GraphicsModel {
+class NullGraphicsModel final : public GraphicsModel {
 public:
     virtual void draw() override;
 };

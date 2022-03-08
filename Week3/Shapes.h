@@ -24,7 +24,7 @@ class Rectangle2D;
 class AngledRectangle2D;
 
 // Class to manage a 2D point shape
-class Point2D:public IShape2D
+class Point2D final : public IShape2D
 {
 	friend Segment2D;
 	friend Circle2D;
@@ -110,7 +110,7 @@ public:
 
 // A segment is a line with a start and an end
 // I.e. not infinite length
-class Segment2D:public IShape2D
+class Segment2D final : public IShape2D
 {
 	friend Point2D;
 	friend Circle2D;
@@ -250,7 +250,7 @@ public:
 };
 
 // Class to manage a 2D circle
-class Circle2D:public IShape2D
+class Circle2D final : public IShape2D
 {
 	friend Point2D;
 	friend Segment2D;
@@ -369,7 +369,7 @@ public:
 
 // Class to manage a 2D rectangle shape.
 // Shape must be orthogonally-aligned
-class Rectangle2D:public IShape2D
+class Rectangle2D final : public IShape2D
 {
 	friend Point2D;
 	friend Segment2D;
@@ -527,7 +527,7 @@ public:
 
 // A shape to manage a rectangle, with a centre, height and width, 
 // rotated to any angle.
-class AngledRectangle2D : public IShape2D
+class AngledRectangle2D final : public IShape2D
 {
    friend Point2D;
    friend Segment2D;
