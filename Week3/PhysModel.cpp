@@ -1,18 +1,17 @@
 #include "PhysModel.h"
+#include "Game.h"
 
 /* Phys Model
 -------------------------------------------------- */
 
-GameTimer PhysModel::gt;
-
 PhysModel::~PhysModel() {}
 
 float PhysModel::toDUPS(float mpf) {
-	return mpf * DIST_UNIT * (float) gt.mdFrameTime;
+	return mpf * DIST_UNIT * (float) Game::gt.mdFrameTime;
 }
 
 float PhysModel::toRPS(float rpf) {
-	return rpf * TWO_PI * (float) gt.mdFrameTime;
+	return rpf * TWO_PI * (float) Game::gt.mdFrameTime;
 }
 
 /* Null Phys Model

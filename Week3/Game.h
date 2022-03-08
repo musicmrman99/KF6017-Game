@@ -32,7 +32,6 @@ private:
 	// GAMEOVER = setting this state causes the program to close after tidying up
 	enum GameState{MENU, PAUSED, RUNNING, GAMEOVER};
 	GameState m_currentState;
-
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 
 	ObjectManager::Ptr objectManager;
@@ -45,7 +44,8 @@ private:
 	void ChangeState(GameState newState);  // Use to change the state of the game to one of the states above
 
 public:
-	static Game instance;          // Singleton instance
+	static Game instance; // Singleton instance
+	static GameTimer gt; // Tracks the time between time marks (for getting FPS)
 
 	// Starts the game engines - Draw Engine, Sound Engine, Input Engine - singletons
 	// This is called soon after the program runs

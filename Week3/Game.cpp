@@ -22,6 +22,8 @@ Game::~Game() {}
 
 Game Game::instance; // Singleton instance
 
+GameTimer Game::gt; // Public static instance
+
 /*
 ==================================================
 Process Lifecycle
@@ -243,8 +245,8 @@ Game Lifecycle
  */
 ErrorType Game::StartOfGame() {
     // Tick the timer (twice consecutively to initialise to 0 difference)
-    PhysModel::gt.mark();
-    PhysModel::gt.mark();
+    gt.mark();
+    gt.mark();
 
     // Game setup
 
@@ -307,7 +309,7 @@ ErrorType Game::Update() {
     }
 
     // Tick the timer
-    PhysModel::gt.mark();
+    gt.mark();
 
     /* Game code
     -------------------------------------------------- */

@@ -14,8 +14,6 @@ private:
     static constexpr float DIST_UNIT = 64.0f;             // Pixels per DIST_UNIT
 
 public:
-    static GameTimer gt; // Tracks the time between time marks (for getting FPS)
-
     virtual ~PhysModel();
 
     virtual void run() = 0;
