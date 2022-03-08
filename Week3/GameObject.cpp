@@ -6,8 +6,8 @@
 GameObject::GameObject(
     EventEmitter::Ptr controller,
     PhysModel::Ptr physModel,
-    GraphicsModelPtr graphicsModel,
-    GraphicsModelPtr uiGraphicsModel
+    GraphicsModel::Ptr graphicsModel,
+    GraphicsModel::Ptr uiGraphicsModel
 ) {
     setController(controller);
     setPhysModel(physModel);
@@ -31,13 +31,13 @@ void GameObject::setPhysModel(PhysModel::Ptr physModel) {
 
 GraphicsModel& GameObject::graphicsModel() { return *_graphicsModel; }
 GraphicsModel& GameObject::graphicsModel() const { return *_graphicsModel; }
-void GameObject::setGraphicsModel(GraphicsModelPtr graphicsModel) {
+void GameObject::setGraphicsModel(GraphicsModel::Ptr graphicsModel) {
     if (graphicsModel) _graphicsModel = graphicsModel;
 }
 
 GraphicsModel& GameObject::uiGraphicsModel() { return *_uiGraphicsModel; }
 GraphicsModel& GameObject::uiGraphicsModel() const { return *_uiGraphicsModel; }
-void GameObject::setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel) {
+void GameObject::setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel) {
     if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
 }
 

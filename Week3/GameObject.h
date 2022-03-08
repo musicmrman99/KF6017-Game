@@ -14,13 +14,11 @@ public:
     using UPtr = std::unique_ptr<GameObject>;
     using WPtr = std::weak_ptr<GameObject>;
 
-    using GraphicsModelPtr = std::shared_ptr<GraphicsModel>;
-
 private:
     EventEmitter::Ptr _controller;
     PhysModel::Ptr _physModel;
-    GraphicsModelPtr _graphicsModel;
-    GraphicsModelPtr _uiGraphicsModel;
+    GraphicsModel::Ptr _graphicsModel;
+    GraphicsModel::Ptr _uiGraphicsModel;
 
     std::queue<Event::Ptr> events;
 
@@ -31,8 +29,8 @@ public:
     GameObject(
         EventEmitter::Ptr controller,
         PhysModel::Ptr physModel,
-        GraphicsModelPtr graphicsModel,
-        GraphicsModelPtr uiGraphicsModel
+        GraphicsModel::Ptr graphicsModel,
+        GraphicsModel::Ptr uiGraphicsModel
     );
     virtual ~GameObject();
 
@@ -46,11 +44,11 @@ public:
 
     virtual GraphicsModel& graphicsModel();
     virtual GraphicsModel& graphicsModel() const;
-    virtual void setGraphicsModel(GraphicsModelPtr graphicsModel);
+    virtual void setGraphicsModel(GraphicsModel::Ptr graphicsModel);
 
     virtual GraphicsModel& uiGraphicsModel();
     virtual GraphicsModel& uiGraphicsModel() const;
-    virtual void setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel);
+    virtual void setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel);
 
     /* Lifecycle
     -------------------- */

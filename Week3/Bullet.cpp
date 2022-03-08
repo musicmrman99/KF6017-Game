@@ -25,8 +25,8 @@ Bullet::Bullet(
 ) : GameObject(
     NullEventEmitter::UPtr(new NullEventEmitter()),
     physModel,
-    std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
-    std::shared_ptr<NullGraphicsModel>(new NullGraphicsModel())
+    ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+    NullGraphicsModel::UPtr(new NullGraphicsModel())
 ) {}
 
 Bullet::Bullet(Vector2D pos, Vector2D rot, PictureIndex image)

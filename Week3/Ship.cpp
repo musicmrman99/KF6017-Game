@@ -131,8 +131,8 @@ Ship::Ship(
 ) : GameObject(
         NullEventEmitter::UPtr(new NullEventEmitter()),
         physModel,
-        std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
-        std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+        UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
     ),
     objectManager(objectManager),
     bulletImage(bulletImage),
