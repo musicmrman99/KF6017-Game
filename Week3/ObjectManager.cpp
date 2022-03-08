@@ -67,12 +67,12 @@ ReleaseObjectEvent::ReleaseObjectEvent(GameObject::UPtr object)
     : Event(), object(move(object)) {
 }
 
-TargettedEvent::UPtr ReleaseObjectEvent::create(ObjectManager::Ptr objectManager, GameObject::UPtr object) {
+TargettedEvent::UPtr ReleaseObjectEvent::create(ObjectManager::WPtr objectManager, GameObject::UPtr object) {
     return TargettedEvent::UPtr(new TargettedEvent(
         ReleaseObjectEvent::UPtr(new ReleaseObjectEvent(
             move(object)
         )),
-        std::static_pointer_cast<EventHandler>(objectManager)
+        std::static_pointer_cast<EventHandler>(objectManager.lock())
     ));
 }
 
@@ -81,11 +81,11 @@ DestroyObjectEvent::DestroyObjectEvent(GameObject* object)
     : Event(), object(object) {
 }
 
-TargettedEvent::UPtr DestroyObjectEvent::create(ObjectManager::Ptr objectManager, GameObject* object) {
+TargettedEvent::UPtr DestroyObjectEvent::create(ObjectManager::WPtr objectManager, GameObject* object) {
     return TargettedEvent::UPtr(new TargettedEvent(
         DestroyObjectEvent::UPtr(new DestroyObjectEvent(
             object
         )),
-        std::static_pointer_cast<EventHandler>(objectManager)
+        std::static_pointer_cast<EventHandler>(objectManager.lock())
     ));
 }

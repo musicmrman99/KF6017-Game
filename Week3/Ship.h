@@ -85,12 +85,12 @@ private:
 
 	// 2nd phase constructor
 	Ship(
-		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager,
+		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
 		std::shared_ptr<NewtonianPhysModel> physModel
 	);
 
 	std::queue<Event::Ptr> globalEventBuffer;
-	ObjectManager::Ptr objectManager;
+	ObjectManager::WPtr objectManager;
 	PictureIndex bulletImage;
 
 public:
@@ -98,7 +98,7 @@ public:
 
 	// Lifecycle
 
-	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager);
+	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager);
 	void buildUpgradeTree();
 	virtual ~Ship();
 

@@ -122,7 +122,7 @@ const UpgradeTree& Ship::getUpgradeTree() {
 -------------------------------------------------- */
 
 Ship::Ship(
-    Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager,
+    Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
     std::shared_ptr<NewtonianPhysModel> physModel
 ) : GameObject(
         std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
@@ -137,7 +137,7 @@ Ship::Ship(
     rotateThrust(0.01f) { // Revolutions / second^2
 }
 
-Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager)
+Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager)
     : Ship(
         pos, rot, image, bulletImage, objectManager,
         std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
