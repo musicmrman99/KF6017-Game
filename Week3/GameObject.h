@@ -11,6 +11,8 @@
 class GameObject : public EventHandler, public EventEmitter {
 public:
     using Ptr = std::shared_ptr<GameObject>;
+    using UPtr = std::unique_ptr<GameObject>;
+    using WPtr = std::weak_ptr<GameObject>;
 
     using PhysModelPtr = std::shared_ptr<PhysModel>;
     using GraphicsModelPtr = std::shared_ptr<GraphicsModel>;

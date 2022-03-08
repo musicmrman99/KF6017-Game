@@ -3,19 +3,16 @@
 /* Object Manager
 -------------------------------------------------- */
 
-void ObjectManager::addObject(GameObject* gameObject) {
-    objects.push_back(GameObject::Ptr(gameObject));
+void ObjectManager::addObject(GameObject::UPtr gameObject) {
+    objects.push_back(move(gameObject));
 }
 
 void ObjectManager::deleteObject(GameObject* gameObject) {
-    // Can use `objects.remove_if()` on a std::list since C++17
-    std::list<GameObject::Ptr>::iterator removeStart = std::remove_if(
-        objects.begin(), objects.end(),
+    objects.remove_if(
         [gameObject](const GameObject::Ptr& object) {
             return object.get() == gameObject;
         }
     );
-    objects.erase(removeStart, objects.end());
 }
 
 void ObjectManager::run() {
@@ -54,20 +51,31 @@ void ObjectManager::run() {
 }
 
 void ObjectManager::handle(const Event::Ptr e) {
-    if (EventTypeManager::isOfType(e->type, ObjectEvent::RELEASE)) {
-        addObject(std::static_pointer_cast<const ObjectEvent>(e)->object);
+    if (EventTypeManager::isOfType(e->type, ReleaseObjectEvent::EVENT_TYPE)) {
+        addObject(move(std::static_pointer_cast<ReleaseObjectEvent>(e)->object));
     }
-    else if (EventTypeManager::isOfType(e->type, ObjectEvent::DESTROY)) {
-        deleteObject(std::static_pointer_cast<const ObjectEvent>(e)->object);
+    else if (EventTypeManager::isOfType(e->type, DestroyObjectEvent::EVENT_TYPE)) {
+        deleteObject(std::static_pointer_cast<const DestroyObjectEvent>(e)->object);
     }
 }
 
 /* Events
 -------------------------------------------------- */
 
-const EventType::Ptr ObjectEvent::RELEASE = EventTypeManager::registerNewType();
-const EventType::Ptr ObjectEvent::DESTROY = EventTypeManager::registerNewType();
+const EventType::Ptr ReleaseObjectEvent::EVENT_TYPE = EventTypeManager::registerNewType();
+ReleaseObjectEvent::ReleaseObjectEvent(ObjectManager::Ptr objectManager, GameObject::UPtr object)
+    : TargettedEvent(
+        ReleaseObjectEvent::EVENT_TYPE,
+        std::static_pointer_cast<EventHandler>(objectManager)
+    ),
+    object(move(object)) {
+}
 
-ObjectEvent::ObjectEvent(ObjectManager::Ptr objectManager, const EventType::Ptr& type, GameObject* object)
-    : TargettedEvent(type, std::static_pointer_cast<EventHandler>(objectManager)), object(object) {
+const EventType::Ptr DestroyObjectEvent::EVENT_TYPE = EventTypeManager::registerNewType();
+DestroyObjectEvent::DestroyObjectEvent(ObjectManager::Ptr objectManager, GameObject* object)
+    : TargettedEvent(
+        DestroyObjectEvent::EVENT_TYPE,
+        std::static_pointer_cast<EventHandler>(objectManager)
+    ),
+    object(object) {
 }

@@ -47,8 +47,8 @@ void Ship::turnRightThrust() {
 const EventType::Ptr Ship::FIRE = EventTypeManager::registerNewType();
 
 void Ship::fire() {
-    Bullet* bullet = new Bullet(physModel().pos(), physModel().rot(), bulletImage);
-    globalEventBuffer.push(ObjectEvent::Ptr(new ObjectEvent(objectManager, ObjectEvent::RELEASE, bullet)));
+    Bullet::UPtr bullet = Bullet::UPtr(new Bullet(physModel().pos(), physModel().rot(), bulletImage));
+    globalEventBuffer.push(ReleaseObjectEvent::Ptr(new ReleaseObjectEvent(objectManager, move(bullet))));
 }
 
 /* Upgrades

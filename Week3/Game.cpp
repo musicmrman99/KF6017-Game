@@ -269,15 +269,15 @@ ErrorType Game::StartOfGame() {
     // Objects
     objectManager = ObjectManager::Ptr(new ObjectManager());
 
-    GameObject* player = new Ship(
+    GameObject::UPtr player = GameObject::UPtr(new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite,
         bulletSprite,
         objectManager
-    );
+    ));
     player->setController(move(playerKeymap));
-    objectManager->addObject(player);
+    objectManager->addObject(move(player));
 
     return SUCCESS;
 }
