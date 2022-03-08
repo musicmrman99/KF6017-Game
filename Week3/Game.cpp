@@ -257,7 +257,7 @@ ErrorType Game::StartOfGame() {
     PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
     // Player Keymap
-    std::shared_ptr<KeyMap> playerKeymap = std::shared_ptr<KeyMap>(new KeyMap());
+    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicEventEmitter(Ship::MAIN_THRUST));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicEventEmitter(Ship::TURN_LEFT_THRUST));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
@@ -276,7 +276,7 @@ ErrorType Game::StartOfGame() {
         bulletSprite,
         objectManager
     );
-    player->setController(playerKeymap);
+    player->setController(move(playerKeymap));
     objectManager->addObject(player);
 
     return SUCCESS;

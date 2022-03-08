@@ -4,7 +4,7 @@
 -------------------- */
 
 GameObject::GameObject(
-    EventEmitterPtr controller,
+    EventEmitter::Ptr controller,
     PhysModelPtr physModel,
     GraphicsModelPtr graphicsModel,
     GraphicsModelPtr uiGraphicsModel
@@ -19,7 +19,7 @@ GameObject::~GameObject() {}
 
 EventEmitter& GameObject::controller() { return *_controller; }
 EventEmitter& GameObject::controller() const { return *_controller; }
-void GameObject::setController(EventEmitterPtr controller) {
+void GameObject::setController(EventEmitter::Ptr controller) {
     if (controller) _controller = controller;
 }
 

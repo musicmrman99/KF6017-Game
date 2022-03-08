@@ -12,6 +12,8 @@
 class BaseEventType : public Symbol {
 public:
 	using Ptr = std::shared_ptr<BaseEventType>;
+	using UPtr = std::unique_ptr<BaseEventType>;
+	using WPtr = std::weak_ptr<BaseEventType>;
 
 	BaseEventType();
 	virtual ~BaseEventType();
@@ -21,6 +23,8 @@ public:
 class EventCategory : public BaseEventType {
 public:
 	using Ptr = std::shared_ptr<EventCategory>;
+	using UPtr = std::unique_ptr<EventCategory>;
+	using WPtr = std::weak_ptr<EventCategory>;
 
 	EventCategory();
 	virtual ~EventCategory();
@@ -30,6 +34,8 @@ public:
 class EventType : public BaseEventType {
 public:
 	using Ptr = std::shared_ptr<EventType>;
+	using UPtr = std::unique_ptr<EventType>;
+	using WPtr = std::weak_ptr<EventType>;
 
 	EventType();
 	virtual ~EventType();
@@ -48,6 +54,8 @@ using EventTypeNPtr = EventTypeN::NodePtr;
 class Event {
 public:
 	using Ptr = std::shared_ptr<Event>;
+	using UPtr = std::unique_ptr<Event>;
+	using WPtr = std::weak_ptr<Event>;
 
 	const EventType::Ptr& type;
 	Event(const EventType::Ptr& type);
@@ -57,6 +65,10 @@ public:
 // Event Emitter
 class EventEmitter : public Symbol {
 public:
+	using Ptr = std::shared_ptr<EventEmitter>;
+	using UPtr = std::unique_ptr<EventEmitter>;
+	using WPtr = std::weak_ptr<EventEmitter>;
+
 	virtual void emit(std::queue<Event::Ptr>& events) = 0;
 	virtual ~EventEmitter();
 };
@@ -64,6 +76,10 @@ public:
 // Event Handler
 class EventHandler : public Symbol {
 public:
+	using Ptr = std::shared_ptr<EventHandler>;
+	using UPtr = std::unique_ptr<EventHandler>;
+	using WPtr = std::weak_ptr<EventHandler>;
+
 	virtual void handle(const Event::Ptr e) = 0;
 	virtual ~EventHandler();
 };
@@ -71,6 +87,9 @@ public:
 class TargettedEvent : public Event {
 public:
 	using Ptr = std::shared_ptr<TargettedEvent>;
+	using UPtr = std::unique_ptr<TargettedEvent>;
+	using WPtr = std::weak_ptr<TargettedEvent>;
+
 	using TargetPtr = std::weak_ptr<EventHandler>;
 
 	const TargetPtr target;

@@ -11,12 +11,12 @@
 class GameObject : public EventHandler, public EventEmitter {
 public:
     using Ptr = std::shared_ptr<GameObject>;
-    using EventEmitterPtr = std::shared_ptr<EventEmitter>;
+
     using PhysModelPtr = std::shared_ptr<PhysModel>;
     using GraphicsModelPtr = std::shared_ptr<GraphicsModel>;
 
 private:
-    EventEmitterPtr _controller;
+    EventEmitter::Ptr _controller;
     PhysModelPtr _physModel;
     GraphicsModelPtr _graphicsModel;
     GraphicsModelPtr _uiGraphicsModel;
@@ -28,7 +28,7 @@ public:
     -------------------- */
 
     GameObject(
-        EventEmitterPtr controller,
+        EventEmitter::Ptr controller,
         PhysModelPtr physModel,
         GraphicsModelPtr graphicsModel,
         GraphicsModelPtr uiGraphicsModel
@@ -37,7 +37,7 @@ public:
 
     virtual EventEmitter& controller();
     virtual EventEmitter& controller() const;
-    virtual void setController(EventEmitterPtr controller);
+    virtual void setController(EventEmitter::Ptr controller);
 
     virtual PhysModel& physModel();
     virtual PhysModel& physModel() const;

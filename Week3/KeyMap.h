@@ -16,6 +16,10 @@ private:
     std::vector<std::pair<Control*, EventEmitter*>> map;
 
 public:
+    using Ptr = std::shared_ptr<KeyMap>;
+    using UPtr = std::unique_ptr<KeyMap>;
+    using WPtr = std::weak_ptr<KeyMap>;
+
     KeyMap() {}
     ~KeyMap();
 
