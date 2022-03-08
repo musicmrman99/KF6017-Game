@@ -19,6 +19,8 @@ private:
 	double mdMinimumFrameTime;	// The minumim frame time that mark() will allow
 	double mdThrottledFrameTime;	// The minimum frame time currently allowed. This will gradually reset
 									// to the minimum frame time to smooth frame rate changes.
+
+	double runtime;
 				
 
 public:
@@ -50,5 +52,10 @@ public:
 // calls to mark(). Until this function has been called twice, it
 // will be unreliable.
 	void mark();			
-						
+
+	// Get the current time elapsed since the start of the game, in seconds.
+	double time();
+
+	// Get the time since a given time returned by time().
+	double timeSince(double time);
 };

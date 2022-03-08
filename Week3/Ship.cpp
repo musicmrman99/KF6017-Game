@@ -59,7 +59,7 @@ void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 }
 
 void Ship::fire() {
-    Bullet::UPtr bullet = Bullet::UPtr(new Bullet(physModel().pos(), physModel().rot(), bulletImage));
+    Bullet::UPtr bullet = Bullet::UPtr(new Bullet(physModel().pos(), physModel().rot(), bulletImage, objectManager));
     globalEventBuffer.push(ReleaseObjectEvent::create(objectManager, move(bullet)));
 }
 

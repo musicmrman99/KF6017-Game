@@ -1,5 +1,8 @@
 #include "Bullet.h"
 
+#include "QueueUtils.h"
+#include "Timer.h"
+
 /* Get/Set the right types
 -------------------------------------------------- */
 
@@ -20,20 +23,30 @@ void Bullet::setPhysModel(PhysModel::Ptr physModel) {
 -------------------------------------------------- */
 
 Bullet::Bullet(
-    Vector2D pos, Vector2D rot, PictureIndex image,
+    Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager,
     NewtonianPhysModel::Ptr physModel
 ) : GameObject(
-    NullEventEmitter::UPtr(new NullEventEmitter()),
-    physModel,
-    ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
-    NullGraphicsModel::UPtr(new NullGraphicsModel())
-) {}
+        Timer::UPtr(new Timer(4.0)),
+        physModel,
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+        NullGraphicsModel::UPtr(new NullGraphicsModel())
+    ),
+    objectManager(objectManager) {
+}
 
-Bullet::Bullet(Vector2D pos, Vector2D rot, PictureIndex image)
+Bullet::Bullet(Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager)
     : Bullet(
-        pos, rot, image,
+        pos, rot, image, objectManager,
         NewtonianPhysModel::UPtr(new NewtonianPhysModel(pos, rot * SPEED, rot, 0.0f))
     ) {
 }
 
-Bullet::~Bullet() {}
+void Bullet::handle(const Event::Ptr e) {
+    if (std::dynamic_pointer_cast<TimerEvent>(e)) {
+        globalEventBuffer.push(DestroyObjectEvent::create(objectManager, this));
+    }
+}
+
+void Bullet::emit(std::queue<Event::Ptr>& globalEvents) {
+    shiftInto(globalEventBuffer, globalEvents);
+}

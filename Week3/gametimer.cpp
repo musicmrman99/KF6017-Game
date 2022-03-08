@@ -21,6 +21,8 @@ GameTimer::GameTimer()
 	mdMinimumFrameTime=0;
 	mdThrottledFrameTime = mdMinimumFrameTime;
 	mdFrameTime = 0;
+
+	runtime = 0.0;
 }
 
 // Use to set the frameTime. Call this once each frame. 
@@ -81,6 +83,8 @@ void GameTimer::mark()
 			mdThrottledFrameTime = 0.1;
 		}
 	}
+
+	runtime += mdFrameTime;
 }
 
 
@@ -97,4 +101,14 @@ void GameTimer::setMinimumFrameTime(double minTime)
 		mdMinimumFrameTime=0.0;
 
 	mdThrottledFrameTime = mdMinimumFrameTime;
+}
+
+// Get the current time elapsed since the start of the game, in seconds.
+double GameTimer::time() {
+	return runtime;
+}
+
+// Get the time since a given time returned by time().
+double GameTimer::timeSince(double time) {
+	return runtime - time;
 }
