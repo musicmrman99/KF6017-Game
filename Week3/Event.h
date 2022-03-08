@@ -1,6 +1,7 @@
 #pragma once
 
 #include <queue>
+#include <memory>
 
 #include "Derived.h"
 #include "Symbol.h"
@@ -63,11 +64,19 @@ public:
 // Null Event Emitter
 class NullEventEmitter final : public EventEmitter {
 public:
+	using Ptr = std::shared_ptr<NullEventEmitter>;
+	using UPtr = std::unique_ptr<NullEventEmitter>;
+	using WPtr = std::weak_ptr<NullEventEmitter>;
+
 	virtual void emit(std::queue<Event::Ptr>& events) override;
 };
 
 // Null Event Handler
 class NullEventHandler final : public EventHandler {
 public:
+	using Ptr = std::shared_ptr<NullEventHandler>;
+	using UPtr = std::unique_ptr<NullEventHandler>;
+	using WPtr = std::weak_ptr<NullEventHandler>;
+
 	virtual void handle(const Event::Ptr e) override;
 };

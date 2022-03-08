@@ -129,7 +129,7 @@ Ship::Ship(
     Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
     NewtonianPhysModel::Ptr physModel
 ) : GameObject(
-        std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
+        NullEventEmitter::UPtr(new NullEventEmitter()),
         physModel,
         std::shared_ptr<ImageGraphicsModel>(new ImageGraphicsModel(physModel, image)),
         std::shared_ptr<UpgradeTreeUI>(new UpgradeTreeUI(upgradeTree))
