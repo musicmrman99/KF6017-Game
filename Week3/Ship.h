@@ -9,6 +9,7 @@
 #include "MyDrawEngine.h"
 #include "MyInputs.h"
 
+#include "ObjectManager.h"
 #include "GameObject.h"
 #include "Event.h"
 #include "NewtonianPhysModel.h"
@@ -25,13 +26,18 @@ public:
 
 	// Movement
 
-	static const EventTypeVPtr MAIN_THRUST;
-	static const EventTypeVPtr TURN_LEFT_THRUST;
-	static const EventTypeVPtr TURN_RIGHT_THRUST;
+	static const EventType::Ptr MAIN_THRUST;
+	static const EventType::Ptr TURN_LEFT_THRUST;
+	static const EventType::Ptr TURN_RIGHT_THRUST;
 
 	void mainThrust();
 	void turnLeftThrust();
 	void turnRightThrust();
+
+	// Attack
+	
+	static const EventType::Ptr FIRE;
+	void fire();
 
 	// Upgrades
 
@@ -66,19 +72,24 @@ private:
 
 	// 2nd phase constructor
 	Ship(
-		Vector2D pos, Vector2D rot, PictureIndex image,
+		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager,
 		std::shared_ptr<NewtonianPhysModel> physModel
 	);
+
+	std::queue<Event::Ptr> globalEventBuffer;
+	ObjectManager::Ptr objectManager;
+	PictureIndex bulletImage;
 
 public:
 	const UpgradeTree& getUpgradeTree();
 
 	// Lifecycle
 
-	Ship(Vector2D pos, Vector2D rot, PictureIndex image);
+	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::Ptr objectManager);
 	void buildUpgradeTree();
 	virtual ~Ship();
 
 	virtual void beforeActions() override;
-	virtual void handle(const Event& e) override;
+	virtual void handle(const Event::Ptr e) override;
+	virtual void emit(std::queue<Event::Ptr>& globalEvents) override;
 };

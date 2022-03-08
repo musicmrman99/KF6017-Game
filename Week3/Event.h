@@ -11,6 +11,8 @@
 
 class BaseEventType : public Symbol {
 public:
+	using Ptr = std::shared_ptr<BaseEventType>;
+
 	BaseEventType();
 	virtual ~BaseEventType();
 };
@@ -18,6 +20,8 @@ public:
 // A category of event types akin to an 'abstract' event type. Cannot be used to create an event
 class EventCategory : public BaseEventType {
 public:
+	using Ptr = std::shared_ptr<EventCategory>;
+
 	EventCategory();
 	virtual ~EventCategory();
 };
@@ -25,48 +29,50 @@ public:
 // An event type.
 class EventType : public BaseEventType {
 public:
+	using Ptr = std::shared_ptr<EventType>;
+
 	EventType();
 	virtual ~EventType();
 };
 
 using BaseEventTypeN = Node<BaseEventType>;
 using BaseEventTypeNPtr = BaseEventTypeN::NodePtr;
-using BaseEventTypeVPtr = BaseEventTypeN::ValuePtr;
 
 using EventCategoryN = Node<EventCategory>;
 using EventCategoryNPtr = EventCategoryN::NodePtr;
-using EventCategoryVPtr = EventCategoryN::ValuePtr;
 
 using EventTypeN = Node<EventType>;
 using EventTypeNPtr = EventTypeN::NodePtr;
-using EventTypeVPtr = EventTypeN::ValuePtr;
 
 // Event
 class Event {
 public:
-	const EventTypeVPtr& type;
-	Event(const EventTypeVPtr& type);
+	using Ptr = std::shared_ptr<Event>;
+
+	const EventType::Ptr& type;
+	Event(const EventType::Ptr& type);
 	virtual ~Event();
 };
 
 // Event Emitter
 class EventEmitter : public Symbol {
 public:
-	virtual void emit(std::queue<Event>& events) = 0;
+	virtual void emit(std::queue<Event::Ptr>& events) = 0;
 };
 
 // Event Handler
 class EventHandler : public Symbol {
 public:
-	virtual void handle(const Event& e) = 0;
+	virtual void handle(const Event::Ptr e) = 0;
 };
 
-class TargettedEvent : Event {
+class TargettedEvent : public Event {
 public:
+	using Ptr = std::shared_ptr<TargettedEvent>;
 	using TargetPtr = std::weak_ptr<EventHandler>;
 
 	const TargetPtr target;
-	TargettedEvent(const EventTypeVPtr& type, const TargetPtr target);
+	TargettedEvent(const EventType::Ptr& type, const TargetPtr target);
 };
 
 /* Event Type Manager
@@ -79,23 +85,23 @@ private:
 
 	EventTypeManager();
 
-	static BaseEventTypeVPtr registerNew(BaseEventType* newBaseEventType, const BaseEventTypeVPtr& parentCategory);
-	static BaseEventTypeVPtr registerNew(BaseEventType* newBaseEventType);
+	static BaseEventType::Ptr registerNew(BaseEventType* newBaseEventType, const BaseEventType::Ptr& parentCategory);
+	static BaseEventType::Ptr registerNew(BaseEventType* newBaseEventType);
 
 public:
-	static const EventCategoryVPtr getRootEventType();
+	static const EventCategory::Ptr getRootEventType();
 
-	static EventCategoryVPtr registerNewCategory(EventCategory* newEventCategory, const EventCategoryVPtr& parentCategory);
-	static EventCategoryVPtr registerNewCategory(EventCategory* newEventCategory);
-	static EventCategoryVPtr registerNewCategory(const EventCategoryVPtr& parentCategory);
-	static EventCategoryVPtr registerNewCategory();
+	static EventCategory::Ptr registerNewCategory(EventCategory* newEventCategory, const EventCategory::Ptr& parentCategory);
+	static EventCategory::Ptr registerNewCategory(EventCategory* newEventCategory);
+	static EventCategory::Ptr registerNewCategory(const EventCategory::Ptr& parentCategory);
+	static EventCategory::Ptr registerNewCategory();
 
-	static EventTypeVPtr registerNewType(EventType* newEventType, const EventCategoryVPtr& category);
-	static EventTypeVPtr registerNewType(EventType* newEventType);
-	static EventTypeVPtr registerNewType(const EventCategoryVPtr& category);
-	static EventTypeVPtr registerNewType();
+	static EventType::Ptr registerNewType(EventType* newEventType, const EventCategory::Ptr& category);
+	static EventType::Ptr registerNewType(EventType* newEventType);
+	static EventType::Ptr registerNewType(const EventCategory::Ptr& category);
+	static EventType::Ptr registerNewType();
 
-	static bool isOfType(const BaseEventTypeVPtr& type, const BaseEventTypeVPtr& against);
+	static bool isOfType(const BaseEventType::Ptr& type, const BaseEventType::Ptr& against);
 };
 
 /* Common Implementations
@@ -103,14 +109,14 @@ public:
 
 class NullEventEmitter : public EventEmitter {
 public:
-	virtual void emit(std::queue<Event>& events);
+	virtual void emit(std::queue<Event::Ptr>& events) override;
 };
 
 class BasicEventEmitter : public EventEmitter {
 private:
-	const EventTypeVPtr eventType;
+	const EventType::Ptr& eventType;
 
 public:
-	BasicEventEmitter(const EventTypeVPtr& eventType);
-	virtual void emit(std::queue<Event>& events);
+	BasicEventEmitter(const EventType::Ptr& eventType);
+	virtual void emit(std::queue<Event::Ptr>& events) override;
 };

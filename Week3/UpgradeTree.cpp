@@ -31,13 +31,13 @@ struct UpgradeTree::NestedUpgradeComparator {
 
 UpgradeEventType::UpgradeEventType(const Upgrade& upgrade) : upgrade(upgrade) {}
 
-const EventCategoryVPtr UpgradeEventType::UPGRADE = EventTypeManager::registerNewCategory();
+const EventCategory::Ptr UpgradeEventType::UPGRADE = EventTypeManager::registerNewCategory();
 
 using UpgradeKey = std::reference_wrapper<const Upgrade>;
-using UpgradeEventTypeMap = std::map<UpgradeKey, const EventTypeVPtr, ReferenceWrapperLess<const Upgrade>>;
+using UpgradeEventTypeMap = std::map<UpgradeKey, const EventType::Ptr, ReferenceWrapperLess<const Upgrade>>;
 
 // Create an event type for purchasing the given upgrade. Memoised / strong-cached.
-const EventTypeVPtr& UpgradeEventType::of(const Upgrade& upgrade) {
+const EventType::Ptr& UpgradeEventType::of(const Upgrade& upgrade) {
     // The set of all UpgradeEventTypes
     static UpgradeEventTypeMap allUpgradeEventTypes = UpgradeEventTypeMap();
 
@@ -48,7 +48,7 @@ const EventTypeVPtr& UpgradeEventType::of(const Upgrade& upgrade) {
     }
 
     // If not, create and return
-    EventTypeVPtr newAction = EventTypeManager::registerNewType(new UpgradeEventType(upgrade), UPGRADE);
+    EventType::Ptr newAction = EventTypeManager::registerNewType(new UpgradeEventType(upgrade), UPGRADE);
     allUpgradeEventTypes.insert({ upgrade, newAction });
     return allUpgradeEventTypes.find(upgrade)->second; // Return a reference to the one in the full list, not the one on the stack
 }

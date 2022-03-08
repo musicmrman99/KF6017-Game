@@ -250,6 +250,7 @@ ErrorType Game::StartOfGame() {
 
     // Load Resources
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
+    PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
     // Player Keymap
     std::shared_ptr<KeyMap> playerKeymap = std::shared_ptr<KeyMap>(new KeyMap());
@@ -257,16 +258,22 @@ ErrorType Game::StartOfGame() {
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicEventEmitter(Ship::TURN_LEFT_THRUST));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicEventEmitter(Ship::TURN_RIGHT_THRUST));
 
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_I), new BasicEventEmitter(Ship::FIRE));
+
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new BasicEventEmitter(UpgradeEventType::of(Ship::LOAD_OPTIMISATION)));
 
-    // Player
-    GameObject::Ptr player = GameObject::Ptr(new Ship(
+    // Objects
+    objectManager = ObjectManager::Ptr(new ObjectManager());
+
+    GameObject* player = new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
-        playerSprite
-    ));
+        playerSprite,
+        bulletSprite,
+        objectManager
+    );
     player->setController(playerKeymap);
-    objectManager.addObject(player);
+    objectManager->addObject(player);
 
     return SUCCESS;
 }
@@ -308,7 +315,7 @@ ErrorType Game::Update() {
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
-    objectManager.run();
+    objectManager->run();
 
     return SUCCESS;
 }

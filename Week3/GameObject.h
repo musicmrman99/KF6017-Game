@@ -21,7 +21,7 @@ private:
     GraphicsModelPtr _graphicsModel;
     GraphicsModelPtr _uiGraphicsModel;
 
-    std::queue<Event> events;
+    std::queue<Event::Ptr> events;
 
 public:
     /* Components
@@ -60,8 +60,8 @@ public:
     virtual void actions();
 
     // Event Handling
-    virtual void handle(const Event& e) override;
-    virtual void emit(std::queue<Event>& events) override;
+    virtual void handle(const Event::Ptr e) override;
+    virtual void emit(std::queue<Event::Ptr>& events) override;
 
     // Run other Model Phase
     virtual void beforePhys();

@@ -19,6 +19,6 @@ public:
     KeyMap() {}
     ~KeyMap();
 
-    virtual void emit(std::queue<Event>& events) override;
+    virtual void emit(std::queue<Event::Ptr>& events) override;
     void bind(Control* control, EventEmitter* action);
 };

@@ -35,7 +35,7 @@ private:
 
 	int m_menuOption; // Tracks the currently selected menu option, during main or pause menu
 
-	ObjectManager objectManager;
+	ObjectManager::Ptr objectManager;
 
 	// Disable:
 	Game();            // no-arg constructor
