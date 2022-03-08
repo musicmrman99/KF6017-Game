@@ -13,8 +13,7 @@
 
 #include "Ship.h"
 #include "KeyMap.h"
-
-constexpr auto SHOWFPS = true;
+#include "GlobalUI.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
@@ -269,6 +268,7 @@ ErrorType Game::StartOfGame() {
     // Objects
     objectManager = ObjectManager::Ptr(new ObjectManager());
 
+      // Player
     GameObject::UPtr player = GameObject::UPtr(new Ship(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
@@ -278,6 +278,9 @@ ErrorType Game::StartOfGame() {
     ));
     player->setController(move(playerKeymap));
     objectManager->addObject(move(player));
+
+      // Global UI
+    objectManager->addObject(GameObject::UPtr(new GlobalUI()));
 
     return SUCCESS;
 }
@@ -312,24 +315,6 @@ ErrorType Game::Update() {
 
     // Tick the timer
     gt.mark();
-
-    // Show the framerate
-    static int fpsUpdateRate = 20 - 1;
-    static int fpsUpdateCountdown = fpsUpdateRate;
-    static float fpsAvg = 0.0f;
-    static float fps = 0.0f;
-    if (SHOWFPS) {
-        if (fpsUpdateCountdown == 0) {
-            fpsUpdateCountdown = fpsUpdateRate;
-            fps = fpsAvg;
-            fpsAvg = 0.0f;
-        }
-        fpsAvg += 1.0f / (float)gt.mdFrameTime;
-        fpsUpdateCountdown--;
-        MyDrawEngine* draw = MyDrawEngine::GetInstance();
-        const Rectangle2D& viewport = draw->GetViewport();
-        draw->WriteDouble(viewport.GetTopRight() - Vector2D(40, 0), fps / fpsUpdateRate, MyDrawEngine::CYAN);
-    }
 
     /* Game code
     -------------------------------------------------- */

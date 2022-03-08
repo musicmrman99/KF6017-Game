@@ -149,6 +149,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
+    <ClCompile Include="GlobalUI.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="KeyMap.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="BooleanCombinators.h" />
     <ClInclude Include="Controls.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GlobalUI.h" />
     <ClInclude Include="GraphicsModel.h" />
     <ClInclude Include="QueueUtils.h" />
     <ClInclude Include="ImageGraphicsModel.h" />
