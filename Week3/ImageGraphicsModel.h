@@ -7,14 +7,16 @@
 
 class ImageGraphicsModel final : public GraphicsModel {
 private:
-	using NewtonianPhysModelPtr = std::shared_ptr<NewtonianPhysModel>;
-
-	const NewtonianPhysModelPtr physModel;
-
+	NewtonianPhysModel::Ptr physModel;
 	PictureIndex image;
 
 public:
-	ImageGraphicsModel(const NewtonianPhysModelPtr physModel, PictureIndex image);
+	using Ptr = std::shared_ptr<ImageGraphicsModel>;
+	using UPtr = std::unique_ptr<ImageGraphicsModel>;
+	using WPtr = std::weak_ptr<ImageGraphicsModel>;
 
+	ImageGraphicsModel(const NewtonianPhysModel::Ptr physModel, PictureIndex image);
+
+	void setPhysModel(const NewtonianPhysModel::Ptr physModel);
 	virtual void draw() override;
 };

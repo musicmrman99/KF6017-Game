@@ -13,14 +13,14 @@ private:
 	// 2nd phase constructor
 	Bullet(
 		Vector2D pos, Vector2D rot, PictureIndex image,
-		std::shared_ptr<NewtonianPhysModel> physModel
+		NewtonianPhysModel::Ptr physModel
 	);
 
 public:
 	// Get/Set the right types
 
 	virtual NewtonianPhysModel& physModel() override;
-	virtual void setPhysModel(PhysModelPtr physModel) override;
+	virtual void setPhysModel(PhysModel::Ptr physModel) override;
 
 	// Lifecycle
 

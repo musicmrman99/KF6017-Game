@@ -11,15 +11,14 @@
 class GameObject : public EventHandler, public EventEmitter {
 public:
     using Ptr = std::shared_ptr<GameObject>;
-    using EventEmitterPtr = std::shared_ptr<EventEmitter>;
-    using PhysModelPtr = std::shared_ptr<PhysModel>;
-    using GraphicsModelPtr = std::shared_ptr<GraphicsModel>;
+    using UPtr = std::unique_ptr<GameObject>;
+    using WPtr = std::weak_ptr<GameObject>;
 
 private:
-    EventEmitterPtr _controller;
-    PhysModelPtr _physModel;
-    GraphicsModelPtr _graphicsModel;
-    GraphicsModelPtr _uiGraphicsModel;
+    EventEmitter::Ptr _controller;
+    PhysModel::Ptr _physModel;
+    GraphicsModel::Ptr _graphicsModel;
+    GraphicsModel::Ptr _uiGraphicsModel;
 
     std::queue<Event::Ptr> events;
 
@@ -28,28 +27,28 @@ public:
     -------------------- */
 
     GameObject(
-        EventEmitterPtr controller,
-        PhysModelPtr physModel,
-        GraphicsModelPtr graphicsModel,
-        GraphicsModelPtr uiGraphicsModel
+        EventEmitter::Ptr controller,
+        PhysModel::Ptr physModel,
+        GraphicsModel::Ptr graphicsModel,
+        GraphicsModel::Ptr uiGraphicsModel
     );
     virtual ~GameObject();
 
     virtual EventEmitter& controller();
     virtual EventEmitter& controller() const;
-    virtual void setController(EventEmitterPtr controller);
+    virtual void setController(EventEmitter::Ptr controller);
 
     virtual PhysModel& physModel();
     virtual PhysModel& physModel() const;
-    virtual void setPhysModel(PhysModelPtr physModel);
+    virtual void setPhysModel(PhysModel::Ptr physModel);
 
     virtual GraphicsModel& graphicsModel();
     virtual GraphicsModel& graphicsModel() const;
-    virtual void setGraphicsModel(GraphicsModelPtr graphicsModel);
+    virtual void setGraphicsModel(GraphicsModel::Ptr graphicsModel);
 
     virtual GraphicsModel& uiGraphicsModel();
     virtual GraphicsModel& uiGraphicsModel() const;
-    virtual void setUIGraphicsModel(GraphicsModelPtr uiGraphicsModel);
+    virtual void setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel);
 
     /* Lifecycle
     -------------------- */
