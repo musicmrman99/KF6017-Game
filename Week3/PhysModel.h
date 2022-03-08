@@ -3,6 +3,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include <memory>
+
 #include "GameTimer.h"
 
 /* Phys Model
@@ -14,6 +16,10 @@ private:
     static constexpr float DIST_UNIT = 64.0f;             // Pixels per DIST_UNIT
 
 public:
+    using Ptr = std::shared_ptr<PhysModel>;
+    using UPtr = std::unique_ptr<PhysModel>;
+    using WPtr = std::weak_ptr<PhysModel>;
+
     virtual ~PhysModel();
 
     virtual void run() = 0;

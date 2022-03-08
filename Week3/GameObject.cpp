@@ -5,7 +5,7 @@
 
 GameObject::GameObject(
     EventEmitter::Ptr controller,
-    PhysModelPtr physModel,
+    PhysModel::Ptr physModel,
     GraphicsModelPtr graphicsModel,
     GraphicsModelPtr uiGraphicsModel
 ) {
@@ -25,7 +25,7 @@ void GameObject::setController(EventEmitter::Ptr controller) {
 
 PhysModel& GameObject::physModel() { return *_physModel; }
 PhysModel& GameObject::physModel() const { return *_physModel; }
-void GameObject::setPhysModel(PhysModelPtr physModel) {
+void GameObject::setPhysModel(PhysModel::Ptr physModel) {
     if (physModel) _physModel = physModel;
 }
 

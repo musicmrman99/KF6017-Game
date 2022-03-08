@@ -22,7 +22,7 @@ public:
 	// Get/Set the right types
 
 	virtual NewtonianPhysModel& physModel() override;
-	virtual void setPhysModel(PhysModelPtr physModel) override;
+	virtual void setPhysModel(PhysModel::Ptr physModel) override;
 
 	// Movement
 
@@ -86,7 +86,7 @@ private:
 	// 2nd phase constructor
 	Ship(
 		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
-		std::shared_ptr<NewtonianPhysModel> physModel
+		NewtonianPhysModel::Ptr physModel
 	);
 
 	std::queue<Event::Ptr> globalEventBuffer;

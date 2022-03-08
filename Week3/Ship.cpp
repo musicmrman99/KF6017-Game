@@ -13,9 +13,13 @@
 NewtonianPhysModel& Ship::physModel() {
     return static_cast<NewtonianPhysModel&>(GameObject::physModel());
 }
-void Ship::setPhysModel(PhysModelPtr physModel) {
-    if (physModel && dynamic_cast<NewtonianPhysModel*>(physModel.get())) {
-        GameObject::setPhysModel(physModel);
+// Can't enforce uniqueness - GameObject interface requires shared_ptr.
+void Ship::setPhysModel(PhysModel::Ptr physModel) {
+    if (physModel) {
+        if (auto newtonianPhysModel = std::dynamic_pointer_cast<NewtonianPhysModel>(physModel)) {
+            GameObject::setPhysModel(physModel);
+            static_cast<ImageGraphicsModel&>(GameObject::graphicsModel()).setPhysModel(newtonianPhysModel);
+        }
     }
 }
 
@@ -123,7 +127,7 @@ const UpgradeTree& Ship::getUpgradeTree() {
 
 Ship::Ship(
     Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
-    std::shared_ptr<NewtonianPhysModel> physModel
+    NewtonianPhysModel::Ptr physModel
 ) : GameObject(
         std::shared_ptr<NullEventEmitter>(new NullEventEmitter()),
         physModel,
@@ -140,7 +144,7 @@ Ship::Ship(
 Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager)
     : Ship(
         pos, rot, image, bulletImage, objectManager,
-        std::shared_ptr<NewtonianPhysModel>(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+        NewtonianPhysModel::UPtr(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
     ) {
     buildUpgradeTree();
 }
