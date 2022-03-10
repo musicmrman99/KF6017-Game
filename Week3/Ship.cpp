@@ -4,6 +4,7 @@
 
 #include "QueueUtils.h"
 
+#include "ObjectEvent.h"
 #include "UpgradeTreeUI.h"
 #include "Bullet.h"
 

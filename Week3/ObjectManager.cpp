@@ -1,5 +1,7 @@
 #include "ObjectManager.h"
 
+#include "ObjectEvent.h"
+
 /* Object Manager
 -------------------------------------------------- */
 

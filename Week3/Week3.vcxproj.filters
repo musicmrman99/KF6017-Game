@@ -153,6 +153,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files\Engine\Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectEvent.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Header Files\Engine\Controllers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEvent.h">
+      <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

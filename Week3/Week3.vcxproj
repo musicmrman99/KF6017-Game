@@ -157,6 +157,7 @@
     <ClCompile Include="MyInputs.cpp" />
     <ClCompile Include="MySoundEngine.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
+    <ClCompile Include="ObjectEvent.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="PhysModel.cpp" />
     <ClCompile Include="QueueUtils.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalUI.h" />
     <ClInclude Include="GraphicsModel.h" />
+    <ClInclude Include="ObjectEvent.h" />
     <ClInclude Include="QueueUtils.h" />
     <ClInclude Include="ImageGraphicsModel.h" />
     <ClInclude Include="KeyMap.h" />

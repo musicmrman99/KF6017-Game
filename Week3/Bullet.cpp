@@ -1,5 +1,6 @@
 #include "Bullet.h"
 
+#include "ObjectEvent.h"
 #include "QueueUtils.h"
 #include "Timer.h"
 
