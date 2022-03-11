@@ -20,6 +20,7 @@ public:
 
 private:
 	static constexpr float SPEED = 40.0f;
+	static constexpr float OBJECT_CULL_TIME = 1.5f;
 
 	Timer::Ptr timer;
 

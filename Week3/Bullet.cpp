@@ -43,7 +43,7 @@ const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
 };
 
 void Bullet::afterCreate() {
-    timer = Timer::create(4.0, self());
+    timer = Timer::create(OBJECT_CULL_TIME, self());
     enqueue(AddControllerEvent::create(timer));
 }
 
