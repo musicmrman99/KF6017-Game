@@ -1,7 +1,9 @@
 #include "Bullet.h"
 
-#include "ObjectEvent.h"
 #include "QueueUtils.h"
+#include "uptrcast.h"
+
+#include "ObjectEvent.h"
 #include "Timer.h"
 
 /* Get/Set the right types
@@ -23,28 +25,28 @@ void Bullet::setPhysModel(PhysModel::Ptr physModel) {
 /* Lifecycle
 -------------------------------------------------- */
 
-Bullet::Bullet(
-    Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager,
-    NewtonianPhysModel::Ptr physModel
-) : GameObject(
+Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
+    : GameObject(
         Timer::UPtr(new Timer(4.0)),
         physModel,
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
-    ),
-    objectManager(objectManager) {
-}
-
-Bullet::Bullet(Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager)
-    : Bullet(
-        pos, rot, image, objectManager,
-        NewtonianPhysModel::UPtr(new NewtonianPhysModel(pos, rot * SPEED, rot, 0.0f))
     ) {
 }
 
+Bullet::Bullet(BulletSpec::UPtr spec)
+    : Bullet(move(spec),
+        NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))
+    ) {
+}
+
+const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
+    return Bullet::UPtr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
+};
+
 void Bullet::handle(const Event::Ptr e) {
     if (std::dynamic_pointer_cast<TimerEvent>(e)) {
-        globalEventBuffer.push(DestroyObjectEvent::create(objectManager, this));
+        globalEventBuffer.push(DestroyObjectEvent::create(this));
     }
 }
 

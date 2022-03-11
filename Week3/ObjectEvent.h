@@ -3,20 +3,20 @@
 #include <memory>
 
 #include "GameObject.h"
-#include "ObjectManager.h"
+#include "ObjectSpec.h"
 
 // Release Object Event
-class ReleaseObjectEvent final : public Event {
+class CreateObjectEvent final : public Event {
 private:
-	ReleaseObjectEvent(GameObject::UPtr object);
+	CreateObjectEvent(ObjectSpec::UPtr spec);
 
 public:
-	using Ptr = std::shared_ptr<ReleaseObjectEvent>;
-	using UPtr = std::unique_ptr<ReleaseObjectEvent>;
-	using WPtr = std::weak_ptr<ReleaseObjectEvent>;
+	using Ptr = std::shared_ptr<CreateObjectEvent>;
+	using UPtr = std::unique_ptr<CreateObjectEvent>;
+	using WPtr = std::weak_ptr<CreateObjectEvent>;
 
-	GameObject::UPtr object;
-	static TargettedEvent::UPtr create(ObjectManager::WPtr objectManager, GameObject::UPtr object);
+	ObjectSpec::UPtr spec;
+	static UPtr create(ObjectSpec::UPtr spec);
 };
 
 // Destroy Object Event
@@ -30,5 +30,5 @@ public:
 	using WPtr = std::weak_ptr<DestroyObjectEvent>;
 
 	GameObject* object;
-	static TargettedEvent::UPtr create(ObjectManager::WPtr objectManager, GameObject* object);
+	static UPtr create(GameObject* object);
 };

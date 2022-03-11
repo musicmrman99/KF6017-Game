@@ -73,6 +73,12 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{629701f7-d424-4738-bd5c-d6ab0bebdfc1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ObjectSpecs">
+      <UniqueIdentifier>{87bdc289-4fc4-4ca9-82c4-a4c4bffd8be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectSpecs">
+      <UniqueIdentifier>{86e4d301-9dde-4684-b1a6-51f784042191}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -155,6 +161,21 @@
     </ClCompile>
     <ClCompile Include="ObjectEvent.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSpec.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipSpec.cpp">
+      <Filter>Source Files\ObjectSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSpec.cpp">
+      <Filter>Source Files\ObjectSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUISpec.cpp">
+      <Filter>Source Files\ObjectSpecs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +277,24 @@
     </ClInclude>
     <ClInclude Include="ObjectEvent.h">
       <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpec.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipSpec.h">
+      <Filter>Header Files\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="uptrcast.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSpec.h">
+      <Filter>Header Files\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalUISpec.h">
+      <Filter>Header Files\ObjectSpecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

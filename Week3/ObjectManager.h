@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "GameObject.h"
+#include "ObjectSpec.h"
 
 // Object Manager
 class ObjectManager final : public EventHandler {
@@ -17,7 +18,7 @@ public:
 	using WPtr = std::weak_ptr<ObjectManager>;
 
 	// Add a GameObject you uniquely own.
-	void addObject(GameObject::UPtr gameObject);
+	void createObject(ObjectSpec::UPtr spec);
 
 	// Delete any GameObject.
 	void deleteObject(GameObject* gameObject);

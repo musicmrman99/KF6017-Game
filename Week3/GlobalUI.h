@@ -3,6 +3,8 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "GlobalUISpec.h"
+#include "ObjectFactory.h"
 
 // Show FPS Graphics Model
 class FrameRateUIModel final : public GraphicsModel {
@@ -31,6 +33,10 @@ public:
 // Global UI
 class GlobalUI final : public GameObject {
 public:
-	GlobalUI();
 	virtual GlobalUIModel& uiGraphicsModel() override;
+
+	// Lifecycle
+
+	GlobalUI(GlobalUISpec::UPtr spec);
+	static const ObjectFactory::Factory factory;
 };

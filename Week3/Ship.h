@@ -4,18 +4,17 @@
 #include <map>
 #include <memory>
 
-#include "Node.h"
-
 #include "MyDrawEngine.h"
-#include "MyInputs.h"
 
-#include "ObjectManager.h"
 #include "GameObject.h"
 #include "Event.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
 #include "UpgradeTree.h"
+
+#include "ObjectFactory.h"
+#include "ShipSpec.h"
 
 class Ship final : public GameObject {
 public:
@@ -83,22 +82,19 @@ private:
 
 	UpgradeTree upgradeTree;
 
-	// 2nd phase constructor
-	Ship(
-		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
-		NewtonianPhysModel::Ptr physModel
-	);
-
 	std::queue<Event::Ptr> globalEventBuffer;
-	ObjectManager::WPtr objectManager;
 	PictureIndex bulletImage;
+
+	// 2nd phase constructor
+	Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
 
 public:
 	const UpgradeTree& getUpgradeTree();
 
 	// Lifecycle
 
-	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager);
+	Ship(ShipSpec::UPtr spec);
+	static const ObjectFactory::Factory factory;
 	void buildUpgradeTree();
 	virtual ~Ship();
 

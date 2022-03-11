@@ -2,23 +2,21 @@
 
 #include <functional>
 
-#include "ObjectManager.h"
 #include "GameObject.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
+
+#include "ObjectFactory.h"
+#include "BulletSpec.h"
 
 class Bullet final : public GameObject {
 private:
 	static constexpr float SPEED = 40.0f;
 	
-	ObjectManager::WPtr objectManager;
 	std::queue<Event::Ptr> globalEventBuffer;
 
 	// 2nd phase constructor
-	Bullet(
-		Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager,
-		NewtonianPhysModel::Ptr physModel
-	);
+	Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
 
 public:
 	// Get/Set the right types
@@ -28,7 +26,9 @@ public:
 
 	// Lifecycle
 
-	Bullet(Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager);
+	Bullet(BulletSpec::UPtr bullet);
+	static const ObjectFactory::Factory factory;
+
 	virtual void handle(const Event::Ptr e) override;
 	virtual void emit(std::queue<Event::Ptr>& globalEvents) override;
 };

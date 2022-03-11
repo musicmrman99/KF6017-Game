@@ -1,12 +1,10 @@
 #include "ObjectManager.h"
 
+#include "ObjectFactory.h"
 #include "ObjectEvent.h"
 
-/* Object Manager
--------------------------------------------------- */
-
-void ObjectManager::addObject(GameObject::UPtr gameObject) {
-    objects.push_back(move(gameObject));
+void ObjectManager::createObject(ObjectSpec::UPtr spec) {
+    objects.push_back(ObjectFactory::create(move(spec)));
 }
 
 void ObjectManager::deleteObject(GameObject* gameObject) {
@@ -31,6 +29,7 @@ void ObjectManager::run() {
             if (auto ptr = targettedEvent->target.lock()) ptr->handle(move(targettedEvent->event));
         } else {
             for (GameObject::Ptr& object : objects) object->handle(event);
+            handle(event);
         }
         events.pop();
 
@@ -53,41 +52,10 @@ void ObjectManager::run() {
 }
 
 void ObjectManager::handle(const Event::Ptr e) {
-    if (auto roe = std::dynamic_pointer_cast<ReleaseObjectEvent>(e)) {
-        addObject(move(roe->object));
+    if (auto roe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) {
+        createObject(move(roe->spec));
     }
     else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) {
         deleteObject(roe->object);
     }
-}
-
-/* Events
--------------------------------------------------- */
-
-// Release Object Event
-ReleaseObjectEvent::ReleaseObjectEvent(GameObject::UPtr object)
-    : Event(), object(move(object)) {
-}
-
-TargettedEvent::UPtr ReleaseObjectEvent::create(ObjectManager::WPtr objectManager, GameObject::UPtr object) {
-    return TargettedEvent::UPtr(new TargettedEvent(
-        ReleaseObjectEvent::UPtr(new ReleaseObjectEvent(
-            move(object)
-        )),
-        std::static_pointer_cast<EventHandler>(objectManager.lock())
-    ));
-}
-
-// Destroy Object Event
-DestroyObjectEvent::DestroyObjectEvent(GameObject* object)
-    : Event(), object(object) {
-}
-
-TargettedEvent::UPtr DestroyObjectEvent::create(ObjectManager::WPtr objectManager, GameObject* object) {
-    return TargettedEvent::UPtr(new TargettedEvent(
-        DestroyObjectEvent::UPtr(new DestroyObjectEvent(
-            object
-        )),
-        std::static_pointer_cast<EventHandler>(objectManager.lock())
-    ));
 }

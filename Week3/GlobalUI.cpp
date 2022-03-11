@@ -1,5 +1,7 @@
 #include "GlobalUI.h"
 
+#include "uptrcast.h"
+
 #include "MyDrawEngine.h"
 #include "Game.h"
 
@@ -42,7 +44,7 @@ GlobalUIModel& GlobalUI::uiGraphicsModel() {
     return static_cast<GlobalUIModel&>(GameObject::uiGraphicsModel());
 }
 
-GlobalUI::GlobalUI()
+GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
     : GameObject(
         NullEventEmitter::UPtr(new NullEventEmitter()),
         NullPhysModel::UPtr(new NullPhysModel()),
@@ -51,3 +53,7 @@ GlobalUI::GlobalUI()
     ) {
     uiGraphicsModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));
 }
+
+const ObjectFactory::Factory GlobalUI::factory = [](ObjectSpec::UPtr spec) -> GameObject::UPtr {
+    return GlobalUI::UPtr(new GlobalUI(static_unique_pointer_cast<GlobalUISpec>(move(spec))));
+};
