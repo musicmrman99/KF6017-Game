@@ -18,11 +18,11 @@ public:
 	// No UPtr - ObjectManager will be onwed by Game, but many EventEmitters (GameObjects, controllers, etc.) may depend on it.
 	using WPtr = std::weak_ptr<ObjectManager>;
 
-	// Add a GameObject you uniquely own.
+	// Create a GameObject.
 	GameObject::Ptr createObject(ObjectSpec::UPtr spec);
 
-	// Delete any GameObject.
-	void deleteObject(GameObject* object);
+	// Destroy any GameObject.
+	void destroyObject(GameObject* object);
 
 	// Add a GameObject you uniquely own.
 	void addController(EventEmitter::Ptr controller);

@@ -9,7 +9,7 @@ GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
     return object;
 }
 
-void ObjectManager::deleteObject(GameObject* object) {
+void ObjectManager::destroyObject(GameObject* object) {
     objects.remove_if(
         [object](const GameObject::Ptr& myObject) {
             return myObject.get() == object;
@@ -69,7 +69,7 @@ void ObjectManager::run() {
 
 void ObjectManager::handle(const Event::Ptr e) {
          if (auto coe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) createObject(move(coe->spec)); // Discard the returned object for now
-    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) deleteObject(roe->object);
+    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) destroyObject(roe->object);
     else if (auto ace = std::dynamic_pointer_cast<AddControllerEvent>(e)) addController(ace->controller);
     else if (auto rce = std::dynamic_pointer_cast<RemoveControllerEvent>(e)) removeController(rce->controller);
 }
