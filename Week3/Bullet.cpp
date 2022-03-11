@@ -1,10 +1,8 @@
 #include "Bullet.h"
 
-#include "QueueUtils.h"
 #include "uptrcast.h"
 
 #include "ObjectEvent.h"
-#include "Timer.h"
 
 /* Get/Set the right types
 -------------------------------------------------- */
@@ -30,26 +28,28 @@ Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
         physModel,
         ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
-    ) {
-    // Timer::UPtr(new Timer(4.0))
-}
-
-Bullet::Bullet(BulletSpec::UPtr spec)
-    : Bullet(move(spec),
-        NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))
-    ) {
+    ),
+    timer(nullptr) {
 }
 
 const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
-    return Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
+    BulletSpec::UPtr bulletSpec = static_unique_pointer_cast<BulletSpec>(move(spec));
+    Bullet::Ptr bullet = Bullet::Ptr(new Bullet(
+        move(bulletSpec),
+        NewtonianPhysModel::UPtr(new NewtonianPhysModel(bulletSpec->pos, bulletSpec->rot * SPEED, bulletSpec->rot, 0.0f))
+    ));
+    bullet->setSelf(bullet);
+    return bullet;
 };
 
-void Bullet::handle(const Event::Ptr e) {
-    if (std::dynamic_pointer_cast<TimerEvent>(e)) {
-        globalEventBuffer.push(DestroyObjectEvent::create(this));
-    }
+void Bullet::afterCreate() {
+    timer = Timer::create(4.0, self());
+    enqueue(AddControllerEvent::create(timer));
 }
 
-void Bullet::emit(std::queue<Event::Ptr>& globalEvents) {
-    shiftInto(globalEventBuffer, globalEvents);
+void Bullet::handle(const Event::Ptr e) {
+    auto te = std::dynamic_pointer_cast<TimerEvent>(e);
+    if (te && te->timer.lock() == timer) {
+        enqueue(DestroyObjectEvent::create(this));
+    }
 }

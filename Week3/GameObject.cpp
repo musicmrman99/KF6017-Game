@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+#include "QueueUtils.h"
+
 /* Components
 -------------------- */
 
@@ -36,10 +38,23 @@ void GameObject::setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel) {
 /* Lifecycle
 -------------------- */
 
+void GameObject::afterCreate() {};
+
 void GameObject::beforeFrame() {};
 
+// Add an event to the event buffer. This is flushed to the
+// global event queue in the default implementation of emit().
+void GameObject::enqueue(Event::Ptr e) {
+    eventsBuffer.push(e);
+}
+
+// Handle events dispatched to this object.
 void GameObject::handle(const Event::Ptr e) {}
-void GameObject::emit(std::queue<Event::Ptr>& globalEvents) {}
+
+// If you do not need to buffer events, then you should override this method.
+void GameObject::emit(std::queue<Event::Ptr>& events) {
+    shiftInto(eventsBuffer, events);
+}
 
 void GameObject::beforePhys() {};
 void GameObject::phys() {
@@ -57,3 +72,5 @@ void GameObject::drawUI() {
 };
 
 void GameObject::afterFrame() {};
+
+void GameObject::beforeDestroy() {};

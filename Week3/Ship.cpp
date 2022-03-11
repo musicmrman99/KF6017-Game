@@ -2,12 +2,11 @@
 
 #include <string>
 
-#include "QueueUtils.h"
 #include "uptrcast.h"
 
 #include "ObjectEvent.h"
 #include "UpgradeTreeUI.h"
-#include "Bullet.h"
+#include "BulletSpec.h"
 
 /* Get/Set the right types
 -------------------------------------------------- */
@@ -61,7 +60,7 @@ void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 }
 
 void Ship::fire() {
-    globalEventBuffer.push(CreateObjectEvent::create(
+    enqueue(CreateObjectEvent::create(
         BulletSpec::UPtr(new BulletSpec(
             physModel().pos(), physModel().rot(), bulletImage
         ))
@@ -158,10 +157,6 @@ Ship::~Ship() {}
 void Ship::beforeFrame() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
-}
-
-void Ship::emit(std::queue<Event::Ptr>& globalEvents) {
-    shiftInto(globalEventBuffer, globalEvents);
 }
 
 void Ship::handle(const Event::Ptr e) {

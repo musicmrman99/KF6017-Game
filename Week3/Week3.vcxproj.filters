@@ -150,9 +150,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="QueueUtils.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalUI.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -295,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="GlobalUISpec.h">
       <Filter>Header Files\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="SelfReferencing.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

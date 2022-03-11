@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include "Derived.h"
-
 #include "Event.h"
 #include "PhysModel.h"
 #include "GraphicsModel.h"
@@ -19,7 +17,7 @@ private:
     GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
 
-    std::queue<Event::Ptr> events;
+    std::queue<Event::Ptr> eventsBuffer;
 
 public:
     /* Components
@@ -47,10 +45,15 @@ public:
     /* Lifecycle
     -------------------- */
 
+    // Run once just after creation
+    virtual void afterCreate();
+
     // Anything Before
     virtual void beforeFrame();
 
     // Event Handling
+    virtual void enqueue(Event::Ptr e);
+
     virtual void handle(const Event::Ptr e) override;
     virtual void emit(std::queue<Event::Ptr>& events) override;
 
@@ -66,4 +69,7 @@ public:
 
     // Anything After
     virtual void afterFrame();
+
+    // Run once just before destruction
+    virtual void beforeDestroy();
 };

@@ -1,20 +1,33 @@
 #include "ObjectManager.h"
 
+#include <algorithm>
+
 #include "ObjectFactory.h"
 #include "ObjectEvent.h"
 
 GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
     GameObject::Ptr object = ObjectFactory::create(move(spec));
+    object->afterCreate();
+    object->emit(events); // Flush event buffer in case controllers or game object require initialised object.
     objects.push_back(object);
     return object;
 }
 
 void ObjectManager::destroyObject(GameObject* object) {
-    objects.remove_if(
+    std::list<GameObject::Ptr>::iterator toDelete = std::partition(
+        objects.begin(), objects.end(),
         [object](const GameObject::Ptr& myObject) {
-            return myObject.get() == object;
+            return myObject.get() != object;
         }
     );
+
+    // We're not expecting there to be multiple matches, but just in case.
+    for (auto delObject = toDelete; delObject != objects.end(); ++delObject) {
+        (*delObject)->beforeDestroy();
+        (*delObject)->emit(events); // Emit any remaining buffered events before it's destroyed.
+    }
+
+    objects.erase(toDelete, objects.end());
 }
 
 void ObjectManager::addController(EventEmitter::Ptr controller) {

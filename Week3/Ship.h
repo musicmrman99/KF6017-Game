@@ -82,7 +82,6 @@ private:
 
 	UpgradeTree upgradeTree;
 
-	std::queue<Event::Ptr> globalEventBuffer;
 	PictureIndex bulletImage;
 
 	// 2nd phase constructor
@@ -100,5 +99,4 @@ public:
 
 	virtual void beforeFrame() override;
 	virtual void handle(const Event::Ptr e) override;
-	virtual void emit(std::queue<Event::Ptr>& globalEvents) override;
 };
