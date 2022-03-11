@@ -22,13 +22,13 @@ public:
 	GameObject::Ptr createObject(ObjectSpec::UPtr spec);
 
 	// Destroy any GameObject.
-	void destroyObject(GameObject* object);
+	void destroyObject(GameObject::WPtr object);
 
 	// Add a GameObject you uniquely own.
 	void addController(EventEmitter::Ptr controller);
 
 	// Delete any GameObject.
-	void removeController(EventEmitter* controller);
+	void removeController(EventEmitter::WPtr controller);
 
 	// Handle the given object event.
 	virtual void handle(const Event::Ptr e) override;

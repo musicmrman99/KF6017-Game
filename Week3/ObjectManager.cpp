@@ -13,11 +13,11 @@ GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
     return object;
 }
 
-void ObjectManager::destroyObject(GameObject* object) {
+void ObjectManager::destroyObject(GameObject::WPtr object) {
     std::list<GameObject::Ptr>::iterator toDelete = std::partition(
         objects.begin(), objects.end(),
         [object](const GameObject::Ptr& myObject) {
-            return myObject.get() != object;
+            return myObject != object.lock();
         }
     );
 
@@ -34,10 +34,10 @@ void ObjectManager::addController(EventEmitter::Ptr controller) {
     controllers.push_back(controller);
 }
 
-void ObjectManager::removeController(EventEmitter* controller) {
+void ObjectManager::removeController(EventEmitter::WPtr controller) {
     controllers.remove_if(
         [controller](const EventEmitter::Ptr& myController) {
-            return myController.get() == controller;
+            return myController == controller.lock();
         }
     );
 }

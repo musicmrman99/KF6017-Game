@@ -22,15 +22,15 @@ public:
 // Destroy Object Event
 class DestroyObjectEvent final : public Event {
 private:
-	DestroyObjectEvent(GameObject* object);
+	DestroyObjectEvent(GameObject::WPtr object);
 
 public:
 	using Ptr = std::shared_ptr<DestroyObjectEvent>;
 	using UPtr = std::unique_ptr<DestroyObjectEvent>;
 	using WPtr = std::weak_ptr<DestroyObjectEvent>;
 
-	GameObject* object;
-	static UPtr create(GameObject* object);
+	GameObject::WPtr object;
+	static UPtr create(GameObject::WPtr object);
 };
 
 // Add Controller Event
@@ -50,13 +50,13 @@ public:
 // Remove Controller Event
 class RemoveControllerEvent final : public Event {
 private:
-	RemoveControllerEvent(EventEmitter* controller);
+	RemoveControllerEvent(EventEmitter::WPtr controller);
 
 public:
 	using Ptr = std::shared_ptr<RemoveControllerEvent>;
 	using UPtr = std::unique_ptr<RemoveControllerEvent>;
 	using WPtr = std::weak_ptr<RemoveControllerEvent>;
 
-	EventEmitter* controller;
-	static UPtr create(EventEmitter* controller);
+	EventEmitter::WPtr controller;
+	static UPtr create(EventEmitter::WPtr controller);
 };

@@ -10,11 +10,11 @@ CreateObjectEvent::UPtr CreateObjectEvent::create(ObjectSpec::UPtr spec) {
 }
 
 // Destroy Object Event
-DestroyObjectEvent::DestroyObjectEvent(GameObject* object)
+DestroyObjectEvent::DestroyObjectEvent(GameObject::WPtr object)
     : Event(), object(object) {
 }
 
-DestroyObjectEvent::UPtr DestroyObjectEvent::create(GameObject* object) {
+DestroyObjectEvent::UPtr DestroyObjectEvent::create(GameObject::WPtr object) {
     return UPtr(new DestroyObjectEvent(object));
 }
 
@@ -28,10 +28,10 @@ AddControllerEvent::UPtr AddControllerEvent::create(EventEmitter::Ptr spec) {
 }
 
 // Destroy Object Event
-RemoveControllerEvent::RemoveControllerEvent(EventEmitter* controller)
+RemoveControllerEvent::RemoveControllerEvent(EventEmitter::WPtr controller)
     : Event(), controller(controller) {
 }
 
-RemoveControllerEvent::UPtr RemoveControllerEvent::create(EventEmitter* controller) {
+RemoveControllerEvent::UPtr RemoveControllerEvent::create(EventEmitter::WPtr controller) {
     return UPtr(new RemoveControllerEvent(controller));
 }

@@ -12,7 +12,7 @@
 #include "BulletSpec.h"
 #include "Timer.h"
 
-class Bullet final : public GameObject, public SelfReferencing<Bullet> {
+class Bullet final : public GameObject, public SelfReferencing<GameObject> {
 public:
 	using Ptr = std::shared_ptr<Bullet>;
 	using UPtr = std::unique_ptr<Bullet>;
