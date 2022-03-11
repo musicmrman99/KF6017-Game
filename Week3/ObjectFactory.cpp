@@ -10,6 +10,6 @@ void ObjectFactory::registerFactory(const ObjectType& type, const Factory& facto
 	instance()->factories.insert({ type, factory });
 }
 
-GameObject::UPtr ObjectFactory::create(ObjectSpec::UPtr spec) {
+GameObject::Ptr ObjectFactory::create(ObjectSpec::UPtr spec) {
 	return instance()->factories.at(spec->type)(move(spec));
 }

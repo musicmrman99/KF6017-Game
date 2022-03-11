@@ -150,7 +150,7 @@ Ship::Ship(ShipSpec::UPtr spec)
 }
 
 const ObjectFactory::Factory Ship::factory = [](ObjectSpec::UPtr spec) {
-    return Ship::UPtr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
+    return Ship::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
 };
 
 Ship::~Ship() {}

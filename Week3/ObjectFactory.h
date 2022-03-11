@@ -15,7 +15,7 @@ public:
 	// No UPtr, as it's a Singleton
 	using WPtr = std::weak_ptr<ObjectFactory>;
 
-	using Factory = std::function<GameObject::UPtr(ObjectSpec::UPtr)>;
+	using Factory = std::function<GameObject::Ptr(ObjectSpec::UPtr)>;
 
 private:
 	using ObjType = std::reference_wrapper<const ObjectType>;
@@ -27,5 +27,5 @@ private:
 
 public:
 	static void registerFactory(const ObjectType& type, const Factory& factory);
-	static GameObject::UPtr create(ObjectSpec::UPtr spec);
+	static GameObject::Ptr create(ObjectSpec::UPtr spec);
 };

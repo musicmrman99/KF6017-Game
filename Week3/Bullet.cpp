@@ -41,7 +41,7 @@ Bullet::Bullet(BulletSpec::UPtr spec)
 }
 
 const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
-    return Bullet::UPtr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
+    return Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
 };
 
 void Bullet::handle(const Event::Ptr e) {
