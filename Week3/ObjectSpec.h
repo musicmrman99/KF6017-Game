@@ -8,6 +8,7 @@ class ObjectType final : public Symbol {};
 
 struct ObjectSpec {
 public:
+	using Ptr = std::shared_ptr<ObjectSpec>;
 	using UPtr = std::unique_ptr<ObjectSpec>;
 
 	const ObjectType& type;

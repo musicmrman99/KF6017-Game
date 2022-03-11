@@ -7,6 +7,7 @@
 
 class BulletSpec final : public ObjectSpec {
 public:
+	using Ptr = std::shared_ptr<BulletSpec>;
 	using UPtr = std::unique_ptr<BulletSpec>;
 
 	static const ObjectType BULLET;

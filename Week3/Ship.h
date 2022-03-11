@@ -98,7 +98,7 @@ public:
 	void buildUpgradeTree();
 	virtual ~Ship();
 
-	virtual void beforeActions() override;
+	virtual void beforeFrame() override;
 	virtual void handle(const Event::Ptr e) override;
 	virtual void emit(std::queue<Event::Ptr>& globalEvents) override;
 };

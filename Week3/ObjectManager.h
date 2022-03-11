@@ -9,6 +9,7 @@
 // Object Manager
 class ObjectManager final : public EventHandler {
 private:
+	std::list<EventEmitter::Ptr> controllers;
 	std::list<GameObject::Ptr> objects;
 	std::queue<Event::Ptr> events;
 
@@ -18,10 +19,16 @@ public:
 	using WPtr = std::weak_ptr<ObjectManager>;
 
 	// Add a GameObject you uniquely own.
-	void createObject(ObjectSpec::UPtr spec);
+	GameObject::Ptr createObject(ObjectSpec::UPtr spec);
 
 	// Delete any GameObject.
-	void deleteObject(GameObject* gameObject);
+	void deleteObject(GameObject* object);
+
+	// Add a GameObject you uniquely own.
+	void addController(EventEmitter::Ptr controller);
+
+	// Delete any GameObject.
+	void removeController(EventEmitter* controller);
 
 	// Handle the given object event.
 	virtual void handle(const Event::Ptr e) override;

@@ -46,7 +46,6 @@ GlobalUIModel& GlobalUI::uiGraphicsModel() {
 
 GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
     : GameObject(
-        NullEventEmitter::UPtr(new NullEventEmitter()),
         NullPhysModel::UPtr(new NullPhysModel()),
         NullGraphicsModel::UPtr(new NullGraphicsModel()),
         GraphicsModel::UPtr(new GlobalUIModel())

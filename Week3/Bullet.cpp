@@ -27,11 +27,11 @@ void Bullet::setPhysModel(PhysModel::Ptr physModel) {
 
 Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
     : GameObject(
-        Timer::UPtr(new Timer(4.0)),
         physModel,
         ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
     ) {
+    // Timer::UPtr(new Timer(4.0))
 }
 
 Bullet::Bullet(BulletSpec::UPtr spec)

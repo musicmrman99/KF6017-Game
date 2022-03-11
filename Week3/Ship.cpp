@@ -132,7 +132,6 @@ const UpgradeTree& Ship::getUpgradeTree() {
 
 Ship::Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
     : GameObject(
-        NullEventEmitter::UPtr(new NullEventEmitter()),
         physModel,
         ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
@@ -156,7 +155,7 @@ const ObjectFactory::Factory Ship::factory = [](ObjectSpec::UPtr spec) {
 
 Ship::~Ship() {}
 
-void Ship::beforeActions() {
+void Ship::beforeFrame() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
 }

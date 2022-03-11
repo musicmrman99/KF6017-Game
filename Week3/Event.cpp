@@ -15,8 +15,8 @@ EventEmitter::~EventEmitter() {}
 EventHandler::~EventHandler() {}
 
 // Targetted Event
-TargettedEvent::TargettedEvent(Event::UPtr event, const EventHandler::WPtr target)
-	: event(move(event)), target(target) {
+TargettedEvent::TargettedEvent(Event::Ptr event, const EventHandler::WPtr target)
+	: event(event), target(target) {
 }
 TargettedEvent::~TargettedEvent() {}
 

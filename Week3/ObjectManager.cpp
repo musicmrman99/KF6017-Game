@@ -3,22 +3,38 @@
 #include "ObjectFactory.h"
 #include "ObjectEvent.h"
 
-void ObjectManager::createObject(ObjectSpec::UPtr spec) {
-    objects.push_back(ObjectFactory::create(move(spec)));
+GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
+    GameObject::Ptr object = ObjectFactory::create(move(spec));
+    objects.push_back(object);
+    return object;
 }
 
-void ObjectManager::deleteObject(GameObject* gameObject) {
+void ObjectManager::deleteObject(GameObject* object) {
     objects.remove_if(
-        [gameObject](const GameObject::Ptr& object) {
-            return object.get() == gameObject;
+        [object](const GameObject::Ptr& myObject) {
+            return myObject.get() == object;
+        }
+    );
+}
+
+void ObjectManager::addController(EventEmitter::Ptr controller) {
+    controllers.push_back(controller);
+}
+
+void ObjectManager::removeController(EventEmitter* controller) {
+    controllers.remove_if(
+        [controller](const EventEmitter::Ptr& myController) {
+            return myController.get() == controller;
         }
     );
 }
 
 void ObjectManager::run() {
-    // Handle actions
-    for (GameObject::Ptr& object : objects) object->beforeActions();
-    for (GameObject::Ptr& object : objects) object->actions();
+    // Anything first
+    for (GameObject::Ptr& object : objects) object->beforeFrame();
+
+    // Emit Global Events - Controllers
+    for (EventEmitter::Ptr& controller : controllers) controller->emit(events);
 
     // Handle Global Events
     for (GameObject::Ptr& object : objects) object->emit(events);
@@ -47,15 +63,13 @@ void ObjectManager::run() {
     for (GameObject::Ptr& object : objects) object->beforeDrawUI();
     for (GameObject::Ptr& object : objects) object->drawUI();
 
-    // Anything else
+    // Anything last
     for (GameObject::Ptr& object : objects) object->afterFrame();
 }
 
 void ObjectManager::handle(const Event::Ptr e) {
-    if (auto roe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) {
-        createObject(move(roe->spec));
-    }
-    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) {
-        deleteObject(roe->object);
-    }
+         if (auto coe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) createObject(move(coe->spec)); // Discard the returned object for now
+    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) deleteObject(roe->object);
+    else if (auto ace = std::dynamic_pointer_cast<AddControllerEvent>(e)) addController(ace->controller);
+    else if (auto rce = std::dynamic_pointer_cast<RemoveControllerEvent>(e)) removeController(rce->controller);
 }

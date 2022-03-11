@@ -7,6 +7,7 @@
 
 class ShipSpec final : public ObjectSpec {
 public:
+	using Ptr = std::shared_ptr<ShipSpec>;
 	using UPtr = std::unique_ptr<ShipSpec>;
 
 	static const ObjectType SHIP;

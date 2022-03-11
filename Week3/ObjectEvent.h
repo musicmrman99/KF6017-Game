@@ -32,3 +32,31 @@ public:
 	GameObject* object;
 	static UPtr create(GameObject* object);
 };
+
+// Add Controller Event
+class AddControllerEvent final : public Event {
+private:
+	AddControllerEvent(EventEmitter::Ptr controller);
+
+public:
+	using Ptr = std::shared_ptr<AddControllerEvent>;
+	using UPtr = std::unique_ptr<AddControllerEvent>;
+	using WPtr = std::weak_ptr<AddControllerEvent>;
+
+	EventEmitter::Ptr controller;
+	static UPtr create(EventEmitter::Ptr controller);
+};
+
+// Remove Controller Event
+class RemoveControllerEvent final : public Event {
+private:
+	RemoveControllerEvent(EventEmitter* controller);
+
+public:
+	using Ptr = std::shared_ptr<RemoveControllerEvent>;
+	using UPtr = std::unique_ptr<RemoveControllerEvent>;
+	using WPtr = std::weak_ptr<RemoveControllerEvent>;
+
+	EventEmitter* controller;
+	static UPtr create(EventEmitter* controller);
+};
