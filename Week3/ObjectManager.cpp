@@ -32,6 +32,7 @@ ObjectFactory& ObjectManager::getObjectFactory() {
 
 GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
     GameObject::Ptr object = factory.create(move(spec));
+    if (!object) return;
     object->setObjectEventFactory(objectEventFactory);
     object->afterCreate();
     object->emit(events); // Flush event buffer in case controllers or game object require initialised object.
