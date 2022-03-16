@@ -3,8 +3,6 @@
 #include <vector>
 #include <functional>
 
-#include "BooleanCombinators.h"
-
 #include "MyInputs.h"
 
 // Type of binding for boolean controls (like key and mouse button presses)
@@ -91,31 +89,6 @@ public:
 
     int minDeltaFor(int minDelta, const Scroll direction);
     int maxDeltaFor(int maxDelta, const Scroll direction);
-
-    virtual bool isActive() const;
-};
-
-/* Composite Control
--------------------- */
-
-// Multiple other controls in some pattern (ie. combined in some way).
-class CompositeControl final : public Control {
-public:
-    using UPtr = std::unique_ptr<CompositeControl>;
-
-    using Combinator = Combinator<std::vector<Control*>, bool>;
-    using Predicate = std::function<bool(Control*)>;
-
-private:
-    std::vector<Control*> controls;
-    Combinator* combinator;
-
-    static Predicate controlActive;
-
-public:
-    CompositeControl(const std::vector<Control*>& controls, Combinator* combinator);
-    CompositeControl(const std::vector<Control*>& controls);
-    ~CompositeControl();
 
     virtual bool isActive() const;
 };

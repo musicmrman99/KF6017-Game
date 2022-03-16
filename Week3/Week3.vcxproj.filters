@@ -191,12 +191,6 @@
     <ClInclude Include="Ship.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Combinator.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="BooleanCombinators.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Derived.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>

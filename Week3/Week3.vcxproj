@@ -184,8 +184,6 @@
     <ClInclude Include="ErrorType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameTimer.h" />
-    <ClInclude Include="Combinator.h" />
-    <ClInclude Include="BooleanCombinators.h" />
     <ClInclude Include="Controls.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalUI.h" />
