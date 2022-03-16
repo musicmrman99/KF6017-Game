@@ -35,6 +35,12 @@ void GameObject::setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel) {
     if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
 }
 
+ObjectEventFactory::Ptr GameObject::objectEventFactory() { return _objectEventFactory; }
+ObjectEventFactory::Ptr GameObject::objectEventFactory() const { return _objectEventFactory; }
+void GameObject::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
+    _objectEventFactory = objectEventFactory;
+}
+
 /* Lifecycle
 -------------------- */
 

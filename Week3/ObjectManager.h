@@ -3,20 +3,44 @@
 #include <list>
 #include <memory>
 
+#include "SelfReferencing.h"
+
 #include "GameObject.h"
 #include "ObjectSpec.h"
+#include "ObjectFactory.h"
+#include "ObjectEventFactory.h"
 
 // Object Manager
-class ObjectManager final : public EventHandler {
-private:
-	std::list<EventEmitter::Ptr> controllers;
-	std::list<GameObject::Ptr> objects;
-	std::queue<Event::Ptr> events;
-
+class ObjectManager final : public EventHandler, public SelfReferencing<ObjectManager> {
 public:
 	using Ptr = std::shared_ptr<ObjectManager>;
 	// No UPtr - ObjectManager will be onwed by Game, but many EventEmitters (GameObjects, controllers, etc.) may depend on it.
 	using WPtr = std::weak_ptr<ObjectManager>;
+
+private:
+	ObjectEventFactory::Ptr objectEventFactory;
+	ObjectFactory factory;
+
+	std::list<EventEmitter::Ptr> controllers;
+	std::list<GameObject::Ptr> objects;
+	std::queue<Event::Ptr> events;
+	
+	ObjectManager();
+	virtual void setSelf(WPtr self) override;
+
+public:
+	/* Creation
+	-------------------- */
+
+	static Ptr create();
+
+	/* Getters
+	-------------------- */
+
+	ObjectFactory& getObjectFactory();
+
+	/* Event Handling
+	-------------------- */
 
 	// Create a GameObject.
 	GameObject::Ptr createObject(ObjectSpec::UPtr spec);
@@ -32,6 +56,9 @@ public:
 
 	// Handle the given object event.
 	virtual void handle(const Event::Ptr e) override;
+
+	/* Frame Process
+	-------------------- */
 
 	// Run the lifecycle for all managed objects.
 	void run();

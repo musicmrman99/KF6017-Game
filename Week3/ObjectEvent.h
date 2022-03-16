@@ -16,7 +16,7 @@ public:
 	using WPtr = std::weak_ptr<CreateObjectEvent>;
 
 	ObjectSpec::UPtr spec;
-	static UPtr create(ObjectSpec::UPtr spec);
+	static Ptr create(ObjectSpec::UPtr spec);
 };
 
 // Destroy Object Event
@@ -30,7 +30,7 @@ public:
 	using WPtr = std::weak_ptr<DestroyObjectEvent>;
 
 	GameObject::WPtr object;
-	static UPtr create(GameObject::WPtr object);
+	static Ptr create(GameObject::WPtr object);
 };
 
 // Add Controller Event
@@ -44,7 +44,7 @@ public:
 	using WPtr = std::weak_ptr<AddControllerEvent>;
 
 	EventEmitter::Ptr controller;
-	static UPtr create(EventEmitter::Ptr controller);
+	static Ptr create(EventEmitter::Ptr controller);
 };
 
 // Remove Controller Event
@@ -58,5 +58,5 @@ public:
 	using WPtr = std::weak_ptr<RemoveControllerEvent>;
 
 	EventEmitter::WPtr controller;
-	static UPtr create(EventEmitter::WPtr controller);
+	static Ptr create(EventEmitter::WPtr controller);
 };

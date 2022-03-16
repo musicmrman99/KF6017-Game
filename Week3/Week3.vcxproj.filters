@@ -70,9 +70,6 @@
     <Filter Include="Header Files\Objects\Components">
       <UniqueIdentifier>{59c467ad-de00-48a6-b1db-12d84d078616}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{629701f7-d424-4738-bd5c-d6ab0bebdfc1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ObjectSpecs">
       <UniqueIdentifier>{87bdc289-4fc4-4ca9-82c4-a4c4bffd8be6}</UniqueIdentifier>
     </Filter>
@@ -173,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="GlobalUISpec.cpp">
       <Filter>Source Files\ObjectSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEventFactory.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="SelfReferencing.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventFactory.h">
+      <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

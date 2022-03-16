@@ -30,13 +30,13 @@ public:
 	class TurnRightThrustEvent final : public Event {};
 
 	class MainThrustEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 	class TurnLeftThrustEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 	class TurnRightThrustEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 
 	void mainThrust();
@@ -47,7 +47,7 @@ public:
 
 	class FireEvent final : public Event {};
 	class FireEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 	void fire();
 

@@ -2,8 +2,6 @@
 
 #include "uptrcast.h"
 
-#include "ObjectEvent.h"
-
 /* Get/Set the right types
 -------------------------------------------------- */
 
@@ -44,12 +42,12 @@ const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
 
 void Bullet::afterCreate() {
     timer = Timer::create(OBJECT_CULL_TIME, self());
-    enqueue(AddControllerEvent::create(timer));
+    enqueue(objectEventFactory()->addController(timer));
 }
 
 void Bullet::handle(const Event::Ptr e) {
     auto te = std::dynamic_pointer_cast<TimerEvent>(e);
     if (te && te->timer.lock() == timer) {
-        enqueue(DestroyObjectEvent::create(self()));
+        enqueue(objectEventFactory()->destroyObject(self()));
     }
 }

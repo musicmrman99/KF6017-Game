@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Event.h"
+#include "ObjectEventFactory.h"
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
@@ -17,6 +18,7 @@ private:
     GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
 
+    ObjectEventFactory::Ptr _objectEventFactory;
     std::queue<Event::Ptr> eventsBuffer;
 
 public:
@@ -41,6 +43,10 @@ public:
     virtual GraphicsModel& uiGraphicsModel();
     virtual GraphicsModel& uiGraphicsModel() const;
     virtual void setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel);
+
+    ObjectEventFactory::Ptr objectEventFactory();
+    ObjectEventFactory::Ptr objectEventFactory() const;
+    void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory);
 
     /* Lifecycle
     -------------------- */

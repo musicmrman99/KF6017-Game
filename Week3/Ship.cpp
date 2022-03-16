@@ -4,7 +4,6 @@
 
 #include "uptrcast.h"
 
-#include "ObjectEvent.h"
 #include "UpgradeTreeUI.h"
 #include "BulletSpec.h"
 
@@ -60,7 +59,7 @@ void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 }
 
 void Ship::fire() {
-    enqueue(CreateObjectEvent::create(
+    enqueue(objectEventFactory()->createObject(
         BulletSpec::UPtr(new BulletSpec(
             physModel().pos(), physModel().rot(), bulletImage
         ))

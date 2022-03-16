@@ -2,11 +2,37 @@
 
 #include <algorithm>
 
-#include "ObjectFactory.h"
 #include "ObjectEvent.h"
 
+/* Creation
+-------------------------------------------------- */
+
+ObjectManager::ObjectManager() : objectEventFactory(nullptr) {}
+void ObjectManager::setSelf(WPtr me) {
+    SelfReferencing<ObjectManager>::setSelf(me);
+    // Not a nice solution (setSelf() isn't supposed to be responsible for this much initialisation), but it works (for now)
+    objectEventFactory = ObjectEventFactory::create(self());
+}
+
+ObjectManager::Ptr ObjectManager::create() {
+    Ptr ptr = Ptr(new ObjectManager());
+    ptr->setSelf(ptr);
+    return ptr;
+}
+
+/* Getters
+-------------------------------------------------- */
+
+ObjectFactory& ObjectManager::getObjectFactory() {
+    return factory;
+}
+
+/* Event Handling
+-------------------------------------------------- */
+
 GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
-    GameObject::Ptr object = ObjectFactory::create(move(spec));
+    GameObject::Ptr object = factory.create(move(spec));
+    object->setObjectEventFactory(objectEventFactory);
     object->afterCreate();
     object->emit(events); // Flush event buffer in case controllers or game object require initialised object.
     objects.push_back(object);
@@ -42,6 +68,16 @@ void ObjectManager::removeController(EventEmitter::WPtr controller) {
     );
 }
 
+void ObjectManager::handle(const Event::Ptr e) {
+    if (auto coe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) createObject(move(coe->spec)); // Discard the returned object for now
+    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) destroyObject(roe->object);
+    else if (auto ace = std::dynamic_pointer_cast<AddControllerEvent>(e)) addController(ace->controller);
+    else if (auto rce = std::dynamic_pointer_cast<RemoveControllerEvent>(e)) removeController(rce->controller);
+}
+
+/* Frame Process
+-------------------------------------------------- */
+
 void ObjectManager::run() {
     // Anything first
     for (GameObject::Ptr& object : objects) object->beforeFrame();
@@ -58,7 +94,6 @@ void ObjectManager::run() {
             if (auto ptr = targettedEvent->target.lock()) ptr->handle(move(targettedEvent->event));
         } else {
             for (GameObject::Ptr& object : objects) object->handle(event);
-            handle(event);
         }
         events.pop();
 
@@ -78,11 +113,4 @@ void ObjectManager::run() {
 
     // Anything last
     for (GameObject::Ptr& object : objects) object->afterFrame();
-}
-
-void ObjectManager::handle(const Event::Ptr e) {
-         if (auto coe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) createObject(move(coe->spec)); // Discard the returned object for now
-    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) destroyObject(roe->object);
-    else if (auto ace = std::dynamic_pointer_cast<AddControllerEvent>(e)) addController(ace->controller);
-    else if (auto rce = std::dynamic_pointer_cast<RemoveControllerEvent>(e)) removeController(rce->controller);
 }

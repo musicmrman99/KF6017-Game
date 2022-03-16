@@ -261,12 +261,13 @@ ErrorType Game::StartOfGame() {
     PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
     // Objects
-    objectManager = ObjectManager::Ptr(new ObjectManager());
+    objectManager = ObjectManager::create();
 
       // Register Factories
-    ObjectFactory::registerFactory(ShipSpec::SHIP, Ship::factory);
-    ObjectFactory::registerFactory(BulletSpec::BULLET, Bullet::factory);
-    ObjectFactory::registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
+    ObjectFactory& objectFactory = objectManager->getObjectFactory();
+    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
+    objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
+    objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
 
       // Create player
     Ship::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
