@@ -28,7 +28,8 @@ void Timer::emit(std::queue<Event::Ptr>& events) {
 }
 
 // Timer Event
-TimerEvent::TimerEvent(const Timer::WPtr timer) : timer(timer) {}
+const EventType TimerEvent::TYPE;
+TimerEvent::TimerEvent(const Timer::WPtr timer) : Event(TYPE), timer(timer) {}
 TimerEvent::Ptr TimerEvent::create(const Timer::WPtr timer) {
 	return Ptr(new TimerEvent(timer));
 }

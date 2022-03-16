@@ -19,6 +19,8 @@ public:
 // A generic upgrade event type.
 class UpgradeEvent final : public Event {
 public:
+	static const EventType TYPE;
+
 	const Upgrade& upgrade;
 	UpgradeEvent(const Upgrade& upgrade);
 };

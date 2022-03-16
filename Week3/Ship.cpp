@@ -29,15 +29,27 @@ void Ship::setPhysModel(PhysModel::Ptr physModel) {
 /* Movement Actions
 -------------------- */
 
+// Events
+
+const EventType Ship::MainThrustEvent::TYPE;
+Ship::MainThrustEvent::MainThrustEvent() : Event(TYPE) {}
 void Ship::MainThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(MainThrustEvent::Ptr(new MainThrustEvent()));
 }
+
+const EventType Ship::TurnLeftThrustEvent::TYPE;
+Ship::TurnLeftThrustEvent::TurnLeftThrustEvent() : Event(TYPE) {}
 void Ship::TurnLeftThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(TurnLeftThrustEvent::Ptr(new TurnLeftThrustEvent()));
 }
+
+const EventType Ship::TurnRightThrustEvent::TYPE;
+Ship::TurnRightThrustEvent::TurnRightThrustEvent() : Event(TYPE) {}
 void Ship::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(TurnRightThrustEvent::Ptr(new TurnRightThrustEvent()));
 }
+
+// Actions
 
 void Ship::mainThrust() {
     physModel().shiftAccel(physModel().rot() * engineThrust);
@@ -54,9 +66,15 @@ void Ship::turnRightThrust() {
 /* Attack
 -------------------- */
 
+// Event
+
+const EventType Ship::FireEvent::TYPE;
+Ship::FireEvent::FireEvent() : Event(TYPE) {}
 void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(FireEvent::Ptr(new FireEvent()));
 }
+
+// Action
 
 void Ship::fire() {
     enqueue(objectEventFactory()->createObject(

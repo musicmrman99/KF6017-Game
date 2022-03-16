@@ -24,6 +24,8 @@ private:
 	TimerEvent(const Timer::WPtr timer);
 
 public:
+	static const EventType TYPE;
+
 	const Timer::WPtr timer;
 	static Ptr create(const Timer::WPtr timer);
 };
