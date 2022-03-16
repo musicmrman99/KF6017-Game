@@ -973,8 +973,6 @@ ErrorType MyDrawEngine::DrawAt(Vector2D position, PictureIndex pic, float scale,
 	{
 		ErrorLogger::Writeln(L"Failed to draw sprite in DrawAt");
 		ErrorLogger::Writeln(ERRORSTRING(err));
-	
-		m_lpSprite->End();
 		return FAILURE;
 	}
 
