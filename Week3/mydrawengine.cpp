@@ -895,6 +895,28 @@ ErrorType MyDrawEngine::WriteDouble(Vector2D position, double num, int colour, F
 // Drawing Functions
 // **************************************************************
 
+// Set up the draw buffer for drawing. Mut call EndDraw() before calling BeginDraw() again.
+ErrorType MyDrawEngine::BeginDraw() {
+	HRESULT err = m_lpSprite->Begin(D3DXSPRITE_ALPHABLEND); // Alpha Blending requested
+	if (FAILED(err)) {
+		ErrorLogger::Writeln(L"Failed to begin sprite render in DrawAt");
+		ErrorLogger::Writeln(ERRORSTRING(err));
+		return FAILURE;
+	}
+	return SUCCESS;
+}
+
+// Flush the draw buffer
+ErrorType MyDrawEngine::EndDraw() {
+	HRESULT err = m_lpSprite->End();
+	if (FAILED(err)) {
+		ErrorLogger::Writeln(L"Failed to end sprite render in DrawAt");
+		ErrorLogger::Writeln(ERRORSTRING(err));
+		return FAILURE;
+	}
+	return SUCCESS;
+}
+
 // Draw a picture at the requested location
 ErrorType MyDrawEngine::DrawAt(Vector2D position, PictureIndex pic, float scale, float angle, float transparency)
 {
@@ -926,15 +948,6 @@ ErrorType MyDrawEngine::DrawAt(Vector2D position, PictureIndex pic, float scale,
 		return FAILURE;
 	}
 
-	// Start drawing
-	HRESULT err = m_lpSprite->Begin(D3DXSPRITE_ALPHABLEND);		// Alpha Blending requested
-	if(FAILED(err))
-	{
-		ErrorLogger::Writeln(L"Failed to begin sprite render in DrawAt");
-		ErrorLogger::Writeln(ERRORSTRING(err));
-		return FAILURE;
-	}
-
 	// Specify the centre of the sprite - will be (height/2,width/2) unless user has asked for something 
 	// different.
 	D3DXVECTOR2 centre (thePicture.m_Centre.XValue, thePicture.m_Centre.YValue);
@@ -955,8 +968,7 @@ ErrorType MyDrawEngine::DrawAt(Vector2D position, PictureIndex pic, float scale,
 	unsigned int colour = 0xFFFFFF+(alpha<<24);
 
 	// Draw the sprite
-	err = m_lpSprite->Draw(thePicture.lpTheTexture, NULL, NULL, NULL, colour);
-
+	HRESULT err = m_lpSprite->Draw(thePicture.lpTheTexture, NULL, NULL, NULL, colour);
 	if(FAILED(err))
 	{
 		ErrorLogger::Writeln(L"Failed to draw sprite in DrawAt");
@@ -965,9 +977,6 @@ ErrorType MyDrawEngine::DrawAt(Vector2D position, PictureIndex pic, float scale,
 		m_lpSprite->End();
 		return FAILURE;
 	}
-
-	// Complete the sprite
-	m_lpSprite->End();
 
 	return SUCCESS;
 }	// DrawAt
