@@ -3,8 +3,9 @@
 #include "SelfReferencing.h"
 
 #include "Event.h"
+#include "ObjectEventEmitter.h"
 
-class Timer final : public EventEmitter, SelfReferencing<Timer> {
+class Timer final : public ObjectEventEmitter, SelfReferencing<Timer> {
 private:
 	double limit;
 	double created;

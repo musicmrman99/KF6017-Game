@@ -3,11 +3,12 @@
 #include <memory>
 
 #include "Event.h"
-#include "ObjectEventFactory.h"
+#include "ObjectEventEmitter.h"
+
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
-class GameObject : public EventHandler, public EventEmitter {
+class GameObject : public EventHandler, public ObjectEventEmitter {
 public:
     using Ptr = std::shared_ptr<GameObject>;
     using UPtr = std::unique_ptr<GameObject>;
@@ -18,7 +19,6 @@ private:
     GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
 
-    ObjectEventFactory::Ptr _objectEventFactory;
     std::queue<Event::Ptr> eventsBuffer;
 
 public:
@@ -45,10 +45,6 @@ public:
     virtual GraphicsModel& uiGraphicsModel();
     virtual GraphicsModel& uiGraphicsModel() const;
     virtual void setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel);
-
-    ObjectEventFactory::Ptr objectEventFactory();
-    ObjectEventFactory::Ptr objectEventFactory() const;
-    void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory);
 
     // Events
 

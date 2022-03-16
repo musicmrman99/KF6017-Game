@@ -19,11 +19,11 @@ void Timer::emit(std::queue<Event::Ptr>& events) {
 	if (Game::gt.timeSince(created) > limit) {
 		events.push(
 			TargettedEvent::UPtr(new TargettedEvent(
-				TimerEvent::create(self()),                 // Emit the timer event (with this object as the source)
-				listener                                    // To the listener
+				TimerEvent::create(self()),                          // Emit the timer event (with this object as the source)
+				listener                                             // To the listener
 			))
 		);
-		events.push(RemoveControllerEvent::create(self())); // Then remove/delete yourself (the timer)
+		events.push(objectEventFactory()->removeController(self())); // Then remove/delete yourself (the timer)
 	}
 }
 
