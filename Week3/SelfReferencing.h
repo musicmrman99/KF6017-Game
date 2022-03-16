@@ -8,7 +8,7 @@ private:
     std::weak_ptr<T> _self;
 
 public:
-    void setSelf(std::weak_ptr<T> self) {
+    virtual void setSelf(std::weak_ptr<T> self) {
         _self = self;
     }
 
