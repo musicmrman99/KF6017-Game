@@ -41,18 +41,18 @@ void GameObject::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactor
     _objectEventFactory = objectEventFactory;
 }
 
+// Add an event to the event buffer. This is flushed to the
+// global event queue in the default implementation of emit().
+void GameObject::enqueue(Event::Ptr e) {
+    eventsBuffer.push(e);
+}
+
 /* Lifecycle
 -------------------- */
 
 void GameObject::afterCreate() {};
 
 void GameObject::beforeFrame() {};
-
-// Add an event to the event buffer. This is flushed to the
-// global event queue in the default implementation of emit().
-void GameObject::enqueue(Event::Ptr e) {
-    eventsBuffer.push(e);
-}
 
 // Handle events dispatched to this object.
 void GameObject::handle(const Event::Ptr e) {}

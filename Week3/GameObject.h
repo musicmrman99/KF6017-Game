@@ -32,6 +32,8 @@ public:
     );
     virtual ~GameObject();
 
+    // Models
+
     virtual PhysModel& physModel();
     virtual PhysModel& physModel() const;
     virtual void setPhysModel(PhysModel::Ptr physModel);
@@ -48,6 +50,10 @@ public:
     ObjectEventFactory::Ptr objectEventFactory() const;
     void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory);
 
+    // Events
+
+    virtual void enqueue(Event::Ptr e);
+
     /* Lifecycle
     -------------------- */
 
@@ -58,8 +64,6 @@ public:
     virtual void beforeFrame();
 
     // Event Handling
-    virtual void enqueue(Event::Ptr e);
-
     virtual void handle(const Event::Ptr e) override;
     virtual void emit(std::queue<Event::Ptr>& events) override;
 
