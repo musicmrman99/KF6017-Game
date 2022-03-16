@@ -1,8 +1,6 @@
 #include "Bullet.h"
 
-#include "ObjectEvent.h"
-#include "QueueUtils.h"
-#include "Timer.h"
+#include "uptrcast.h"
 
 /* Get/Set the right types
 -------------------------------------------------- */
@@ -23,31 +21,33 @@ void Bullet::setPhysModel(PhysModel::Ptr physModel) {
 /* Lifecycle
 -------------------------------------------------- */
 
-Bullet::Bullet(
-    Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager,
-    NewtonianPhysModel::Ptr physModel
-) : GameObject(
-        Timer::UPtr(new Timer(4.0)),
+Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
+    : GameObject(
         physModel,
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
     ),
-    objectManager(objectManager) {
+    timer(nullptr) {
 }
 
-Bullet::Bullet(Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager)
-    : Bullet(
-        pos, rot, image, objectManager,
-        NewtonianPhysModel::UPtr(new NewtonianPhysModel(pos, rot * SPEED, rot, 0.0f))
-    ) {
+const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
+    BulletSpec::UPtr bulletSpec = static_unique_pointer_cast<BulletSpec>(move(spec));
+    Bullet::Ptr bullet = Bullet::Ptr(new Bullet(
+        move(bulletSpec),
+        NewtonianPhysModel::UPtr(new NewtonianPhysModel(bulletSpec->pos, bulletSpec->rot * SPEED, bulletSpec->rot, 0.0f))
+    ));
+    bullet->setSelf(bullet);
+    return bullet;
+};
+
+void Bullet::afterCreate() {
+    timer = Timer::create(OBJECT_CULL_TIME, self());
+    enqueue(objectEventFactory()->addController(timer));
 }
 
 void Bullet::handle(const Event::Ptr e) {
-    if (std::dynamic_pointer_cast<TimerEvent>(e)) {
-        globalEventBuffer.push(DestroyObjectEvent::create(objectManager, this));
+    auto te = std::dynamic_pointer_cast<TimerEvent>(e);
+    if (te && te->timer.lock() == timer) {
+        enqueue(objectEventFactory()->destroyObject(self()));
     }
-}
-
-void Bullet::emit(std::queue<Event::Ptr>& globalEvents) {
-    shiftInto(globalEventBuffer, globalEvents);
 }

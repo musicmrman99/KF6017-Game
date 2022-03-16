@@ -2,11 +2,10 @@
 
 #include <string>
 
-#include "QueueUtils.h"
+#include "uptrcast.h"
 
-#include "ObjectEvent.h"
 #include "UpgradeTreeUI.h"
-#include "Bullet.h"
+#include "BulletSpec.h"
 
 /* Get/Set the right types
 -------------------------------------------------- */
@@ -60,8 +59,11 @@ void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 }
 
 void Ship::fire() {
-    Bullet::UPtr bullet = Bullet::UPtr(new Bullet(physModel().pos(), physModel().rot(), bulletImage, objectManager));
-    globalEventBuffer.push(ReleaseObjectEvent::create(objectManager, move(bullet)));
+    enqueue(objectEventFactory()->createObject(
+        BulletSpec::UPtr(new BulletSpec(
+            physModel().pos(), physModel().rot(), bulletImage
+        ))
+    ));
 }
 
 /* Upgrades
@@ -126,39 +128,34 @@ const UpgradeTree& Ship::getUpgradeTree() {
 /* Lifecycle
 -------------------------------------------------- */
 
-Ship::Ship(
-    Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
-    NewtonianPhysModel::Ptr physModel
-) : GameObject(
-        NullEventEmitter::UPtr(new NullEventEmitter()),
+Ship::Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
+    : GameObject(
         physModel,
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, image)),
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
     ),
-    objectManager(objectManager),
-    bulletImage(bulletImage),
+    bulletImage(spec->bulletImage),
     upgradeTree(UpgradeTree(SHIP)),
     engineThrust(0.1f),    // Distance units / second^2
     rotateThrust(0.008f) { // Revolutions / second^2
 }
 
-Ship::Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager)
-    : Ship(
-        pos, rot, image, bulletImage, objectManager,
-        NewtonianPhysModel::UPtr(new NewtonianPhysModel(pos, Vector2D(0, 0), rot, 0.0f))
+Ship::Ship(ShipSpec::UPtr spec)
+    : Ship(move(spec),
+        NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))
     ) {
     buildUpgradeTree();
 }
 
+const ObjectFactory::Factory Ship::factory = [](ObjectSpec::UPtr spec) {
+    return Ship::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
+};
+
 Ship::~Ship() {}
 
-void Ship::beforeActions() {
+void Ship::beforeFrame() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
-}
-
-void Ship::emit(std::queue<Event::Ptr>& globalEvents) {
-    shiftInto(globalEventBuffer, globalEvents);
 }
 
 void Ship::handle(const Event::Ptr e) {

@@ -4,6 +4,9 @@
 
 #include <time.h>
 
+
+#include "uptrcast.h"
+
 #include "ErrorLogger.h"
 #include "MyDrawEngine.h"
 #include "MySoundEngine.h"
@@ -12,8 +15,10 @@
 #include "shapes.h"
 
 #include "Ship.h"
-#include "KeyMap.h"
+#include "Bullet.h"
 #include "GlobalUI.h"
+
+#include "KeyMap.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
@@ -255,8 +260,25 @@ ErrorType Game::StartOfGame() {
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
     PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
-    // Player Keymap
-    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap());
+    // Objects
+    objectManager = ObjectManager::create();
+
+      // Register Factories
+    ObjectFactory& objectFactory = objectManager->getObjectFactory();
+    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
+    objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
+    objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
+
+      // Create player
+    Ship::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
+        Vector2D(0.0f, 0.0f), // Centre of the world
+        Vector2D(0.0f, 1.0f), // Facing up
+        playerSprite,
+        bulletSprite
+    )));
+
+      // Player Keymap
+    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap(player));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new Ship::MainThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustEventEmitter());
@@ -265,22 +287,10 @@ ErrorType Game::StartOfGame() {
 
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(Ship::LOAD_OPTIMISATION));
 
-    // Objects
-    objectManager = ObjectManager::Ptr(new ObjectManager());
-
-      // Player
-    GameObject::UPtr player = GameObject::UPtr(new Ship(
-        Vector2D(0.0f, 0.0f), // Centre of the world
-        Vector2D(0.0f, 1.0f), // Facing up
-        playerSprite,
-        bulletSprite,
-        objectManager
-    ));
-    player->setController(move(playerKeymap));
-    objectManager->addObject(move(player));
+    objectManager->addController(static_unique_pointer_cast<EventEmitter>(move(playerKeymap)));
 
       // Global UI
-    objectManager->addObject(GameObject::UPtr(new GlobalUI()));
+    objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 
     return SUCCESS;
 }

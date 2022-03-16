@@ -110,35 +110,3 @@ bool ScrollControl::isActive() const {
 
     return false;
 }
-
-/* Composite Control
--------------------------------------------------- */
-
-CompositeControl::CompositeControl(const std::vector<Control*>& controls, Combinator* combinator)
-    : controls(controls), combinator(combinator) {
-}
-CompositeControl::CompositeControl(const std::vector<Control*>& controls)
-    : CompositeControl(controls, new All<std::vector<Control*>, Predicate>()) {
-}
-
-CompositeControl::~CompositeControl() {
-    for (Control*& control : controls) {
-        if (control) {
-            delete control;
-            control = nullptr;
-        }
-    }
-
-    if (combinator) {
-        delete combinator;
-        combinator = nullptr;
-    }
-}
-
-bool CompositeControl::isActive() const {
-    return combinator->combine(controls);
-}
-
-CompositeControl::Predicate CompositeControl::controlActive = [](const Control* control) {
-    return control->isActive();
-};

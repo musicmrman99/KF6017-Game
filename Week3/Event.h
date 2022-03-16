@@ -51,10 +51,10 @@ public:
 	using UPtr = std::unique_ptr<TargettedEvent>;
 	using WPtr = std::weak_ptr<TargettedEvent>;
 
-	Event::UPtr event;
+	Event::Ptr event;
 	const EventHandler::WPtr target;
 
-	TargettedEvent(Event::UPtr event, const EventHandler::WPtr target);
+	TargettedEvent(Event::Ptr event, const EventHandler::WPtr target);
 	virtual ~TargettedEvent();
 };
 

@@ -70,8 +70,11 @@
     <Filter Include="Header Files\Objects\Components">
       <UniqueIdentifier>{59c467ad-de00-48a6-b1db-12d84d078616}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{629701f7-d424-4738-bd5c-d6ab0bebdfc1}</UniqueIdentifier>
+    <Filter Include="Header Files\ObjectSpecs">
+      <UniqueIdentifier>{87bdc289-4fc4-4ca9-82c4-a4c4bffd8be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ObjectSpecs">
+      <UniqueIdentifier>{86e4d301-9dde-4684-b1a6-51f784042191}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -144,9 +147,6 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="QueueUtils.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalUI.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -154,6 +154,24 @@
       <Filter>Source Files\Engine\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="ObjectEvent.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSpec.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipSpec.cpp">
+      <Filter>Source Files\ObjectSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSpec.cpp">
+      <Filter>Source Files\ObjectSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUISpec.cpp">
+      <Filter>Source Files\ObjectSpecs</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEventFactory.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -172,12 +190,6 @@
     </ClInclude>
     <ClInclude Include="Ship.h">
       <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Combinator.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="BooleanCombinators.h">
-      <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Derived.h">
       <Filter>Header Files\Utils</Filter>
@@ -255,6 +267,30 @@
       <Filter>Header Files\Engine\Controllers</Filter>
     </ClInclude>
     <ClInclude Include="ObjectEvent.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpec.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipSpec.h">
+      <Filter>Header Files\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="uptrcast.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSpec.h">
+      <Filter>Header Files\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalUISpec.h">
+      <Filter>Header Files\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="SelfReferencing.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventFactory.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>

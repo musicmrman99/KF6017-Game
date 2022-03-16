@@ -2,9 +2,8 @@
 
 #include <memory>
 
-#include "Derived.h"
-
 #include "Event.h"
+#include "ObjectEventFactory.h"
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
@@ -15,28 +14,25 @@ public:
     using WPtr = std::weak_ptr<GameObject>;
 
 private:
-    EventEmitter::Ptr _controller;
     PhysModel::Ptr _physModel;
     GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
 
-    std::queue<Event::Ptr> events;
+    ObjectEventFactory::Ptr _objectEventFactory;
+    std::queue<Event::Ptr> eventsBuffer;
 
 public:
     /* Components
     -------------------- */
 
     GameObject(
-        EventEmitter::Ptr controller,
         PhysModel::Ptr physModel,
         GraphicsModel::Ptr graphicsModel,
         GraphicsModel::Ptr uiGraphicsModel
     );
     virtual ~GameObject();
 
-    virtual EventEmitter& controller();
-    virtual EventEmitter& controller() const;
-    virtual void setController(EventEmitter::Ptr controller);
+    // Models
 
     virtual PhysModel& physModel();
     virtual PhysModel& physModel() const;
@@ -50,18 +46,28 @@ public:
     virtual GraphicsModel& uiGraphicsModel() const;
     virtual void setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel);
 
+    ObjectEventFactory::Ptr objectEventFactory();
+    ObjectEventFactory::Ptr objectEventFactory() const;
+    void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory);
+
+    // Events
+
+    virtual void enqueue(Event::Ptr e);
+
     /* Lifecycle
     -------------------- */
 
-    // Action Handling
-    virtual void beforeActions();
-    virtual void actions();
+    // Run once just after creation
+    virtual void afterCreate();
+
+    // Anything Before
+    virtual void beforeFrame();
 
     // Event Handling
     virtual void handle(const Event::Ptr e) override;
     virtual void emit(std::queue<Event::Ptr>& events) override;
 
-    // Run other Model Phase
+    // Run Models
     virtual void beforePhys();
     virtual void phys();
 
@@ -71,5 +77,9 @@ public:
     virtual void beforeDrawUI();
     virtual void drawUI();
 
+    // Anything After
     virtual void afterFrame();
+
+    // Run once just before destruction
+    virtual void beforeDestroy();
 };

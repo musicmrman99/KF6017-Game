@@ -1,26 +1,89 @@
 #include "ObjectManager.h"
 
+#include <algorithm>
+
 #include "ObjectEvent.h"
 
-/* Object Manager
+/* Creation
 -------------------------------------------------- */
 
-void ObjectManager::addObject(GameObject::UPtr gameObject) {
-    objects.push_back(move(gameObject));
+ObjectManager::ObjectManager() : objectEventFactory(nullptr) {}
+void ObjectManager::setSelf(WPtr me) {
+    SelfReferencing<ObjectManager>::setSelf(me);
+    // Not a nice solution (setSelf() isn't supposed to be responsible for this much initialisation), but it works (for now)
+    objectEventFactory = ObjectEventFactory::create(self());
 }
 
-void ObjectManager::deleteObject(GameObject* gameObject) {
-    objects.remove_if(
-        [gameObject](const GameObject::Ptr& object) {
-            return object.get() == gameObject;
+ObjectManager::Ptr ObjectManager::create() {
+    Ptr ptr = Ptr(new ObjectManager());
+    ptr->setSelf(ptr);
+    return ptr;
+}
+
+/* Getters
+-------------------------------------------------- */
+
+ObjectFactory& ObjectManager::getObjectFactory() {
+    return factory;
+}
+
+/* Event Handling
+-------------------------------------------------- */
+
+GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
+    GameObject::Ptr object = factory.create(move(spec));
+    object->setObjectEventFactory(objectEventFactory);
+    object->afterCreate();
+    object->emit(events); // Flush event buffer in case controllers or game object require initialised object.
+    objects.push_back(object);
+    return object;
+}
+
+void ObjectManager::destroyObject(GameObject::WPtr object) {
+    std::list<GameObject::Ptr>::iterator toDelete = std::partition(
+        objects.begin(), objects.end(),
+        [object](const GameObject::Ptr& myObject) {
+            return myObject != object.lock();
+        }
+    );
+
+    // We're not expecting there to be multiple matches, but just in case.
+    for (auto delObject = toDelete; delObject != objects.end(); ++delObject) {
+        (*delObject)->beforeDestroy();
+        (*delObject)->emit(events); // Emit any remaining buffered events before it's destroyed.
+    }
+
+    objects.erase(toDelete, objects.end());
+}
+
+void ObjectManager::addController(EventEmitter::Ptr controller) {
+    controllers.push_back(controller);
+}
+
+void ObjectManager::removeController(EventEmitter::WPtr controller) {
+    controllers.remove_if(
+        [controller](const EventEmitter::Ptr& myController) {
+            return myController == controller.lock();
         }
     );
 }
 
+void ObjectManager::handle(const Event::Ptr e) {
+    if (auto coe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) createObject(move(coe->spec)); // Discard the returned object for now
+    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) destroyObject(roe->object);
+    else if (auto ace = std::dynamic_pointer_cast<AddControllerEvent>(e)) addController(ace->controller);
+    else if (auto rce = std::dynamic_pointer_cast<RemoveControllerEvent>(e)) removeController(rce->controller);
+}
+
+/* Frame Process
+-------------------------------------------------- */
+
 void ObjectManager::run() {
-    // Handle actions
-    for (GameObject::Ptr& object : objects) object->beforeActions();
-    for (GameObject::Ptr& object : objects) object->actions();
+    // Anything first
+    for (GameObject::Ptr& object : objects) object->beforeFrame();
+
+    // Emit Global Events - Controllers
+    for (EventEmitter::Ptr& controller : controllers) controller->emit(events);
 
     // Handle Global Events
     for (GameObject::Ptr& object : objects) object->emit(events);
@@ -48,46 +111,6 @@ void ObjectManager::run() {
     for (GameObject::Ptr& object : objects) object->beforeDrawUI();
     for (GameObject::Ptr& object : objects) object->drawUI();
 
-    // Anything else
+    // Anything last
     for (GameObject::Ptr& object : objects) object->afterFrame();
-}
-
-void ObjectManager::handle(const Event::Ptr e) {
-    if (auto roe = std::dynamic_pointer_cast<ReleaseObjectEvent>(e)) {
-        addObject(move(roe->object));
-    }
-    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) {
-        deleteObject(roe->object);
-    }
-}
-
-/* Events
--------------------------------------------------- */
-
-// Release Object Event
-ReleaseObjectEvent::ReleaseObjectEvent(GameObject::UPtr object)
-    : Event(), object(move(object)) {
-}
-
-TargettedEvent::UPtr ReleaseObjectEvent::create(ObjectManager::WPtr objectManager, GameObject::UPtr object) {
-    return TargettedEvent::UPtr(new TargettedEvent(
-        ReleaseObjectEvent::UPtr(new ReleaseObjectEvent(
-            move(object)
-        )),
-        std::static_pointer_cast<EventHandler>(objectManager.lock())
-    ));
-}
-
-// Destroy Object Event
-DestroyObjectEvent::DestroyObjectEvent(GameObject* object)
-    : Event(), object(object) {
-}
-
-TargettedEvent::UPtr DestroyObjectEvent::create(ObjectManager::WPtr objectManager, GameObject* object) {
-    return TargettedEvent::UPtr(new TargettedEvent(
-        DestroyObjectEvent::UPtr(new DestroyObjectEvent(
-            object
-        )),
-        std::static_pointer_cast<EventHandler>(objectManager.lock())
-    ));
 }

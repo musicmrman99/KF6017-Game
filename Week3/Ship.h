@@ -4,18 +4,17 @@
 #include <map>
 #include <memory>
 
-#include "Node.h"
-
 #include "MyDrawEngine.h"
-#include "MyInputs.h"
 
-#include "ObjectManager.h"
 #include "GameObject.h"
 #include "Event.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
 #include "UpgradeTree.h"
+
+#include "ObjectFactory.h"
+#include "ShipSpec.h"
 
 class Ship final : public GameObject {
 public:
@@ -31,13 +30,13 @@ public:
 	class TurnRightThrustEvent final : public Event {};
 
 	class MainThrustEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 	class TurnLeftThrustEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 	class TurnRightThrustEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 
 	void mainThrust();
@@ -48,7 +47,7 @@ public:
 
 	class FireEvent final : public Event {};
 	class FireEventEmitter final : public EventEmitter {
-		public: virtual void emit(std::queue<Event::Ptr>& events) override;
+	public: virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 	void fire();
 
@@ -83,26 +82,21 @@ private:
 
 	UpgradeTree upgradeTree;
 
-	// 2nd phase constructor
-	Ship(
-		Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager,
-		NewtonianPhysModel::Ptr physModel
-	);
-
-	std::queue<Event::Ptr> globalEventBuffer;
-	ObjectManager::WPtr objectManager;
 	PictureIndex bulletImage;
+
+	// 2nd phase constructor
+	Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
 
 public:
 	const UpgradeTree& getUpgradeTree();
 
 	// Lifecycle
 
-	Ship(Vector2D pos, Vector2D rot, PictureIndex image, PictureIndex bulletImage, ObjectManager::WPtr objectManager);
+	Ship(ShipSpec::UPtr spec);
+	static const ObjectFactory::Factory factory;
 	void buildUpgradeTree();
 	virtual ~Ship();
 
-	virtual void beforeActions() override;
+	virtual void beforeFrame() override;
 	virtual void handle(const Event::Ptr e) override;
-	virtual void emit(std::queue<Event::Ptr>& globalEvents) override;
 };

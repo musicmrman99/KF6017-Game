@@ -1,27 +1,21 @@
 #include "GameObject.h"
 
+#include "QueueUtils.h"
+
 /* Components
 -------------------- */
 
 GameObject::GameObject(
-    EventEmitter::Ptr controller,
     PhysModel::Ptr physModel,
     GraphicsModel::Ptr graphicsModel,
     GraphicsModel::Ptr uiGraphicsModel
 ) {
-    setController(controller);
     setPhysModel(physModel);
     setGraphicsModel(graphicsModel);
     setUIGraphicsModel(uiGraphicsModel);
 }
 
 GameObject::~GameObject() {}
-
-EventEmitter& GameObject::controller() { return *_controller; }
-EventEmitter& GameObject::controller() const { return *_controller; }
-void GameObject::setController(EventEmitter::Ptr controller) {
-    if (controller) _controller = controller;
-}
 
 PhysModel& GameObject::physModel() { return *_physModel; }
 PhysModel& GameObject::physModel() const { return *_physModel; }
@@ -41,21 +35,32 @@ void GameObject::setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel) {
     if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
 }
 
+ObjectEventFactory::Ptr GameObject::objectEventFactory() { return _objectEventFactory; }
+ObjectEventFactory::Ptr GameObject::objectEventFactory() const { return _objectEventFactory; }
+void GameObject::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
+    _objectEventFactory = objectEventFactory;
+}
+
+// Add an event to the event buffer. This is flushed to the
+// global event queue in the default implementation of emit().
+void GameObject::enqueue(Event::Ptr e) {
+    eventsBuffer.push(e);
+}
+
 /* Lifecycle
 -------------------- */
 
-void GameObject::beforeActions() {};
-void GameObject::actions() {
-    controller().emit(events);
-    while (!events.empty()) {
-        const Event::Ptr& event = events.front();
-        handle(event);
-        events.pop();
-    }
-}
+void GameObject::afterCreate() {};
 
+void GameObject::beforeFrame() {};
+
+// Handle events dispatched to this object.
 void GameObject::handle(const Event::Ptr e) {}
-void GameObject::emit(std::queue<Event::Ptr>& globalEvents) {}
+
+// If you do not need to buffer events, then you should override this method.
+void GameObject::emit(std::queue<Event::Ptr>& events) {
+    shiftInto(eventsBuffer, events);
+}
 
 void GameObject::beforePhys() {};
 void GameObject::phys() {
@@ -73,3 +78,5 @@ void GameObject::drawUI() {
 };
 
 void GameObject::afterFrame() {};
+
+void GameObject::beforeDestroy() {};

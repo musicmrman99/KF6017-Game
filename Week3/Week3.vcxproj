@@ -143,6 +143,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="GlobalUI.cpp" />
+    <ClCompile Include="GlobalUISpec.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="KeyMap.cpp" />
@@ -158,12 +160,15 @@
     <ClCompile Include="MySoundEngine.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="ObjectEvent.cpp" />
+    <ClCompile Include="ObjectEventFactory.cpp" />
+    <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ObjectSpec.cpp" />
     <ClCompile Include="PhysModel.cpp" />
-    <ClCompile Include="QueueUtils.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="ShipSpec.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UpgradeTree.cpp" />
     <ClCompile Include="UpgradeTreeUI.cpp" />
@@ -172,6 +177,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletSpec.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Derived.h" />
@@ -179,13 +185,15 @@
     <ClInclude Include="ErrorType.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameTimer.h" />
-    <ClInclude Include="Combinator.h" />
-    <ClInclude Include="BooleanCombinators.h" />
     <ClInclude Include="Controls.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlobalUI.h" />
+    <ClInclude Include="GlobalUISpec.h" />
     <ClInclude Include="GraphicsModel.h" />
     <ClInclude Include="ObjectEvent.h" />
+    <ClInclude Include="ObjectEventFactory.h" />
+    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ObjectSpec.h" />
     <ClInclude Include="QueueUtils.h" />
     <ClInclude Include="ImageGraphicsModel.h" />
     <ClInclude Include="KeyMap.h" />
@@ -197,12 +205,15 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="PhysModel.h" />
     <ClInclude Include="ReferenceWrapperUtils.h" />
+    <ClInclude Include="SelfReferencing.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />
+    <ClInclude Include="ShipSpec.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UpgradeTree.h" />
     <ClInclude Include="UpgradeTreeUI.h" />
+    <ClInclude Include="uptrcast.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

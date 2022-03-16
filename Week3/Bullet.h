@@ -2,23 +2,29 @@
 
 #include <functional>
 
-#include "ObjectManager.h"
+#include "SelfReferencing.h"
+
 #include "GameObject.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
-class Bullet final : public GameObject {
+#include "ObjectFactory.h"
+#include "BulletSpec.h"
+#include "Timer.h"
+
+class Bullet final : public GameObject, public SelfReferencing<GameObject> {
+public:
+	using Ptr = std::shared_ptr<Bullet>;
+	using UPtr = std::unique_ptr<Bullet>;
+	using WPtr = std::weak_ptr<Bullet>;
+
 private:
 	static constexpr float SPEED = 40.0f;
-	
-	ObjectManager::WPtr objectManager;
-	std::queue<Event::Ptr> globalEventBuffer;
+	static constexpr float OBJECT_CULL_TIME = 1.5f;
 
-	// 2nd phase constructor
-	Bullet(
-		Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager,
-		NewtonianPhysModel::Ptr physModel
-	);
+	Timer::Ptr timer;
+
+	Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
 
 public:
 	// Get/Set the right types
@@ -28,7 +34,8 @@ public:
 
 	// Lifecycle
 
-	Bullet(Vector2D pos, Vector2D rot, PictureIndex image, ObjectManager::WPtr objectManager);
+	static const ObjectFactory::Factory factory;
+
+	virtual void afterCreate() override;
 	virtual void handle(const Event::Ptr e) override;
-	virtual void emit(std::queue<Event::Ptr>& globalEvents) override;
 };
