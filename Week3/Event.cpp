@@ -4,8 +4,8 @@
 -------------------------------------------------- */
 
 // Event
-Event::Event() {}
-Event::Event(const Event::Ptr& ptr) {}
+Event::Event(const EventType& type) : type(type) {}
+Event::Event(const Event::Ptr& ptr) : type(ptr->type) {}
 Event::~Event() {}
 
 // Event Emitter
@@ -15,8 +15,9 @@ EventEmitter::~EventEmitter() {}
 EventHandler::~EventHandler() {}
 
 // Targetted Event
+const EventType TargettedEvent::TYPE;
 TargettedEvent::TargettedEvent(Event::Ptr event, const EventHandler::WPtr target)
-	: event(event), target(target) {
+	: Event(TYPE), event(event), target(target) {
 }
 TargettedEvent::~TargettedEvent() {}
 

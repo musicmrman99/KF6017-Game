@@ -3,8 +3,9 @@
 #include "SelfReferencing.h"
 
 #include "Event.h"
+#include "ObjectEventEmitter.h"
 
-class Timer final : public EventEmitter, SelfReferencing<Timer> {
+class Timer final : public ObjectEventEmitter, SelfReferencing<Timer> {
 private:
 	double limit;
 	double created;
@@ -24,6 +25,8 @@ private:
 	TimerEvent(const Timer::WPtr timer);
 
 public:
+	static const EventType TYPE;
+
 	const Timer::WPtr timer;
 	static Ptr create(const Timer::WPtr timer);
 };

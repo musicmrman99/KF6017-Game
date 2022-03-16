@@ -10,6 +10,8 @@
 /* Core Types
 -------------------------------------------------- */
 
+class EventType : public Symbol {};
+
 // Event
 class Event {
 public:
@@ -17,7 +19,9 @@ public:
 	using UPtr = std::unique_ptr<Event>;
 	using WPtr = std::weak_ptr<Event>;
 
-	Event();
+	const EventType& type;
+
+	Event(const EventType& type);
 	Event(const Event::Ptr& ptr);
 	virtual ~Event();
 };
@@ -50,6 +54,7 @@ public:
 	using Ptr = std::shared_ptr<TargettedEvent>;
 	using UPtr = std::unique_ptr<TargettedEvent>;
 	using WPtr = std::weak_ptr<TargettedEvent>;
+	static const EventType TYPE;
 
 	Event::Ptr event;
 	const EventHandler::WPtr target;

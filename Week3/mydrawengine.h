@@ -302,7 +302,10 @@ public:
 	// Call this using "MyDrawEngine enginePtr = MyDrawEngine::GetInstance();"
 	static MyDrawEngine* GetInstance();
 
-		// Preconditions	thePicture has been initialised to contain an image
+	ErrorType BeginDraw();
+	ErrorType EndDraw();
+
+	// Preconditions	thePicture has been initialised to contain an image
 		// Postcondition	The whole image in theSurface will be placed
 		//					on the back buffer. (Subject to clipping.)
 		//					The centre of the image will be placed at the x,y coordinates specified

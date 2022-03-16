@@ -14,6 +14,7 @@ public:
 	using Ptr = std::shared_ptr<CreateObjectEvent>;
 	using UPtr = std::unique_ptr<CreateObjectEvent>;
 	using WPtr = std::weak_ptr<CreateObjectEvent>;
+	static const EventType TYPE;
 
 	ObjectSpec::UPtr spec;
 	static Ptr create(ObjectSpec::UPtr spec);
@@ -28,6 +29,7 @@ public:
 	using Ptr = std::shared_ptr<DestroyObjectEvent>;
 	using UPtr = std::unique_ptr<DestroyObjectEvent>;
 	using WPtr = std::weak_ptr<DestroyObjectEvent>;
+	static const EventType TYPE;
 
 	GameObject::WPtr object;
 	static Ptr create(GameObject::WPtr object);
@@ -42,6 +44,7 @@ public:
 	using Ptr = std::shared_ptr<AddControllerEvent>;
 	using UPtr = std::unique_ptr<AddControllerEvent>;
 	using WPtr = std::weak_ptr<AddControllerEvent>;
+	static const EventType TYPE;
 
 	EventEmitter::Ptr controller;
 	static Ptr create(EventEmitter::Ptr controller);
@@ -56,6 +59,7 @@ public:
 	using Ptr = std::shared_ptr<RemoveControllerEvent>;
 	using UPtr = std::unique_ptr<RemoveControllerEvent>;
 	using WPtr = std::weak_ptr<RemoveControllerEvent>;
+	static const EventType TYPE;
 
 	EventEmitter::WPtr controller;
 	static Ptr create(EventEmitter::WPtr controller);

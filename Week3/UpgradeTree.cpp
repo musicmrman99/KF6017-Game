@@ -30,7 +30,8 @@ struct UpgradeTree::NestedUpgradeComparator {
 -------------------------------------------------- */
 
 // Upgrade Event
-UpgradeEvent::UpgradeEvent(const Upgrade& upgrade) : upgrade(upgrade) {}
+const EventType UpgradeEvent::TYPE;
+UpgradeEvent::UpgradeEvent(const Upgrade& upgrade) : Event(TYPE), upgrade(upgrade) {}
 
 // Upgrade Event Emitter
 UpgradeEventEmitter::UpgradeEventEmitter(const Upgrade& upgrade) : upgrade(upgrade) {}

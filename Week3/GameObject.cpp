@@ -35,12 +35,6 @@ void GameObject::setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel) {
     if (uiGraphicsModel) _uiGraphicsModel = uiGraphicsModel;
 }
 
-ObjectEventFactory::Ptr GameObject::objectEventFactory() { return _objectEventFactory; }
-ObjectEventFactory::Ptr GameObject::objectEventFactory() const { return _objectEventFactory; }
-void GameObject::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
-    _objectEventFactory = objectEventFactory;
-}
-
 // Add an event to the event buffer. This is flushed to the
 // global event queue in the default implementation of emit().
 void GameObject::enqueue(Event::Ptr e) {

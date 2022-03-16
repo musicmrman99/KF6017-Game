@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -160,6 +161,7 @@
     <ClCompile Include="MySoundEngine.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="ObjectEvent.cpp" />
+    <ClCompile Include="ObjectEventEmitter.cpp" />
     <ClCompile Include="ObjectEventFactory.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
@@ -191,6 +193,7 @@
     <ClInclude Include="GlobalUISpec.h" />
     <ClInclude Include="GraphicsModel.h" />
     <ClInclude Include="ObjectEvent.h" />
+    <ClInclude Include="ObjectEventEmitter.h" />
     <ClInclude Include="ObjectEventFactory.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjectSpec.h" />

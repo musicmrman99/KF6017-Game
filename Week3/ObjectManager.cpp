@@ -57,6 +57,9 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
 }
 
 void ObjectManager::addController(EventEmitter::Ptr controller) {
+    if (auto c = std::dynamic_pointer_cast<ObjectEventEmitter>(controller)) {
+        c->setObjectEventFactory(objectEventFactory);
+    }
     controllers.push_back(controller);
 }
 
@@ -69,10 +72,10 @@ void ObjectManager::removeController(EventEmitter::WPtr controller) {
 }
 
 void ObjectManager::handle(const Event::Ptr e) {
-    if (auto coe = std::dynamic_pointer_cast<CreateObjectEvent>(e)) createObject(move(coe->spec)); // Discard the returned object for now
-    else if (auto roe = std::dynamic_pointer_cast<DestroyObjectEvent>(e)) destroyObject(roe->object);
-    else if (auto ace = std::dynamic_pointer_cast<AddControllerEvent>(e)) addController(ace->controller);
-    else if (auto rce = std::dynamic_pointer_cast<RemoveControllerEvent>(e)) removeController(rce->controller);
+         if (e->type == CreateObjectEvent::TYPE) createObject(move(std::static_pointer_cast<CreateObjectEvent>(e)->spec)); // Discard the returned object for now
+    else if (e->type == DestroyObjectEvent::TYPE) destroyObject(std::static_pointer_cast<DestroyObjectEvent>(e)->object);
+    else if (e->type == AddControllerEvent::TYPE) addController(std::static_pointer_cast<AddControllerEvent>(e)->controller);
+    else if (e->type == RemoveControllerEvent::TYPE) removeController(std::static_pointer_cast<RemoveControllerEvent>(e)->controller);
 }
 
 /* Frame Process
@@ -90,8 +93,9 @@ void ObjectManager::run() {
     while (!events.empty()) {
         // Handle Event
         const Event::Ptr& event = events.front();
-        if (const TargettedEvent::Ptr targettedEvent = std::dynamic_pointer_cast<TargettedEvent>(event)) {
-            if (auto ptr = targettedEvent->target.lock()) ptr->handle(move(targettedEvent->event));
+        if (event->type == TargettedEvent::TYPE) {
+            const TargettedEvent::Ptr te = std::static_pointer_cast<TargettedEvent>(event);
+            if (auto ptr = te->target.lock()) ptr->handle(move(te->event));
         } else {
             for (GameObject::Ptr& object : objects) object->handle(event);
         }
