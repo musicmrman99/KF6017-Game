@@ -46,8 +46,10 @@ void Bullet::afterCreate() {
 }
 
 void Bullet::handle(const Event::Ptr e) {
-    auto te = std::dynamic_pointer_cast<TimerEvent>(e);
-    if (te && te->timer.lock() == timer) {
+    if (
+        e->type == TimerEvent::TYPE &&
+        std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
+    ) {
         enqueue(objectEventFactory()->destroyObject(self()));
     }
 }

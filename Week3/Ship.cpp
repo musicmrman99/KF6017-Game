@@ -177,13 +177,13 @@ void Ship::beforeFrame() {
 }
 
 void Ship::handle(const Event::Ptr e) {
-         if (std::dynamic_pointer_cast<MainThrustEvent>(e)) mainThrust();
-    else if (std::dynamic_pointer_cast<TurnLeftThrustEvent>(e)) turnLeftThrust();
-    else if (std::dynamic_pointer_cast<TurnRightThrustEvent>(e)) turnRightThrust();
+         if (e->type == MainThrustEvent::TYPE) mainThrust();
+    else if (e->type == TurnLeftThrustEvent::TYPE) turnLeftThrust();
+    else if (e->type == TurnRightThrustEvent::TYPE) turnRightThrust();
 
-    else if (std::dynamic_pointer_cast<FireEvent>(e)) fire();
+    else if (e->type == FireEvent::TYPE) fire();
     
-    else if (auto ue = std::dynamic_pointer_cast<UpgradeEvent>(e)) {
-        upgradeTree.purchaseUpgrade(ue->upgrade);
+    else if (e->type == UpgradeEvent::TYPE) {
+        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
     }
 }
