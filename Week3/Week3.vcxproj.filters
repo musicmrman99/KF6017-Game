@@ -296,10 +296,10 @@
     <ClInclude Include="ObjectEventFactory.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectEventEmitter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventEmitter.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>
