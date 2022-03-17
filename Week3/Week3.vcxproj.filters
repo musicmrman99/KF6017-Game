@@ -174,7 +174,7 @@
     <ClCompile Include="ObjectEventFactory.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectEventEmitter.cpp">
+    <ClCompile Include="ObjectEventCreator.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,7 +299,7 @@
     <ClInclude Include="ObjectFactory.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectEventEmitter.h">
+    <ClInclude Include="ObjectEventCreator.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>

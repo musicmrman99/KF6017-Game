@@ -3,7 +3,7 @@
 #include "Event.h"
 #include "ObjectEventFactory.h"
 
-class ObjectEventEmitter : public EventEmitter {
+class ObjectEventCreator {
 private:
     ObjectEventFactory::Ptr _objectEventFactory;
 

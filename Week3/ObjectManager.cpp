@@ -59,7 +59,7 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
 
 void ObjectManager::addController(EventEmitter::Ptr controller) {
     if (!controller) return;
-    if (auto c = std::dynamic_pointer_cast<ObjectEventEmitter>(controller)) {
+    if (auto c = std::dynamic_pointer_cast<ObjectEventCreator>(controller)) {
         c->setObjectEventFactory(objectEventFactory);
     }
     controllers.push_back(controller);

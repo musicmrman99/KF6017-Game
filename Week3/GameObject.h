@@ -3,12 +3,12 @@
 #include <memory>
 
 #include "Event.h"
-#include "ObjectEventEmitter.h"
+#include "ObjectEventCreator.h"
 
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
-class GameObject : public EventHandler, public ObjectEventEmitter {
+class GameObject : public EventHandler, public EventEmitter, public ObjectEventCreator {
 public:
     using Ptr = std::shared_ptr<GameObject>;
     using UPtr = std::unique_ptr<GameObject>;
