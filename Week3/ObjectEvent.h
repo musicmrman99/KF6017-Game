@@ -2,13 +2,17 @@
 
 #include <memory>
 
-#include "GameObject.h"
-#include "ObjectSpec.h"
+#include "Event.h"
+
+struct ObjectSpec;
+class GameObject;
 
 // Release Object Event
 class CreateObjectEvent final : public Event {
 private:
-	CreateObjectEvent(ObjectSpec::UPtr spec);
+	using ObjectSpecUPtr = std::unique_ptr<ObjectSpec>;
+
+	CreateObjectEvent(ObjectSpecUPtr spec);
 
 public:
 	using Ptr = std::shared_ptr<CreateObjectEvent>;
@@ -16,14 +20,16 @@ public:
 	using WPtr = std::weak_ptr<CreateObjectEvent>;
 	static const EventType TYPE;
 
-	ObjectSpec::UPtr spec;
-	static Ptr create(ObjectSpec::UPtr spec);
+	ObjectSpecUPtr spec;
+	static Ptr create(ObjectSpecUPtr spec);
 };
 
 // Destroy Object Event
 class DestroyObjectEvent final : public Event {
 private:
-	DestroyObjectEvent(GameObject::WPtr object);
+	using GameObjectWPtr = std::weak_ptr<GameObject>;
+
+	DestroyObjectEvent(GameObjectWPtr object);
 
 public:
 	using Ptr = std::shared_ptr<DestroyObjectEvent>;
@@ -31,8 +37,8 @@ public:
 	using WPtr = std::weak_ptr<DestroyObjectEvent>;
 	static const EventType TYPE;
 
-	GameObject::WPtr object;
-	static Ptr create(GameObject::WPtr object);
+	GameObjectWPtr object;
+	static Ptr create(GameObjectWPtr object);
 };
 
 // Add Controller Event

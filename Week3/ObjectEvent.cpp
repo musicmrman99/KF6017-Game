@@ -1,14 +1,17 @@
 #include "ObjectEvent.h"
 
+#include "ObjectSpec.h"
+#include "GameObject.h"
+
 /* Release Object Event
 -------------------- */
 
 const EventType CreateObjectEvent::TYPE;
-CreateObjectEvent::CreateObjectEvent(ObjectSpec::UPtr spec)
+CreateObjectEvent::CreateObjectEvent(ObjectSpecUPtr spec)
     : Event(TYPE), spec(move(spec)) {
 }
 
-CreateObjectEvent::Ptr CreateObjectEvent::create(ObjectSpec::UPtr spec) {
+CreateObjectEvent::Ptr CreateObjectEvent::create(ObjectSpecUPtr spec) {
     return UPtr(new CreateObjectEvent(move(spec)));
 }
 
@@ -16,11 +19,11 @@ CreateObjectEvent::Ptr CreateObjectEvent::create(ObjectSpec::UPtr spec) {
 -------------------- */
 
 const EventType DestroyObjectEvent::TYPE;
-DestroyObjectEvent::DestroyObjectEvent(GameObject::WPtr object)
+DestroyObjectEvent::DestroyObjectEvent(GameObjectWPtr object)
     : Event(TYPE), object(object) {
 }
 
-DestroyObjectEvent::Ptr DestroyObjectEvent::create(GameObject::WPtr object) {
+DestroyObjectEvent::Ptr DestroyObjectEvent::create(GameObjectWPtr object) {
     return UPtr(new DestroyObjectEvent(object));
 }
 

@@ -30,7 +30,7 @@ Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
     timer(nullptr) {
 }
 
-const ObjectFactory::Factory Bullet::factory = [](ObjectSpec::UPtr spec) {
+const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
     BulletSpec::UPtr bulletSpec = static_unique_pointer_cast<BulletSpec>(move(spec));
     Bullet::Ptr bullet = Bullet::Ptr(new Bullet(
         move(bulletSpec),

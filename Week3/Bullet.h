@@ -34,7 +34,7 @@ public:
 
 	// Lifecycle
 
-	static const ObjectFactory::Factory factory;
+	static const ObjectFactory factory;
 
 	virtual void afterCreate() override;
 	virtual void handle(const Event::Ptr e) override;
