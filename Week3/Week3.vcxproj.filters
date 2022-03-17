@@ -156,7 +156,7 @@
     <ClCompile Include="ObjectEvent.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectFactory.cpp">
+    <ClCompile Include="ObjectFactoryManager.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
     <ClCompile Include="ObjectSpec.cpp">
@@ -272,7 +272,7 @@
     <ClInclude Include="ObjectEvent.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectFactory.h">
+    <ClInclude Include="ObjectFactoryManager.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
     <ClInclude Include="ObjectSpec.h">
@@ -298,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="ObjectEventEmitter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

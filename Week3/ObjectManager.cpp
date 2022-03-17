@@ -23,7 +23,7 @@ ObjectManager::Ptr ObjectManager::create() {
 /* Getters
 -------------------------------------------------- */
 
-ObjectFactory& ObjectManager::getObjectFactory() {
+ObjectFactoryManager& ObjectManager::getObjectFactoryManager() {
     return factory;
 }
 

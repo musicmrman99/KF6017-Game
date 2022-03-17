@@ -111,7 +111,7 @@ public:
 	// Lifecycle
 
 	Ship(ShipSpec::UPtr spec);
-	static const ObjectFactory::Factory factory;
+	static const ObjectFactory factory;
 	void buildUpgradeTree();
 	virtual ~Ship();
 

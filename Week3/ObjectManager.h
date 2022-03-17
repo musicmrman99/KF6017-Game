@@ -7,7 +7,7 @@
 
 #include "GameObject.h"
 #include "ObjectSpec.h"
-#include "ObjectFactory.h"
+#include "ObjectFactoryManager.h"
 #include "ObjectEventFactory.h"
 
 // Object Manager
@@ -19,7 +19,7 @@ public:
 
 private:
 	ObjectEventFactory::Ptr objectEventFactory;
-	ObjectFactory factory;
+	ObjectFactoryManager factory;
 
 	std::list<EventEmitter::Ptr> controllers;
 	std::list<GameObject::Ptr> objects;
@@ -37,7 +37,7 @@ public:
 	/* Getters
 	-------------------- */
 
-	ObjectFactory& getObjectFactory();
+	ObjectFactoryManager& getObjectFactoryManager();
 
 	/* Event Handling
 	-------------------- */

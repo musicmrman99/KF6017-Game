@@ -165,7 +165,7 @@ Ship::Ship(ShipSpec::UPtr spec)
     buildUpgradeTree();
 }
 
-const ObjectFactory::Factory Ship::factory = [](ObjectSpec::UPtr spec) {
+const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
     return Ship::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
 };
 

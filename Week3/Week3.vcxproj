@@ -163,7 +163,7 @@
     <ClCompile Include="ObjectEvent.cpp" />
     <ClCompile Include="ObjectEventEmitter.cpp" />
     <ClCompile Include="ObjectEventFactory.cpp" />
-    <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ObjectFactoryManager.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="ObjectSpec.cpp" />
     <ClCompile Include="PhysModel.cpp" />
@@ -196,6 +196,7 @@
     <ClInclude Include="ObjectEventEmitter.h" />
     <ClInclude Include="ObjectEventFactory.h" />
     <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ObjectFactoryManager.h" />
     <ClInclude Include="ObjectSpec.h" />
     <ClInclude Include="QueueUtils.h" />
     <ClInclude Include="ImageGraphicsModel.h" />

@@ -53,6 +53,6 @@ GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
     uiGraphicsModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));
 }
 
-const ObjectFactory::Factory GlobalUI::factory = [](ObjectSpec::UPtr spec) {
+const ObjectFactory GlobalUI::factory = [](ObjectSpec::UPtr spec) {
     return GlobalUI::Ptr(new GlobalUI(static_unique_pointer_cast<GlobalUISpec>(move(spec))));
 };

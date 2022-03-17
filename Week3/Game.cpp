@@ -264,7 +264,7 @@ ErrorType Game::StartOfGame() {
     objectManager = ObjectManager::create();
 
       // Register Factories
-    ObjectFactory& objectFactory = objectManager->getObjectFactory();
+    ObjectFactoryManager& objectFactory = objectManager->getObjectFactoryManager();
     objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
