@@ -33,6 +33,7 @@ public:
     // Make changing the PhysModel reflected in the given PhysModel-dependant object.
     void trackPhysObserver(PhysObserver::WPtr physObserver);
 
+    PhysModel::WPtr physModelWPtr() const;       // Useful for setting the PhysModel as an observer of another model
     PhysModel& physModel() const;                // Get the PhysModel
     void setPhysModel(PhysModel::Ptr physModel); // Set the PhysModel (and update all observers)
 

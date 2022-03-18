@@ -24,6 +24,8 @@ public:
     using HasPhys::physModel;
     using HasPhys::setPhysModel;
 
+    // Useful for setting the PhysModel as an observer of another model
+    PhysModel::WPtr physModelWPtr() const { return std::static_pointer_cast<TDPhysModel>(HasPhys::physModelWPtr()); }
     TDPhysModel& physModel() const { return static_cast<TDPhysModel&>(HasPhys::physModel()); };
     virtual void setPhysModel(TDPhysModelPtr physModel) {
         if (physModel) HasPhys::setPhysModel(physModel);

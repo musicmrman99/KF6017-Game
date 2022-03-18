@@ -12,6 +12,7 @@ void HasPhys::trackPhysObserver(PhysObserver::WPtr physObserver) {
     }
 }
 
+PhysModel::WPtr HasPhys::physModelWPtr() const { return _physModel; }
 PhysModel& HasPhys::physModel() const { return *_physModel; }
 
 void HasPhys::setPhysModel(PhysModel::Ptr physModel) {
