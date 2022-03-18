@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "uptrcast.h"
+#include "ptrcast.h"
 
 #include "UpgradeTreeUI.h"
 #include "BulletSpec.h"
@@ -132,17 +132,16 @@ const UpgradeTree& Ship::getUpgradeTree() {
 
 Ship::Ship(ShipSpec::UPtr spec)
     : GameObject(
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image)),
         UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
     ),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))),
+    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
     bulletImage(spec->bulletImage),
     upgradeTree(UpgradeTree(SHIP)),
     engineThrust(0.1f),  // Distance units / second^2
     rotateThrust(0.008f) // Revolutions / second^2
 {
-    // NOTE: The cast will disappear once we get the HasGraphics trait implemented
-    trackPhysObserver(std::static_pointer_cast<ImageGraphicsModel>(_graphicsModel));
+    trackPhysObserver(graphicsModelWPtr());
     buildUpgradeTree();
 }
 

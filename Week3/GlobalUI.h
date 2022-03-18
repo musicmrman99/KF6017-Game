@@ -3,8 +3,9 @@
 #include <vector>
 
 #include "GameObject.h"
-#include "GlobalUISpec.h"
 #include "ObjectFactory.h"
+
+#include "GlobalUISpec.h"
 
 // Show FPS Graphics Model
 class FrameRateUIModel final : public GraphicsModel {

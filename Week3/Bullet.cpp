@@ -1,19 +1,18 @@
 #include "Bullet.h"
 
-#include "uptrcast.h"
+#include "ptrcast.h"
 
 /* Lifecycle
 -------------------------------------------------- */
 
 Bullet::Bullet(BulletSpec::UPtr spec)
     : GameObject(
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
     ),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
+    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
     timer(nullptr) {
-    // NOTE: The cast will disappear once we get the HasGraphics trait implemented
-    trackPhysObserver(std::static_pointer_cast<ImageGraphicsModel>(_graphicsModel));
+    trackPhysObserver(graphicsModelWPtr());
 }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {

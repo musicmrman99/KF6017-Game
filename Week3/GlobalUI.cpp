@@ -1,6 +1,6 @@
 #include "GlobalUI.h"
 
-#include "uptrcast.h"
+#include "ptrcast.h"
 
 #include "MyDrawEngine.h"
 #include "Game.h"
@@ -46,7 +46,6 @@ GlobalUIModel& GlobalUI::uiGraphicsModel() {
 
 GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
     : GameObject(
-        NullGraphicsModel::UPtr(new NullGraphicsModel()),
         GraphicsModel::UPtr(new GlobalUIModel())
     ) {
     uiGraphicsModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));

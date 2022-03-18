@@ -7,6 +7,7 @@
 
 #include "GameObject.h"
 #include "HasPhys.h"
+#include "HasGraphics.h"
 
 #include "ObjectSpec.h"
 #include "ObjectFactoryManager.h"
@@ -27,6 +28,7 @@ private:
 
 	std::list<GameObject::Ptr> objects;
 	std::list<HasPhys::Ptr> physObjects;
+	std::list<HasGraphics::Ptr> graphicsObjects;
 	
 	std::queue<Event::Ptr> events;
 	

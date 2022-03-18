@@ -88,6 +88,12 @@
     <Filter Include="Header Files\Engine\Audio">
       <UniqueIdentifier>{48f6c1fb-14ec-47ca-a237-bb92298d1997}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Models">
+      <UniqueIdentifier>{1312dec3-0756-4b51-9845-4cef40fcec50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Models">
+      <UniqueIdentifier>{e3cf4ba8-b9be-447f-8191-f54afb80eb24}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -121,9 +127,6 @@
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
     <ClCompile Include="GraphicsModel.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageGraphicsModel.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="KeyMap.cpp">
@@ -195,6 +198,15 @@
     <ClCompile Include="MySoundEngine.cpp">
       <Filter>Source Files\Engine\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="HasGraphics.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObserver.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -242,9 +254,6 @@
     <ClInclude Include="GraphicsModel.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="ImageGraphicsModel.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>Header Files\Engine\Utils</Filter>
     </ClInclude>
@@ -284,7 +293,7 @@
     <ClInclude Include="ShipSpec.h">
       <Filter>Header Files\ObjectSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="uptrcast.h">
+    <ClInclude Include="ptrcast.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="BulletSpec.h">
@@ -334,6 +343,21 @@
     </ClInclude>
     <ClInclude Include="MySoundEngine.h">
       <Filter>Header Files\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGraphicsModel.h">
+      <Filter>Header Files\Engine\Graphics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="HasGraphics.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObserver.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObserverOf.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HasGraphicsOf.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

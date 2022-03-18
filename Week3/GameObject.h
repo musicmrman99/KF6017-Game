@@ -22,7 +22,6 @@ private:
     std::queue<Event::Ptr> eventsBuffer;
 
 protected: // FIXME: TEMPORARY
-    GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
 
 public:
@@ -30,16 +29,11 @@ public:
     -------------------- */
 
     GameObject(
-        GraphicsModel::Ptr graphicsModel,
         GraphicsModel::Ptr uiGraphicsModel
     );
     virtual ~GameObject();
 
     // Models
-
-    virtual GraphicsModel& graphicsModel();
-    virtual GraphicsModel& graphicsModel() const;
-    virtual void setGraphicsModel(GraphicsModel::Ptr graphicsModel);
 
     virtual GraphicsModel& uiGraphicsModel();
     virtual GraphicsModel& uiGraphicsModel() const;
@@ -63,9 +57,6 @@ public:
     virtual void emit(std::queue<Event::Ptr>& events) override;
 
     // Run Models
-    virtual void beforeDraw();
-    virtual void draw();
-
     virtual void beforeDrawUI();
     virtual void drawUI();
 

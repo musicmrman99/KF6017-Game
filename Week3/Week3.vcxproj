@@ -154,6 +154,8 @@
     <ClCompile Include="GlobalUI.cpp" />
     <ClCompile Include="GlobalUISpec.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
+    <ClCompile Include="GraphicsObserver.cpp" />
+    <ClCompile Include="HasGraphics.cpp" />
     <ClCompile Include="HasPhys.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="KeyMap.cpp" />
@@ -182,6 +184,10 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="GraphicsObserver.h" />
+    <ClInclude Include="GraphicsObserverOf.h" />
+    <ClInclude Include="HasGraphics.h" />
+    <ClInclude Include="HasGraphicsOf.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />
     <ClInclude Include="Tracker.h" />
@@ -224,7 +230,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="UpgradeTree.h" />
     <ClInclude Include="UpgradeTreeUI.h" />
-    <ClInclude Include="uptrcast.h" />
+    <ClInclude Include="ptrcast.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -6,6 +6,7 @@
 
 #include "GameObject.h"
 #include "HasPhysOf.h"
+#include "HasGraphicsOf.h"
 
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
@@ -17,13 +18,9 @@
 class Bullet final :
 	public GameObject,
 	public HasPhysOf<NewtonianPhysModel>,
+	public HasGraphicsOf<ImageGraphicsModel>,
 	public SelfReferencing<GameObject>
 {
-public:
-	using Ptr = std::shared_ptr<Bullet>;
-	using UPtr = std::unique_ptr<Bullet>;
-	using WPtr = std::weak_ptr<Bullet>;
-
 private:
 	static constexpr float SPEED = 40.0f;
 	static constexpr float OBJECT_CULL_TIME = 1.5f;
@@ -33,6 +30,10 @@ private:
 	Bullet(BulletSpec::UPtr spec);
 
 public:
+	using Ptr = std::shared_ptr<Bullet>;
+	using UPtr = std::unique_ptr<Bullet>;
+	using WPtr = std::weak_ptr<Bullet>;
+
 	// Lifecycle
 
 	static const ObjectFactory factory;

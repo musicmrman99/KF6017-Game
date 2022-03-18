@@ -8,6 +8,7 @@
 
 #include "GameObject.h"
 #include "HasPhysOf.h"
+#include "HasGraphicsOf.h"
 
 #include "Event.h"
 #include "NewtonianPhysModel.h"
@@ -18,7 +19,11 @@
 #include "ObjectFactory.h"
 #include "ShipSpec.h"
 
-class Ship final : public GameObject, public HasPhysOf<NewtonianPhysModel> {
+class Ship final :
+	public GameObject,
+	public HasPhysOf<NewtonianPhysModel>,
+	public HasGraphicsOf<ImageGraphicsModel>
+{
 public:
 	// Movement
 
