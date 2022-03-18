@@ -2,6 +2,8 @@
 
 #include <algorithm>
 
+#include "MyDrawEngine.h"
+
 #include "ObjectEvent.h"
 
 /* Creation
@@ -101,6 +103,8 @@ void ObjectManager::handle(const Event::Ptr e) {
 -------------------------------------------------- */
 
 void ObjectManager::run() {
+    MyDrawEngine* draw = MyDrawEngine::GetInstance();
+
     // Anything first
     for (GameObject::Ptr& object : objects) object->beforeFrame();
 
@@ -128,11 +132,18 @@ void ObjectManager::run() {
     for (HasPhys::Ptr& object : physObjects) object->beforePhys();
     for (HasPhys::Ptr& object : physObjects) object->phys();
 
+    // Don't keep trying to draw if drawing goes wrong on this frame
+    if (draw->BeginDraw() == SUCCESS) {
     for (HasGraphics::Ptr& object : graphicsObjects) object->beforeDraw();
     for (HasGraphics::Ptr& object : graphicsObjects) object->draw();
+    if (draw->EndDraw() == SUCCESS) {
 
+    if (draw->BeginDraw() == SUCCESS) {
     for (HasUI::Ptr& object : uiObjects) object->beforeDrawUI();
     for (HasUI::Ptr& object : uiObjects) object->drawUI();
+         draw->EndDraw();
+    }}}
+    // ... but do keep going through the lifecycle methods
 
     // Anything last
     for (GameObject::Ptr& object : objects) object->afterFrame();

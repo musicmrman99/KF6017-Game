@@ -331,10 +331,7 @@ ErrorType Game::Update() {
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
-    MyDrawEngine* draw = MyDrawEngine::GetInstance();
-    draw->BeginDraw();
     objectManager->run();
-    draw->EndDraw();
 
     return SUCCESS;
 }
