@@ -5,23 +5,19 @@
 /* Lifecycle
 -------------------------------------------------- */
 
-Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
+Bullet::Bullet(BulletSpec::UPtr spec)
     : GameObject(
         ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
     ),
-    HasPhysOf(physModel),
+    HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
     timer(nullptr) {
     // NOTE: The cast will disappear once we get the HasGraphics trait implemented
     trackPhysObserver(std::static_pointer_cast<ImageGraphicsModel>(_graphicsModel));
 }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
-    BulletSpec::UPtr bulletSpec = static_unique_pointer_cast<BulletSpec>(move(spec));
-    Bullet::Ptr bullet = Bullet::Ptr(new Bullet(
-        move(bulletSpec),
-        NewtonianPhysModel::UPtr(new NewtonianPhysModel(bulletSpec->pos, bulletSpec->rot * SPEED, bulletSpec->rot, 0.0f))
-    ));
+    Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
     bullet->setSelf(bullet);
     return bullet;
 };

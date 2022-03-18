@@ -30,7 +30,7 @@ private:
 
 	Timer::Ptr timer;
 
-	Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
+	Bullet(BulletSpec::UPtr spec);
 
 public:
 	// Lifecycle
