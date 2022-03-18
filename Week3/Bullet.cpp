@@ -2,31 +2,15 @@
 
 #include "uptrcast.h"
 
-/* Get/Set the right types
--------------------------------------------------- */
-
-NewtonianPhysModel& Bullet::physModel() {
-    return static_cast<NewtonianPhysModel&>(GameObject::physModel());
-}
-// Can't enforce uniqueness - GameObject interface requires shared_ptr.
-void Bullet::setPhysModel(PhysModel::Ptr physModel) {
-    if (physModel) {
-        if (auto newtonianPhysModel = std::dynamic_pointer_cast<NewtonianPhysModel>(physModel)) {
-            GameObject::setPhysModel(physModel);
-            static_cast<ImageGraphicsModel&>(GameObject::graphicsModel()).setPhysModel(newtonianPhysModel);
-        }
-    }
-}
-
 /* Lifecycle
 -------------------------------------------------- */
 
 Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
     : GameObject(
-        physModel,
         ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
     ),
+    HasPhysOf(physModel),
     timer(nullptr) {
 }
 

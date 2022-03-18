@@ -5,6 +5,8 @@
 #include "SelfReferencing.h"
 
 #include "GameObject.h"
+#include "HasPhysOf.h"
+
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -12,7 +14,11 @@
 #include "BulletSpec.h"
 #include "Timer.h"
 
-class Bullet final : public GameObject, public SelfReferencing<GameObject> {
+class Bullet final :
+	public GameObject,
+	public HasPhysOf<NewtonianPhysModel>,
+	public SelfReferencing<GameObject>
+{
 public:
 	using Ptr = std::shared_ptr<Bullet>;
 	using UPtr = std::unique_ptr<Bullet>;
@@ -27,11 +33,6 @@ private:
 	Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
 
 public:
-	// Get/Set the right types
-
-	virtual NewtonianPhysModel& physModel() override;
-	virtual void setPhysModel(PhysModel::Ptr physModel) override;
-
 	// Lifecycle
 
 	static const ObjectFactory factory;

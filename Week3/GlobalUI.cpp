@@ -46,7 +46,6 @@ GlobalUIModel& GlobalUI::uiGraphicsModel() {
 
 GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
     : GameObject(
-        NullPhysModel::UPtr(new NullPhysModel()),
         NullGraphicsModel::UPtr(new NullGraphicsModel()),
         GraphicsModel::UPtr(new GlobalUIModel())
     ) {
@@ -54,5 +53,5 @@ GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
 }
 
 const ObjectFactory GlobalUI::factory = [](ObjectSpec::UPtr spec) {
-    return GlobalUI::Ptr(new GlobalUI(static_unique_pointer_cast<GlobalUISpec>(move(spec))));
+    return GameObject::Ptr(new GlobalUI(static_unique_pointer_cast<GlobalUISpec>(move(spec))));
 };

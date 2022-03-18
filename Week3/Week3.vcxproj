@@ -154,6 +154,7 @@
     <ClCompile Include="GlobalUI.cpp" />
     <ClCompile Include="GlobalUISpec.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
+    <ClCompile Include="HasPhys.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="MyDrawEngine.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="ObjectSpec.cpp" />
     <ClCompile Include="PhysModel.cpp" />
+    <ClCompile Include="PhysObserver.cpp" />
     <ClCompile Include="Shapes.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
@@ -180,6 +182,9 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="PhysObserver.h" />
+    <ClInclude Include="PhysObserverOf.h" />
+    <ClInclude Include="Tracker.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Derived.h" />
@@ -192,6 +197,8 @@
     <ClInclude Include="GlobalUI.h" />
     <ClInclude Include="GlobalUISpec.h" />
     <ClInclude Include="GraphicsModel.h" />
+    <ClInclude Include="HasPhys.h" />
+    <ClInclude Include="HasPhysOf.h" />
     <ClInclude Include="ObjectEvent.h" />
     <ClInclude Include="ObjectEventCreator.h" />
     <ClInclude Include="ObjectEventFactory.h" />

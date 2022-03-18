@@ -6,6 +6,8 @@
 #include "SelfReferencing.h"
 
 #include "GameObject.h"
+#include "HasPhys.h"
+
 #include "ObjectSpec.h"
 #include "ObjectFactoryManager.h"
 #include "ObjectEventFactory.h"
@@ -22,7 +24,10 @@ private:
 	ObjectFactoryManager factory;
 
 	std::list<EventEmitter::Ptr> controllers;
+
 	std::list<GameObject::Ptr> objects;
+	std::list<HasPhys::Ptr> physObjects;
+	
 	std::queue<Event::Ptr> events;
 	
 	ObjectManager();

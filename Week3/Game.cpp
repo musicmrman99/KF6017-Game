@@ -269,7 +269,7 @@ ErrorType Game::StartOfGame() {
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
 
       // Create player
-    Ship::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
+    GameObject::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite,

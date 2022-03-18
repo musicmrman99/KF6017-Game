@@ -7,6 +7,8 @@
 #include "MyDrawEngine.h"
 
 #include "GameObject.h"
+#include "HasPhysOf.h"
+
 #include "Event.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
@@ -16,13 +18,8 @@
 #include "ObjectFactory.h"
 #include "ShipSpec.h"
 
-class Ship final : public GameObject {
+class Ship final : public GameObject, public HasPhysOf<NewtonianPhysModel> {
 public:
-	// Get/Set the right types
-
-	virtual NewtonianPhysModel& physModel() override;
-	virtual void setPhysModel(PhysModel::Ptr physModel) override;
-
 	// Movement
 
 	class MainThrustEvent final : public Event {

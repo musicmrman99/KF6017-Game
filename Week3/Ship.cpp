@@ -7,22 +7,6 @@
 #include "UpgradeTreeUI.h"
 #include "BulletSpec.h"
 
-/* Get/Set the right types
--------------------------------------------------- */
-
-NewtonianPhysModel& Ship::physModel() {
-    return static_cast<NewtonianPhysModel&>(GameObject::physModel());
-}
-// Can't enforce uniqueness - GameObject interface requires shared_ptr.
-void Ship::setPhysModel(PhysModel::Ptr physModel) {
-    if (physModel) {
-        if (auto newtonianPhysModel = std::dynamic_pointer_cast<NewtonianPhysModel>(physModel)) {
-            GameObject::setPhysModel(physModel);
-            static_cast<ImageGraphicsModel&>(GameObject::graphicsModel()).setPhysModel(newtonianPhysModel);
-        }
-    }
-}
-
 /* Actions
 -------------------------------------------------- */
 
@@ -148,10 +132,10 @@ const UpgradeTree& Ship::getUpgradeTree() {
 
 Ship::Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
     : GameObject(
-        physModel,
         ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
         UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
     ),
+    HasPhysOf(physModel),
     bulletImage(spec->bulletImage),
     upgradeTree(UpgradeTree(SHIP)),
     engineThrust(0.1f),    // Distance units / second^2
@@ -166,7 +150,7 @@ Ship::Ship(ShipSpec::UPtr spec)
 }
 
 const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
-    return Ship::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
+    return GameObject::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
 };
 
 Ship::~Ship() {}

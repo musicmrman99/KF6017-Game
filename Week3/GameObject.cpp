@@ -6,22 +6,14 @@
 -------------------- */
 
 GameObject::GameObject(
-    PhysModel::Ptr physModel,
     GraphicsModel::Ptr graphicsModel,
     GraphicsModel::Ptr uiGraphicsModel
 ) {
-    setPhysModel(physModel);
     setGraphicsModel(graphicsModel);
     setUIGraphicsModel(uiGraphicsModel);
 }
 
 GameObject::~GameObject() {}
-
-PhysModel& GameObject::physModel() { return *_physModel; }
-PhysModel& GameObject::physModel() const { return *_physModel; }
-void GameObject::setPhysModel(PhysModel::Ptr physModel) {
-    if (physModel) _physModel = physModel;
-}
 
 GraphicsModel& GameObject::graphicsModel() { return *_graphicsModel; }
 GraphicsModel& GameObject::graphicsModel() const { return *_graphicsModel; }
@@ -54,11 +46,6 @@ void GameObject::handle(const Event::Ptr e) {}
 // If you do not need to buffer events, then you should override this method.
 void GameObject::emit(std::queue<Event::Ptr>& events) {
     shiftInto(eventsBuffer, events);
-}
-
-void GameObject::beforePhys() {};
-void GameObject::phys() {
-    physModel().run();
 }
 
 void GameObject::beforeDraw() {};

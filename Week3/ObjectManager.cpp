@@ -31,12 +31,20 @@ ObjectFactoryManager& ObjectManager::getObjectFactoryManager() {
 -------------------------------------------------- */
 
 GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
+    // Create
     GameObject::Ptr object = factory.create(move(spec));
     if (!object) return nullptr;
     object->setObjectEventFactory(objectEventFactory);
+
+    // Run creation lifecycle
     object->afterCreate();
-    object->emit(events); // Flush event buffer in case controllers or game object require initialised object.
+    object->emit(events); // Flush event buffer in case other game objects require an initialised object.
+
+    // Add to main list and relevant component lists
     objects.push_back(object);
+    if (auto physObject = std::dynamic_pointer_cast<HasPhys>(object)) physObjects.push_back(physObject);
+
+    // Return it
     return object;
 }
 
@@ -50,10 +58,15 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
 
     // We're not expecting there to be multiple matches, but just in case.
     for (auto delObject = toDelete; delObject != objects.end(); ++delObject) {
+        // Run destruction lifecycle
         (*delObject)->beforeDestroy();
         (*delObject)->emit(events); // Emit any remaining buffered events before it's destroyed.
+
+        // Remove from relevant component lists
+        if (auto physObject = std::dynamic_pointer_cast<HasPhys>(*delObject)) physObjects.remove(physObject);
     }
 
+    // Remove from main list
     objects.erase(toDelete, objects.end());
 }
 
@@ -108,8 +121,8 @@ void ObjectManager::run() {
     }
 
     // Handle physics and graphics
-    for (GameObject::Ptr& object : objects) object->beforePhys();
-    for (GameObject::Ptr& object : objects) object->phys();
+    for (HasPhys::Ptr& object : physObjects) object->beforePhys();
+    for (HasPhys::Ptr& object : physObjects) object->phys();
 
     for (GameObject::Ptr& object : objects) object->beforeDraw();
     for (GameObject::Ptr& object : objects) object->draw();

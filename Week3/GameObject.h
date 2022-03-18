@@ -8,14 +8,17 @@
 #include "PhysModel.h"
 #include "GraphicsModel.h"
 
-class GameObject : public EventHandler, public EventEmitter, public ObjectEventCreator {
+class GameObject :
+    public EventHandler,
+    public EventEmitter,
+    public ObjectEventCreator
+{
 public:
     using Ptr = std::shared_ptr<GameObject>;
     using UPtr = std::unique_ptr<GameObject>;
     using WPtr = std::weak_ptr<GameObject>;
 
 private:
-    PhysModel::Ptr _physModel;
     GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
 
@@ -26,17 +29,12 @@ public:
     -------------------- */
 
     GameObject(
-        PhysModel::Ptr physModel,
         GraphicsModel::Ptr graphicsModel,
         GraphicsModel::Ptr uiGraphicsModel
     );
     virtual ~GameObject();
 
     // Models
-
-    virtual PhysModel& physModel();
-    virtual PhysModel& physModel() const;
-    virtual void setPhysModel(PhysModel::Ptr physModel);
 
     virtual GraphicsModel& graphicsModel();
     virtual GraphicsModel& graphicsModel() const;
@@ -64,9 +62,6 @@ public:
     virtual void emit(std::queue<Event::Ptr>& events) override;
 
     // Run Models
-    virtual void beforePhys();
-    virtual void phys();
-
     virtual void beforeDraw();
     virtual void draw();
 
