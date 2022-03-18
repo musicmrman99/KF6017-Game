@@ -99,9 +99,6 @@ private:
 
 	PictureIndex bulletImage;
 
-	// 2nd phase constructor
-	Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
-
 public:
 	const UpgradeTree& getUpgradeTree();
 
@@ -110,6 +107,7 @@ public:
 	Ship(ShipSpec::UPtr spec);
 	static const ObjectFactory factory;
 	void buildUpgradeTree();
+
 	virtual ~Ship();
 
 	virtual void beforeFrame() override;

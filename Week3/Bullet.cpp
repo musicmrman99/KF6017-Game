@@ -7,11 +7,13 @@
 
 Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
     : GameObject(
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
+        ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image)),
         NullGraphicsModel::UPtr(new NullGraphicsModel())
     ),
     HasPhysOf(physModel),
     timer(nullptr) {
+    // NOTE: The cast will disappear once we get the HasGraphics trait implemented
+    trackPhysObserver(std::static_pointer_cast<ImageGraphicsModel>(_graphicsModel));
 }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {

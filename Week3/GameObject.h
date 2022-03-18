@@ -19,10 +19,11 @@ public:
     using WPtr = std::weak_ptr<GameObject>;
 
 private:
+    std::queue<Event::Ptr> eventsBuffer;
+
+protected: // FIXME: TEMPORARY
     GraphicsModel::Ptr _graphicsModel;
     GraphicsModel::Ptr _uiGraphicsModel;
-
-    std::queue<Event::Ptr> eventsBuffer;
 
 public:
     /* Components
