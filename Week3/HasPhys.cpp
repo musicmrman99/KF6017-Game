@@ -5,7 +5,7 @@ HasPhys::HasPhys(PhysModel::Ptr physModel) {
 }
 HasPhys::~HasPhys() {}
 
-void HasPhys::trackPhysObserver(std::weak_ptr<PhysObserver> physObserver) {
+void HasPhys::trackPhysObserver(PhysObserver::WPtr physObserver) {
     if (auto po = physObserver.lock()) {
         po->updatePhysModel(_physModel);
         _observerTracker.track(physObserver);
