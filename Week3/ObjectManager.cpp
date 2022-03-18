@@ -44,6 +44,7 @@ GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
     objects.push_back(object);
     if (auto physObject = std::dynamic_pointer_cast<HasPhys>(object)) physObjects.push_back(physObject);
     if (auto graphicsObject = std::dynamic_pointer_cast<HasGraphics>(object)) graphicsObjects.push_back(graphicsObject);
+    if (auto uiObject = std::dynamic_pointer_cast<HasUI>(object)) uiObjects.push_back(uiObject);
 
     // Return it
     return object;
@@ -66,6 +67,7 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
         // Remove from relevant component lists
         if (auto physObject = std::dynamic_pointer_cast<HasPhys>(*delObject)) physObjects.remove(physObject);
         if (auto graphicsObject = std::dynamic_pointer_cast<HasGraphics>(*delObject)) graphicsObjects.remove(graphicsObject);
+        if (auto uiObject = std::dynamic_pointer_cast<HasUI>(*delObject)) uiObjects.remove(uiObject);
     }
 
     // Remove from main list
@@ -129,8 +131,8 @@ void ObjectManager::run() {
     for (HasGraphics::Ptr& object : graphicsObjects) object->beforeDraw();
     for (HasGraphics::Ptr& object : graphicsObjects) object->draw();
 
-    for (GameObject::Ptr& object : objects) object->beforeDrawUI();
-    for (GameObject::Ptr& object : objects) object->drawUI();
+    for (HasUI::Ptr& object : uiObjects) object->beforeDrawUI();
+    for (HasUI::Ptr& object : uiObjects) object->drawUI();
 
     // Anything last
     for (GameObject::Ptr& object : objects) object->afterFrame();

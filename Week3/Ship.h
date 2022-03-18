@@ -9,12 +9,14 @@
 #include "GameObject.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
+#include "HasUIOf.h"
 
 #include "Event.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
 #include "UpgradeTree.h"
+#include "UpgradeTreeUI.h"
 
 #include "ObjectFactory.h"
 #include "ShipSpec.h"
@@ -22,7 +24,8 @@
 class Ship final :
 	public GameObject,
 	public HasPhysOf<NewtonianPhysModel>,
-	public HasGraphicsOf<ImageGraphicsModel>
+	public HasGraphicsOf<ImageGraphicsModel>,
+	public HasUIOf<UpgradeTreeUI>
 {
 public:
 	// Movement

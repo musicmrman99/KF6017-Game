@@ -40,15 +40,9 @@ void GlobalUIModel::draw() {
 /* Global UI
 -------------------------------------------------- */
 
-GlobalUIModel& GlobalUI::uiGraphicsModel() {
-    return static_cast<GlobalUIModel&>(GameObject::uiGraphicsModel());
-}
-
 GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
-    : GameObject(
-        GraphicsModel::UPtr(new GlobalUIModel())
-    ) {
-    uiGraphicsModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));
+    : HasUIOf(GlobalUIModel::UPtr(new GlobalUIModel())) {
+    uiModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));
 }
 
 const ObjectFactory GlobalUI::factory = [](ObjectSpec::UPtr spec) {

@@ -5,13 +5,11 @@
 /* Lifecycle
 -------------------------------------------------- */
 
-Bullet::Bullet(BulletSpec::UPtr spec)
-    : GameObject(
-        NullGraphicsModel::UPtr(new NullGraphicsModel())
-    ),
+Bullet::Bullet(BulletSpec::UPtr spec) :
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
-    timer(nullptr) {
+    timer(nullptr)
+{
     trackPhysObserver(graphicsModelWPtr());
 }
 

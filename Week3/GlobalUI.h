@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include "GameObject.h"
+#include "HasUIOf.h"
 #include "ObjectFactory.h"
 
 #include "GlobalUISpec.h"
@@ -27,17 +29,15 @@ private:
 	std::vector<GraphicsModel::Ptr> widgets;
 
 public:
+	using UPtr = std::unique_ptr<GlobalUIModel>;
+
 	void addWidget(GraphicsModel::Ptr widget);
 	virtual void draw() override;
 };
 
 // Global UI
-class GlobalUI final : public GameObject {
+class GlobalUI final : public GameObject, public HasUIOf<GlobalUIModel> {
 public:
-	virtual GlobalUIModel& uiGraphicsModel() override;
-
-	// Lifecycle
-
 	GlobalUI(GlobalUISpec::UPtr spec);
 	static const ObjectFactory factory;
 };

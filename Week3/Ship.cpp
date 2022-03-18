@@ -4,7 +4,6 @@
 
 #include "ptrcast.h"
 
-#include "UpgradeTreeUI.h"
 #include "BulletSpec.h"
 
 /* Actions
@@ -130,12 +129,10 @@ const UpgradeTree& Ship::getUpgradeTree() {
 /* Lifecycle
 -------------------------------------------------- */
 
-Ship::Ship(ShipSpec::UPtr spec)
-    : GameObject(
-        UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))
-    ),
+Ship::Ship(ShipSpec::UPtr spec) :
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
+    HasUIOf(UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))),
     bulletImage(spec->bulletImage),
     upgradeTree(UpgradeTree(SHIP)),
     engineThrust(0.1f),  // Distance units / second^2

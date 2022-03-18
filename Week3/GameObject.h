@@ -21,26 +21,14 @@ public:
 private:
     std::queue<Event::Ptr> eventsBuffer;
 
-protected: // FIXME: TEMPORARY
-    GraphicsModel::Ptr _uiGraphicsModel;
-
 public:
     /* Components
     -------------------- */
 
-    GameObject(
-        GraphicsModel::Ptr uiGraphicsModel
-    );
     virtual ~GameObject();
 
-    // Models
-
-    virtual GraphicsModel& uiGraphicsModel();
-    virtual GraphicsModel& uiGraphicsModel() const;
-    virtual void setUIGraphicsModel(GraphicsModel::Ptr uiGraphicsModel);
-
     // Events
-
+    
     virtual void enqueue(Event::Ptr e);
 
     /* Lifecycle
@@ -55,10 +43,6 @@ public:
     // Event Handling
     virtual void handle(const Event::Ptr e) override;
     virtual void emit(std::queue<Event::Ptr>& events) override;
-
-    // Run Models
-    virtual void beforeDrawUI();
-    virtual void drawUI();
 
     // Anything After
     virtual void afterFrame();

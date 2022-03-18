@@ -157,6 +157,7 @@
     <ClCompile Include="GraphicsObserver.cpp" />
     <ClCompile Include="HasGraphics.cpp" />
     <ClCompile Include="HasPhys.cpp" />
+    <ClCompile Include="HasUI.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="MyDrawEngine.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="ShipSpec.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UIObserver.cpp" />
     <ClCompile Include="UpgradeTree.cpp" />
     <ClCompile Include="UpgradeTreeUI.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -188,6 +190,8 @@
     <ClInclude Include="GraphicsObserverOf.h" />
     <ClInclude Include="HasGraphics.h" />
     <ClInclude Include="HasGraphicsOf.h" />
+    <ClInclude Include="HasUI.h" />
+    <ClInclude Include="HasUIOf.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />
     <ClInclude Include="Tracker.h" />
@@ -228,6 +232,8 @@
     <ClInclude Include="ShipSpec.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="UIObserver.h" />
+    <ClInclude Include="UIObserverOf.h" />
     <ClInclude Include="UpgradeTree.h" />
     <ClInclude Include="UpgradeTreeUI.h" />
     <ClInclude Include="ptrcast.h" />
