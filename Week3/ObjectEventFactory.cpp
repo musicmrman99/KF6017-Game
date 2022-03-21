@@ -3,6 +3,8 @@
 #include "ObjectManager.h"
 #include "ObjectEvent.h"
 
+// Depends on ObjectManager because TargettedEvent needs to know that ObjectManager is-a EventHandler.
+
 ObjectEventFactory::ObjectEventFactory(ObjectManagerWPtr objectManager)
     : objectManager(objectManager) {
 }
