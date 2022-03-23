@@ -1,9 +1,7 @@
 #include "Timer.h"
 
 #include "Game.h"
-#include "Event.h"
 #include "TargettedEvent.h"
-#include "ObjectEvent.h"
 
 // Timer
 Timer::Timer(double limit, EventHandler::WPtr listener)

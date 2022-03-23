@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Event.h"
+#include "EventEmitter.h"
 
 struct ObjectSpec;
 class GameObject;

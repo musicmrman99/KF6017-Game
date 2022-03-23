@@ -3,6 +3,7 @@
 #include "SelfReferencing.h"
 
 #include "Event.h"
+#include "EventHandler.h"
 #include "ObjectEventCreator.h"
 
 class Timer final : public EventEmitter, public ObjectEventCreator, public SelfReferencing<Timer> {

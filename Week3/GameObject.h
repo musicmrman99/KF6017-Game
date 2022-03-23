@@ -3,6 +3,8 @@
 #include <memory>
 
 #include "Event.h"
+#include "EventHandler.h"
+#include "EventEmitter.h"
 #include "ObjectEventCreator.h"
 
 #include "PhysModel.h"

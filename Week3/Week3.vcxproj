@@ -148,6 +148,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventEmitter.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -187,6 +189,8 @@
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="EventEmitter.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="GraphicsObserver.h" />
     <ClInclude Include="GraphicsObserverOf.h" />
     <ClInclude Include="HasGraphics.h" />

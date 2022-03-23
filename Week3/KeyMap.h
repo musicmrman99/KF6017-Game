@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Event.h"
+#include "EventEmitter.h"
 #include "Controls.h"
 
 #include "GameObject.h"

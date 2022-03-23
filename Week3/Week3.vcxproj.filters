@@ -231,6 +231,12 @@
     <ClCompile Include="TargettedEvent.cpp">
       <Filter>Source Files\Engine\Controllers</Filter>
     </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files\Engine\Controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmitter.cpp">
+      <Filter>Source Files\Engine\Controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -396,6 +402,12 @@
       <Filter>Header Files\Engine\Physics\Components\PhysicsComponent</Filter>
     </ClInclude>
     <ClInclude Include="TargettedEvent.h">
+      <Filter>Header Files\Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Header Files\Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitter.h">
       <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
   </ItemGroup>

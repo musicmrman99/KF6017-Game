@@ -2,9 +2,11 @@
 
 #include <string>
 
-#include "Event.h"
 #include "Symbol.h"
 #include "Node.h"
+
+#include "Event.h"
+#include "EventEmitter.h"
 
 // An upgrade
 class Upgrade final : public Symbol {

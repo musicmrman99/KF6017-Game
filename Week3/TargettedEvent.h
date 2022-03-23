@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Event.h"
+#include "EventHandler.h"
 
 // Targetted Event
 class TargettedEvent : public Event {
