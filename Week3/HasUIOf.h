@@ -24,6 +24,8 @@ private:
 public:
     HasUIOf(TDGraphicsModelPtr uiModel) : HasUI(uiModel) {}
 
+    // Note: Non-virtual hiding is intended.
+
     // Make changing the UI's GraphicsModel reflected in the given GraphicsModel-dependant object.
     void trackUIObserver(typename UIObserverOf<TDGraphicsModel>::WPtr uiObserver) { HasUI::trackUIObserver(uiObserver); }
 

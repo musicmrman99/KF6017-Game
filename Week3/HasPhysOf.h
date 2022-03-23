@@ -24,6 +24,8 @@ private:
 public:
     HasPhysOf(TDPhysModelPtr physModel) : HasPhys(physModel) {}
 
+    // Note: Non-virtual hiding is intended.
+
     // Make changing the TDPhysModel reflected in the given TDPhysModel-dependant object.
     void trackPhysObserver(typename PhysObserverOf<TDPhysModel>::WPtr physObserver) { HasPhys::trackPhysObserver(physObserver); }
 

@@ -24,6 +24,8 @@ private:
 public:
     HasGraphicsOf(TDGraphicsModelPtr graphicsModel) : HasGraphics(graphicsModel) {}
 
+    // Note: Non-virtual hiding is intended.
+
     // Make changing the GraphicsModel reflected in the given GraphicsModel-dependant object.
     void trackGraphicsObserver(typename GraphicsObserverOf<TDGraphicsModel>::WPtr graphicsObserver) { HasGraphics::trackGraphicsObserver(graphicsObserver); }
 
