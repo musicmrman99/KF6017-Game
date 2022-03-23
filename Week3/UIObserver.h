@@ -13,6 +13,5 @@ public:
 
     GraphicsModel::WPtr uiModelWPtr() const;
     GraphicsModel::Ptr uiModel() const;
-
     void updateUIModel(GraphicsModel::WPtr uiModel);
 };

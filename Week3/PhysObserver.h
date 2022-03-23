@@ -13,6 +13,5 @@ public:
     
     PhysModel::WPtr physModelWPtr() const;
     PhysModel::Ptr physModel() const;
-
     void updatePhysModel(PhysModel::WPtr physModel);
 };
