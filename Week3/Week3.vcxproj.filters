@@ -31,9 +31,6 @@
     <Filter Include="Header Files\Engine\Physics">
       <UniqueIdentifier>{de259a2a-5f6a-4605-80b7-4f2673cbbc09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Controllers">
-      <UniqueIdentifier>{72e339ce-8eab-4ffb-b04c-15dd2fc9eca1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Graphics">
       <UniqueIdentifier>{824fb528-ad91-4dd3-8b19-e2c8e638c7b5}</UniqueIdentifier>
     </Filter>
@@ -85,14 +82,32 @@
     <Filter Include="Header Files\Engine\Utils">
       <UniqueIdentifier>{2d43f27e-e3e0-4434-8be9-b615d7254323}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Audio">
-      <UniqueIdentifier>{48f6c1fb-14ec-47ca-a237-bb92298d1997}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Graphics\Models">
       <UniqueIdentifier>{1312dec3-0756-4b51-9845-4cef40fcec50}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Engine\Graphics\Models">
       <UniqueIdentifier>{e3cf4ba8-b9be-447f-8191-f54afb80eb24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events">
+      <UniqueIdentifier>{72e339ce-8eab-4ffb-b04c-15dd2fc9eca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Audio">
+      <UniqueIdentifier>{48f6c1fb-14ec-47ca-a237-bb92298d1997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Components">
+      <UniqueIdentifier>{6a070c7b-232d-45e5-a3cd-8f7167109f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Components\GraphicsComponent">
+      <UniqueIdentifier>{b6b11c4f-ef88-4442-a5a0-577914a92274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Components\UIComponent">
+      <UniqueIdentifier>{e3afa914-703c-4c81-a650-ab771559db32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics\Components">
+      <UniqueIdentifier>{ddb05fdd-d037-4f35-95b5-1812fb80d9e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics\Components\PhysicsComponent">
+      <UniqueIdentifier>{c3964f07-e778-4571-b537-312a81bc9d80}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -222,10 +237,10 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
-      <Filter>Header Files\Engine\Controllers</Filter>
+      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="KeyMap.h">
-      <Filter>Header Files\Engine\Controllers</Filter>
+      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
       <Filter>Header Files\Objects</Filter>
@@ -234,7 +249,7 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Controls.h">
-      <Filter>Header Files\Engine\Controllers</Filter>
+      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="Symbol.h">
       <Filter>Header Files\Utils</Filter>
@@ -285,7 +300,7 @@
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Header Files\Engine\Controllers</Filter>
+      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="ObjectEvent.h">
       <Filter>Header Files\Engine\Objects</Filter>
@@ -323,18 +338,6 @@
     <ClInclude Include="Tracker.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="HasPhys.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="HasPhysOf.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysObserver.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="PhysObserverOf.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="NewtonianPhysModel.h">
       <Filter>Header Files\Engine\Physics\Models</Filter>
     </ClInclude>
@@ -345,37 +348,49 @@
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="MyInputs.h">
-      <Filter>Header Files\Engine\Controllers</Filter>
+      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="MySoundEngine.h">
-      <Filter>Header Files\Engine\Audio</Filter>
+      <Filter>Header Files\Engine\Events\Audio</Filter>
     </ClInclude>
     <ClInclude Include="ImageGraphicsModel.h">
       <Filter>Header Files\Engine\Graphics\Models</Filter>
     </ClInclude>
-    <ClInclude Include="HasGraphics.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsObserver.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="GraphicsObserverOf.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="HasGraphicsOf.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="HasUI.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics\Components\UIComponent</Filter>
     </ClInclude>
     <ClInclude Include="HasUIOf.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics\Components\UIComponent</Filter>
     </ClInclude>
     <ClInclude Include="UIObserver.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics\Components\UIComponent</Filter>
     </ClInclude>
     <ClInclude Include="UIObserverOf.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics\Components\UIComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObserver.h">
+      <Filter>Header Files\Engine\Graphics\Components\GraphicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObserverOf.h">
+      <Filter>Header Files\Engine\Graphics\Components\GraphicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasGraphics.h">
+      <Filter>Header Files\Engine\Graphics\Components\GraphicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasGraphicsOf.h">
+      <Filter>Header Files\Engine\Graphics\Components\GraphicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasPhys.h">
+      <Filter>Header Files\Engine\Physics\Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasPhysOf.h">
+      <Filter>Header Files\Engine\Physics\Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysObserver.h">
+      <Filter>Header Files\Engine\Physics\Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysObserverOf.h">
+      <Filter>Header Files\Engine\Physics\Components\PhysicsComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
