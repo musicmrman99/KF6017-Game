@@ -176,6 +176,7 @@
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="ShipSpec.cpp" />
+    <ClCompile Include="TargettedEvent.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIObserver.cpp" />
     <ClCompile Include="UpgradeTree.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="HasUIOf.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />
+    <ClInclude Include="TargettedEvent.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Camera.h" />

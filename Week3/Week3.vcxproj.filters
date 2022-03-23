@@ -228,6 +228,9 @@
     <ClCompile Include="HasUI.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="TargettedEvent.cpp">
+      <Filter>Source Files\Engine\Controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -391,6 +394,9 @@
     </ClInclude>
     <ClInclude Include="PhysObserverOf.h">
       <Filter>Header Files\Engine\Physics\Components\PhysicsComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="TargettedEvent.h">
+      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

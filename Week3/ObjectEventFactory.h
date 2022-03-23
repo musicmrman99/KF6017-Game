@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Event.h"
+#include "TargettedEvent.h"
 
 struct ObjectSpec;
 class GameObject;

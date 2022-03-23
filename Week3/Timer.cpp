@@ -2,6 +2,7 @@
 
 #include "Game.h"
 #include "Event.h"
+#include "TargettedEvent.h"
 #include "ObjectEvent.h"
 
 // Timer

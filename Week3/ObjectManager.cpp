@@ -4,6 +4,7 @@
 
 #include "MyDrawEngine.h"
 
+#include "TargettedEvent.h"
 #include "ObjectEvent.h"
 
 /* Creation
