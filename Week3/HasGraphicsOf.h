@@ -4,6 +4,7 @@
 #include "ptrcast.h"
 
 #include "HasGraphics.h"
+#include "GraphicsObserverOf.h"
 
 // GameObject Trait: Adds the Graphics component slot and restricts it to holding a particular
 // Graphics Model type.
@@ -21,13 +22,14 @@ private:
     using TDGraphicsModelWPtr = std::weak_ptr<TDGraphicsModel>;
 
 public:
-    HasGraphicsOf(TDGraphicsModelPtr graphicsModel) : HasGraphics(graphicsModel) {};
+    HasGraphicsOf(TDGraphicsModelPtr graphicsModel) : HasGraphics(graphicsModel) {}
 
-    using HasGraphics::graphicsModel;
-    using HasGraphics::setGraphicsModel;
+    // Make changing the GraphicsModel reflected in the given GraphicsModel-dependant object.
+    void trackGraphicsObserver(typename GraphicsObserverOf<TDGraphicsModel>::WPtr graphicsObserver) { HasGraphics::trackGraphicsObserver(graphicsObserver); }
 
-    TDGraphicsModelWPtr graphicsModelWPtr() const { return static_weak_pointer_cast<TDGraphicsModel>(HasGraphics::graphicsModelWPtr()); };
-    TDGraphicsModel& graphicsModel() const { return static_cast<TDGraphicsModel&>(HasGraphics::graphicsModel()); };
+    // Useful for setting the GraphicsModel as an observer of another model
+    TDGraphicsModelWPtr graphicsModelWPtr() const { return static_weak_pointer_cast<TDGraphicsModel>(HasGraphics::graphicsModelWPtr()); }
+    TDGraphicsModel& graphicsModel() const { return static_cast<TDGraphicsModel&>(HasGraphics::graphicsModel()); }
     void setGraphicsModel(TDGraphicsModelPtr graphicsModel) {
         if (graphicsModel) HasGraphics::setGraphicsModel(graphicsModel);
     }

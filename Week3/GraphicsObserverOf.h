@@ -14,8 +14,7 @@ private:
     using TDGraphicsModelPtr = std::shared_ptr<TDGraphicsModel>;
 
 public:
-    using GraphicsObserver::graphicsModelWPtr;
-    using GraphicsObserver::graphicsModel;
+    using WPtr = std::weak_ptr<GraphicsObserverOf<TDGraphicsModel>>;
 
     const TDGraphicsModelWPtr graphicsModelWPtr() const {
         return std::static_pointer_cast<TDGraphicsModel>(GraphicsObserver::graphicsModel());

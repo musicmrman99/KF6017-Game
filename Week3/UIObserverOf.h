@@ -14,8 +14,7 @@ private:
     using TDGraphicsModelPtr = std::shared_ptr<TDGraphicsModel>;
 
 public:
-    using UIObserver::uiModelWPtr;
-    using UIObserver::uiModel;
+    using WPtr = std::weak_ptr<UIObserverOf<TDGraphicsModel>>;
 
     const TDGraphicsModelWPtr uiModelWPtr() const {
         return std::static_pointer_cast<TDGraphicsModel>(UIObserver::uiModel());

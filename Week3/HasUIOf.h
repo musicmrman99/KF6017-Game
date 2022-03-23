@@ -4,6 +4,7 @@
 #include "ptrcast.h"
 
 #include "HasUI.h"
+#include "UIObserverOf.h"
 
 // GameObject Trait: Adds the UI component slot and restricts it to holding a particular
 // Graphics Model type.
@@ -21,13 +22,14 @@ private:
     using TDGraphicsModelWPtr = std::weak_ptr<TDGraphicsModel>;
 
 public:
-    HasUIOf(TDGraphicsModelPtr uiModel) : HasUI(uiModel) {};
+    HasUIOf(TDGraphicsModelPtr uiModel) : HasUI(uiModel) {}
 
-    using HasUI::uiModel;
-    using HasUI::setUIModel;
+    // Make changing the UI's GraphicsModel reflected in the given GraphicsModel-dependant object.
+    void trackUIObserver(typename UIObserverOf<TDGraphicsModel>::WPtr uiObserver) { HasUI::trackUIObserver(uiObserver); }
 
-    TDGraphicsModelWPtr uiModelWPtr() const { return static_weak_pointer_cast<TDGraphicsModel>(HasUI::uiModelWPtr()); };
-    TDGraphicsModel& uiModel() const { return static_cast<TDGraphicsModel&>(HasUI::uiModel()); };
+    // Useful for setting the UI's GraphicsModel as an observer of another model
+    TDGraphicsModelWPtr uiModelWPtr() const { return static_weak_pointer_cast<TDGraphicsModel>(HasUI::uiModelWPtr()); }
+    TDGraphicsModel& uiModel() const { return static_cast<TDGraphicsModel&>(HasUI::uiModel()); }
     void setUIModel(TDGraphicsModelPtr uiModel) {
         if (uiModel) HasUI::setUIModel(uiModel);
     }

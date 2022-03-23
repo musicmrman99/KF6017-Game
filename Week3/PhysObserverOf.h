@@ -14,8 +14,7 @@ private:
     using TDPhysModelPtr = std::shared_ptr<TDPhysModel>;
 
 public:
-    using PhysObserver::physModelWPtr;
-    using PhysObserver::physModel;
+    using WPtr = std::weak_ptr<PhysObserverOf<TDPhysModel>>;
 
     const TDPhysModelWPtr physModelWPtr() const {
         return std::static_pointer_cast<TDPhysModel>(PhysObserver::physModel());

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "Derived.h"
+#include "ptrcast.h"
 
 #include "HasPhys.h"
+#include "PhysObserverOf.h"
 
 // GameObject Trait: Adds the Physics component slot and restricts it to holding a particular
 // Physics Model type.
@@ -17,16 +19,17 @@ private:
     // A (T)ype (D)erived from (PhysModel)
     using TDPhysModel = Derived<TPhysModel, PhysModel>;
     using TDPhysModelPtr = std::shared_ptr<TDPhysModel>;
+    using TDPhysModelWPtr = std::weak_ptr<TDPhysModel>;
 
 public:
-    HasPhysOf(TDPhysModelPtr physModel) : HasPhys(physModel) {};
+    HasPhysOf(TDPhysModelPtr physModel) : HasPhys(physModel) {}
 
-    using HasPhys::physModel;
-    using HasPhys::setPhysModel;
+    // Make changing the TDPhysModel reflected in the given TDPhysModel-dependant object.
+    void trackPhysObserver(typename PhysObserverOf<TDPhysModel>::WPtr physObserver) { HasPhys::trackPhysObserver(physObserver); }
 
     // Useful for setting the PhysModel as an observer of another model
-    PhysModel::WPtr physModelWPtr() const { return std::static_pointer_cast<TDPhysModel>(HasPhys::physModelWPtr()); }
-    TDPhysModel& physModel() const { return static_cast<TDPhysModel&>(HasPhys::physModel()); };
+    TDPhysModelWPtr physModelWPtr() const { return static_weak_pointer_cast<TDPhysModel>(HasPhys::physModelWPtr()); }
+    TDPhysModel& physModel() const { return static_cast<TDPhysModel&>(HasPhys::physModel()); }
     void setPhysModel(TDPhysModelPtr physModel) {
         if (physModel) HasPhys::setPhysModel(physModel);
     }
