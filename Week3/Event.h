@@ -3,9 +3,7 @@
 #include <queue>
 #include <memory>
 
-#include "Derived.h"
 #include "Symbol.h"
-#include "Node.h"
 
 /* Core Types
 -------------------------------------------------- */

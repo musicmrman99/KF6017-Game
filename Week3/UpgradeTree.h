@@ -4,6 +4,7 @@
 
 #include "Event.h"
 #include "Symbol.h"
+#include "Node.h"
 
 // An upgrade
 class Upgrade final : public Symbol {
