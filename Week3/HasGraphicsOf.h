@@ -28,7 +28,7 @@ public:
 
     TDGraphicsModelWPtr graphicsModelWPtr() const { return static_weak_pointer_cast<TDGraphicsModel>(HasGraphics::graphicsModelWPtr()); };
     TDGraphicsModel& graphicsModel() const { return static_cast<TDGraphicsModel&>(HasGraphics::graphicsModel()); };
-    virtual void setGraphicsModel(TDGraphicsModelPtr graphicsModel) {
+    void setGraphicsModel(TDGraphicsModelPtr graphicsModel) {
         if (graphicsModel) HasGraphics::setGraphicsModel(graphicsModel);
     }
 };

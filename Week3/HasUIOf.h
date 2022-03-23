@@ -28,7 +28,7 @@ public:
 
     TDGraphicsModelWPtr uiModelWPtr() const { return static_weak_pointer_cast<TDGraphicsModel>(HasUI::uiModelWPtr()); };
     TDGraphicsModel& uiModel() const { return static_cast<TDGraphicsModel&>(HasUI::uiModel()); };
-    virtual void setUIModel(TDGraphicsModelPtr uiModel) {
+    void setUIModel(TDGraphicsModelPtr uiModel) {
         if (uiModel) HasUI::setUIModel(uiModel);
     }
 };
