@@ -20,5 +20,5 @@ public:
     const TDGraphicsModelWPtr uiModelWPtr() const {
         return static_weak_pointer_cast<TDGraphicsModel>(UIObserver::uiModel());
     }
-    const TDGraphicsModelPtr uiModel() const { return uiModelWPtr().lock(); }
+    TDGraphicsModel& uiModel() const { return *uiModelWPtr().lock(); }
 };

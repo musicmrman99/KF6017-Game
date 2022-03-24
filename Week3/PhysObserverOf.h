@@ -20,5 +20,5 @@ public:
     const TDPhysModelWPtr physModelWPtr() const {
         return static_weak_pointer_cast<TDPhysModel>(PhysObserver::physModelWPtr());
     }
-    const TDPhysModelPtr physModel() const { return physModelWPtr().lock(); }
+    TDPhysModel& physModel() const { return *physModelWPtr().lock(); }
 };

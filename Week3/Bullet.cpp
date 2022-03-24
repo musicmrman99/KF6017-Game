@@ -13,7 +13,7 @@ void BulletEventHandler::handle(const Event::Ptr e) {
         e->type == TimerEvent::TYPE &&
         std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
     ) {
-        eventEmitter()->enqueue(objectEventFactory()->destroyObject(self()));
+        eventEmitter().enqueue(objectEventFactory()->destroyObject(self()));
     }
 }
 

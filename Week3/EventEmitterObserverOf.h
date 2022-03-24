@@ -20,5 +20,5 @@ public:
     const TDEventEmitterWPtr eventEmitterWPtr() const {
         return static_weak_pointer_cast<TDEventEmitter>(EventEmitterObserver::eventEmitterWPtr());
     }
-    const TDEventEmitterPtr eventEmitter() const { return eventEmitterWPtr().lock(); }
+    TDEventEmitter& eventEmitter() const { return *eventEmitterWPtr().lock(); }
 };

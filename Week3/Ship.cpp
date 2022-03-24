@@ -80,15 +80,15 @@ void ShipEventHandler::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>&
 // Actions
 
 void ShipEventHandler::mainThrust() {
-    physModel()->shiftAccel(physModel()->rot() * engineThrust);
+    physModel().shiftAccel(physModel().rot() * engineThrust);
 };
 
 void ShipEventHandler::turnLeftThrust() {
-    physModel()->shiftRotAccel(-rotateThrust);
+    physModel().shiftRotAccel(-rotateThrust);
 };
 
 void ShipEventHandler::turnRightThrust() {
-    physModel()->shiftRotAccel(rotateThrust);
+    physModel().shiftRotAccel(rotateThrust);
 };
 
 /* Attack
@@ -105,9 +105,9 @@ void ShipEventHandler::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 // Action
 
 void ShipEventHandler::fire() {
-    eventEmitter()->enqueue(objectEventFactory()->createObject(
+    eventEmitter().enqueue(objectEventFactory()->createObject(
         BulletSpec::UPtr(new BulletSpec(
-            physModel()->pos(), physModel()->rot(), bulletImage
+            physModel().pos(), physModel().rot(), bulletImage
         ))
     ));
 }

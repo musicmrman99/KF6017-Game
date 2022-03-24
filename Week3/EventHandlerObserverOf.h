@@ -20,5 +20,5 @@ public:
     const TDEventHandlerWPtr eventHandlerWPtr() const {
         return static_weak_pointer_cast<TDEventHandler>(EventHandlerObserver::eventHandler());
     }
-    const TDEventHandlerPtr eventHandler() const { return eventHandlerWPtr().lock(); }
+    TDEventHandler& eventHandler() const { return *eventHandlerWPtr().lock(); }
 };
