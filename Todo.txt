@@ -1,9 +1,3 @@
-- fix upgrade tree UI
-
-// make UpgradeTreeUI depend on the upgrade tree separately
-
-- do upgrades work in a namespace? (static allocation / equality issues ???)
-
 Tidy up:
 
 - no need for specific game objects to have a virtual destructor - GameObject has one by contract

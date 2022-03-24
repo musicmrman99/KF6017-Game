@@ -9,6 +9,7 @@ public:
     using WPtr = std::weak_ptr<GameObject>;
 
 public:
+    // All game objects have a virtual destructor.
     virtual ~GameObject();
 
     // Lifecycle

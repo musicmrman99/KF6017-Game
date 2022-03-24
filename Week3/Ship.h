@@ -147,8 +147,6 @@ public:
 	Ship(ShipSpec::Ptr spec);
 	static const ObjectFactory factory;
 
-	virtual ~Ship();
-
 	virtual void buildUpgradeTree(UpgradeTree& upgradeTree) override;
 
 	// FIXME: Dirty hack to make this work for now

@@ -142,8 +142,6 @@ const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
     return GameObject::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
 };
 
-Ship::~Ship() {}
-
 void Ship::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
     ObjectEventCreator::setObjectEventFactory(objectEventFactory);
     eventHandler().setObjectEventFactory(objectEventFactory);
