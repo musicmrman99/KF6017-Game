@@ -27,28 +27,28 @@
 -------------------- */
 
 // Define what upgrades are available.
-namespace ShipUpgrade {
-	const Upgrade SHIP(L"Ship"); // Root Upgrade
+struct ShipUpgrade {
+	static const Upgrade SHIP; // Root Upgrade
 
-	const Upgrade LOAD_OPTIMISATION(L"Load Optimisation");
-	const Upgrade SPACIAL_COMPRESSION(L"Spacial Compression");
-	const Upgrade COOPERATION(L"Cooperation");
-	const Upgrade OPTIMAL_SELECTION(L"Optimal Selection");
+	static const Upgrade LOAD_OPTIMISATION;
+	static const Upgrade SPACIAL_COMPRESSION;
+	static const Upgrade COOPERATION;
+	static const Upgrade OPTIMAL_SELECTION;
 
-	const Upgrade FRONT_THRUSTERS(L"Front Thrusters");
-	const Upgrade REAR_THRUSTERS(L"Rear Thrusters");
-	const Upgrade OVERDRIVE(L"Overdrive");
-	const Upgrade HYPER_JUMP(L"Hyper Jump");
+	static const Upgrade FRONT_THRUSTERS;
+	static const Upgrade REAR_THRUSTERS;
+	static const Upgrade OVERDRIVE;
+	static const Upgrade HYPER_JUMP;
 
-	const Upgrade HEAVY_SHELLS(L"Heavy Shells");
-	const Upgrade FRONT_AUTO_CANNONS(L"Front Auto-Cannons");
-	const Upgrade REAR_AUTO_CANNONS(L"Rear Auto-Cannons");
-	const Upgrade IONIC_SHELLS(L"Ionic Shells");
+	static const Upgrade HEAVY_SHELLS;
+	static const Upgrade FRONT_AUTO_CANNONS;
+	static const Upgrade REAR_AUTO_CANNONS;
+	static const Upgrade IONIC_SHELLS;
 
-	const Upgrade WORKER_DRONE(L"Worker Drone");
-	const Upgrade ARMOURED_DRONE(L"Armoured Drone");
-	const Upgrade MINE(L"Mine");
-	const Upgrade FIGHTER_DRONE(L"Fighter Drone");
+	static const Upgrade WORKER_DRONE;
+	static const Upgrade ARMOURED_DRONE;
+	static const Upgrade MINE;
+	static const Upgrade FIGHTER_DRONE;
 };
 
 /* Event Handler

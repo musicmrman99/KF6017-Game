@@ -6,6 +6,31 @@
 
 #include "BulletSpec.h"
 
+/* Upgrades
+-------------------------------------------------- */
+
+const Upgrade ShipUpgrade::SHIP(L"Ship"); // Root Upgrade
+
+const Upgrade ShipUpgrade::LOAD_OPTIMISATION(L"Load Optimisation");
+const Upgrade ShipUpgrade::SPACIAL_COMPRESSION(L"Spacial Compression");
+const Upgrade ShipUpgrade::COOPERATION(L"Cooperation");
+const Upgrade ShipUpgrade::OPTIMAL_SELECTION(L"Optimal Selection");
+
+const Upgrade ShipUpgrade::FRONT_THRUSTERS(L"Front Thrusters");
+const Upgrade ShipUpgrade::REAR_THRUSTERS(L"Rear Thrusters");
+const Upgrade ShipUpgrade::OVERDRIVE(L"Overdrive");
+const Upgrade ShipUpgrade::HYPER_JUMP(L"Hyper Jump");
+
+const Upgrade ShipUpgrade::HEAVY_SHELLS(L"Heavy Shells");
+const Upgrade ShipUpgrade::FRONT_AUTO_CANNONS(L"Front Auto-Cannons");
+const Upgrade ShipUpgrade::REAR_AUTO_CANNONS(L"Rear Auto-Cannons");
+const Upgrade ShipUpgrade::IONIC_SHELLS(L"Ionic Shells");
+
+const Upgrade ShipUpgrade::WORKER_DRONE(L"Worker Drone");
+const Upgrade ShipUpgrade::ARMOURED_DRONE(L"Armoured Drone");
+const Upgrade ShipUpgrade::MINE(L"Mine");
+const Upgrade ShipUpgrade::FIGHTER_DRONE(L"Fighter Drone");
+
 /* Event Handler
 -------------------------------------------------- */
 
