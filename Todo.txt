@@ -1,0 +1,36 @@
+- fix upgrade tree UI
+
+// make UpgradeTreeUI depend on the upgrade tree separately
+
+- do upgrades work in a namespace? (static allocation / equality issues ???)
+
+Tidy up:
+
+- no need for specific game objects to have a virtual destructor - GameObject has one by contract
+  - see https://stackoverflow.com/questions/14281078/is-it-safe-to-not-specify-a-destructor-in-a-subclass-of-a-base-class-with-a-virt#comment19829212_14281119
+
+- use static_weak_pointer_cast in *ObserverOf<T> classes
+- rename: SelfReferencing<T> -> Referencing<T>
+- make *ObserverOf<T>::*Model/Handler/Emitter() return a reference, not a shared_ptr
+- Ship shouldn't be an ObjectEventCreator - it doesn't create object events, nor does it need the ref again
+
+Next:
+
+- merge controllers
+
+---------------------------------------------
+
+- Event
+  - EventEmitter
+    - HasEventEmitter
+      - HasEventEmitterOf<A : EventEmitter> : HasEventEmitter
+        - Controller<A : EventEmitter> : GameObject, HasEventEmitterOf<A>
+          / --- Controller module
+    - KeyMap
+      - Controls
+        - MyInputs
+    - Timer
+
+  - EventHandler
+    - HasEventHandler
+      - HasEventHandlerOf<A : EventHander> : HasEventHandler

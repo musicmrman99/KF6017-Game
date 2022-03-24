@@ -165,6 +165,7 @@
     <ClCompile Include="HasGraphics.cpp" />
     <ClCompile Include="HasPhys.cpp" />
     <ClCompile Include="HasUI.cpp" />
+    <ClCompile Include="HasUpgradeTree.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="MyDrawEngine.cpp" />
@@ -187,6 +188,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIObserver.cpp" />
     <ClCompile Include="UpgradeTree.cpp" />
+    <ClCompile Include="UpgradeTreeObserver.cpp" />
     <ClCompile Include="UpgradeTreeUI.cpp" />
     <ClCompile Include="Vector2D.cpp" />
     <ClCompile Include="winmain.cpp" />
@@ -211,6 +213,7 @@
     <ClInclude Include="HasGraphicsOf.h" />
     <ClInclude Include="HasUI.h" />
     <ClInclude Include="HasUIOf.h" />
+    <ClInclude Include="HasUpgradeTree.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />
     <ClInclude Include="TargettedEvent.h" />
@@ -255,6 +258,7 @@
     <ClInclude Include="UIObserver.h" />
     <ClInclude Include="UIObserverOf.h" />
     <ClInclude Include="UpgradeTree.h" />
+    <ClInclude Include="UpgradeTreeObserver.h" />
     <ClInclude Include="UpgradeTreeUI.h" />
     <ClInclude Include="ptrcast.h" />
     <ClInclude Include="Vector2D.h" />

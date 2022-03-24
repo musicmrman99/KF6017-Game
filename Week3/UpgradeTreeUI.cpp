@@ -2,7 +2,11 @@
 
 void UpgradeTreeUI::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
-    MyDrawEngine::GetInstance()->WriteText(graphics->GetViewport().GetTopLeft(), formatTree(tree.getRootUpgrade()).c_str(), MyDrawEngine::CYAN);
+    MyDrawEngine::GetInstance()->WriteText(
+        graphics->GetViewport().GetTopLeft(), 
+        formatTree(upgradeTree().getRootUpgrade()).c_str(),
+        MyDrawEngine::CYAN
+    );
 }
 
 std::wstring UpgradeTreeUI::formatTree(UpgradeTree::NodePtr node, int indent) const {

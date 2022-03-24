@@ -17,7 +17,7 @@
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
-#include "UpgradeTree.h"
+#include "HasUpgradeTree.h"
 #include "UpgradeTreeUI.h"
 
 #include "ObjectFactory.h"
@@ -51,18 +51,20 @@ namespace ShipUpgrade {
 	const Upgrade FIGHTER_DRONE(L"Fighter Drone");
 };
 
+/* Event Handler
+-------------------- */
+
 class ShipEventHandler final :
 	public EventHandler,
 	public PhysObserverOf<NewtonianPhysModel>,
 	public EventEmitterObserverOf<BufferedEventEmitter>,
+	public UpgradeTreeObserver,
 	public ObjectEventCreator
 {
 private:
 	// Gameplay
 	float engineThrust;
 	float rotateThrust;
-
-	UpgradeTree upgradeTree;
 
 	PictureIndex bulletImage;
 
@@ -123,9 +125,11 @@ public:
 
 	// Use the generic UpgradeEvent type / UpgradeEventEmitter for Ship upgrades.
 
-	void buildUpgradeTree();
-	const UpgradeTree& getUpgradeTree();
+	void purchaseUpgrade(const Upgrade& upgrade);
 };
+
+/* Ship
+-------------------- */
 
 class Ship final :
 	public GameObject,
@@ -133,6 +137,8 @@ class Ship final :
 	public HasEventEmitterOf<BufferedEventEmitter>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
+	public HasUpgradeTree,
+	public HasUIOf<UpgradeTreeUI>,
 	public ObjectEventCreator // FIXME: well, it's not really - but we need the reference, and ObjectManager will only give it to us if we are one of these.
 {
 public:
@@ -142,6 +148,8 @@ public:
 	static const ObjectFactory factory;
 
 	virtual ~Ship();
+
+	virtual void buildUpgradeTree(UpgradeTree& upgradeTree) override;
 
 	// FIXME: Dirty hack to make this work for now
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;

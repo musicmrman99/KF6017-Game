@@ -46,14 +46,8 @@
     <Filter Include="Source Files\Engine\Objects">
       <UniqueIdentifier>{877b4e12-121f-4bb8-a63f-cd4743a4cb06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Objects\Components">
-      <UniqueIdentifier>{fb7d78e2-3a46-4a21-88a1-7376634d9cda}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{6f3c0585-0dfd-4cad-ae81-8a743171b9a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Objects\Components">
-      <UniqueIdentifier>{59c467ad-de00-48a6-b1db-12d84d078616}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\ObjectSpecs">
       <UniqueIdentifier>{87bdc289-4fc4-4ca9-82c4-a4c4bffd8be6}</UniqueIdentifier>
@@ -148,6 +142,24 @@
     <Filter Include="Source Files\Engine\Events\Graphics">
       <UniqueIdentifier>{dc47a1bd-3deb-45ec-a91c-391ad7662e3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects\UpgradeTrees">
+      <UniqueIdentifier>{2cddab0e-63a6-4f7d-8208-48bb4b58da85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\UpgradeTrees\Components">
+      <UniqueIdentifier>{278d89b5-85f1-4070-b482-e1ff7e44d4da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects\UpgradeTrees\Models">
+      <UniqueIdentifier>{59c467ad-de00-48a6-b1db-12d84d078616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\UpgradeTrees">
+      <UniqueIdentifier>{0333e165-c989-47ed-b9b4-2d4077913a4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\UpgradeTrees\Models">
+      <UniqueIdentifier>{fb7d78e2-3a46-4a21-88a1-7376634d9cda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\UpgradeTrees\Components">
+      <UniqueIdentifier>{0f582cb3-183e-4926-bbaa-179f15b973b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -193,7 +205,7 @@
       <Filter>Source Files\Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTree.cpp">
-      <Filter>Source Files\Objects\Components</Filter>
+      <Filter>Source Files\Objects\UpgradeTrees\Models</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTreeUI.cpp">
       <Filter>Source Files\Engine\Events\Graphics</Filter>
@@ -291,6 +303,12 @@
     <ClCompile Include="BufferedEventEmitter.cpp">
       <Filter>Source Files\Engine\Events\Models</Filter>
     </ClCompile>
+    <ClCompile Include="HasUpgradeTree.cpp">
+      <Filter>Source Files\Objects\UpgradeTrees\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeTreeObserver.cpp">
+      <Filter>Source Files\Objects\UpgradeTrees\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -345,7 +363,7 @@
       <Filter>Header Files\Engine\Utils</Filter>
     </ClInclude>
     <ClInclude Include="UpgradeTree.h">
-      <Filter>Header Files\Objects\Components</Filter>
+      <Filter>Header Files\Objects\UpgradeTrees\Models</Filter>
     </ClInclude>
     <ClInclude Include="UpgradeTreeUI.h">
       <Filter>Header Files\Graphics</Filter>
@@ -490,6 +508,12 @@
     </ClInclude>
     <ClInclude Include="BufferedEventEmitter.h">
       <Filter>Header Files\Engine\Events\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="HasUpgradeTree.h">
+      <Filter>Header Files\Objects\UpgradeTrees\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeTreeObserver.h">
+      <Filter>Header Files\Objects\UpgradeTrees\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

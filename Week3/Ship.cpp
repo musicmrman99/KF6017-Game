@@ -19,9 +19,8 @@ void ShipEventHandler::handle(const Event::Ptr e) {
 
     else if (e->type == FireEvent::TYPE) fire();
 
-    else if (e->type == UpgradeEvent::TYPE) {
-        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
-    }
+    else if (e->type == UpgradeEvent::TYPE)
+        purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
 }
 
 /* Movement
@@ -29,12 +28,9 @@ void ShipEventHandler::handle(const Event::Ptr e) {
 
 ShipEventHandler::ShipEventHandler(ShipSpec::Ptr spec)
     : bulletImage(spec->bulletImage),
-    upgradeTree(UpgradeTree(ShipUpgrade::SHIP)),
     engineThrust(0.1f),  // Distance units / second^2
     rotateThrust(0.008f) // Revolutions / second^2
-{
-    buildUpgradeTree();
-}
+{}
 
 // Events
 
@@ -91,11 +87,45 @@ void ShipEventHandler::fire() {
     ));
 }
 
-/* Upgrades
--------------------- */
+void ShipEventHandler::purchaseUpgrade(const Upgrade& upgrade) {
+    upgradeTree().purchaseUpgrade(upgrade);
+}
+
+/* Ship
+-------------------------------------------------- */
+
+Ship::Ship(ShipSpec::Ptr spec) :
+    HasEventHandlerOf(ShipEventHandler::UPtr(new ShipEventHandler(spec))),
+    HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
+    HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))),
+    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
+    HasUpgradeTree(ShipUpgrade::SHIP),
+    HasUIOf(UpgradeTreeUI::UPtr(new UpgradeTreeUI()))
+{
+    // Thread dependencies
+    trackPhysObserver(graphicsModelWPtr());
+    trackPhysObserver(eventHandlerWPtr());
+    trackEventEmitterObserver(eventHandlerWPtr());
+    trackUpgradeTreeObserver(eventHandlerWPtr());
+    trackUpgradeTreeObserver(uiModelWPtr());
+
+    // Virtual method initialisation
+    initUpgradeTree();
+}
+
+const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
+    return GameObject::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
+};
+
+Ship::~Ship() {}
+
+void Ship::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
+    ObjectEventCreator::setObjectEventFactory(objectEventFactory);
+    eventHandler().setObjectEventFactory(objectEventFactory);
+}
 
 // Organise the available upgrades into a tree.
-void ShipEventHandler::buildUpgradeTree() {
+void Ship::buildUpgradeTree(UpgradeTree& upgradeTree) {
     // Formatted the same as tree itself for ease of reading
     const auto& loadOptimisation = upgradeTree.addUpgrade(ShipUpgrade::LOAD_OPTIMISATION);
     upgradeTree.addUpgrade(loadOptimisation, ShipUpgrade::SPACIAL_COMPRESSION);
@@ -116,35 +146,6 @@ void ShipEventHandler::buildUpgradeTree() {
     upgradeTree.addUpgrade(workerDrone, ShipUpgrade::ARMOURED_DRONE);
     const auto& mine = upgradeTree.addUpgrade(workerDrone, ShipUpgrade::MINE);
     upgradeTree.addUpgrade(mine, ShipUpgrade::FIGHTER_DRONE);
-}
-
-const UpgradeTree& ShipEventHandler::getUpgradeTree() {
-    return upgradeTree;
-}
-
-/* Ship
--------------------------------------------------- */
-
-Ship::Ship(ShipSpec::Ptr spec) :
-    HasEventHandlerOf(ShipEventHandler::UPtr(new ShipEventHandler(spec))),
-    HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
-    HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))),
-    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image)))
-{
-    trackPhysObserver(graphicsModelWPtr());
-    trackPhysObserver(eventHandlerWPtr());
-    trackEventEmitterObserver(eventHandlerWPtr());
-}
-
-const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
-    return GameObject::Ptr(new Ship(static_unique_pointer_cast<ShipSpec>(move(spec))));
-};
-
-Ship::~Ship() {}
-
-void Ship::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
-    ObjectEventCreator::setObjectEventFactory(objectEventFactory);
-    eventHandler().setObjectEventFactory(objectEventFactory);
 }
 
 void Ship::beforeFrame() {
