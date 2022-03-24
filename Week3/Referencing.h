@@ -3,7 +3,7 @@
 #include <memory>
 
 template <class T>
-class SelfReferencing {
+class Referencing {
 private:
     std::weak_ptr<T> _self;
 

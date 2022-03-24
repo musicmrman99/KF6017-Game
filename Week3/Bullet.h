@@ -2,7 +2,7 @@
 
 #include <functional>
 
-#include "SelfReferencing.h"
+#include "Referencing.h"
 
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
@@ -24,7 +24,7 @@ class Bullet;
 class BulletEventHandler final :
 	public EventHandler,
 	public EventEmitterObserverOf<BufferedEventEmitter>,
-	public SelfReferencing<Bullet>,
+	public Referencing<Bullet>,
 	public ObjectEventCreator
 {
 private:
@@ -46,7 +46,7 @@ class Bullet final :
 	public HasEventEmitterOf<BufferedEventEmitter>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
-	public SelfReferencing<Bullet>,
+	public Referencing<Bullet>,
 	public ObjectEventCreator
 {
 private:

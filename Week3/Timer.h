@@ -1,12 +1,12 @@
 #pragma once
 
-#include "SelfReferencing.h"
+#include "Referencing.h"
 
 #include "Event.h"
 #include "EventHandler.h"
 #include "ObjectEventCreator.h"
 
-class Timer final : public EventEmitter, public ObjectEventCreator, public SelfReferencing<Timer> {
+class Timer final : public EventEmitter, public ObjectEventCreator, public Referencing<Timer> {
 private:
 	double limit;
 	double created;

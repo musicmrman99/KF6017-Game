@@ -13,7 +13,7 @@
 
 ObjectManager::ObjectManager() : objectEventFactory(nullptr) {}
 void ObjectManager::setSelf(WPtr me) {
-    SelfReferencing<ObjectManager>::setSelf(me);
+    Referencing<ObjectManager>::setSelf(me);
     // Not a nice solution (setSelf() isn't supposed to be responsible for this much initialisation), but it works (for now)
     objectEventFactory = ObjectEventFactory::create(self());
 }

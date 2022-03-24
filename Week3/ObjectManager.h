@@ -3,7 +3,7 @@
 #include <list>
 #include <memory>
 
-#include "SelfReferencing.h"
+#include "Referencing.h"
 
 #include "GameObject.h"
 #include "HasEventEmitter.h"
@@ -17,7 +17,7 @@
 #include "ObjectEventFactory.h"
 
 // Object Manager
-class ObjectManager final : public EventHandler, public SelfReferencing<ObjectManager> {
+class ObjectManager final : public EventHandler, public Referencing<ObjectManager> {
 public:
 	using Ptr = std::shared_ptr<ObjectManager>;
 	// No UPtr - ObjectManager will be onwed by Game, but many EventEmitters (GameObjects, controllers, etc.) may depend on it.

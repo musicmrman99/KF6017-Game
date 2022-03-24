@@ -249,7 +249,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="PhysModel.h" />
     <ClInclude Include="ReferenceWrapperUtils.h" />
-    <ClInclude Include="SelfReferencing.h" />
+    <ClInclude Include="Referencing.h" />
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipSpec.h" />
