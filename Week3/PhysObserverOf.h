@@ -18,7 +18,7 @@ public:
     using WPtr = std::weak_ptr<PhysObserverOf<TDPhysModel>>;
 
     const TDPhysModelWPtr physModelWPtr() const {
-        return static_weak_pointer_cast<TDPhysModel>(PhysObserver::physModel());
+        return static_weak_pointer_cast<TDPhysModel>(PhysObserver::physModelWPtr());
     }
     const TDPhysModelPtr physModel() const { return physModelWPtr().lock(); }
 };
