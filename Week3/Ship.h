@@ -149,7 +149,7 @@ public:
 
 	virtual void buildUpgradeTree(UpgradeTree& upgradeTree) override;
 
-	// FIXME: Dirty hack to make this work for now
+	// Delegate event factory dependencies to components that need them.
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void beforeFrame() override;
