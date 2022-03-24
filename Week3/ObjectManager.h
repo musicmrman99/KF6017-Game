@@ -39,7 +39,7 @@ private:
 	std::queue<Event::Ptr> events;
 	
 	ObjectManager();
-	virtual void setSelf(WPtr self) override;
+	virtual void setRef(WPtr self) override;
 
 public:
 	/* Creation

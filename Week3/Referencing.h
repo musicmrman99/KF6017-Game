@@ -5,14 +5,14 @@
 template <class T>
 class Referencing {
 private:
-    std::weak_ptr<T> _self;
+    std::weak_ptr<T> _ref;
 
 public:
-    virtual void setSelf(std::weak_ptr<T> self) {
-        _self = self;
+    virtual void setRef(std::weak_ptr<T> ref) {
+        _ref = ref;
     }
 
-    virtual std::weak_ptr<T> self() {
-        return _self;
+    virtual std::weak_ptr<T> ref() {
+        return _ref;
     }
 };

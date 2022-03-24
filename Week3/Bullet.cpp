@@ -13,7 +13,7 @@ void BulletEventHandler::handle(const Event::Ptr e) {
         e->type == TimerEvent::TYPE &&
         std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
     ) {
-        eventEmitter().enqueue(objectEventFactory()->destroyObject(self()));
+        eventEmitter().enqueue(objectEventFactory()->destroyObject(ref()));
     }
 }
 
@@ -33,8 +33,8 @@ Bullet::Bullet(BulletSpec::UPtr spec) :
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
     Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
-    bullet->setSelf(bullet);
-    bullet->eventHandler().setSelf(bullet);                   // DEPENDS: Bullet
+    bullet->setRef(bullet);
+    bullet->eventHandler().setRef(bullet);                   // DEPENDS: Bullet
     return bullet;
 };
 
@@ -45,7 +45,7 @@ void Bullet::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
 
 void Bullet::afterCreate() {
     // Send the timer event back to the event handler component directly
-    timer = Timer::create(OBJECT_CULL_TIME, self().lock()->eventHandlerWPtr());
+    timer = Timer::create(OBJECT_CULL_TIME, ref().lock()->eventHandlerWPtr());
     eventHandler().setTimer(timer);                           // DEPENDS: Timer
     eventEmitter().enqueue(objectEventFactory()->addController(timer));
 }

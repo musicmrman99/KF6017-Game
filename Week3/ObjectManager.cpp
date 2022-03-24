@@ -12,15 +12,15 @@
 -------------------------------------------------- */
 
 ObjectManager::ObjectManager() : objectEventFactory(nullptr) {}
-void ObjectManager::setSelf(WPtr me) {
-    Referencing<ObjectManager>::setSelf(me);
-    // Not a nice solution (setSelf() isn't supposed to be responsible for this much initialisation), but it works (for now)
-    objectEventFactory = ObjectEventFactory::create(self());
+void ObjectManager::setRef(WPtr me) {
+    Referencing<ObjectManager>::setRef(me);
+    // Not a nice solution (setRef() isn't supposed to be responsible for this much initialisation), but it works (for now)
+    objectEventFactory = ObjectEventFactory::create(ref());
 }
 
 ObjectManager::Ptr ObjectManager::create() {
     Ptr ptr = Ptr(new ObjectManager());
-    ptr->setSelf(ptr);
+    ptr->setRef(ptr);
     return ptr;
 }
 
