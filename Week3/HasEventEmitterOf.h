@@ -27,7 +27,9 @@ public:
     // Note: Non-virtual hiding is intended.
 
     // Make changing the EventEmitter reflected in the given EventEmitter-dependant object.
-    void trackEventEmitterObserver(typename EventEmitterObserverOf<TDEventEmitter>::WPtr eventEmitterObserver) { HasEventEmitter::trackEventEmitterObserver(eventEmitterObserver); }
+    void trackEventEmitterObserver(typename EventEmitterObserverOf<TDEventEmitter>::WPtr eventEmitterObserver) {
+        HasEventEmitter::trackEventEmitterObserver(eventEmitterObserver);
+    }
 
     // Useful for setting the EventEmitter as an observer of another model
     TDEventEmitterWPtr eventEmitterWPtr() const { return static_weak_pointer_cast<TDEventEmitter>(HasEventEmitter::eventEmitterWPtr()); }
