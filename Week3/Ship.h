@@ -5,11 +5,15 @@
 #include "MyDrawEngine.h"
 
 #include "GameObject.h"
+#include "HasEventEmitterOf.h"
+#include "HasEventHandlerOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 #include "HasUIOf.h"
 
 #include "Event.h"
+#include "ObjectEventCreator.h"
+#include "BufferedEventEmitter.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -19,13 +23,56 @@
 #include "ObjectFactory.h"
 #include "ShipSpec.h"
 
-class Ship final :
-	public GameObject,
-	public HasPhysOf<NewtonianPhysModel>,
-	public HasGraphicsOf<ImageGraphicsModel>,
-	public HasUIOf<UpgradeTreeUI>
+/* Static Definitions
+-------------------- */
+
+// Define what upgrades are available.
+namespace ShipUpgrade {
+	const Upgrade SHIP(L"Ship"); // Root Upgrade
+
+	const Upgrade LOAD_OPTIMISATION(L"Load Optimisation");
+	const Upgrade SPACIAL_COMPRESSION(L"Spacial Compression");
+	const Upgrade COOPERATION(L"Cooperation");
+	const Upgrade OPTIMAL_SELECTION(L"Optimal Selection");
+
+	const Upgrade FRONT_THRUSTERS(L"Front Thrusters");
+	const Upgrade REAR_THRUSTERS(L"Rear Thrusters");
+	const Upgrade OVERDRIVE(L"Overdrive");
+	const Upgrade HYPER_JUMP(L"Hyper Jump");
+
+	const Upgrade HEAVY_SHELLS(L"Heavy Shells");
+	const Upgrade FRONT_AUTO_CANNONS(L"Front Auto-Cannons");
+	const Upgrade REAR_AUTO_CANNONS(L"Rear Auto-Cannons");
+	const Upgrade IONIC_SHELLS(L"Ionic Shells");
+
+	const Upgrade WORKER_DRONE(L"Worker Drone");
+	const Upgrade ARMOURED_DRONE(L"Armoured Drone");
+	const Upgrade MINE(L"Mine");
+	const Upgrade FIGHTER_DRONE(L"Fighter Drone");
+};
+
+class ShipEventHandler final :
+	public EventHandler,
+	public PhysObserverOf<NewtonianPhysModel>,
+	public EventEmitterObserverOf<BufferedEventEmitter>,
+	public ObjectEventCreator
 {
+private:
+	// Gameplay
+	float engineThrust;
+	float rotateThrust;
+
+	UpgradeTree upgradeTree;
+
+	PictureIndex bulletImage;
+
 public:
+	using UPtr = std::unique_ptr<ShipEventHandler>;
+
+	ShipEventHandler(ShipSpec::Ptr spec);
+
+	virtual void handle(const Event::Ptr e) override;
+
 	// Movement
 
 	class MainThrustEvent final : public Event {
@@ -74,48 +121,30 @@ public:
 
 	// Upgrades
 
-	static const Upgrade SHIP; // Root Upgrade
+	// Use the generic UpgradeEvent type / UpgradeEventEmitter for Ship upgrades.
 
-	static const Upgrade LOAD_OPTIMISATION;
-	static const Upgrade COOPERATION;
-	static const Upgrade OPTIMAL_SELECTION;
-	static const Upgrade SPACIAL_COMPRESSION;
-
-	static const Upgrade FRONT_THRUSTERS;
-	static const Upgrade REAR_THRUSTERS;
-	static const Upgrade OVERDRIVE;
-	static const Upgrade HYPER_JUMP;
-
-	static const Upgrade HEAVY_SHELLS;
-	static const Upgrade FRONT_AUTO_CANNONS;
-	static const Upgrade REAR_AUTO_CANNONS;
-	static const Upgrade IONIC_SHELLS;
-
-	static const Upgrade WORKER_DRONE;
-	static const Upgrade ARMOURED_DRONE;
-	static const Upgrade MINE;
-	static const Upgrade FIGHTER_DRONE;
-
-private:
-	// Gameplay
-	float engineThrust;
-	float rotateThrust;
-
-	UpgradeTree upgradeTree;
-
-	PictureIndex bulletImage;
-
-public:
+	void buildUpgradeTree();
 	const UpgradeTree& getUpgradeTree();
+};
 
+class Ship final :
+	public GameObject,
+	public HasEventHandlerOf<ShipEventHandler>,
+	public HasEventEmitterOf<BufferedEventEmitter>,
+	public HasPhysOf<NewtonianPhysModel>,
+	public HasGraphicsOf<ImageGraphicsModel>,
+	public ObjectEventCreator // FIXME: well, it's not really - but we need the reference, and ObjectManager will only give it to us if we are one of these.
+{
+public:
 	// Lifecycle
 
-	Ship(ShipSpec::UPtr spec);
+	Ship(ShipSpec::Ptr spec);
 	static const ObjectFactory factory;
-	void buildUpgradeTree();
 
 	virtual ~Ship();
 
+	// FIXME: Dirty hack to make this work for now
+	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
+
 	virtual void beforeFrame() override;
-	virtual void handle(const Event::Ptr e) override;
 };

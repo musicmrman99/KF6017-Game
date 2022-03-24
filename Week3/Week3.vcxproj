@@ -143,13 +143,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventEmitter.cpp" />
+    <ClCompile Include="EventEmitterObserver.cpp" />
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventHandlerObserver.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameTimer.cpp" />
@@ -157,6 +160,8 @@
     <ClCompile Include="GlobalUISpec.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
     <ClCompile Include="GraphicsObserver.cpp" />
+    <ClCompile Include="HasEventEmitter.cpp" />
+    <ClCompile Include="HasEventHandler.cpp" />
     <ClCompile Include="HasGraphics.cpp" />
     <ClCompile Include="HasPhys.cpp" />
     <ClCompile Include="HasUI.cpp" />
@@ -187,12 +192,21 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />
     <ClInclude Include="EventEmitter.h" />
+    <ClInclude Include="EventEmitterObserver.h" />
+    <ClInclude Include="EventEmitterObserverOf.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventHandlerObserver.h" />
+    <ClInclude Include="EventHandlerObserverOf.h" />
     <ClInclude Include="GraphicsObserver.h" />
     <ClInclude Include="GraphicsObserverOf.h" />
+    <ClInclude Include="HasEventEmitter.h" />
+    <ClInclude Include="HasEventEmitterOf.h" />
+    <ClInclude Include="HasEventHandler.h" />
+    <ClInclude Include="HasEventHandlerOf.h" />
     <ClInclude Include="HasGraphics.h" />
     <ClInclude Include="HasGraphicsOf.h" />
     <ClInclude Include="HasUI.h" />

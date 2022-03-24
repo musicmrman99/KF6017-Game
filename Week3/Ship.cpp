@@ -6,44 +6,68 @@
 
 #include "BulletSpec.h"
 
-/* Actions
+/* Event Handler
 -------------------------------------------------- */
 
-/* Movement Actions
+/* Dispatcher
 -------------------- */
+
+void ShipEventHandler::handle(const Event::Ptr e) {
+    if (e->type == MainThrustEvent::TYPE) mainThrust();
+    else if (e->type == TurnLeftThrustEvent::TYPE) turnLeftThrust();
+    else if (e->type == TurnRightThrustEvent::TYPE) turnRightThrust();
+
+    else if (e->type == FireEvent::TYPE) fire();
+
+    else if (e->type == UpgradeEvent::TYPE) {
+        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
+    }
+}
+
+/* Movement
+-------------------- */
+
+ShipEventHandler::ShipEventHandler(ShipSpec::Ptr spec)
+    : bulletImage(spec->bulletImage),
+    upgradeTree(UpgradeTree(ShipUpgrade::SHIP)),
+    engineThrust(0.1f),  // Distance units / second^2
+    rotateThrust(0.008f) // Revolutions / second^2
+{
+    buildUpgradeTree();
+}
 
 // Events
 
-const EventType Ship::MainThrustEvent::TYPE;
-Ship::MainThrustEvent::MainThrustEvent() : Event(TYPE) {}
-void Ship::MainThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+const EventType ShipEventHandler::MainThrustEvent::TYPE;
+ShipEventHandler::MainThrustEvent::MainThrustEvent() : Event(TYPE) {}
+void ShipEventHandler::MainThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(MainThrustEvent::Ptr(new MainThrustEvent()));
 }
 
-const EventType Ship::TurnLeftThrustEvent::TYPE;
-Ship::TurnLeftThrustEvent::TurnLeftThrustEvent() : Event(TYPE) {}
-void Ship::TurnLeftThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+const EventType ShipEventHandler::TurnLeftThrustEvent::TYPE;
+ShipEventHandler::TurnLeftThrustEvent::TurnLeftThrustEvent() : Event(TYPE) {}
+void ShipEventHandler::TurnLeftThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(TurnLeftThrustEvent::Ptr(new TurnLeftThrustEvent()));
 }
 
-const EventType Ship::TurnRightThrustEvent::TYPE;
-Ship::TurnRightThrustEvent::TurnRightThrustEvent() : Event(TYPE) {}
-void Ship::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
+const EventType ShipEventHandler::TurnRightThrustEvent::TYPE;
+ShipEventHandler::TurnRightThrustEvent::TurnRightThrustEvent() : Event(TYPE) {}
+void ShipEventHandler::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(TurnRightThrustEvent::Ptr(new TurnRightThrustEvent()));
 }
 
 // Actions
 
-void Ship::mainThrust() {
-    physModel().shiftAccel(physModel().rot() * engineThrust);
+void ShipEventHandler::mainThrust() {
+    physModel()->shiftAccel(physModel()->rot() * engineThrust);
 };
 
-void Ship::turnLeftThrust() {
-    physModel().shiftRotAccel(-rotateThrust);
+void ShipEventHandler::turnLeftThrust() {
+    physModel()->shiftRotAccel(-rotateThrust);
 };
 
-void Ship::turnRightThrust() {
-    physModel().shiftRotAccel(rotateThrust);
+void ShipEventHandler::turnRightThrust() {
+    physModel()->shiftRotAccel(rotateThrust);
 };
 
 /* Attack
@@ -51,18 +75,18 @@ void Ship::turnRightThrust() {
 
 // Event
 
-const EventType Ship::FireEvent::TYPE;
-Ship::FireEvent::FireEvent() : Event(TYPE) {}
-void Ship::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
+const EventType ShipEventHandler::FireEvent::TYPE;
+ShipEventHandler::FireEvent::FireEvent() : Event(TYPE) {}
+void ShipEventHandler::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
     events.push(FireEvent::Ptr(new FireEvent()));
 }
 
 // Action
 
-void Ship::fire() {
-    enqueue(objectEventFactory()->createObject(
+void ShipEventHandler::fire() {
+    eventEmitter()->enqueue(objectEventFactory()->createObject(
         BulletSpec::UPtr(new BulletSpec(
-            physModel().pos(), physModel().rot(), bulletImage
+            physModel()->pos(), physModel()->rot(), bulletImage
         ))
     ));
 }
@@ -70,76 +94,46 @@ void Ship::fire() {
 /* Upgrades
 -------------------- */
 
-// Use the generic UpgradeEvent type / UpgradeEventEmitter for Ship upgrades.
-
-// Define what upgrades are available.
-const Upgrade Ship::SHIP(L"Ship");
-
-const Upgrade Ship::LOAD_OPTIMISATION(L"Load Optimisation");
-const Upgrade Ship::SPACIAL_COMPRESSION(L"Spacial Compression");
-const Upgrade Ship::COOPERATION(L"Cooperation");
-const Upgrade Ship::OPTIMAL_SELECTION(L"Optimal Selection");
-
-const Upgrade Ship::FRONT_THRUSTERS(L"Front Thrusters");
-const Upgrade Ship::REAR_THRUSTERS(L"Rear Thrusters");
-const Upgrade Ship::OVERDRIVE(L"Overdrive");
-const Upgrade Ship::HYPER_JUMP(L"Hyper Jump");
-
-const Upgrade Ship::HEAVY_SHELLS(L"Heavy Shells");
-const Upgrade Ship::FRONT_AUTO_CANNONS(L"Front Auto-Cannons");
-const Upgrade Ship::REAR_AUTO_CANNONS(L"Rear Auto-Cannons");
-const Upgrade Ship::IONIC_SHELLS(L"Ionic Shells");
-
-const Upgrade Ship::WORKER_DRONE(L"Worker Drone");
-const Upgrade Ship::ARMOURED_DRONE(L"Armoured Drone");
-const Upgrade Ship::MINE(L"Mine");
-const Upgrade Ship::FIGHTER_DRONE(L"Fighter Drone");
-
 // Organise the available upgrades into a tree.
-void Ship::buildUpgradeTree() {
+void ShipEventHandler::buildUpgradeTree() {
     // Formatted the same as tree itself for ease of reading
-    const auto& loadOptimisation = upgradeTree.addUpgrade(LOAD_OPTIMISATION);
-    upgradeTree.addUpgrade(loadOptimisation, SPACIAL_COMPRESSION);
-    const auto& cooperation = upgradeTree.addUpgrade(loadOptimisation, COOPERATION);
-    upgradeTree.addUpgrade(cooperation, OPTIMAL_SELECTION);
+    const auto& loadOptimisation = upgradeTree.addUpgrade(ShipUpgrade::LOAD_OPTIMISATION);
+    upgradeTree.addUpgrade(loadOptimisation, ShipUpgrade::SPACIAL_COMPRESSION);
+    const auto& cooperation = upgradeTree.addUpgrade(loadOptimisation, ShipUpgrade::COOPERATION);
+    upgradeTree.addUpgrade(cooperation, ShipUpgrade::OPTIMAL_SELECTION);
 
-    const auto& rearThrusters = upgradeTree.addUpgrade(REAR_THRUSTERS);
-    upgradeTree.addUpgrade(rearThrusters, FRONT_THRUSTERS);
-    const auto& overdrive = upgradeTree.addUpgrade(rearThrusters, OVERDRIVE);
-    upgradeTree.addUpgrade(overdrive, HYPER_JUMP);
+    const auto& rearThrusters = upgradeTree.addUpgrade(ShipUpgrade::REAR_THRUSTERS);
+    upgradeTree.addUpgrade(rearThrusters, ShipUpgrade::FRONT_THRUSTERS);
+    const auto& overdrive = upgradeTree.addUpgrade(rearThrusters, ShipUpgrade::OVERDRIVE);
+    upgradeTree.addUpgrade(overdrive, ShipUpgrade::HYPER_JUMP);
 
-    const auto& heavyShells = upgradeTree.addUpgrade(HEAVY_SHELLS);
-    upgradeTree.addUpgrade(heavyShells, IONIC_SHELLS);
-    const auto& frontAutoCannons = upgradeTree.addUpgrade(heavyShells, FRONT_AUTO_CANNONS);
-    upgradeTree.addUpgrade(frontAutoCannons, REAR_AUTO_CANNONS);
+    const auto& heavyShells = upgradeTree.addUpgrade(ShipUpgrade::HEAVY_SHELLS);
+    upgradeTree.addUpgrade(heavyShells, ShipUpgrade::IONIC_SHELLS);
+    const auto& frontAutoCannons = upgradeTree.addUpgrade(heavyShells, ShipUpgrade::FRONT_AUTO_CANNONS);
+    upgradeTree.addUpgrade(frontAutoCannons, ShipUpgrade::REAR_AUTO_CANNONS);
 
-    const auto& workerDrone = upgradeTree.addUpgrade(WORKER_DRONE);
-    upgradeTree.addUpgrade(workerDrone, ARMOURED_DRONE);
-    const auto& mine = upgradeTree.addUpgrade(workerDrone, MINE);
-    upgradeTree.addUpgrade(mine, FIGHTER_DRONE);
+    const auto& workerDrone = upgradeTree.addUpgrade(ShipUpgrade::WORKER_DRONE);
+    upgradeTree.addUpgrade(workerDrone, ShipUpgrade::ARMOURED_DRONE);
+    const auto& mine = upgradeTree.addUpgrade(workerDrone, ShipUpgrade::MINE);
+    upgradeTree.addUpgrade(mine, ShipUpgrade::FIGHTER_DRONE);
 }
 
-/* Getters
--------------------------------------------------- */
-
-const UpgradeTree& Ship::getUpgradeTree() {
+const UpgradeTree& ShipEventHandler::getUpgradeTree() {
     return upgradeTree;
 }
 
-/* Lifecycle
+/* Ship
 -------------------------------------------------- */
 
-Ship::Ship(ShipSpec::UPtr spec) :
+Ship::Ship(ShipSpec::Ptr spec) :
+    HasEventHandlerOf(ShipEventHandler::UPtr(new ShipEventHandler(spec))),
+    HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))),
-    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
-    HasUIOf(UpgradeTreeUI::UPtr(new UpgradeTreeUI(upgradeTree))),
-    bulletImage(spec->bulletImage),
-    upgradeTree(UpgradeTree(SHIP)),
-    engineThrust(0.1f),  // Distance units / second^2
-    rotateThrust(0.008f) // Revolutions / second^2
+    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image)))
 {
     trackPhysObserver(graphicsModelWPtr());
-    buildUpgradeTree();
+    trackPhysObserver(eventHandlerWPtr());
+    trackEventEmitterObserver(eventHandlerWPtr());
 }
 
 const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
@@ -148,19 +142,12 @@ const ObjectFactory Ship::factory = [](ObjectSpec::UPtr spec) {
 
 Ship::~Ship() {}
 
+void Ship::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
+    ObjectEventCreator::setObjectEventFactory(objectEventFactory);
+    eventHandler().setObjectEventFactory(objectEventFactory);
+}
+
 void Ship::beforeFrame() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
-}
-
-void Ship::handle(const Event::Ptr e) {
-         if (e->type == MainThrustEvent::TYPE) mainThrust();
-    else if (e->type == TurnLeftThrustEvent::TYPE) turnLeftThrust();
-    else if (e->type == TurnRightThrustEvent::TYPE) turnRightThrust();
-
-    else if (e->type == FireEvent::TYPE) fire();
-    
-    else if (e->type == UpgradeEvent::TYPE) {
-        upgradeTree.purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
-    }
 }

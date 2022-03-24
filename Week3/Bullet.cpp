@@ -2,33 +2,50 @@
 
 #include "ptrcast.h"
 
-/* Lifecycle
+/* BulletEventHandler
+-------------------------------------------------- */
+
+BulletEventHandler::BulletEventHandler() : timer(nullptr) {}
+void BulletEventHandler::setTimer(Timer::Ptr timer) { this->timer = timer; }
+
+void BulletEventHandler::handle(const Event::Ptr e) {
+    if (
+        e->type == TimerEvent::TYPE &&
+        std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
+    ) {
+        eventEmitter()->enqueue(objectEventFactory()->destroyObject(self()));
+    }
+}
+
+/* Bullet
 -------------------------------------------------- */
 
 Bullet::Bullet(BulletSpec::UPtr spec) :
+    HasEventHandlerOf(BulletEventHandler::UPtr(new BulletEventHandler())),
+    HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
     timer(nullptr)
 {
     trackPhysObserver(graphicsModelWPtr());
+    trackEventEmitterObserver(eventHandlerWPtr());            // DEPENDS: EventEmitter
 }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
     Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
     bullet->setSelf(bullet);
+    bullet->eventHandler().setSelf(bullet);                   // DEPENDS: Bullet
     return bullet;
 };
 
-void Bullet::afterCreate() {
-    timer = Timer::create(OBJECT_CULL_TIME, self());
-    enqueue(objectEventFactory()->addController(timer));
+void Bullet::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
+    ObjectEventCreator::setObjectEventFactory(objectEventFactory);
+    eventHandler().setObjectEventFactory(objectEventFactory); // DEPENDS: ObjectEventFactory
 }
 
-void Bullet::handle(const Event::Ptr e) {
-    if (
-        e->type == TimerEvent::TYPE &&
-        std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
-    ) {
-        enqueue(objectEventFactory()->destroyObject(self()));
-    }
+void Bullet::afterCreate() {
+    // Send the timer event back to the event handler component directly
+    timer = Timer::create(OBJECT_CULL_TIME, self().lock()->eventHandlerWPtr());
+    eventHandler().setTimer(timer);                           // DEPENDS: Timer
+    eventEmitter().enqueue(objectEventFactory()->addController(timer));
 }

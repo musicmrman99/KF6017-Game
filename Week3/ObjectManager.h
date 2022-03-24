@@ -6,6 +6,8 @@
 #include "SelfReferencing.h"
 
 #include "GameObject.h"
+#include "HasEventEmitter.h"
+#include "HasEventHandler.h"
 #include "HasPhys.h"
 #include "HasGraphics.h"
 #include "HasUI.h"
@@ -28,6 +30,8 @@ private:
 	std::list<EventEmitter::Ptr> controllers;
 
 	std::list<GameObject::Ptr> objects;
+	std::list<HasEventEmitter::Ptr> eventEmitters;
+	std::list<HasEventHandler::Ptr> eventHandlers;
 	std::list<HasPhys::Ptr> physObjects;
 	std::list<HasGraphics::Ptr> graphicsObjects;
 	std::list<HasUI::Ptr> uiObjects;

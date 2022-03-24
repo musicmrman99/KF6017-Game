@@ -7,7 +7,7 @@ private:
     ObjectEventFactory::Ptr _objectEventFactory;
 
 public:
-    ObjectEventFactory::Ptr objectEventFactory();
-    ObjectEventFactory::Ptr objectEventFactory() const;
-    void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory);
+    virtual ObjectEventFactory::Ptr objectEventFactory();
+    virtual ObjectEventFactory::Ptr objectEventFactory() const;
+    virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory);
 };

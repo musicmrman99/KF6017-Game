@@ -5,9 +5,13 @@
 #include "SelfReferencing.h"
 
 #include "GameObject.h"
+#include "HasEventEmitterOf.h"
+#include "HasEventHandlerOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 
+#include "ObjectEventCreator.h"
+#include "BufferedEventEmitter.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -15,11 +19,35 @@
 #include "BulletSpec.h"
 #include "Timer.h"
 
+class Bullet;
+
+class BulletEventHandler final :
+	public EventHandler,
+	public EventEmitterObserverOf<BufferedEventEmitter>,
+	public SelfReferencing<Bullet>,
+	public ObjectEventCreator
+{
+private:
+	using BulletWPtr = std::weak_ptr<Bullet>;
+
+	Timer::Ptr timer;
+
+public:
+	using UPtr = std::unique_ptr<BulletEventHandler>;
+
+	BulletEventHandler();
+	void setTimer(Timer::Ptr timer);
+	virtual void handle(const Event::Ptr e) override;
+};
+
 class Bullet final :
 	public GameObject,
+	public HasEventHandlerOf<BulletEventHandler>,
+	public HasEventEmitterOf<BufferedEventEmitter>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
-	public SelfReferencing<GameObject>
+	public SelfReferencing<Bullet>,
+	public ObjectEventCreator
 {
 private:
 	static constexpr float SPEED = 40.0f;
@@ -38,6 +66,8 @@ public:
 
 	static const ObjectFactory factory;
 
+	// FIXME: Dirty hack to make this work for now
+	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
+
 	virtual void afterCreate() override;
-	virtual void handle(const Event::Ptr e) override;
 };

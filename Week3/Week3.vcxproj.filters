@@ -37,9 +37,6 @@
     <Filter Include="Header Files\Engine\Objects">
       <UniqueIdentifier>{086d307f-48de-4480-a1b8-1ba1427e5db2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Controllers">
-      <UniqueIdentifier>{b4375402-7cc9-49ff-a2ed-e6fed722bd62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Physics">
       <UniqueIdentifier>{753d0448-b17a-40f2-b4a4-3018f9d7e204}</UniqueIdentifier>
     </Filter>
@@ -51,9 +48,6 @@
     </Filter>
     <Filter Include="Source Files\Objects\Components">
       <UniqueIdentifier>{fb7d78e2-3a46-4a21-88a1-7376634d9cda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{dc47a1bd-3deb-45ec-a91c-391ad7662e3c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{6f3c0585-0dfd-4cad-ae81-8a743171b9a9}</UniqueIdentifier>
@@ -109,6 +103,51 @@
     <Filter Include="Header Files\Engine\Physics\Components\PhysicsComponent">
       <UniqueIdentifier>{c3964f07-e778-4571-b537-312a81bc9d80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Events\Components">
+      <UniqueIdentifier>{5c503f5d-dd4b-4df5-9965-c4eaef899df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics\Components">
+      <UniqueIdentifier>{ffcc1ef9-e966-46ba-af24-fa7f1fba09e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics\Components\PhysicsComponent">
+      <UniqueIdentifier>{8262c843-459a-4c1b-a548-ffa1b308f57f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Components">
+      <UniqueIdentifier>{758fb283-658b-4257-bba5-ef4f86b3ddd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Components\GraphicsComponent">
+      <UniqueIdentifier>{96093bb1-4063-4597-8d74-57bbd766c06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Components\UIComponent">
+      <UniqueIdentifier>{824d7b10-b794-43e6-9af2-c2279b7578d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models">
+      <UniqueIdentifier>{6a6e2e9a-db8f-4b66-9954-0b87677ce237}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Components\EventEmitterComponent">
+      <UniqueIdentifier>{d7d6e4b6-1549-4592-acf8-b5a7ccc46e9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Components\EventHandlerComponent">
+      <UniqueIdentifier>{e3e5de24-419d-4d95-b107-f41bc6d0119c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events">
+      <UniqueIdentifier>{b4375402-7cc9-49ff-a2ed-e6fed722bd62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Components">
+      <UniqueIdentifier>{673d8869-3c7c-451e-b775-f743b6b4908f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Components\EventHandlerComponent">
+      <UniqueIdentifier>{237a9efb-5f15-4407-9dcb-1674fc98f40c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Components\EventEmitterComponent">
+      <UniqueIdentifier>{4dbb427f-c205-437f-a4e6-39a9b4eb4a6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models">
+      <UniqueIdentifier>{7fc87d85-6bfe-48f5-9d58-037c3dca5727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Graphics">
+      <UniqueIdentifier>{dc47a1bd-3deb-45ec-a91c-391ad7662e3c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -121,10 +160,10 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Controls.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="Event.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
@@ -144,9 +183,6 @@
     <ClCompile Include="GraphicsModel.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="KeyMap.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
@@ -160,7 +196,7 @@
       <Filter>Source Files\Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTreeUI.cpp">
-      <Filter>Source Files\Graphics</Filter>
+      <Filter>Source Files\Engine\Events\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>Source Files\Objects</Filter>
@@ -169,7 +205,7 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="ObjectEvent.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
@@ -198,44 +234,62 @@
     <ClCompile Include="NewtonianPhysModel.cpp">
       <Filter>Source Files\Engine\Physics\Models</Filter>
     </ClCompile>
-    <ClCompile Include="HasPhys.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysObserver.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="MyDrawEngine.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="MyInputs.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="MySoundEngine.cpp">
       <Filter>Source Files\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="HasGraphics.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="ImageGraphicsModel.cpp">
       <Filter>Source Files\Engine\Graphics\Models</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsObserver.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="UIObserver.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="HasUI.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="TargettedEvent.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="EventHandler.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="EventEmitter.cpp">
-      <Filter>Source Files\Engine\Controllers</Filter>
+      <Filter>Source Files\Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandlerObserver.cpp">
+      <Filter>Source Files\Engine\Events\Components\EventHandlerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HasEventHandler.cpp">
+      <Filter>Source Files\Engine\Events\Components\EventHandlerComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HasPhys.cpp">
+      <Filter>Source Files\Engine\Physics\Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysObserver.cpp">
+      <Filter>Source Files\Engine\Physics\Components\PhysicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObserver.cpp">
+      <Filter>Source Files\Engine\Graphics\Components\GraphicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HasGraphics.cpp">
+      <Filter>Source Files\Engine\Graphics\Components\GraphicsComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObserver.cpp">
+      <Filter>Source Files\Engine\Graphics\Components\UIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HasUI.cpp">
+      <Filter>Source Files\Engine\Graphics\Components\UIComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmitterObserver.cpp">
+      <Filter>Source Files\Engine\Events\Components\EventEmitterComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="HasEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Components\EventEmitterComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMap.cpp">
+      <Filter>Source Files\Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferedEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,6 +463,33 @@
     </ClInclude>
     <ClInclude Include="EventEmitter.h">
       <Filter>Header Files\Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventHandlerOf.h">
+      <Filter>Header Files\Engine\Events\Components\EventHandlerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventHandler.h">
+      <Filter>Header Files\Engine\Events\Components\EventHandlerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlerObserverOf.h">
+      <Filter>Header Files\Engine\Events\Components\EventHandlerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlerObserver.h">
+      <Filter>Header Files\Engine\Events\Components\EventHandlerComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventEmitterOf.h">
+      <Filter>Header Files\Engine\Events\Components\EventEmitterComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventEmitter.h">
+      <Filter>Header Files\Engine\Events\Components\EventEmitterComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitterObserverOf.h">
+      <Filter>Header Files\Engine\Events\Components\EventEmitterComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitterObserver.h">
+      <Filter>Header Files\Engine\Events\Components\EventEmitterComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferedEventEmitter.h">
+      <Filter>Header Files\Engine\Events\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
