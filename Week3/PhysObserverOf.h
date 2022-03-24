@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Derived.h"
+#include "ptrcast.h"
 
 #include "PhysObserver.h"
 
@@ -17,7 +18,7 @@ public:
     using WPtr = std::weak_ptr<PhysObserverOf<TDPhysModel>>;
 
     const TDPhysModelWPtr physModelWPtr() const {
-        return std::static_pointer_cast<TDPhysModel>(PhysObserver::physModel());
+        return static_weak_pointer_cast<TDPhysModel>(PhysObserver::physModel());
     }
     const TDPhysModelPtr physModel() const { return physModelWPtr().lock(); }
 };

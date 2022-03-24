@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Derived.h"
+#include "ptrcast.h"
 
 #include "EventEmitterObserver.h"
 
@@ -17,7 +18,7 @@ public:
     using WPtr = std::weak_ptr<EventEmitterObserverOf<TDEventEmitter>>;
 
     const TDEventEmitterWPtr eventEmitterWPtr() const {
-        return std::static_pointer_cast<TDEventEmitter>(EventEmitterObserver::eventEmitter());
+        return static_weak_pointer_cast<TDEventEmitter>(EventEmitterObserver::eventEmitter());
     }
     const TDEventEmitterPtr eventEmitter() const { return eventEmitterWPtr().lock(); }
 };

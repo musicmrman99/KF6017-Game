@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Derived.h"
+#include "ptrcast.h"
 
 #include "UIObserver.h"
 
@@ -17,7 +18,7 @@ public:
     using WPtr = std::weak_ptr<UIObserverOf<TDGraphicsModel>>;
 
     const TDGraphicsModelWPtr uiModelWPtr() const {
-        return std::static_pointer_cast<TDGraphicsModel>(UIObserver::uiModel());
+        return static_weak_pointer_cast<TDGraphicsModel>(UIObserver::uiModel());
     }
     const TDGraphicsModelPtr uiModel() const { return uiModelWPtr().lock(); }
 };
