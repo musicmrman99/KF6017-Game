@@ -1,55 +1,51 @@
 #include "Bullet.h"
 
-#include "uptrcast.h"
+#include "ptrcast.h"
 
-/* Get/Set the right types
+/* BulletEventHandler
 -------------------------------------------------- */
 
-NewtonianPhysModel& Bullet::physModel() {
-    return static_cast<NewtonianPhysModel&>(GameObject::physModel());
-}
-// Can't enforce uniqueness - GameObject interface requires shared_ptr.
-void Bullet::setPhysModel(PhysModel::Ptr physModel) {
-    if (physModel) {
-        if (auto newtonianPhysModel = std::dynamic_pointer_cast<NewtonianPhysModel>(physModel)) {
-            GameObject::setPhysModel(physModel);
-            static_cast<ImageGraphicsModel&>(GameObject::graphicsModel()).setPhysModel(newtonianPhysModel);
-        }
-    }
-}
+BulletEventHandler::BulletEventHandler() : timer(nullptr) {}
+void BulletEventHandler::setTimer(Timer::Ptr timer) { this->timer = timer; }
 
-/* Lifecycle
--------------------------------------------------- */
-
-Bullet::Bullet(BulletSpec::UPtr spec, NewtonianPhysModel::Ptr physModel)
-    : GameObject(
-        physModel,
-        ImageGraphicsModel::UPtr(new ImageGraphicsModel(physModel, spec->image)),
-        NullGraphicsModel::UPtr(new NullGraphicsModel())
-    ),
-    timer(nullptr) {
-}
-
-const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
-    BulletSpec::UPtr bulletSpec = static_unique_pointer_cast<BulletSpec>(move(spec));
-    Bullet::Ptr bullet = Bullet::Ptr(new Bullet(
-        move(bulletSpec),
-        NewtonianPhysModel::UPtr(new NewtonianPhysModel(bulletSpec->pos, bulletSpec->rot * SPEED, bulletSpec->rot, 0.0f))
-    ));
-    bullet->setSelf(bullet);
-    return bullet;
-};
-
-void Bullet::afterCreate() {
-    timer = Timer::create(OBJECT_CULL_TIME, self());
-    enqueue(objectEventFactory()->addController(timer));
-}
-
-void Bullet::handle(const Event::Ptr e) {
+void BulletEventHandler::handle(const Event::Ptr e) {
     if (
         e->type == TimerEvent::TYPE &&
         std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
     ) {
-        enqueue(objectEventFactory()->destroyObject(self()));
+        eventEmitter().enqueue(objectEventFactory()->destroyObject(ref()));
     }
+}
+
+/* Bullet
+-------------------------------------------------- */
+
+Bullet::Bullet(BulletSpec::UPtr spec) :
+    HasEventHandlerOf(BulletEventHandler::UPtr(new BulletEventHandler())),
+    HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
+    HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
+    HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
+    timer(nullptr)
+{
+    trackPhysObserver(graphicsModelWPtr());
+    trackEventEmitterObserver(eventHandlerWPtr());            // DEPENDS: EventEmitter
+}
+
+const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
+    Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
+    bullet->setRef(bullet);
+    bullet->eventHandler().setRef(bullet);                   // DEPENDS: Bullet
+    return bullet;
+};
+
+void Bullet::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
+    ObjectEventCreator::setObjectEventFactory(objectEventFactory);
+    eventHandler().setObjectEventFactory(objectEventFactory); // DEPENDS: ObjectEventFactory
+}
+
+void Bullet::afterCreate() {
+    // Send the timer event back to the event handler component directly
+    timer = Timer::create(OBJECT_CULL_TIME, ref().lock()->eventHandlerWPtr());
+    eventHandler().setTimer(timer);                           // DEPENDS: Timer
+    eventEmitter().enqueue(objectEventFactory()->addController(timer));
 }

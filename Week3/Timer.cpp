@@ -1,8 +1,7 @@
 #include "Timer.h"
 
 #include "Game.h"
-#include "Event.h"
-#include "ObjectEvent.h"
+#include "TargettedEvent.h"
 
 // Timer
 Timer::Timer(double limit, EventHandler::WPtr listener)
@@ -11,7 +10,7 @@ Timer::Timer(double limit, EventHandler::WPtr listener)
 
 Timer::Ptr Timer::create(double limit, EventHandler::WPtr listener) {
 	Timer::Ptr timer = Timer::Ptr(new Timer(limit, listener));
-	timer->setSelf(timer);
+	timer->setRef(timer);
 	return timer;
 }
 
@@ -19,11 +18,11 @@ void Timer::emit(std::queue<Event::Ptr>& events) {
 	if (Game::gt.timeSince(created) > limit) {
 		events.push(
 			TargettedEvent::UPtr(new TargettedEvent(
-				TimerEvent::create(self()),                          // Emit the timer event (with this object as the source)
-				listener                                             // To the listener
+				TimerEvent::create(ref()),                          // Emit the timer event (with this object as the source)
+				listener                                            // To the listener
 			))
 		);
-		events.push(objectEventFactory()->removeController(self())); // Then remove/delete yourself (the timer)
+		events.push(objectEventFactory()->removeController(ref())); // Then remove/delete yourself (the timer)
 	}
 }
 

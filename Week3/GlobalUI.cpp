@@ -1,6 +1,6 @@
 #include "GlobalUI.h"
 
-#include "uptrcast.h"
+#include "ptrcast.h"
 
 #include "MyDrawEngine.h"
 #include "Game.h"
@@ -40,19 +40,11 @@ void GlobalUIModel::draw() {
 /* Global UI
 -------------------------------------------------- */
 
-GlobalUIModel& GlobalUI::uiGraphicsModel() {
-    return static_cast<GlobalUIModel&>(GameObject::uiGraphicsModel());
-}
-
 GlobalUI::GlobalUI(GlobalUISpec::UPtr spec)
-    : GameObject(
-        NullPhysModel::UPtr(new NullPhysModel()),
-        NullGraphicsModel::UPtr(new NullGraphicsModel()),
-        GraphicsModel::UPtr(new GlobalUIModel())
-    ) {
-    uiGraphicsModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));
+    : HasUIOf(GlobalUIModel::UPtr(new GlobalUIModel())) {
+    uiModel().addWidget(FrameRateUIModel::Ptr(new FrameRateUIModel()));
 }
 
 const ObjectFactory GlobalUI::factory = [](ObjectSpec::UPtr spec) {
-    return GlobalUI::Ptr(new GlobalUI(static_unique_pointer_cast<GlobalUISpec>(move(spec))));
+    return GameObject::Ptr(new GlobalUI(static_unique_pointer_cast<GlobalUISpec>(move(spec))));
 };

@@ -1,6 +1,8 @@
 #include "KeyMap.h"
 
-KeyMap::KeyMap(GameObject::Ptr object) : object(object) {}
+#include "TargettedEvent.h"
+
+KeyMap::KeyMap(HasEventHandler::Ptr object) : object(object) {}
 
 void KeyMap::emit(std::queue<Event::Ptr>& events) {
     static std::queue<Event::Ptr> eventsBuffer;

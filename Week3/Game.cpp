@@ -4,7 +4,7 @@
 
 #include <time.h>
 
-#include "uptrcast.h"
+#include "ptrcast.h"
 
 #include "ErrorLogger.h"
 #include "MyDrawEngine.h"
@@ -269,7 +269,7 @@ ErrorType Game::StartOfGame() {
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
 
       // Create player
-    Ship::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
+    GameObject::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
         Vector2D(0.0f, 0.0f), // Centre of the world
         Vector2D(0.0f, 1.0f), // Facing up
         playerSprite,
@@ -277,14 +277,14 @@ ErrorType Game::StartOfGame() {
     )));
 
       // Player Keymap
-    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap(player));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new Ship::MainThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new Ship::TurnLeftThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new Ship::TurnRightThrustEventEmitter());
+    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap(std::dynamic_pointer_cast<HasEventHandler>(player)));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new ShipEventHandler::TurnRightThrustEventEmitter());
 
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new Ship::FireEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new ShipEventHandler::FireEventEmitter());
 
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(Ship::LOAD_OPTIMISATION));
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->addController(static_unique_pointer_cast<EventEmitter>(move(playerKeymap)));
 
@@ -331,10 +331,7 @@ ErrorType Game::Update() {
     MyInputs* input = MyInputs::GetInstance();
     input->SampleKeyboard();
 
-    MyDrawEngine* draw = MyDrawEngine::GetInstance();
-    draw->BeginDraw();
     objectManager->run();
-    draw->EndDraw();
 
     return SUCCESS;
 }

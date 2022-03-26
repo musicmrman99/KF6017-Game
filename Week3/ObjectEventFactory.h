@@ -2,7 +2,8 @@
 
 #include <memory>
 
-#include "Event.h"
+#include "TargettedEvent.h"
+#include "EventEmitter.h"
 
 struct ObjectSpec;
 class GameObject;

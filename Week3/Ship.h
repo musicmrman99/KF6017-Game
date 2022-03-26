@@ -1,27 +1,79 @@
 #pragma once
 
-#include <vector>
-#include <map>
 #include <memory>
 
 #include "MyDrawEngine.h"
 
 #include "GameObject.h"
+#include "HasEventEmitterOf.h"
+#include "HasEventHandlerOf.h"
+#include "HasPhysOf.h"
+#include "HasGraphicsOf.h"
+#include "HasUIOf.h"
+
 #include "Event.h"
+#include "ObjectEventCreator.h"
+#include "BufferedEventEmitter.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
-#include "UpgradeTree.h"
+#include "HasUpgradeTree.h"
+#include "UpgradeTreeUI.h"
 
 #include "ObjectFactory.h"
 #include "ShipSpec.h"
 
-class Ship final : public GameObject {
-public:
-	// Get/Set the right types
+/* Static Definitions
+-------------------- */
 
-	virtual NewtonianPhysModel& physModel() override;
-	virtual void setPhysModel(PhysModel::Ptr physModel) override;
+// Define what upgrades are available.
+struct ShipUpgrade {
+	static const Upgrade SHIP; // Root Upgrade
+
+	static const Upgrade LOAD_OPTIMISATION;
+	static const Upgrade SPACIAL_COMPRESSION;
+	static const Upgrade COOPERATION;
+	static const Upgrade OPTIMAL_SELECTION;
+
+	static const Upgrade FRONT_THRUSTERS;
+	static const Upgrade REAR_THRUSTERS;
+	static const Upgrade OVERDRIVE;
+	static const Upgrade HYPER_JUMP;
+
+	static const Upgrade HEAVY_SHELLS;
+	static const Upgrade FRONT_AUTO_CANNONS;
+	static const Upgrade REAR_AUTO_CANNONS;
+	static const Upgrade IONIC_SHELLS;
+
+	static const Upgrade WORKER_DRONE;
+	static const Upgrade ARMOURED_DRONE;
+	static const Upgrade MINE;
+	static const Upgrade FIGHTER_DRONE;
+};
+
+/* Event Handler
+-------------------- */
+
+class ShipEventHandler final :
+	public EventHandler,
+	public PhysObserverOf<NewtonianPhysModel>,
+	public EventEmitterObserverOf<BufferedEventEmitter>,
+	public UpgradeTreeObserver,
+	public ObjectEventCreator
+{
+private:
+	// Gameplay
+	float engineThrust;
+	float rotateThrust;
+
+	PictureIndex bulletImage;
+
+public:
+	using UPtr = std::unique_ptr<ShipEventHandler>;
+
+	ShipEventHandler(ShipSpec::Ptr spec);
+
+	virtual void handle(const Event::Ptr e) override;
 
 	// Movement
 
@@ -71,50 +123,34 @@ public:
 
 	// Upgrades
 
-	static const Upgrade SHIP; // Root Upgrade
+	// Use the generic UpgradeEvent type / UpgradeEventEmitter for Ship upgrades.
 
-	static const Upgrade LOAD_OPTIMISATION;
-	static const Upgrade COOPERATION;
-	static const Upgrade OPTIMAL_SELECTION;
-	static const Upgrade SPACIAL_COMPRESSION;
+	void purchaseUpgrade(const Upgrade& upgrade);
+};
 
-	static const Upgrade FRONT_THRUSTERS;
-	static const Upgrade REAR_THRUSTERS;
-	static const Upgrade OVERDRIVE;
-	static const Upgrade HYPER_JUMP;
+/* Ship
+-------------------- */
 
-	static const Upgrade HEAVY_SHELLS;
-	static const Upgrade FRONT_AUTO_CANNONS;
-	static const Upgrade REAR_AUTO_CANNONS;
-	static const Upgrade IONIC_SHELLS;
-
-	static const Upgrade WORKER_DRONE;
-	static const Upgrade ARMOURED_DRONE;
-	static const Upgrade MINE;
-	static const Upgrade FIGHTER_DRONE;
-
-private:
-	// Gameplay
-	float engineThrust;
-	float rotateThrust;
-
-	UpgradeTree upgradeTree;
-
-	PictureIndex bulletImage;
-
-	// 2nd phase constructor
-	Ship(ShipSpec::UPtr spec, NewtonianPhysModel::Ptr physModel);
-
+class Ship final :
+	public GameObject,
+	public HasEventHandlerOf<ShipEventHandler>,
+	public HasEventEmitterOf<BufferedEventEmitter>,
+	public HasPhysOf<NewtonianPhysModel>,
+	public HasGraphicsOf<ImageGraphicsModel>,
+	public HasUpgradeTree,
+	public HasUIOf<UpgradeTreeUI>,
+	public ObjectEventCreator // FIXME: well, it's not really - but we need the reference, and ObjectManager will only give it to us if we are one of these.
+{
 public:
-	const UpgradeTree& getUpgradeTree();
-
 	// Lifecycle
 
-	Ship(ShipSpec::UPtr spec);
+	Ship(ShipSpec::Ptr spec);
 	static const ObjectFactory factory;
-	void buildUpgradeTree();
-	virtual ~Ship();
+
+	virtual void buildUpgradeTree(UpgradeTree& upgradeTree) override;
+
+	// Delegate event factory dependencies to components that need them.
+	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void beforeFrame() override;
-	virtual void handle(const Event::Ptr e) override;
 };

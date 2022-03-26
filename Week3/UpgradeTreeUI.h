@@ -6,18 +6,14 @@
 #include "Shapes.h"
 #include "GraphicsModel.h"
 
-#include "UpgradeTree.h"
+#include "UpgradeTreeObserver.h"
+#include "EventHandlerObserverOf.h"
 
-class UpgradeTreeUI final : public GraphicsModel {
-private:
-    const UpgradeTree& tree;
-
+class UpgradeTreeUI final : public GraphicsModel, public UpgradeTreeObserver {
 public:
     using Ptr = std::shared_ptr<UpgradeTreeUI>;
     using UPtr = std::unique_ptr<UpgradeTreeUI>;
     using WPtr = std::weak_ptr<UpgradeTreeUI>;
-
-    UpgradeTreeUI(const UpgradeTree& tree) : tree(tree) {}
 
     virtual void draw() override;
     std::wstring formatTree(UpgradeTree::NodePtr node, int indent = 0) const;

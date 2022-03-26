@@ -3,9 +3,10 @@
 #include <vector>
 
 #include "Event.h"
+#include "EventEmitter.h"
 #include "Controls.h"
 
-#include "GameObject.h"
+#include "HasEventHandler.h"
 
 /*
  * Maps Controls to the given type of Events and collates which actions should be
@@ -16,14 +17,14 @@ private:
     // Controls are held/iterated in insertion order,
     // which will impact the order of emitted events.
     std::vector<std::pair<Control::UPtr, EventEmitter::Ptr>> map;
-    GameObject::Ptr object;
+    HasEventHandler::Ptr object;
 
 public:
     using Ptr = std::shared_ptr<KeyMap>;
     using UPtr = std::unique_ptr<KeyMap>;
     using WPtr = std::weak_ptr<KeyMap>;
 
-    KeyMap(GameObject::Ptr object);
+    KeyMap(HasEventHandler::Ptr object);
 
     virtual void emit(std::queue<Event::Ptr>& events) override;
     void bind(Control::UPtr control, EventEmitter::Ptr action);

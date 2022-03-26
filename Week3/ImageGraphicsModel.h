@@ -5,9 +5,10 @@
 #include "GraphicsModel.h"
 #include "NewtonianPhysModel.h"
 
-class ImageGraphicsModel final : public GraphicsModel {
+#include "PhysObserverOf.h"
+
+class ImageGraphicsModel final : public GraphicsModel, public PhysObserverOf<NewtonianPhysModel> {
 private:
-	NewtonianPhysModel::Ptr physModel;
 	PictureIndex image;
 
 public:
@@ -15,8 +16,6 @@ public:
 	using UPtr = std::unique_ptr<ImageGraphicsModel>;
 	using WPtr = std::weak_ptr<ImageGraphicsModel>;
 
-	ImageGraphicsModel(const NewtonianPhysModel::Ptr physModel, PictureIndex image);
-
-	void setPhysModel(const NewtonianPhysModel::Ptr physModel);
+	ImageGraphicsModel(PictureIndex image);
 	virtual void draw() override;
 };
