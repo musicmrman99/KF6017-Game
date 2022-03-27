@@ -147,6 +147,8 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="ControllerSpec.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="EventEmitter.cpp" />
@@ -197,6 +199,8 @@
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="ControllerSpec.h" />
     <ClInclude Include="EventEmitter.h" />
     <ClInclude Include="EventEmitterObserver.h" />
     <ClInclude Include="EventEmitterObserverOf.h" />

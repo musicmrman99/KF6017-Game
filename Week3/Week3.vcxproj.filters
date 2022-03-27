@@ -166,6 +166,18 @@
     <Filter Include="Source Files\Game\Components\UpgradeTrees\Traits">
       <UniqueIdentifier>{0f582cb3-183e-4926-bbaa-179f15b973b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Events\Objects">
+      <UniqueIdentifier>{f7925826-b011-461e-b13a-fa408b763d1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Objects\ObjectSpecs">
+      <UniqueIdentifier>{5eec5557-422e-472a-b785-2ed114e5ddd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects">
+      <UniqueIdentifier>{8e0b89e8-b2ae-4cbc-9b2e-3d4079eea535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects\ObjectSpecs">
+      <UniqueIdentifier>{efb85e03-951d-4731-a5d7-50922b5cff76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -300,9 +312,6 @@
     <ClCompile Include="HasEventEmitter.cpp">
       <Filter>Source Files\Engine\Events\Traits\EventEmitterComponent</Filter>
     </ClCompile>
-    <ClCompile Include="KeyMap.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
     <ClCompile Include="BufferedEventEmitter.cpp">
       <Filter>Source Files\Engine\Events\Models</Filter>
     </ClCompile>
@@ -315,6 +324,15 @@
     <ClCompile Include="UpgradeTreeUI.cpp">
       <Filter>Source Files\Game\Components\UpgradeTrees\Models</Filter>
     </ClCompile>
+    <ClCompile Include="KeyMap.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\Engine\Events\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerSpec.cpp">
+      <Filter>Source Files\Engine\Events\Objects\ObjectSpecs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -324,9 +342,6 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
-      <Filter>Header Files\Engine\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyMap.h">
       <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
@@ -520,6 +535,15 @@
     </ClInclude>
     <ClInclude Include="UpgradeTreeUI.h">
       <Filter>Header Files\Game\Components\UpgradeTrees\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMap.h">
+      <Filter>Header Files\Engine\Events\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Header Files\Engine\Events\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerSpec.h">
+      <Filter>Header Files\Engine\Events\Objects\ObjectSpecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
