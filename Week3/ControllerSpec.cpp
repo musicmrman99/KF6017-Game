@@ -2,10 +2,10 @@
 
 const ObjectType ControllerSpec::CONTROLLER;
 
-ControllerSpec::ControllerSpec(EventEmitter::UPtr eventEmitter)
-	: ObjectSpec(CONTROLLER), eventEmitter(move(eventEmitter)) {
+ControllerSpec::ControllerSpec(EventEmitter::Ptr eventEmitter)
+	: ObjectSpec(CONTROLLER), eventEmitter(eventEmitter) {
 }
 
-ControllerSpec::UPtr ControllerSpec::create(EventEmitter::UPtr eventEmitter) {
-	return UPtr(new ControllerSpec(move(eventEmitter)));
+ControllerSpec::UPtr ControllerSpec::create(EventEmitter::Ptr eventEmitter) {
+	return UPtr(new ControllerSpec(eventEmitter));
 }

@@ -4,12 +4,20 @@
 
 #include "Event.h"
 #include "EventHandler.h"
+#include "Controller.h"
 #include "ObjectEventCreator.h"
 
-class Timer final : public EventEmitter, public ObjectEventCreator, public Referencing<Timer> {
+// An EventEmitter intended to be used with Controller that emits an event after
+// a given duration.
+class Timer final :
+	public EventEmitter,
+	public ObjectEventCreator,
+	public Referencing<Controller>,
+	public Referencing<Timer>
+{
 private:
-	double limit;
-	double created;
+	double timeLimit;
+	double timeCreated;
 	EventHandler::WPtr listener;
 
 	Timer(double limit, EventHandler::WPtr listener);

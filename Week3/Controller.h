@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "HasEventEmitter.h"
 
+#include "ObjectEventCreator.h"
 #include "ObjectFactory.h"
 #include "ControllerSpec.h"
 
@@ -11,7 +12,11 @@
 // emit, rather than emitting events in response to a condition, such as
 // handling another event). Controllers have a 'frame lock' that ensures they
 // only emit events once per frame to avoid an infinite loop in the event loop.
-class Controller final : public GameObject, public HasEventEmitter {
+class Controller final :
+	public GameObject,
+	public HasEventEmitter,
+	public ObjectEventCreator
+{
 private:
 	bool hasEmittedThisFrame;
 
@@ -23,6 +28,7 @@ public:
 	using WPtr = std::weak_ptr<Controller>;
 	
 	static const ObjectFactory factory;
+	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void beforeFrame() override;
 	virtual void emit(std::queue<Event::Ptr>& events) override;

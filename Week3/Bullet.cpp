@@ -47,5 +47,9 @@ void Bullet::afterCreate() {
     // Send the timer event back to the event handler component directly
     timer = Timer::create(OBJECT_CULL_TIME, ref().lock()->eventHandlerWPtr());
     eventHandler().setTimer(timer);                           // DEPENDS: Timer
-    eventEmitter().enqueue(objectEventFactory()->addController(timer));
+    eventEmitter().enqueue(
+        objectEventFactory()->createObject(
+            ControllerSpec::create(timer)
+        )
+    );
 }

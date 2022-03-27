@@ -166,17 +166,23 @@
     <Filter Include="Source Files\Game\Components\UpgradeTrees\Traits">
       <UniqueIdentifier>{0f582cb3-183e-4926-bbaa-179f15b973b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects">
+      <UniqueIdentifier>{8e0b89e8-b2ae-4cbc-9b2e-3d4079eea535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects\ObjectSpecs">
+      <UniqueIdentifier>{efb85e03-951d-4731-a5d7-50922b5cff76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\Dependencies">
+      <UniqueIdentifier>{473f5b8d-3f23-4376-8f78-1319b11c4580}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Engine\Events\Objects">
       <UniqueIdentifier>{f7925826-b011-461e-b13a-fa408b763d1b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\Events\Objects\ObjectSpecs">
       <UniqueIdentifier>{5eec5557-422e-472a-b785-2ed114e5ddd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Events\Objects">
-      <UniqueIdentifier>{8e0b89e8-b2ae-4cbc-9b2e-3d4079eea535}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Engine\Events\Objects\ObjectSpecs">
-      <UniqueIdentifier>{efb85e03-951d-4731-a5d7-50922b5cff76}</UniqueIdentifier>
+    <Filter Include="Source Files\Engine\Events\Models\Dependencies">
+      <UniqueIdentifier>{60adb71c-5fd6-4d5a-a1e9-e38f45980339}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -188,9 +194,6 @@
     </ClCompile>
     <ClCompile Include="Ship.cpp">
       <Filter>Source Files\Game\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Controls.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\Engine\Events</Filter>
@@ -264,9 +267,6 @@
     <ClCompile Include="MyDrawEngine.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="MyInputs.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
     <ClCompile Include="MySoundEngine.cpp">
       <Filter>Source Files\Engine\Events\Audio</Filter>
     </ClCompile>
@@ -312,9 +312,6 @@
     <ClCompile Include="HasEventEmitter.cpp">
       <Filter>Source Files\Engine\Events\Traits\EventEmitterComponent</Filter>
     </ClCompile>
-    <ClCompile Include="BufferedEventEmitter.cpp">
-      <Filter>Source Files\Engine\Events\Models</Filter>
-    </ClCompile>
     <ClCompile Include="HasUpgradeTree.cpp">
       <Filter>Source Files\Game\Components\UpgradeTrees\Traits</Filter>
     </ClCompile>
@@ -333,6 +330,15 @@
     <ClCompile Include="ControllerSpec.cpp">
       <Filter>Source Files\Engine\Events\Objects\ObjectSpecs</Filter>
     </ClCompile>
+    <ClCompile Include="BufferedEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\Engine\Events\Models\Dependencies</Filter>
+    </ClCompile>
+    <ClCompile Include="MyInputs.cpp">
+      <Filter>Source Files\Engine\Events\Models\Dependencies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -349,9 +355,6 @@
     </ClInclude>
     <ClInclude Include="Derived.h">
       <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Controls.h">
-      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="Symbol.h">
       <Filter>Header Files\Utils</Filter>
@@ -445,9 +448,6 @@
     </ClInclude>
     <ClInclude Include="MyDrawEngine.h">
       <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="MyInputs.h">
-      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="MySoundEngine.h">
       <Filter>Header Files\Engine\Events\Audio</Filter>
@@ -544,6 +544,12 @@
     </ClInclude>
     <ClInclude Include="ControllerSpec.h">
       <Filter>Header Files\Engine\Events\Objects\ObjectSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\Engine\Events\Models\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="MyInputs.h">
+      <Filter>Header Files\Engine\Events\Models\Dependencies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

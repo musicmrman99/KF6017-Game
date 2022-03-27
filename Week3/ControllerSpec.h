@@ -5,7 +5,7 @@
 
 class ControllerSpec final : public ObjectSpec {
 private:
-	ControllerSpec(EventEmitter::UPtr eventEmitter);
+	ControllerSpec(EventEmitter::Ptr eventEmitter);
 
 public:
 	using Ptr = std::shared_ptr<ControllerSpec>;
@@ -13,6 +13,6 @@ public:
 
 	static const ObjectType CONTROLLER;
 
-	EventEmitter::UPtr eventEmitter;
-	static UPtr create(EventEmitter::UPtr eventEmitter);
+	EventEmitter::Ptr eventEmitter;
+	static UPtr create(EventEmitter::Ptr eventEmitter);
 };
