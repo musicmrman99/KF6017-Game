@@ -92,27 +92,9 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
     objects.erase(toDelete, objects.end());
 }
 
-void ObjectManager::addController(EventEmitter::Ptr controller) {
-    if (!controller) return;
-    if (auto c = std::dynamic_pointer_cast<ObjectEventCreator>(controller)) {
-        c->setObjectEventFactory(objectEventFactory);
-    }
-    controllers.push_back(controller);
-}
-
-void ObjectManager::removeController(EventEmitter::WPtr controller) {
-    controllers.remove_if(
-        [controller](const EventEmitter::Ptr& myController) {
-            return myController == controller.lock();
-        }
-    );
-}
-
 void ObjectManager::handle(const Event::Ptr e) {
          if (e->type == CreateObjectEvent::TYPE) createObject(move(std::static_pointer_cast<CreateObjectEvent>(e)->spec)); // Discard the returned object for now
     else if (e->type == DestroyObjectEvent::TYPE) destroyObject(std::static_pointer_cast<DestroyObjectEvent>(e)->object);
-    else if (e->type == AddControllerEvent::TYPE) addController(std::static_pointer_cast<AddControllerEvent>(e)->controller);
-    else if (e->type == RemoveControllerEvent::TYPE) removeController(std::static_pointer_cast<RemoveControllerEvent>(e)->controller);
 }
 
 /* Frame Process
@@ -123,9 +105,6 @@ void ObjectManager::run() {
 
     // Anything first
     for (GameObject::Ptr& object : objects) object->beforeFrame();
-
-    // Emit Global Events - Controllers
-    for (EventEmitter::Ptr& controller : controllers) controller->emit(events);
 
     // Handle Global Events
     for (HasEventEmitter::Ptr& object : eventEmitters) object->emit(events);

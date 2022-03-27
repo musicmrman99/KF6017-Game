@@ -26,6 +26,4 @@ public:
 
 	TargettedEvent::UPtr createObject(ObjectSpecUPtr spec) const;
 	TargettedEvent::UPtr destroyObject(GameObjectWPtr object) const;
-	TargettedEvent::UPtr addController(EventEmitter::Ptr controller) const;
-	TargettedEvent::UPtr removeController(EventEmitter::WPtr controller) const;
 };
