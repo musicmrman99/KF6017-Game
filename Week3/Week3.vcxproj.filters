@@ -234,9 +234,6 @@
     <ClCompile Include="GlobalUI.cpp">
       <Filter>Source Files\Game\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectEvent.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
@@ -339,6 +336,9 @@
     <ClCompile Include="MyInputs.cpp">
       <Filter>Source Files\Engine\Events\Models\Dependencies</Filter>
     </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -400,9 +400,6 @@
     </ClInclude>
     <ClInclude Include="GlobalUI.h">
       <Filter>Header Files\Game\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files\Engine\Events</Filter>
     </ClInclude>
     <ClInclude Include="ObjectEvent.h">
       <Filter>Header Files\Engine\Objects</Filter>
@@ -550,6 +547,9 @@
     </ClInclude>
     <ClInclude Include="MyInputs.h">
       <Filter>Header Files\Engine\Events\Models\Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Engine\Events\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
