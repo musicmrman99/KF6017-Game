@@ -26,17 +26,3 @@ TargettedEvent::UPtr ObjectEventFactory::destroyObject(GameObjectWPtr object) co
         objectManager
     ));
 }
-
-TargettedEvent::UPtr ObjectEventFactory::addController(EventEmitter::Ptr controller) const {
-    return TargettedEvent::UPtr(new TargettedEvent(
-        AddControllerEvent::create(controller),
-        objectManager
-    ));
-}
-
-TargettedEvent::UPtr ObjectEventFactory::removeController(EventEmitter::WPtr controller) const {
-    return TargettedEvent::UPtr(new TargettedEvent(
-        RemoveControllerEvent::create(controller),
-        objectManager
-    ));
-}

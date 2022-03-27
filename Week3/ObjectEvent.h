@@ -41,33 +41,3 @@ public:
 	GameObjectWPtr object;
 	static Ptr create(GameObjectWPtr object);
 };
-
-// Add Controller Event
-class AddControllerEvent final : public Event {
-private:
-	AddControllerEvent(EventEmitter::Ptr controller);
-
-public:
-	using Ptr = std::shared_ptr<AddControllerEvent>;
-	using UPtr = std::unique_ptr<AddControllerEvent>;
-	using WPtr = std::weak_ptr<AddControllerEvent>;
-	static const EventType TYPE;
-
-	EventEmitter::Ptr controller;
-	static Ptr create(EventEmitter::Ptr controller);
-};
-
-// Remove Controller Event
-class RemoveControllerEvent final : public Event {
-private:
-	RemoveControllerEvent(EventEmitter::WPtr controller);
-
-public:
-	using Ptr = std::shared_ptr<RemoveControllerEvent>;
-	using UPtr = std::unique_ptr<RemoveControllerEvent>;
-	using WPtr = std::weak_ptr<RemoveControllerEvent>;
-	static const EventType TYPE;
-
-	EventEmitter::WPtr controller;
-	static Ptr create(EventEmitter::WPtr controller);
-};

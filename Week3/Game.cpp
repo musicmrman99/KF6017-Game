@@ -17,6 +17,7 @@
 #include "Bullet.h"
 #include "GlobalUI.h"
 
+#include "Controller.h"
 #include "KeyMap.h"
 
 Game::Game() :
@@ -264,6 +265,9 @@ ErrorType Game::StartOfGame() {
 
       // Register Factories
     ObjectFactoryManager& objectFactory = objectManager->getObjectFactoryManager();
+      // Controllers
+    objectFactory.registerFactory(ControllerSpec::CONTROLLER, Controller::factory);
+      // Objects
     objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
@@ -277,16 +281,14 @@ ErrorType Game::StartOfGame() {
     )));
 
       // Player Keymap
-    KeyMap::UPtr playerKeymap = KeyMap::UPtr(new KeyMap(std::dynamic_pointer_cast<HasEventHandler>(player)));
+    KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new ShipEventHandler::TurnRightThrustEventEmitter());
-
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new ShipEventHandler::FireEventEmitter());
-
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
 
-    objectManager->addController(static_unique_pointer_cast<EventEmitter>(move(playerKeymap)));
+    objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
       // Global UI
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));

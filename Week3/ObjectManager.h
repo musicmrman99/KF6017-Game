@@ -20,14 +20,12 @@
 class ObjectManager final : public EventHandler, public Referencing<ObjectManager> {
 public:
 	using Ptr = std::shared_ptr<ObjectManager>;
-	// No UPtr - ObjectManager will be onwed by Game, but many EventEmitters (GameObjects, controllers, etc.) may depend on it.
+	// No UPtr - ObjectManager will be onwed by Game, but many EventEmitters (GameObjects) may depend on it.
 	using WPtr = std::weak_ptr<ObjectManager>;
 
 private:
 	ObjectEventFactory::Ptr objectEventFactory;
 	ObjectFactoryManager factory;
-
-	std::list<EventEmitter::Ptr> controllers;
 
 	std::list<GameObject::Ptr> objects;
 	std::list<HasEventEmitter::Ptr> eventEmitters;
@@ -60,12 +58,6 @@ public:
 
 	// Destroy any GameObject.
 	void destroyObject(GameObject::WPtr object);
-
-	// Add a GameObject you uniquely own.
-	void addController(EventEmitter::Ptr controller);
-
-	// Delete any GameObject.
-	void removeController(EventEmitter::WPtr controller);
 
 	// Handle the given object event.
 	virtual void handle(const Event::Ptr e) override;
