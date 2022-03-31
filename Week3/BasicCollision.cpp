@@ -20,10 +20,16 @@ void BasicCollision::emit(std::queue<Event::Ptr>& events) {
 	// more than just the object manager for that to be possible. This is an adequate solution for now.
 	auto allGameObjects = objectManager->getAllGameObjects();
 	std::list<HasCollisionOf<BasicCollisionModel>::Ptr> collidableObjects;
-	for (GameObject::Ptr gameObject : allGameObjects) {
+	for (const GameObject::Ptr& gameObject : allGameObjects) {
 		if (auto collidableObject = std::dynamic_pointer_cast<HasCollisionOf<BasicCollisionModel>>(gameObject)) {
 			collidableObjects.push_back(collidableObject);
 		}
+	}
+
+	// Update everyone's collision models (this isn't a special lifecycle method in the object manager, so
+	// must be done manually).
+	for (const HasCollisionOf<BasicCollisionModel>::Ptr& collidableObject : collidableObjects) {
+		collidableObject->updateCollision();
 	}
 
 	// Objects here cannot be nullptr (as they are deleted immediately) and cannot be deleted mid-collision
