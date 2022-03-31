@@ -19,6 +19,7 @@
 
 #include "Controller.h"
 #include "KeyMap.h"
+#include "BasicCollision.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
@@ -271,6 +272,9 @@ ErrorType Game::StartOfGame() {
     objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
+
+      // Create collision system
+    objectManager->createObject(ControllerSpec::create(BasicCollision::create(objectManager)));
 
       // Create player
     GameObject::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
