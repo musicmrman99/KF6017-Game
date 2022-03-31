@@ -48,6 +48,30 @@ float AngledRectangle2D::GetWidth() const {
     return mHeight;
 }
 
+// Get a structure containing the top, left, bottom, and right
+// sides as segments.
+AngledRectangle2DSides AngledRectangle2D::GetSides() const {
+    // Uses the same algorithm as intersects(Rectangle2D&)
+    // and intersects(AngledRectangle2D&).
+    AngledRectangle2DSides sides;
+
+    // Get corners
+    Vector2D p1(mWidth / 2, mHeight / 2);
+    p1 = p1.rotatedBy(mAngle);
+    Vector2D p2(mWidth / 2, -mHeight / 2);
+    p2 = p2.rotatedBy(mAngle);
+    Vector2D p3 = -p1;
+    Vector2D p4 = -p2;
+
+    // Get sides
+    sides.top.PlaceAt(mCentre + p1, mCentre + p2);
+    sides.left.PlaceAt(mCentre + p2, mCentre + p3);
+    sides.bottom.PlaceAt(mCentre + p3, mCentre + p4);
+    sides.right.PlaceAt(mCentre + p4, mCentre + p1);
+
+    return sides;
+}
+
 // ----------
 
 // Sets the centre of the angled rectangle

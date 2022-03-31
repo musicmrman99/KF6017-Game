@@ -2,8 +2,16 @@
 
 #include "IShape2D.h"
 
-#include "Rectangle2D.h"
+#include "Segment2D.h"
 #include "Circle2D.h"
+#include "Rectangle2D.h"
+
+struct AngledRectangle2DSides {
+    Segment2D top;
+    Segment2D left;
+    Segment2D bottom;
+    Segment2D right;
+};
 
 // A shape to manage a rectangle, with a centre, height and width, 
 // rotated to any angle.
@@ -52,6 +60,8 @@ public:
 
     // Returns the current width
     float GetWidth() const;
+
+    AngledRectangle2DSides GetSides() const;
 
     // ----------
 
