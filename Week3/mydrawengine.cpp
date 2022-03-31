@@ -575,13 +575,13 @@ ErrorType MyDrawEngine::Flip()
 // Returns true if the specified point is visible from the current camera position
 bool MyDrawEngine::IsOnCamera(Vector2D point) const
 {
-	return GetViewport().Intersects(point);
+	return GetViewport().intersects(point);
 }
 
 // Returns true if the specified point is fully or partially visible from the current camera position
 bool MyDrawEngine::IsOnCamera(const IShape2D& shape)const
 {
-	return shape.Intersects(GetViewport());
+	return shape.intersects(GetViewport());
 }
 
 // Returns a rectangle describing the area of the world that is visible from the current camera position
