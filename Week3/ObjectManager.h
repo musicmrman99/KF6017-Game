@@ -49,6 +49,7 @@ public:
 	-------------------- */
 
 	ObjectFactoryManager& getObjectFactoryManager();
+	std::list<GameObject::Ptr>& getAllGameObjects();
 
 	/* Event Handling
 	-------------------- */

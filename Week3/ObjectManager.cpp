@@ -27,9 +27,8 @@ ObjectManager::Ptr ObjectManager::create() {
 /* Getters
 -------------------------------------------------- */
 
-ObjectFactoryManager& ObjectManager::getObjectFactoryManager() {
-    return factory;
-}
+ObjectFactoryManager& ObjectManager::getObjectFactoryManager() { return factory; }
+std::list<GameObject::Ptr>& ObjectManager::getAllGameObjects() { return objects; }
 
 /* Event Handling
 -------------------------------------------------- */
