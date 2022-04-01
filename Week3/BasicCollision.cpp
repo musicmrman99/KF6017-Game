@@ -1,5 +1,8 @@
 #include "BasicCollision.h"
 
+#include <algorithm>
+#include "ReferenceWrapperUtils.h"
+
 #include "HasEventHandler.h"
 #include "HasCollisionOf.h"
 #include "BasicCollisionModel.h"
@@ -38,18 +41,41 @@ void BasicCollision::emit(std::queue<Event::Ptr>& events) {
 	for (auto i = collidableObjects.begin(); i != collidableObjects.end(); i++) {
 		for (auto j = std::next(i); j != collidableObjects.end(); j++) {
 			if ((*i)->collisionModel().getShape().intersects((*j)->collisionModel().getShape())) {
-				events.push(
-					TargettedEvent::Ptr(new TargettedEvent(
-						CollisionEvent::create(std::dynamic_pointer_cast<GameObject>(*i)),
-						std::dynamic_pointer_cast<HasEventHandler>(*j)
-					))
-				);
-				events.push(
-					TargettedEvent::Ptr(new TargettedEvent(
-						CollisionEvent::create(std::dynamic_pointer_cast<GameObject>(*j)),
-						std::dynamic_pointer_cast<HasEventHandler>(*i)
-					))
-				);
+				const auto& iType = (*i)->collisionModel().getType();
+				const auto& jAcceptedTypes = (*j)->collisionModel().getAcceptedTypes();
+				if (
+					jAcceptedTypes.size() == 0 || // If the size is zero, accept anything
+					std::find_if(
+						jAcceptedTypes.begin(),
+						jAcceptedTypes.end(),
+						ReferenceWrapperEqPredicate<const BasicCollisionType>(iType)
+					) != jAcceptedTypes.end()
+				) {
+					events.push(
+						TargettedEvent::Ptr(new TargettedEvent(
+							CollisionEvent::create(std::dynamic_pointer_cast<GameObject>(*i)),
+							std::dynamic_pointer_cast<HasEventHandler>(*j)
+						))
+					);
+				}
+				
+				const auto& jType = (*j)->collisionModel().getType();
+				const auto& iAcceptedTypes = (*i)->collisionModel().getAcceptedTypes();
+				if (
+					iAcceptedTypes.size() == 0 || // If the size is zero, accept anything
+					std::find_if(
+						iAcceptedTypes.begin(),
+						iAcceptedTypes.end(),
+						ReferenceWrapperEqPredicate<const BasicCollisionType>(jType)
+					) != iAcceptedTypes.end()
+				) {
+					events.push(
+						TargettedEvent::Ptr(new TargettedEvent(
+							CollisionEvent::create(std::dynamic_pointer_cast<GameObject>(*j)),
+							std::dynamic_pointer_cast<HasEventHandler>(*i)
+						))
+					);
+				}
 			}
 		}
 	}
