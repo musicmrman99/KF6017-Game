@@ -122,6 +122,14 @@ void ShipEventHandler::purchaseUpgrade(const Upgrade& upgrade) {
 Ship::Ship(ShipSpec::Ptr spec) :
     HasEventHandlerOf(ShipEventHandler::UPtr(new ShipEventHandler(spec))),
     HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
+    HasCollisionOf(BasicCollisionModel::create(
+        new AngledRectangle2D(Vector2D(0, 0), 100, 50),
+        ShipSpec::SHIP_COLLISION,
+        {
+            ShipSpec::SHIP_COLLISION,
+            BulletSpec::BULLET_COLLISION
+        }
+    )),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, Vector2D(0, 0), spec->rot, 0.0f))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
     HasUpgradeTree(ShipUpgrade::SHIP),
@@ -130,6 +138,7 @@ Ship::Ship(ShipSpec::Ptr spec) :
     // Thread dependencies
     trackPhysObserver(graphicsModelWPtr());
     trackPhysObserver(eventHandlerWPtr());
+    trackPhysObserver(collisionModelWPtr());
     trackEventEmitterObserver(eventHandlerWPtr());
     trackUpgradeTreeObserver(eventHandlerWPtr());
     trackUpgradeTreeObserver(uiModelWPtr());
@@ -174,4 +183,12 @@ void Ship::buildUpgradeTree(UpgradeTree& upgradeTree) {
 void Ship::beforeFrame() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
+}
+
+void Ship::beforeDraw() {
+    AngledRectangle2DSides sides = static_cast<const AngledRectangle2D&>(collisionModel().getShape()).GetSides();
+    MyDrawEngine::GetInstance()->DrawLine(sides.top.GetStart(), sides.top.GetEnd(), MyDrawEngine::LIGHTRED);
+    MyDrawEngine::GetInstance()->DrawLine(sides.left.GetStart(), sides.left.GetEnd(), MyDrawEngine::LIGHTRED);
+    MyDrawEngine::GetInstance()->DrawLine(sides.bottom.GetStart(), sides.bottom.GetEnd(), MyDrawEngine::LIGHTRED);
+    MyDrawEngine::GetInstance()->DrawLine(sides.right.GetStart(), sides.right.GetEnd(), MyDrawEngine::LIGHTRED);
 }

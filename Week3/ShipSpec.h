@@ -2,6 +2,7 @@
 
 #include "ObjectSpec.h"
 
+#include "BasicCollisionModel.h"
 #include "Vector2D.h"
 #include "MyDrawEngine.h"
 
@@ -11,6 +12,7 @@ public:
 	using UPtr = std::unique_ptr<ShipSpec>;
 
 	static const ObjectType SHIP;
+	static const BasicCollisionType SHIP_COLLISION;
 
 	const Vector2D pos;
 	const Vector2D rot;

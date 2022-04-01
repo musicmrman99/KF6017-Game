@@ -23,18 +23,24 @@ void BulletEventHandler::handle(const Event::Ptr e) {
 Bullet::Bullet(BulletSpec::UPtr spec) :
     HasEventHandlerOf(BulletEventHandler::UPtr(new BulletEventHandler())),
     HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
+    HasCollisionOf(BasicCollisionModel::create(
+        new AngledRectangle2D(Vector2D(0, 0), 20, 20),
+        BulletSpec::BULLET_COLLISION,
+        {} // Collides with everything (that has a collision model)
+    )),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
     timer(nullptr)
 {
     trackPhysObserver(graphicsModelWPtr());
+    trackPhysObserver(collisionModelWPtr());
     trackEventEmitterObserver(eventHandlerWPtr());            // DEPENDS: EventEmitter
 }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
     Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
     bullet->setRef(bullet);
-    bullet->eventHandler().setRef(bullet);                   // DEPENDS: Bullet
+    bullet->eventHandler().setRef(bullet);                    // DEPENDS: Bullet
     return bullet;
 };
 
@@ -52,4 +58,12 @@ void Bullet::afterCreate() {
             ControllerSpec::create(timer)
         )
     );
+}
+
+void Bullet::beforeDraw() {
+    AngledRectangle2DSides sides = static_cast<const AngledRectangle2D&>(collisionModel().getShape()).GetSides();
+    MyDrawEngine::GetInstance()->DrawLine(sides.top.GetStart(), sides.top.GetEnd(), MyDrawEngine::LIGHTRED);
+    MyDrawEngine::GetInstance()->DrawLine(sides.left.GetStart(), sides.left.GetEnd(), MyDrawEngine::LIGHTRED);
+    MyDrawEngine::GetInstance()->DrawLine(sides.bottom.GetStart(), sides.bottom.GetEnd(), MyDrawEngine::LIGHTRED);
+    MyDrawEngine::GetInstance()->DrawLine(sides.right.GetStart(), sides.right.GetEnd(), MyDrawEngine::LIGHTRED);
 }

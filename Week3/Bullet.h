@@ -7,11 +7,13 @@
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
 #include "HasEventHandlerOf.h"
+#include "HasCollisionOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 
 #include "ObjectEventCreator.h"
 #include "BufferedEventEmitter.h"
+#include "BasicCollisionModel.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -44,6 +46,7 @@ class Bullet final :
 	public GameObject,
 	public HasEventHandlerOf<BulletEventHandler>,
 	public HasEventEmitterOf<BufferedEventEmitter>,
+	public HasCollisionOf<BasicCollisionModel>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
 	public Referencing<Bullet>,
@@ -70,4 +73,5 @@ public:
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void afterCreate() override;
+	virtual void beforeDraw() override;
 };

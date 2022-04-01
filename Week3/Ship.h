@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
 #include "HasEventHandlerOf.h"
+#include "HasCollisionOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 #include "HasUIOf.h"
@@ -14,6 +15,7 @@
 #include "Event.h"
 #include "ObjectEventCreator.h"
 #include "BufferedEventEmitter.h"
+#include "BasicCollisionModel.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -135,6 +137,7 @@ class Ship final :
 	public GameObject,
 	public HasEventHandlerOf<ShipEventHandler>,
 	public HasEventEmitterOf<BufferedEventEmitter>,
+	public HasCollisionOf<BasicCollisionModel>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
 	public HasUpgradeTree,
@@ -153,4 +156,5 @@ public:
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void beforeFrame() override;
+	virtual void beforeDraw() override;
 };
