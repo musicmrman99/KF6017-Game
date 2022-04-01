@@ -123,7 +123,7 @@ Ship::Ship(ShipSpec::Ptr spec) :
     HasEventHandlerOf(ShipEventHandler::UPtr(new ShipEventHandler(spec))),
     HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
     HasCollisionOf(BasicCollisionModel::create(
-        new AngledRectangle2D(Vector2D(0, 0), 100, 50),
+        new AngledRectangle2D(100, 50),
         ShipSpec::SHIP_COLLISION,
         {
             ShipSpec::SHIP_COLLISION,

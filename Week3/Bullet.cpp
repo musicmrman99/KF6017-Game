@@ -24,7 +24,7 @@ Bullet::Bullet(BulletSpec::UPtr spec) :
     HasEventHandlerOf(BulletEventHandler::UPtr(new BulletEventHandler())),
     HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
     HasCollisionOf(BasicCollisionModel::create(
-        new AngledRectangle2D(Vector2D(0, 0), 20, 20),
+        new Circle2D(20),
         BulletSpec::BULLET_COLLISION,
         {} // Collides with everything (that has a collision model)
     )),
