@@ -73,5 +73,4 @@ public:
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void afterCreate() override;
-	virtual void beforeDraw() override;
 };

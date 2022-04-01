@@ -156,5 +156,4 @@ public:
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void beforeFrame() override;
-	virtual void beforeDraw() override;
 };

@@ -184,11 +184,3 @@ void Ship::beforeFrame() {
     physModel().setAccel(Vector2D(0.0f, 0.0f));
     physModel().setRotAccel(0.0f);
 }
-
-void Ship::beforeDraw() {
-    AngledRectangle2DSides sides = static_cast<const AngledRectangle2D&>(collisionModel().getShape()).GetSides();
-    MyDrawEngine::GetInstance()->DrawLine(sides.top.GetStart(), sides.top.GetEnd(), MyDrawEngine::LIGHTRED);
-    MyDrawEngine::GetInstance()->DrawLine(sides.left.GetStart(), sides.left.GetEnd(), MyDrawEngine::LIGHTRED);
-    MyDrawEngine::GetInstance()->DrawLine(sides.bottom.GetStart(), sides.bottom.GetEnd(), MyDrawEngine::LIGHTRED);
-    MyDrawEngine::GetInstance()->DrawLine(sides.right.GetStart(), sides.right.GetEnd(), MyDrawEngine::LIGHTRED);
-}

@@ -59,11 +59,3 @@ void Bullet::afterCreate() {
         )
     );
 }
-
-void Bullet::beforeDraw() {
-    AngledRectangle2DSides sides = static_cast<const AngledRectangle2D&>(collisionModel().getShape()).GetSides();
-    MyDrawEngine::GetInstance()->DrawLine(sides.top.GetStart(), sides.top.GetEnd(), MyDrawEngine::LIGHTRED);
-    MyDrawEngine::GetInstance()->DrawLine(sides.left.GetStart(), sides.left.GetEnd(), MyDrawEngine::LIGHTRED);
-    MyDrawEngine::GetInstance()->DrawLine(sides.bottom.GetStart(), sides.bottom.GetEnd(), MyDrawEngine::LIGHTRED);
-    MyDrawEngine::GetInstance()->DrawLine(sides.right.GetStart(), sides.right.GetEnd(), MyDrawEngine::LIGHTRED);
-}
