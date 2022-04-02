@@ -1,12 +1,15 @@
 #pragma once
 
+// Dependencies
 #include <vector>
 #include <memory>
 
+// Traits
 #include "GameObject.h"
 #include "HasUIOf.h"
-#include "ObjectFactory.h"
 
+// Creation
+#include "ObjectFactory.h"
 #include "GlobalUISpec.h"
 
 // Show FPS Graphics Model
