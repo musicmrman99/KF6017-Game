@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -18,11 +18,159 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AngledRectangle2D.cpp" />
+    <ClCompile Include="BasicCollision.cpp" />
+    <ClCompile Include="BasicCollisionModel.cpp" />
+    <ClCompile Include="BufferedEventEmitter.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletSpec.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="Circle2D.cpp" />
+    <ClCompile Include="CollisionModel.cpp" />
+    <ClCompile Include="CollisionObserver.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="ControllerSpec.cpp" />
+    <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="ErrorLogger.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventEmitter.cpp" />
+    <ClCompile Include="EventEmitterObserver.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventHandlerObserver.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="gametimer.cpp" />
+    <ClCompile Include="GlobalUI.cpp" />
+    <ClCompile Include="GlobalUISpec.cpp" />
+    <ClCompile Include="GraphicsModel.cpp" />
+    <ClCompile Include="GraphicsObserver.cpp" />
+    <ClCompile Include="HasCollision.cpp" />
+    <ClCompile Include="HasEventEmitter.cpp" />
+    <ClCompile Include="HasEventHandler.cpp" />
+    <ClCompile Include="HasGraphics.cpp" />
+    <ClCompile Include="HasPhys.cpp" />
+    <ClCompile Include="HasUI.cpp" />
+    <ClCompile Include="HasUpgradeTree.cpp" />
+    <ClCompile Include="ImageGraphicsModel.cpp" />
+    <ClCompile Include="IShape2D.cpp" />
+    <ClCompile Include="KeyMap.cpp" />
+    <ClCompile Include="mydrawengine.cpp" />
+    <ClCompile Include="myinputs.cpp" />
+    <ClCompile Include="mysoundengine.cpp" />
+    <ClCompile Include="NewtonianPhysModel.cpp" />
+    <ClCompile Include="ObjectEvent.cpp" />
+    <ClCompile Include="ObjectEventCreator.cpp" />
+    <ClCompile Include="ObjectEventFactory.cpp" />
+    <ClCompile Include="ObjectFactoryManager.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ObjectSpec.cpp" />
+    <ClCompile Include="PhysModel.cpp" />
+    <ClCompile Include="PhysObserver.cpp" />
+    <ClCompile Include="Point2D.cpp" />
+    <ClCompile Include="Rectangle2D.cpp" />
+    <ClCompile Include="Segment2D.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="ShipSpec.cpp" />
+    <ClCompile Include="TargettedEvent.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UIObserver.cpp" />
+    <ClCompile Include="UpgradeTree.cpp" />
+    <ClCompile Include="UpgradeTreeObserver.cpp" />
+    <ClCompile Include="UpgradeTreeUI.cpp" />
+    <ClCompile Include="vector2D.cpp" />
+    <ClCompile Include="winmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AngledRectangle2D.h" />
+    <ClInclude Include="BasicCollision.h" />
+    <ClInclude Include="BasicCollisionModel.h" />
+    <ClInclude Include="BufferedEventEmitter.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Circle2D.h" />
+    <ClInclude Include="CollisionModel.h" />
+    <ClInclude Include="CollisionObserver.h" />
+    <ClInclude Include="CollisionObserverOf.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="ControllerSpec.h" />
+    <ClInclude Include="Controls.h" />
+    <ClInclude Include="Derived.h" />
+    <ClInclude Include="ErrorLogger.h" />
+    <ClInclude Include="errortype.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventEmitter.h" />
+    <ClInclude Include="EventEmitterObserver.h" />
+    <ClInclude Include="EventEmitterObserverOf.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventHandlerObserver.h" />
+    <ClInclude Include="EventHandlerObserverOf.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="gametimer.h" />
+    <ClInclude Include="GlobalUI.h" />
+    <ClInclude Include="GlobalUISpec.h" />
+    <ClInclude Include="GraphicsModel.h" />
+    <ClInclude Include="GraphicsObserver.h" />
+    <ClInclude Include="GraphicsObserverOf.h" />
+    <ClInclude Include="HasCollision.h" />
+    <ClInclude Include="HasCollisionOf.h" />
+    <ClInclude Include="HasEventEmitter.h" />
+    <ClInclude Include="HasEventEmitterOf.h" />
+    <ClInclude Include="HasEventHandler.h" />
+    <ClInclude Include="HasEventHandlerOf.h" />
+    <ClInclude Include="HasGraphics.h" />
+    <ClInclude Include="HasGraphicsOf.h" />
+    <ClInclude Include="HasPhys.h" />
+    <ClInclude Include="HasPhysOf.h" />
+    <ClInclude Include="HasUI.h" />
+    <ClInclude Include="HasUIOf.h" />
+    <ClInclude Include="HasUpgradeTree.h" />
+    <ClInclude Include="ImageGraphicsModel.h" />
+    <ClInclude Include="IShape2D.h" />
+    <ClInclude Include="KeyMap.h" />
+    <ClInclude Include="mydrawengine.h" />
+    <ClInclude Include="myinputs.h" />
+    <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="NewtonianPhysModel.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="ObjectEvent.h" />
+    <ClInclude Include="ObjectEventCreator.h" />
+    <ClInclude Include="ObjectEventFactory.h" />
+    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ObjectFactoryManager.h" />
+    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ObjectSpec.h" />
+    <ClInclude Include="PhysModel.h" />
+    <ClInclude Include="PhysObserver.h" />
+    <ClInclude Include="PhysObserverOf.h" />
+    <ClInclude Include="Point2D.h" />
+    <ClInclude Include="ptrcast.h" />
+    <ClInclude Include="QueueUtils.h" />
+    <ClInclude Include="Rectangle2D.h" />
+    <ClInclude Include="ReferenceWrapperUtils.h" />
+    <ClInclude Include="Referencing.h" />
+    <ClInclude Include="Segment2D.h" />
+    <ClInclude Include="Shapes.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="ShipSpec.h" />
+    <ClInclude Include="Symbol.h" />
+    <ClInclude Include="TargettedEvent.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Tracker.h" />
+    <ClInclude Include="UIObserver.h" />
+    <ClInclude Include="UIObserverOf.h" />
+    <ClInclude Include="UpgradeTree.h" />
+    <ClInclude Include="UpgradeTreeObserver.h" />
+    <ClInclude Include="UpgradeTreeUI.h" />
+    <ClInclude Include="vector2D.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{5e41927d-ed54-43ed-887c-bf7675cd552f}</ProjectGuid>
-    <RootNamespace>Week3</RootNamespace>
+    <ProjectGuid>{6cd193b4-fe78-468c-b9f2-a1add3ccae58}</ProjectGuid>
+    <RootNamespace>Game</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -72,8 +220,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <LibraryPath>$(ProjectDir)\Lib;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
+    <IncludePath>$(ProjectDir)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -105,7 +253,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,154 +289,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="AngledRectangle2D.cpp" />
-    <ClCompile Include="BufferedEventEmitter.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletSpec.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="BasicCollision.cpp" />
-    <ClCompile Include="BasicCollisionModel.cpp" />
-    <ClCompile Include="Circle2D.cpp" />
-    <ClCompile Include="CollisionModel.cpp" />
-    <ClCompile Include="CollisionObserver.cpp" />
-    <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="ControllerSpec.cpp" />
-    <ClCompile Include="ErrorLogger.cpp" />
-    <ClCompile Include="Event.cpp" />
-    <ClCompile Include="EventEmitter.cpp" />
-    <ClCompile Include="EventEmitterObserver.cpp" />
-    <ClCompile Include="EventHandler.cpp" />
-    <ClCompile Include="EventHandlerObserver.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GameTimer.cpp" />
-    <ClCompile Include="GlobalUI.cpp" />
-    <ClCompile Include="GlobalUISpec.cpp" />
-    <ClCompile Include="GraphicsModel.cpp" />
-    <ClCompile Include="GraphicsObserver.cpp" />
-    <ClCompile Include="HasCollision.cpp" />
-    <ClCompile Include="HasEventEmitter.cpp" />
-    <ClCompile Include="HasEventHandler.cpp" />
-    <ClCompile Include="HasGraphics.cpp" />
-    <ClCompile Include="HasPhys.cpp" />
-    <ClCompile Include="HasUI.cpp" />
-    <ClCompile Include="HasUpgradeTree.cpp" />
-    <ClCompile Include="ImageGraphicsModel.cpp" />
-    <ClCompile Include="IShape2D.cpp" />
-    <ClCompile Include="KeyMap.cpp" />
-    <ClCompile Include="MyDrawEngine.cpp" />
-    <ClCompile Include="MyInputs.cpp" />
-    <ClCompile Include="MySoundEngine.cpp" />
-    <ClCompile Include="NewtonianPhysModel.cpp" />
-    <ClCompile Include="ObjectEvent.cpp" />
-    <ClCompile Include="ObjectEventCreator.cpp" />
-    <ClCompile Include="ObjectEventFactory.cpp" />
-    <ClCompile Include="ObjectFactoryManager.cpp" />
-    <ClCompile Include="ObjectManager.cpp" />
-    <ClCompile Include="ObjectSpec.cpp" />
-    <ClCompile Include="PhysModel.cpp" />
-    <ClCompile Include="PhysObserver.cpp" />
-    <ClCompile Include="Point2D.cpp" />
-    <ClCompile Include="Rectangle2D.cpp" />
-    <ClCompile Include="Segment2D.cpp" />
-    <ClCompile Include="Ship.cpp" />
-    <ClCompile Include="Controls.cpp" />
-    <ClCompile Include="ShipSpec.cpp" />
-    <ClCompile Include="TargettedEvent.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="UIObserver.cpp" />
-    <ClCompile Include="UpgradeTree.cpp" />
-    <ClCompile Include="UpgradeTreeObserver.cpp" />
-    <ClCompile Include="UpgradeTreeUI.cpp" />
-    <ClCompile Include="Vector2D.cpp" />
-    <ClCompile Include="winmain.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AngledRectangle2D.h" />
-    <ClInclude Include="BufferedEventEmitter.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletSpec.h" />
-    <ClInclude Include="BasicCollision.h" />
-    <ClInclude Include="BasicCollisionModel.h" />
-    <ClInclude Include="Circle2D.h" />
-    <ClInclude Include="CollisionModel.h" />
-    <ClInclude Include="CollisionObserver.h" />
-    <ClInclude Include="CollisionObserverOf.h" />
-    <ClInclude Include="Controller.h" />
-    <ClInclude Include="ControllerSpec.h" />
-    <ClInclude Include="EventEmitter.h" />
-    <ClInclude Include="EventEmitterObserver.h" />
-    <ClInclude Include="EventEmitterObserverOf.h" />
-    <ClInclude Include="EventHandler.h" />
-    <ClInclude Include="EventHandlerObserver.h" />
-    <ClInclude Include="EventHandlerObserverOf.h" />
-    <ClInclude Include="GraphicsObserver.h" />
-    <ClInclude Include="GraphicsObserverOf.h" />
-    <ClInclude Include="HasCollision.h" />
-    <ClInclude Include="HasEventEmitter.h" />
-    <ClInclude Include="HasEventEmitterOf.h" />
-    <ClInclude Include="HasEventHandler.h" />
-    <ClInclude Include="HasEventHandlerOf.h" />
-    <ClInclude Include="HasGraphics.h" />
-    <ClInclude Include="HasGraphicsOf.h" />
-    <ClInclude Include="HasUI.h" />
-    <ClInclude Include="HasUIOf.h" />
-    <ClInclude Include="HasUpgradeTree.h" />
-    <ClInclude Include="HasCollisionOf.h" />
-    <ClInclude Include="IShape2D.h" />
-    <ClInclude Include="PhysObserver.h" />
-    <ClInclude Include="PhysObserverOf.h" />
-    <ClInclude Include="Point2D.h" />
-    <ClInclude Include="Rectangle2D.h" />
-    <ClInclude Include="Segment2D.h" />
-    <ClInclude Include="TargettedEvent.h" />
-    <ClInclude Include="Tracker.h" />
-    <ClInclude Include="Event.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Derived.h" />
-    <ClInclude Include="ErrorLogger.h" />
-    <ClInclude Include="ErrorType.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameTimer.h" />
-    <ClInclude Include="Controls.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GlobalUI.h" />
-    <ClInclude Include="GlobalUISpec.h" />
-    <ClInclude Include="GraphicsModel.h" />
-    <ClInclude Include="HasPhys.h" />
-    <ClInclude Include="HasPhysOf.h" />
-    <ClInclude Include="ObjectEvent.h" />
-    <ClInclude Include="ObjectEventCreator.h" />
-    <ClInclude Include="ObjectEventFactory.h" />
-    <ClInclude Include="ObjectFactory.h" />
-    <ClInclude Include="ObjectFactoryManager.h" />
-    <ClInclude Include="ObjectSpec.h" />
-    <ClInclude Include="QueueUtils.h" />
-    <ClInclude Include="ImageGraphicsModel.h" />
-    <ClInclude Include="KeyMap.h" />
-    <ClInclude Include="MyDrawEngine.h" />
-    <ClInclude Include="MyInputs.h" />
-    <ClInclude Include="MySoundEngine.h" />
-    <ClInclude Include="NewtonianPhysModel.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="ObjectManager.h" />
-    <ClInclude Include="PhysModel.h" />
-    <ClInclude Include="ReferenceWrapperUtils.h" />
-    <ClInclude Include="Referencing.h" />
-    <ClInclude Include="Shapes.h" />
-    <ClInclude Include="Ship.h" />
-    <ClInclude Include="ShipSpec.h" />
-    <ClInclude Include="Symbol.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="UIObserver.h" />
-    <ClInclude Include="UIObserverOf.h" />
-    <ClInclude Include="UpgradeTree.h" />
-    <ClInclude Include="UpgradeTreeObserver.h" />
-    <ClInclude Include="UpgradeTreeUI.h" />
-    <ClInclude Include="ptrcast.h" />
-    <ClInclude Include="Vector2D.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
