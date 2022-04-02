@@ -108,7 +108,10 @@ void ShipEventHandler::fire() {
     static constexpr float DIST = 40.0f;
     eventEmitter().enqueue(objectEventFactory()->createObject(
         BulletSpec::UPtr(new BulletSpec(
-            physModel().pos() + DIST * physModel().rot(), physModel().rot(), bulletImage
+            physModel().pos() + DIST * physModel().rot(),
+            physModel().rot(),
+            physModel().vel(),
+            bulletImage
         ))
     ));
 }

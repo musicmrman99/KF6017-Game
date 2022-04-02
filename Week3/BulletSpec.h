@@ -16,11 +16,13 @@ public:
 
 	const Vector2D pos;
 	const Vector2D rot;
+	const Vector2D vel;
 	const PictureIndex image;
 
 	BulletSpec(
 		const Vector2D pos,
 		const Vector2D rot,
+		const Vector2D vel,
 		const PictureIndex image
 	);
 };

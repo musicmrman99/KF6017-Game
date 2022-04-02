@@ -32,7 +32,7 @@ Bullet::Bullet(BulletSpec::UPtr spec) :
     )),
     HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(
         spec->pos,
-        spec->rot * BASE_SPEED,
+        spec->vel + spec->rot * BASE_SPEED,
         spec->rot,
         0.0f
     ))),
