@@ -105,9 +105,10 @@ void ShipEventHandler::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 // Action
 
 void ShipEventHandler::fire() {
+    static constexpr float DIST = 40.0f;
     eventEmitter().enqueue(objectEventFactory()->createObject(
         BulletSpec::UPtr(new BulletSpec(
-            physModel().pos(), physModel().rot(), bulletImage
+            physModel().pos() + DIST * physModel().rot(), physModel().rot(), bulletImage
         ))
     ));
 }
@@ -123,7 +124,7 @@ Ship::Ship(ShipSpec::Ptr spec) :
     HasEventHandlerOf(ShipEventHandler::UPtr(new ShipEventHandler(spec))),
     HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
     HasCollisionOf(BasicCollisionModel::create(
-        new AngledRectangle2D(100, 50),
+        new AngledRectangle2D(COLLISION_LENGTH, COLLISION_BREADTH),
         ShipSpec::SHIP_COLLISION,
         {
             ShipSpec::SHIP_COLLISION,

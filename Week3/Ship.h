@@ -144,6 +144,10 @@ class Ship final :
 	public HasUIOf<UpgradeTreeUI>,
 	public ObjectEventCreator // FIXME: well, it's not really - but we need the reference, and ObjectManager will only give it to us if we are one of these.
 {
+private:
+	static constexpr int COLLISION_LENGTH = 100;
+	static constexpr int COLLISION_BREADTH = 50;
+
 public:
 	// Lifecycle
 
