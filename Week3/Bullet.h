@@ -7,11 +7,13 @@
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
 #include "HasEventHandlerOf.h"
+#include "HasCollisionOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 
 #include "ObjectEventCreator.h"
 #include "BufferedEventEmitter.h"
+#include "BasicCollisionModel.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -44,14 +46,16 @@ class Bullet final :
 	public GameObject,
 	public HasEventHandlerOf<BulletEventHandler>,
 	public HasEventEmitterOf<BufferedEventEmitter>,
+	public HasCollisionOf<BasicCollisionModel>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
 	public Referencing<Bullet>,
 	public ObjectEventCreator
 {
 private:
-	static constexpr float SPEED = 40.0f;
-	static constexpr float OBJECT_CULL_TIME = 1.5f;
+	static constexpr float LIFETIME = 1.5f;
+	static constexpr float BASE_SPEED = 40.0f;
+	static constexpr int COLLISION_RADIUS = 20;
 
 	Timer::Ptr timer;
 

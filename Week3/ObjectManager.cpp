@@ -27,9 +27,8 @@ ObjectManager::Ptr ObjectManager::create() {
 /* Getters
 -------------------------------------------------- */
 
-ObjectFactoryManager& ObjectManager::getObjectFactoryManager() {
-    return factory;
-}
+ObjectFactoryManager& ObjectManager::getObjectFactoryManager() { return factory; }
+std::list<GameObject::Ptr>& ObjectManager::getAllGameObjects() { return objects; }
 
 /* Event Handling
 -------------------------------------------------- */
@@ -106,10 +105,10 @@ void ObjectManager::run() {
     // Anything first
     for (GameObject::Ptr& object : objects) object->beforeFrame();
 
-    // Handle Global Events
+    // Handle events
     for (HasEventEmitter::Ptr& object : eventEmitters) object->emit(events);
     while (!events.empty()) {
-        // Handle Event
+        // Handle event
         const Event::Ptr& event = events.front();
         if (event->type == TargettedEvent::TYPE) {
             const TargettedEvent::Ptr te = std::static_pointer_cast<TargettedEvent>(event);
@@ -123,10 +122,11 @@ void ObjectManager::run() {
         for (HasEventEmitter::Ptr& object : eventEmitters) object->emit(events);
     }
 
-    // Handle physics and graphics
+    // Handle physics
     for (HasPhys::Ptr& object : physObjects) object->beforePhys();
     for (HasPhys::Ptr& object : physObjects) object->phys();
 
+    // Draw graphics
     // Don't keep trying to draw if drawing goes wrong on this frame
     if (draw->BeginDraw() == SUCCESS) {
     for (HasGraphics::Ptr& object : graphicsObjects) object->beforeDraw();

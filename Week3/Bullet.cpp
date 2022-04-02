@@ -2,6 +2,8 @@
 
 #include "ptrcast.h"
 
+#include "ShipSpec.h"
+
 /* BulletEventHandler
 -------------------------------------------------- */
 
@@ -23,18 +25,29 @@ void BulletEventHandler::handle(const Event::Ptr e) {
 Bullet::Bullet(BulletSpec::UPtr spec) :
     HasEventHandlerOf(BulletEventHandler::UPtr(new BulletEventHandler())),
     HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
-    HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(spec->pos, spec->rot * SPEED, spec->rot, 0.0f))),
+    HasCollisionOf(BasicCollisionModel::create(
+        new Circle2D(COLLISION_RADIUS),
+        BulletSpec::BULLET_COLLISION,
+        { ShipSpec::SHIP_COLLISION }
+    )),
+    HasPhysOf(NewtonianPhysModel::UPtr(new NewtonianPhysModel(
+        spec->pos,
+        spec->vel + spec->rot * BASE_SPEED,
+        spec->rot,
+        0.0f
+    ))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
     timer(nullptr)
 {
     trackPhysObserver(graphicsModelWPtr());
+    trackPhysObserver(collisionModelWPtr());
     trackEventEmitterObserver(eventHandlerWPtr());            // DEPENDS: EventEmitter
 }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
     Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));
     bullet->setRef(bullet);
-    bullet->eventHandler().setRef(bullet);                   // DEPENDS: Bullet
+    bullet->eventHandler().setRef(bullet);                    // DEPENDS: Bullet
     return bullet;
 };
 
@@ -45,7 +58,7 @@ void Bullet::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
 
 void Bullet::afterCreate() {
     // Send the timer event back to the event handler component directly
-    timer = Timer::create(OBJECT_CULL_TIME, ref().lock()->eventHandlerWPtr());
+    timer = Timer::create(LIFETIME, ref().lock()->eventHandlerWPtr());
     eventHandler().setTimer(timer);                           // DEPENDS: Timer
     eventEmitter().enqueue(
         objectEventFactory()->createObject(

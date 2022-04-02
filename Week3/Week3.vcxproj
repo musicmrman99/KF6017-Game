@@ -143,10 +143,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AngledRectangle2D.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="BasicCollision.cpp" />
+    <ClCompile Include="BasicCollisionModel.cpp" />
+    <ClCompile Include="Circle2D.cpp" />
+    <ClCompile Include="CollisionModel.cpp" />
+    <ClCompile Include="CollisionObserver.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="ControllerSpec.cpp" />
     <ClCompile Include="ErrorLogger.cpp" />
@@ -162,6 +168,7 @@
     <ClCompile Include="GlobalUISpec.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
     <ClCompile Include="GraphicsObserver.cpp" />
+    <ClCompile Include="HasCollision.cpp" />
     <ClCompile Include="HasEventEmitter.cpp" />
     <ClCompile Include="HasEventHandler.cpp" />
     <ClCompile Include="HasGraphics.cpp" />
@@ -169,6 +176,7 @@
     <ClCompile Include="HasUI.cpp" />
     <ClCompile Include="HasUpgradeTree.cpp" />
     <ClCompile Include="ImageGraphicsModel.cpp" />
+    <ClCompile Include="IShape2D.cpp" />
     <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="MyDrawEngine.cpp" />
     <ClCompile Include="MyInputs.cpp" />
@@ -182,7 +190,9 @@
     <ClCompile Include="ObjectSpec.cpp" />
     <ClCompile Include="PhysModel.cpp" />
     <ClCompile Include="PhysObserver.cpp" />
-    <ClCompile Include="Shapes.cpp" />
+    <ClCompile Include="Point2D.cpp" />
+    <ClCompile Include="Rectangle2D.cpp" />
+    <ClCompile Include="Segment2D.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Controls.cpp" />
     <ClCompile Include="ShipSpec.cpp" />
@@ -196,9 +206,16 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AngledRectangle2D.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="BasicCollision.h" />
+    <ClInclude Include="BasicCollisionModel.h" />
+    <ClInclude Include="Circle2D.h" />
+    <ClInclude Include="CollisionModel.h" />
+    <ClInclude Include="CollisionObserver.h" />
+    <ClInclude Include="CollisionObserverOf.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="ControllerSpec.h" />
     <ClInclude Include="EventEmitter.h" />
@@ -209,6 +226,7 @@
     <ClInclude Include="EventHandlerObserverOf.h" />
     <ClInclude Include="GraphicsObserver.h" />
     <ClInclude Include="GraphicsObserverOf.h" />
+    <ClInclude Include="HasCollision.h" />
     <ClInclude Include="HasEventEmitter.h" />
     <ClInclude Include="HasEventEmitterOf.h" />
     <ClInclude Include="HasEventHandler.h" />
@@ -218,8 +236,13 @@
     <ClInclude Include="HasUI.h" />
     <ClInclude Include="HasUIOf.h" />
     <ClInclude Include="HasUpgradeTree.h" />
+    <ClInclude Include="HasCollisionOf.h" />
+    <ClInclude Include="IShape2D.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />
+    <ClInclude Include="Point2D.h" />
+    <ClInclude Include="Rectangle2D.h" />
+    <ClInclude Include="Segment2D.h" />
     <ClInclude Include="TargettedEvent.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="Event.h" />

@@ -172,17 +172,47 @@
     <Filter Include="Source Files\Engine\Events\Objects\ObjectSpecs">
       <UniqueIdentifier>{efb85e03-951d-4731-a5d7-50922b5cff76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Events\Models\Dependencies">
-      <UniqueIdentifier>{473f5b8d-3f23-4376-8f78-1319b11c4580}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Events\Objects">
       <UniqueIdentifier>{f7925826-b011-461e-b13a-fa408b763d1b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\Events\Objects\ObjectSpecs">
       <UniqueIdentifier>{5eec5557-422e-472a-b785-2ed114e5ddd0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Events\Models\Dependencies">
-      <UniqueIdentifier>{60adb71c-5fd6-4d5a-a1e9-e38f45980339}</UniqueIdentifier>
+    <Filter Include="Source Files\Engine\Events\Models\BasicCollision">
+      <UniqueIdentifier>{10c0e192-a065-4758-864b-5e182027c962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\BufferedEventEmitter">
+      <UniqueIdentifier>{d668d3a2-1933-426e-9f61-e4b5bfa57535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\KeyMap">
+      <UniqueIdentifier>{c3d6b941-0b06-4b6e-9535-571edd23a804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\Timer">
+      <UniqueIdentifier>{5e3719b2-9b97-47ca-9187-f1d7ddb19652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\BufferedEventEmitter">
+      <UniqueIdentifier>{8bc3dca7-206f-4419-b850-cb740c404cc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\BasicCollision">
+      <UniqueIdentifier>{e8f9b6bd-6147-42c3-973b-e9c7e8a02917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\KeyMap">
+      <UniqueIdentifier>{05f089d3-9015-4753-bb34-9b504f9e14b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\Timer">
+      <UniqueIdentifier>{2412d9b2-78ec-4fdc-bd0f-808a60620eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Traits\Collision">
+      <UniqueIdentifier>{b3d9ae6c-6172-4bf4-b4e1-ee1922eba3f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Traits\Collision">
+      <UniqueIdentifier>{4669c81d-ef4a-42db-8de7-f6e9f60fa2db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Utils\Shapes">
+      <UniqueIdentifier>{0a3cf482-18b0-4e09-8686-536b0ff68281}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utils\Shapes">
+      <UniqueIdentifier>{e67e81ae-7038-4663-9b61-dce038059fc3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +250,6 @@
       <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Vector2D.cpp">
-      <Filter>Source Files\Engine\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Shapes.cpp">
       <Filter>Source Files\Engine\Utils</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTree.cpp">
@@ -318,26 +345,59 @@
     <ClCompile Include="UpgradeTreeUI.cpp">
       <Filter>Source Files\Game\Components\UpgradeTrees\Models</Filter>
     </ClCompile>
-    <ClCompile Include="KeyMap.cpp">
-      <Filter>Source Files\Engine\Events\Models</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>Source Files\Engine\Events\Objects</Filter>
     </ClCompile>
     <ClCompile Include="ControllerSpec.cpp">
       <Filter>Source Files\Engine\Events\Objects\ObjectSpecs</Filter>
     </ClCompile>
-    <ClCompile Include="BufferedEventEmitter.cpp">
-      <Filter>Source Files\Engine\Events\Models</Filter>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Engine\Events\Models\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Controls.cpp">
-      <Filter>Source Files\Engine\Events\Models\Dependencies</Filter>
+    <ClCompile Include="KeyMap.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
     </ClCompile>
     <ClCompile Include="MyInputs.cpp">
-      <Filter>Source Files\Engine\Events\Models\Dependencies</Filter>
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Engine\Events\Models</Filter>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferedEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models\BufferedEventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionModel.cpp">
+      <Filter>Source Files\Engine\Events\Models\BasicCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="HasCollision.cpp">
+      <Filter>Source Files\Engine\Events\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionObserver.cpp">
+      <Filter>Source Files\Engine\Events\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollision.cpp">
+      <Filter>Source Files\Engine\Events\Models\BasicCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollisionModel.cpp">
+      <Filter>Source Files\Engine\Events\Models\BasicCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="Point2D.cpp">
+      <Filter>Source Files\Engine\Utils\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Segment2D.cpp">
+      <Filter>Source Files\Engine\Utils\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle2D.cpp">
+      <Filter>Source Files\Engine\Utils\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle2D.cpp">
+      <Filter>Source Files\Engine\Utils\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="AngledRectangle2D.cpp">
+      <Filter>Source Files\Engine\Utils\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="IShape2D.cpp">
+      <Filter>Source Files\Engine\Utils\Shapes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -381,9 +441,6 @@
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Vector2D.h">
-      <Filter>Header Files\Engine\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Shapes.h">
       <Filter>Header Files\Engine\Utils</Filter>
     </ClInclude>
     <ClInclude Include="UpgradeTree.h">
@@ -527,14 +584,8 @@
     <ClInclude Include="UpgradeTreeObserver.h">
       <Filter>Header Files\Game\Components\UpgradeTrees\Traits</Filter>
     </ClInclude>
-    <ClInclude Include="BufferedEventEmitter.h">
-      <Filter>Header Files\Engine\Events\Models</Filter>
-    </ClInclude>
     <ClInclude Include="UpgradeTreeUI.h">
       <Filter>Header Files\Game\Components\UpgradeTrees\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyMap.h">
-      <Filter>Header Files\Engine\Events\Models</Filter>
     </ClInclude>
     <ClInclude Include="Controller.h">
       <Filter>Header Files\Engine\Events\Objects</Filter>
@@ -542,14 +593,62 @@
     <ClInclude Include="ControllerSpec.h">
       <Filter>Header Files\Engine\Events\Objects\ObjectSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="Controls.h">
-      <Filter>Header Files\Engine\Events\Models\Dependencies</Filter>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Engine\Events\Models\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMap.h">
+      <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
     </ClInclude>
     <ClInclude Include="MyInputs.h">
-      <Filter>Header Files\Engine\Events\Models\Dependencies</Filter>
+      <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Header Files\Engine\Events\Models</Filter>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferedEventEmitter.h">
+      <Filter>Header Files\Engine\Events\Models\BufferedEventEmitter</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionModel.h">
+      <Filter>Header Files\Engine\Events\Models\BasicCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="HasCollision.h">
+      <Filter>Header Files\Engine\Events\Traits\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionObserver.h">
+      <Filter>Header Files\Engine\Events\Traits\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollision.h">
+      <Filter>Header Files\Engine\Events\Models\BasicCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="HasCollisionOf.h">
+      <Filter>Header Files\Engine\Events\Traits\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionObserverOf.h">
+      <Filter>Header Files\Engine\Events\Traits\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollisionModel.h">
+      <Filter>Header Files\Engine\Events\Models\BasicCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="IShape2D.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2D.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Segment2D.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle2D.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle2D.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="AngledRectangle2D.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes.h">
+      <Filter>Header Files\Engine\Utils\Shapes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

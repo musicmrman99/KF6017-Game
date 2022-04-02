@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
 #include "HasEventHandlerOf.h"
+#include "HasCollisionOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 #include "HasUIOf.h"
@@ -14,6 +15,7 @@
 #include "Event.h"
 #include "ObjectEventCreator.h"
 #include "BufferedEventEmitter.h"
+#include "BasicCollisionModel.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
@@ -135,12 +137,17 @@ class Ship final :
 	public GameObject,
 	public HasEventHandlerOf<ShipEventHandler>,
 	public HasEventEmitterOf<BufferedEventEmitter>,
+	public HasCollisionOf<BasicCollisionModel>,
 	public HasPhysOf<NewtonianPhysModel>,
 	public HasGraphicsOf<ImageGraphicsModel>,
 	public HasUpgradeTree,
 	public HasUIOf<UpgradeTreeUI>,
 	public ObjectEventCreator // FIXME: well, it's not really - but we need the reference, and ObjectManager will only give it to us if we are one of these.
 {
+private:
+	static constexpr int COLLISION_LENGTH = 100;
+	static constexpr int COLLISION_BREADTH = 50;
+
 public:
 	// Lifecycle
 
