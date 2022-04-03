@@ -1,6 +1,7 @@
 #pragma once
 
 // Dependencies
+#include <queue>
 #include "Referencing.h"
 
 // Traits
@@ -30,6 +31,8 @@ private:
 	ObjectManager::WPtr objectManager;
 
 	HasPhysOf<NewtonianPhysModel>::Ptr cameraFocusObject;
+	std::queue<Vector2D> latencyQueue;
+	static const int LATENCY = 30;
 
 	Level(LevelSpec::Ptr spec);
 

@@ -11,6 +11,7 @@
 
 #include "Controller.h"
 #include "KeyMap.h"
+#include "Game.h"
 
 Level::Level(LevelSpec::Ptr spec) : objectManager(spec->objectManager) {}
 
@@ -98,5 +99,7 @@ void Level::objectCreated(GameObject::Ptr object) {
 }
 
 void Level::run() {
-    MyDrawEngine::GetInstance()->theCamera.PlaceAt(cameraFocusObject->physModel().pos());
+    latencyQueue.push(cameraFocusObject->physModel().pos());
+    MyDrawEngine::GetInstance()->theCamera.PlaceAt(latencyQueue.front());
+    if (latencyQueue.size() > LATENCY) latencyQueue.pop();
 }
