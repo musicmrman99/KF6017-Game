@@ -15,11 +15,15 @@ const ObjectFactory Level::factory = [](ObjectSpec::UPtr spec) {
 };
 
 void Level::afterCreate() {
-    // Load Resources
+    /* Load Resources
+    -------------------- */
+
     PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
     PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
-    // Register Factories
+    /* Register Factories
+    -------------------- */
+
     ObjectFactoryManager& objectFactory = objectManager->getObjectFactoryManager();
     // Controllers
     objectFactory.registerFactory(ControllerSpec::CONTROLLER, Controller::factory);
@@ -28,8 +32,17 @@ void Level::afterCreate() {
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
 
+    /* Define Lifecycle Points
+    -------------------- */
+
     // Create collision system
     objectManager->createObject(ControllerSpec::create(BasicCollision::create(objectManager)));
+
+    /* Game Setup
+    -------------------- */
+
+    // Global UI
+    objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 
     // Create player
     GameObject::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
@@ -39,7 +52,7 @@ void Level::afterCreate() {
         bulletSprite
     )));
 
-    // Player Keymap
+    // Create player controller (a key map)
     KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
@@ -48,9 +61,6 @@ void Level::afterCreate() {
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
-
-    // Global UI
-    objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 }
 
 // Implement LifecyclePoint
