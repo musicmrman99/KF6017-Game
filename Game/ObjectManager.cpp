@@ -55,7 +55,6 @@ GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
     for (auto& lifecyclePoint : lifecyclePoints) lifecyclePoint->objectCreated(object);
 
     // Add to relevant component lists
-    if (auto physObject = std::dynamic_pointer_cast<HasPhys>(object)) physObjects.push_back(physObject);
     if (auto graphicsObject = std::dynamic_pointer_cast<HasGraphics>(object)) graphicsObjects.push_back(graphicsObject);
     if (auto uiObject = std::dynamic_pointer_cast<HasUI>(object)) uiObjects.push_back(uiObject);
 
@@ -80,7 +79,6 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
         for (auto& lifecyclePoint : lifecyclePoints) lifecyclePoint->objectDestroyed(*delObject);
 
         // Remove from relevant component lists
-        if (auto physObject = std::dynamic_pointer_cast<HasPhys>(*delObject)) physObjects.remove(physObject);
         if (auto graphicsObject = std::dynamic_pointer_cast<HasGraphics>(*delObject)) graphicsObjects.remove(graphicsObject);
         if (auto uiObject = std::dynamic_pointer_cast<HasUI>(*delObject)) uiObjects.remove(uiObject);
     }
@@ -105,10 +103,6 @@ void ObjectManager::run() {
 
     // Run all lifecycle points
     for (LifecyclePoint::Ptr& lifecyclePoint : lifecyclePoints) lifecyclePoint->run();
-
-    // Handle physics
-    for (HasPhys::Ptr& object : physObjects) object->beforePhys();
-    for (HasPhys::Ptr& object : physObjects) object->phys();
 
     // Draw graphics
     // Don't keep trying to draw if drawing goes wrong on this frame

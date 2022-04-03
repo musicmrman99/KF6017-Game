@@ -32,7 +32,6 @@ private:
 	ObjectEventFactory::Ptr objectEventFactory;
 	ObjectFactoryManager factory;
 
-	std::list<HasPhys::Ptr> physObjects;
 	std::list<HasGraphics::Ptr> graphicsObjects;
 	std::list<HasUI::Ptr> uiObjects;
 

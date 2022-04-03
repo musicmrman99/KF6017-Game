@@ -202,12 +202,6 @@
     <Filter Include="Source Files\Game\Objects">
       <UniqueIdentifier>{60642d90-2a05-4b26-bee8-6043ac9d3047}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Objects\Bullet">
-      <UniqueIdentifier>{5af281a7-bdbe-4cc6-848b-93db3cdf9744}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Objects\GlobalUI">
-      <UniqueIdentifier>{aeff6197-921f-471c-a0b2-e689d9c58156}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game\Objects\Ship">
       <UniqueIdentifier>{b69dbcc3-abb6-461c-b44f-25fa9f97afa0}</UniqueIdentifier>
     </Filter>
@@ -285,6 +279,18 @@
     </Filter>
     <Filter Include="Source Files\Engine\Events\LifecyclePoints">
       <UniqueIdentifier>{798e10bb-9743-46db-a84c-bb3b3dfa96fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics\LifecyclePoints">
+      <UniqueIdentifier>{92a6afcb-3d81-4a2c-a71b-6677a14d343a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics\LifecyclePoints">
+      <UniqueIdentifier>{58699256-a287-4ab5-a8c5-0ccf90a32406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Bullet">
+      <UniqueIdentifier>{5af281a7-bdbe-4cc6-848b-93db3cdf9744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\GlobalUI">
+      <UniqueIdentifier>{aeff6197-921f-471c-a0b2-e689d9c58156}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -494,6 +500,9 @@
     </ClCompile>
     <ClCompile Include="Events.cpp">
       <Filter>Source Files\Engine\Events\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Source Files\Engine\Physics\LifecyclePoints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -766,6 +775,9 @@
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>Header Files\Engine\Events\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Header Files\Engine\Physics\LifecyclePoints</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

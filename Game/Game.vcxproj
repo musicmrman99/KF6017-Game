@@ -72,6 +72,7 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="ObjectSpec.cpp" />
     <ClCompile Include="Events.cpp" />
+    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PhysModel.cpp" />
     <ClCompile Include="PhysObserver.cpp" />
     <ClCompile Include="Point2D.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ObjectSpec.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="Physics.h" />
     <ClInclude Include="PhysModel.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />

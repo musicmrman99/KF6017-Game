@@ -6,7 +6,7 @@ Events::Ptr Events::create() {
     return Ptr(new Events());
 }
 
-// Track collidable objects
+// Track event emitter and handler objects
 
 void Events::objectCreated(GameObject::Ptr object) {
     if (auto eventEmitter = std::dynamic_pointer_cast<HasEventEmitter>(object)) {
@@ -25,6 +25,8 @@ void Events::objectDestroyed(GameObject::Ptr object) {
         eventHandlers.remove(eventHandler);
     }
 }
+
+// Run the lifecycle point
 
 void Events::run() {
     for (HasEventEmitter::Ptr& object : eventEmitters) object->emit(events);
