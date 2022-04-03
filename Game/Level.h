@@ -39,6 +39,4 @@ public:
 	// Implement LifecyclePoint
 
 	virtual void objectCreated(GameObject::Ptr object) override;
-	virtual void objectDestroyed(GameObject::Ptr object) override;
-	virtual void run() override;
 };

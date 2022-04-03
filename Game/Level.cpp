@@ -25,8 +25,10 @@ void Level::afterCreate() {
     -------------------- */
 
     ObjectFactoryManager& objectFactory = objectManager->getObjectFactoryManager();
-    // Controllers
+    // Lifecycle Points & Controllers
+    objectFactory.registerFactory(BasicCollisionSpec::BASIC_COLLISION_SPEC, BasicCollision::factory);
     objectFactory.registerFactory(ControllerSpec::CONTROLLER, Controller::factory);
+
     // Objects
     objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
@@ -35,8 +37,11 @@ void Level::afterCreate() {
     /* Define Lifecycle Points
     -------------------- */
 
-    // Create collision system
-    objectManager->createObject(ControllerSpec::create(BasicCollision::create(objectManager)));
+    // Create collision system (GameObject and LifecyclePoint)
+    BasicCollision::Ptr basicCollision = std::static_pointer_cast<BasicCollision>(
+        objectManager->createObject(BasicCollisionSpec::create())
+    );
+    objectManager->addLifecyclePoint(basicCollision);
 
     /* Game Setup
     -------------------- */
@@ -70,6 +75,3 @@ void Level::objectCreated(GameObject::Ptr object) {
         levelActor->setLevel(ref().lock());
     }
 }
-
-void Level::objectDestroyed(GameObject::Ptr object) {}
-void Level::run() {}

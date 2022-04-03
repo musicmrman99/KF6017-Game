@@ -22,6 +22,7 @@
     <ClCompile Include="AngledRectangle2D.cpp" />
     <ClCompile Include="BasicCollision.cpp" />
     <ClCompile Include="BasicCollisionModel.cpp" />
+    <ClCompile Include="BasicCollisionSpec.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="AngledRectangle2D.h" />
     <ClInclude Include="BasicCollision.h" />
     <ClInclude Include="BasicCollisionModel.h" />
+    <ClInclude Include="BasicCollisionSpec.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="BulletSpec.h" />

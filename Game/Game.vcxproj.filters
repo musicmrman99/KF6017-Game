@@ -43,9 +43,6 @@
     <Filter Include="Header Files\Engine\Collision">
       <UniqueIdentifier>{68188fd3-e674-47a2-87ce-2771f0c64ff5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Collision\Hooks">
-      <UniqueIdentifier>{fa27c0e1-9bca-432b-89d8-f6dc2797b7ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Collision\Models">
       <UniqueIdentifier>{992f9876-2d92-4a7b-83dc-2bf211228c57}</UniqueIdentifier>
     </Filter>
@@ -253,9 +250,6 @@
     <Filter Include="Source Files\Engine\Core\Models\ObjectEventFactory">
       <UniqueIdentifier>{87fd758d-1ee0-4ee8-9f88-08f942faa8b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Core\Objects">
-      <UniqueIdentifier>{71cd14f3-5d5f-41a5-9a78-6e672450de93}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Level">
       <UniqueIdentifier>{0a74a5ba-9aae-4b22-87c5-80613d23591c}</UniqueIdentifier>
     </Filter>
@@ -283,8 +277,8 @@
     <Filter Include="Header Files\Engine\Core\LifecyclePoints">
       <UniqueIdentifier>{a9a32ceb-0afa-4bcd-a9db-d1c8115ba3c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Collision\Hooks">
-      <UniqueIdentifier>{46b0163e-afa0-4fe9-a29a-68315090bced}</UniqueIdentifier>
+    <Filter Include="Source Files\Engine\Core\LifecyclePoints">
+      <UniqueIdentifier>{cbc2fcd1-3667-4e42-881a-2a3a3186bfad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -459,12 +453,6 @@
     <ClCompile Include="ObjectEventFactory.cpp">
       <Filter>Source Files\Engine\Core\Models\ObjectEventFactory</Filter>
     </ClCompile>
-    <ClCompile Include="LifecyclePoint.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicCollision.cpp">
-      <Filter>Source Files\Engine\Collision\Hooks</Filter>
-    </ClCompile>
     <ClCompile Include="BasicCollisionModel.cpp">
       <Filter>Source Files\Engine\Collision\Models</Filter>
     </ClCompile>
@@ -489,13 +477,19 @@
     <ClCompile Include="LevelSpec.cpp">
       <Filter>Source Files\Game\Level</Filter>
     </ClCompile>
+    <ClCompile Include="LifecyclePoint.cpp">
+      <Filter>Source Files\Engine\Core\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollisionSpec.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollision.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngledRectangle2D.h">
       <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicCollision.h">
-      <Filter>Header Files\Engine\Collision\Hooks</Filter>
     </ClInclude>
     <ClInclude Include="BasicCollisionModel.h">
       <Filter>Header Files\Engine\Collision\Models</Filter>
@@ -754,6 +748,12 @@
     </ClInclude>
     <ClInclude Include="LevelSpec.h">
       <Filter>Header Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollision.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollisionSpec.h">
+      <Filter>Header Files\Engine\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

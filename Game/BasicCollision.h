@@ -1,23 +1,45 @@
 #pragma once
 
+// Dependencies
 #include <memory>
+#include "GameObject.h"
+#include "LifecyclePoint.h"
 
-#include "EventEmitter.h"
-#include "ObjectManager.h"
+// Traits
+#include "HasCollisionOf.h"
+#include "HasEventEmitterOf.h"
+
+// Models
+#include "BasicCollisionModel.h"
+#include "BufferedEventEmitter.h"
+
+// Creation
+#include "ObjectFactory.h"
+#include "BasicCollisionSpec.h"
 
 // Handles tracking collidable objects and emitting collision events.
-class BasicCollision final : public EventEmitter {
+// Note that this lifecycle point depends on the Events lifecycle point,
+// so is also a GameObject.
+class BasicCollision final :
+	public LifecyclePoint,
+	public GameObject,
+	public HasEventEmitterOf<BufferedEventEmitter>
+{
 private:
-	ObjectManager::Ptr objectManager;
-	BasicCollision(ObjectManager::Ptr objectManager);
+	std::list<HasCollisionOf<BasicCollisionModel>::Ptr> collidableObjects;
+
+	BasicCollision(BasicCollisionSpec::UPtr spec);
 
 public:
 	using Ptr = std::shared_ptr<BasicCollision>;
 	using UPtr = std::unique_ptr<BasicCollision>;
 	using WPtr = std::weak_ptr<BasicCollision>;
 
-	static BasicCollision::UPtr create(ObjectManager::Ptr objectManager);
-	virtual void emit(std::queue<Event::Ptr>& events) override;
+	static const ObjectFactory factory;
+
+	virtual void objectCreated(GameObject::Ptr object) override;
+	virtual void objectDestroyed(GameObject::Ptr object) override;
+	virtual void run() override;
 };
 
 class CollisionEvent final : public Event {
