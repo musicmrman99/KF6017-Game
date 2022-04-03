@@ -2,6 +2,7 @@
 
 #include "Controller.h"
 #include "BasicCollision.h"
+#include "Events.h"
 #include "KeyMap.h"
 
 #include "Ship.h"
@@ -39,6 +40,8 @@ void Level::afterCreate() {
 
     /* Define Lifecycle Points
     -------------------- */
+
+    objectManager->addLifecyclePoint(Events::create());
 
     // Create collision system (GameObject and LifecyclePoint)
     BasicCollision::Ptr basicCollision = std::static_pointer_cast<BasicCollision>(

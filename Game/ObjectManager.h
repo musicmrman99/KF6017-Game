@@ -32,14 +32,10 @@ private:
 	ObjectEventFactory::Ptr objectEventFactory;
 	ObjectFactoryManager factory;
 
-	std::list<HasEventEmitter::Ptr> eventEmitters;
-	std::list<HasEventHandler::Ptr> eventHandlers;
 	std::list<HasPhys::Ptr> physObjects;
 	std::list<HasGraphics::Ptr> graphicsObjects;
 	std::list<HasUI::Ptr> uiObjects;
 
-	std::queue<Event::Ptr> events;
-	
 	ObjectManager();
 	virtual void setRef(WPtr self) override;
 

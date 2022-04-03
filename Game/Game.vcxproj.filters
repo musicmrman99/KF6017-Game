@@ -280,6 +280,12 @@
     <Filter Include="Source Files\Engine\Core\LifecyclePoints">
       <UniqueIdentifier>{cbc2fcd1-3667-4e42-881a-2a3a3186bfad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Events\LifecyclePoints">
+      <UniqueIdentifier>{9e0e42e0-3781-4efc-a105-a46ff6b04780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\LifecyclePoints">
+      <UniqueIdentifier>{798e10bb-9743-46db-a84c-bb3b3dfa96fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -485,6 +491,9 @@
     </ClCompile>
     <ClCompile Include="BasicCollision.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>Source Files\Engine\Events\LifecyclePoints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -754,6 +763,9 @@
     </ClInclude>
     <ClInclude Include="BasicCollisionSpec.h">
       <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Header Files\Engine\Events\LifecyclePoints</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
