@@ -69,6 +69,9 @@ void Level::afterCreate() {
         bulletSprite
     )));
 
+    setCameraFocus(std::dynamic_pointer_cast<HasPhysOf<NewtonianPhysModel>>(player));
+    MyDrawEngine::GetInstance()->UseCamera(true);
+
     // Create player controller (a key map)
     KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
@@ -80,10 +83,20 @@ void Level::afterCreate() {
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 }
 
+// Modifying global state
+
+void Level::setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject) {
+    if (physObject) cameraFocusObject = physObject;
+}
+
 // Implement LifecyclePoint
 
 void Level::objectCreated(GameObject::Ptr object) {
     if (auto levelActor = std::dynamic_pointer_cast<LevelActor>(object)) {
         levelActor->setLevel(ref().lock());
     }
+}
+
+void Level::run() {
+    MyDrawEngine::GetInstance()->theCamera.PlaceAt(cameraFocusObject->physModel().pos());
 }

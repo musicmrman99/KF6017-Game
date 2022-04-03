@@ -9,6 +9,8 @@
 #include "ObjectEventCreator.h"
 
 #include "LevelActor.h"
+#include "HasPhysOf.h"
+#include "NewtonianPhysModel.h"
 
 // Models
 #include "BufferedEventEmitter.h"
@@ -27,6 +29,8 @@ private:
 	// it must register object event factories at least.
 	ObjectManager::WPtr objectManager;
 
+	HasPhysOf<NewtonianPhysModel>::Ptr cameraFocusObject;
+
 	Level(LevelSpec::Ptr spec);
 
 public:
@@ -36,7 +40,12 @@ public:
 
 	virtual void afterCreate() override;
 
+	// Modifying global state
+
+	void setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject);
+
 	// Implement LifecyclePoint
 
 	virtual void objectCreated(GameObject::Ptr object) override;
+	virtual void run() override;
 };
