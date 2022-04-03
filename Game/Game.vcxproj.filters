@@ -127,9 +127,6 @@
     <Filter Include="Source Files\Engine\Utils">
       <UniqueIdentifier>{e3da7eed-edcd-4d4a-b635-ad6dc847126e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Collision\Hooks">
-      <UniqueIdentifier>{46b0163e-afa0-4fe9-a29a-68315090bced}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Collision\Models">
       <UniqueIdentifier>{bdfd97d4-80a5-48b5-bda8-8639b0073345}</UniqueIdentifier>
     </Filter>
@@ -262,17 +259,11 @@
     <Filter Include="Header Files\Game\Level">
       <UniqueIdentifier>{0a74a5ba-9aae-4b22-87c5-80613d23591c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Level\Objects">
-      <UniqueIdentifier>{a040aca5-23f0-4e5c-8ab8-d4e2396c585b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Level\Traits">
       <UniqueIdentifier>{e8eab0f8-3fa7-4b2e-bdfb-6a6d5eaff45f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Game\Level">
       <UniqueIdentifier>{f58c1541-a741-409c-b588-ef8f35ea1f3a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Level\Objects">
-      <UniqueIdentifier>{8ec6ee78-de60-4913-b0dc-6f7e8e496f25}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Game\Level\Traits">
       <UniqueIdentifier>{3260a2b8-6b34-4ff6-8ba1-35ed1e7cbbfd}</UniqueIdentifier>
@@ -291,6 +282,9 @@
     </Filter>
     <Filter Include="Header Files\Engine\Core\LifecyclePoints">
       <UniqueIdentifier>{a9a32ceb-0afa-4bcd-a9db-d1c8115ba3c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision\Hooks">
+      <UniqueIdentifier>{46b0163e-afa0-4fe9-a29a-68315090bced}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -483,17 +477,17 @@
     <ClCompile Include="HasCollision.cpp">
       <Filter>Source Files\Engine\Collision\Traits</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files\Game\Level\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelSpec.cpp">
-      <Filter>Source Files\Game\Level\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="LevelActor.cpp">
       <Filter>Source Files\Game\Level\Traits</Filter>
     </ClCompile>
     <ClCompile Include="NewGame.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSpec.cpp">
+      <Filter>Source Files\Game\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -746,12 +740,6 @@
     <ClInclude Include="ObjectSpec.h">
       <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files\Game\Level\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelSpec.h">
-      <Filter>Header Files\Game\Level\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="LevelActor.h">
       <Filter>Header Files\Game\Level\Traits</Filter>
     </ClInclude>
@@ -760,6 +748,12 @@
     </ClInclude>
     <ClInclude Include="NewGame.h">
       <Filter>Header Files\Engine\Core\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSpec.h">
+      <Filter>Header Files\Game\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
