@@ -22,12 +22,6 @@ void Level::afterCreate() {
     // Lock the object manager for the whole function
     ObjectManager::Ptr objectManager = this->objectManager.lock();
 
-    /* Load Resources
-    -------------------- */
-
-    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-    PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
-
     /* Register Factories
     -------------------- */
 
@@ -54,6 +48,12 @@ void Level::afterCreate() {
     objectManager->addLifecyclePoint(basicCollision);
 
     objectManager->addLifecyclePoint(Graphics::create());
+
+    /* Load Resources
+    -------------------- */
+
+    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
+    PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
 
     /* Game Setup
     -------------------- */
