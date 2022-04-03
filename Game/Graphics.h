@@ -4,14 +4,16 @@
 
 #include "LifecyclePoint.h"
 
-#include "HasPhys.h"
+#include "HasGraphics.h"
+#include "HasUI.h"
 
-class Physics : public LifecyclePoint {
+class Graphics : public LifecyclePoint {
 private:
-	std::list<HasPhys::Ptr> physObjects;
+	std::list<HasGraphics::Ptr> graphicsObjects;
+	std::list<HasUI::Ptr> uiObjects;
 
 public:
-	using Ptr = std::shared_ptr<Physics>;
+	using Ptr = std::shared_ptr<Graphics>;
 
 	static Ptr create();
 

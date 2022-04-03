@@ -32,9 +32,6 @@ private:
 	ObjectEventFactory::Ptr objectEventFactory;
 	ObjectFactoryManager factory;
 
-	std::list<HasGraphics::Ptr> graphicsObjects;
-	std::list<HasUI::Ptr> uiObjects;
-
 	ObjectManager();
 	virtual void setRef(WPtr self) override;
 

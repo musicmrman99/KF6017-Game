@@ -292,6 +292,12 @@
     <Filter Include="Source Files\Game\Objects\GlobalUI">
       <UniqueIdentifier>{aeff6197-921f-471c-a0b2-e689d9c58156}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Graphics\LifecyclePoints">
+      <UniqueIdentifier>{8c452835-f858-4ff2-902f-a026179556df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\LifecyclePoints">
+      <UniqueIdentifier>{53704f31-2350-4b8d-be39-698f222ba91a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -503,6 +509,9 @@
     </ClCompile>
     <ClCompile Include="Physics.cpp">
       <Filter>Source Files\Engine\Physics\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Source Files\Engine\Graphics\LifecyclePoints</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -778,6 +787,9 @@
     </ClInclude>
     <ClInclude Include="Physics.h">
       <Filter>Header Files\Engine\Physics\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Header Files\Engine\Graphics\LifecyclePoints</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

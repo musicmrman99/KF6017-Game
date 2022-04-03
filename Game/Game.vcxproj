@@ -44,6 +44,7 @@
     <ClCompile Include="gametimer.cpp" />
     <ClCompile Include="GlobalUI.cpp" />
     <ClCompile Include="GlobalUISpec.cpp" />
+    <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="GraphicsModel.cpp" />
     <ClCompile Include="GraphicsObserver.cpp" />
     <ClCompile Include="HasCollision.cpp" />
@@ -121,6 +122,7 @@
     <ClInclude Include="gametimer.h" />
     <ClInclude Include="GlobalUI.h" />
     <ClInclude Include="GlobalUISpec.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="GraphicsModel.h" />
     <ClInclude Include="GraphicsObserver.h" />
     <ClInclude Include="GraphicsObserverOf.h" />

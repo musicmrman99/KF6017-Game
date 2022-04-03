@@ -1,15 +1,16 @@
 #include "Level.h"
 
-#include "Controller.h"
-
 #include "Events.h"
 #include "Physics.h"
 #include "BasicCollision.h"
-#include "KeyMap.h"
+#include "Graphics.h"
 
 #include "Ship.h"
 #include "Bullet.h"
 #include "GlobalUI.h"
+
+#include "Controller.h"
+#include "KeyMap.h"
 
 Level::Level(LevelSpec::Ptr spec) : objectManager(spec->objectManager) {}
 
@@ -51,6 +52,8 @@ void Level::afterCreate() {
         objectManager->createObject(BasicCollisionSpec::create())
     );
     objectManager->addLifecyclePoint(basicCollision);
+
+    objectManager->addLifecyclePoint(Graphics::create());
 
     /* Game Setup
     -------------------- */
