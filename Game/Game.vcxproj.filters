@@ -303,18 +303,6 @@
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
-    <ClCompile Include="BasicCollision.cpp">
-      <Filter>Source Files\Engine\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicCollisionModel.cpp">
-      <Filter>Source Files\Engine\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionModel.cpp">
-      <Filter>Source Files\Engine\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionObserver.cpp">
-      <Filter>Source Files\Engine\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="ErrorLogger.cpp">
       <Filter>Source Files\Engine\Utils\Engine</Filter>
     </ClCompile>
@@ -323,9 +311,6 @@
     </ClCompile>
     <ClCompile Include="gametimer.cpp">
       <Filter>Source Files\Engine\Utils\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="HasCollision.cpp">
-      <Filter>Source Files\Engine\Collision</Filter>
     </ClCompile>
     <ClCompile Include="mysoundengine.cpp">
       <Filter>Source Files\Engine</Filter>
@@ -473,6 +458,27 @@
     </ClCompile>
     <ClCompile Include="LevelSpec.cpp">
       <Filter>Source Files\Engine\Core\Objects\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LifecyclePoint.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollision.cpp">
+      <Filter>Source Files\Engine\Collision\Hooks</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollisionModel.cpp">
+      <Filter>Source Files\Engine\Collision\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionModel.cpp">
+      <Filter>Source Files\Engine\Collision\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionObserver.cpp">
+      <Filter>Source Files\Engine\Collision\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="HasCollision.cpp">
+      <Filter>Source Files\Engine\Collision\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelActor.cpp">
+      <Filter>Source Files\Engine\Core\Traits</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -730,6 +736,12 @@
     </ClInclude>
     <ClInclude Include="ObjectSpec.h">
       <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="LifecyclePoint.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelActor.h">
+      <Filter>Header Files\Engine\Core\Traits</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

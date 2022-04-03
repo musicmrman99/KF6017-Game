@@ -249,10 +249,13 @@ ErrorType Game::StartOfGame() {
     gt.mark();
     gt.mark();
 
-    // Game setup
+    // Create the level and set it as a lifecycle point
     objectManager = ObjectManager::create();
     objectManager->getObjectFactoryManager().registerFactory(LevelSpec::LEVEL_SPEC, Level::factory);
-    objectManager->createObject(LevelSpec::create(objectManager));
+    Level::Ptr level = std::static_pointer_cast<Level>(
+        objectManager->createObject(LevelSpec::create(objectManager))
+    );
+    objectManager->addLifecyclePoint(level);
 
     return SUCCESS;
 }

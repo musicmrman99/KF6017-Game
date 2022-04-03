@@ -33,18 +33,23 @@ std::list<GameObject::Ptr>& ObjectManager::getAllGameObjects() { return objects;
 /* Event Handling
 -------------------------------------------------- */
 
+void ObjectManager::addLifecyclePoint(LifecyclePoint::Ptr lifecyclePoint) {
+    lifecyclePoints.push_back(lifecyclePoint);
+}
+
 GameObject::Ptr ObjectManager::createObject(ObjectSpec::UPtr spec) {
-    // Create
+    // Create and add to main list
     GameObject::Ptr object = factory.create(move(spec));
     if (!object) return nullptr;
-    
-    // Add to main list
     objects.push_back(object);
 
     // Is object event creator?
     if (auto c = std::dynamic_pointer_cast<ObjectEventCreator>(object)) {
         c->setObjectEventFactory(objectEventFactory);
     }
+
+    // Inform all lifecycle points
+    for (auto& lifecyclePoint : lifecyclePoints) lifecyclePoint->objectCreated(object);
 
     // Run creation lifecycle methods
     object->afterCreate();
@@ -73,8 +78,12 @@ void ObjectManager::destroyObject(GameObject::WPtr object) {
 
     // We're not expecting there to be multiple matches, but just in case.
     for (auto delObject = toDelete; delObject != objects.end(); ++delObject) {
-        // Run destruction lifecycle
+        // Run destruction lifecycle and inform all lifecycle points
         (*delObject)->beforeDestroy();
+
+        // Inform all lifecycle points
+        for (auto& lifecyclePoint : lifecyclePoints) lifecyclePoint->objectDestroyed(*delObject);
+
         if (auto eventEmitter = std::dynamic_pointer_cast<HasEventEmitter>(*delObject)) {
             eventEmitter->emit(events); // Emit any remaining buffered events before the object is destroyed.
             eventEmitters.remove(eventEmitter); // Avoid unnecessary dynamic casts
@@ -104,6 +113,9 @@ void ObjectManager::run() {
 
     // Anything first
     for (GameObject::Ptr& object : objects) object->beforeFrame();
+
+    // Run all lifecycle points
+    for (LifecyclePoint::Ptr& lifecyclePoint : lifecyclePoints) lifecyclePoint->run();
 
     // Handle events
     for (HasEventEmitter::Ptr& object : eventEmitters) object->emit(events);

@@ -55,3 +55,26 @@ void Level::afterCreate() {
     // Global UI
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 }
+
+void Level::beforeFrame() {}
+void Level::afterFrame() {}
+void Level::beforeDestroy() {}
+
+// Implement LifecyclePoint
+
+void Level::objectCreated(GameObject::Ptr object) {
+    if (auto levelActor = std::dynamic_pointer_cast<LevelActor>(object)) {
+        levelActors.push_back(levelActor);
+    }
+}
+
+void Level::objectDestroyed(GameObject::Ptr object) {
+    if (auto levelActor = std::dynamic_pointer_cast<LevelActor>(object)) {
+        levelActors.remove(levelActor);
+    }
+}
+
+void Level::run() {
+    // We can lock/deref the ref, as the Level must exist - this function is being run on it
+    for (LevelActor::Ptr& levelActor : levelActors) levelActor->updateLevel(*this);
+}

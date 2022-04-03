@@ -56,6 +56,7 @@
     <ClCompile Include="IShape2D.cpp" />
     <ClCompile Include="KeyMap.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelActor.cpp" />
     <ClCompile Include="LevelSpec.cpp" />
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
@@ -65,6 +66,7 @@
     <ClCompile Include="ObjectEventCreator.cpp" />
     <ClCompile Include="ObjectEventFactory.cpp" />
     <ClCompile Include="ObjectFactoryManager.cpp" />
+    <ClCompile Include="LifecyclePoint.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="ObjectSpec.cpp" />
     <ClCompile Include="PhysModel.cpp" />
@@ -134,6 +136,7 @@
     <ClInclude Include="IShape2D.h" />
     <ClInclude Include="KeyMap.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelActor.h" />
     <ClInclude Include="LevelSpec.h" />
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
@@ -145,6 +148,7 @@
     <ClInclude Include="ObjectEventFactory.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="ObjectFactoryManager.h" />
+    <ClInclude Include="LifecyclePoint.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="ObjectSpec.h" />
     <ClInclude Include="PhysModel.h" />
