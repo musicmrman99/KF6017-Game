@@ -22,29 +22,11 @@
     <Filter Include="Header Files\Game\Bullet">
       <UniqueIdentifier>{e3b3db32-97ec-4964-bd62-6e48fb3ab25d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Bullet\Objects">
-      <UniqueIdentifier>{c756e8a2-a315-4b72-b645-0b40c4aaf74a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Bullet\Objects\Specs">
-      <UniqueIdentifier>{8ac42b17-5d23-486a-9a67-2fd66a86ee4a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Ship">
       <UniqueIdentifier>{fb5861c0-d40a-407a-b49c-119e6807c379}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Ship\Objects">
-      <UniqueIdentifier>{3e748c1a-2d19-4316-973b-f5564171a890}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Ship\Objects\Specs">
-      <UniqueIdentifier>{1e42b70e-9f74-4506-bee5-1d0499796520}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\GlobalUI">
       <UniqueIdentifier>{bf38540e-46cf-4465-9305-3e5846662b1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\GlobalUI\Objects">
-      <UniqueIdentifier>{e86a4210-1d57-4c86-bd4b-c14dd8a9b67c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\GlobalUI\Objects\Specs">
-      <UniqueIdentifier>{3a85379f-d1ae-407f-96b1-a997f747be28}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Shared">
       <UniqueIdentifier>{755054ef-32f4-4486-a5df-71de6524c70f}</UniqueIdentifier>
@@ -136,9 +118,6 @@
     <Filter Include="Header Files\Engine\Events\Objects">
       <UniqueIdentifier>{267261cf-3ec3-4c97-95e7-22e239820015}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Events\Objects\Specs">
-      <UniqueIdentifier>{b3276c02-3028-44c1-98a2-6ecda67d73fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Engine\Events\Traits">
       <UniqueIdentifier>{32159964-36bb-43e4-a156-8b5cd3809173}</UniqueIdentifier>
     </Filter>
@@ -208,38 +187,8 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{50354562-b173-4827-98b8-e73733bc7f1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Bullet">
-      <UniqueIdentifier>{5af281a7-bdbe-4cc6-848b-93db3cdf9744}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Bullet\Objects">
-      <UniqueIdentifier>{d7ca3b5a-b496-41b2-8eeb-2e23f66a8c7d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Bullet\Objects\Specs">
-      <UniqueIdentifier>{a3bb60ec-f48a-439b-a4ea-6522355b95f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Ship">
-      <UniqueIdentifier>{b69dbcc3-abb6-461c-b44f-25fa9f97afa0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Ship\Objects">
-      <UniqueIdentifier>{a5217469-0498-4e9e-9170-9447484ed339}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Ship\Objects\Specs">
-      <UniqueIdentifier>{088c57e4-3554-48ef-96e6-8e480736c393}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\GlobalUI">
-      <UniqueIdentifier>{aeff6197-921f-471c-a0b2-e689d9c58156}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\GlobalUI\Objects">
-      <UniqueIdentifier>{9d994dbd-d859-44a4-a6ee-cb803a9796b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\GlobalUI\Objects\Specs">
-      <UniqueIdentifier>{a6c9c39a-e61d-49d7-be69-7af52108b25b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Game\Shared">
       <UniqueIdentifier>{f9d43396-83b6-4a6a-a11a-ff45045a581d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\Utils">
-      <UniqueIdentifier>{e7b39ee0-f583-4e77-9525-061938b2a136}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Game\Shared\UpgradeTree">
       <UniqueIdentifier>{33e777a6-5fdc-4f0b-8930-52beccddbf15}</UniqueIdentifier>
@@ -252,6 +201,84 @@
     </Filter>
     <Filter Include="Source Files\Engine\Utils\General">
       <UniqueIdentifier>{34b2b48e-eaff-4d60-9b30-ac4f33b45540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Traits\Graphics">
+      <UniqueIdentifier>{975ba786-0cc3-49b9-804d-24906397d58a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Traits\UI">
+      <UniqueIdentifier>{bec468ea-bdf6-49db-bce2-ec33593486e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects\Controller">
+      <UniqueIdentifier>{0c6f5393-8365-4fd7-aee1-6fb46558e734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Objects\Controller">
+      <UniqueIdentifier>{2a8d3f3a-adc5-40bc-b3ff-6d60d4bd26c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects">
+      <UniqueIdentifier>{60642d90-2a05-4b26-bee8-6043ac9d3047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Bullet">
+      <UniqueIdentifier>{5af281a7-bdbe-4cc6-848b-93db3cdf9744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\GlobalUI">
+      <UniqueIdentifier>{aeff6197-921f-471c-a0b2-e689d9c58156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Ship">
+      <UniqueIdentifier>{b69dbcc3-abb6-461c-b44f-25fa9f97afa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\BufferedEventEmitter">
+      <UniqueIdentifier>{b1b6bb71-7f57-4890-985c-dda50ec59473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\KeyMap">
+      <UniqueIdentifier>{1ae8374c-a357-49b8-96f8-bf5d123e3a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\Timer">
+      <UniqueIdentifier>{424d4464-1946-4102-8e93-ac49163284ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Traits\EventEmitter">
+      <UniqueIdentifier>{ad98062a-a54d-4323-8ec2-af5dd92b35a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Traits\EventHandler">
+      <UniqueIdentifier>{2205de41-98b3-4934-99bc-e62402ec31d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Objects">
+      <UniqueIdentifier>{013c5022-9fda-4cf9-963b-c9ee70f3160e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Objects\Level">
+      <UniqueIdentifier>{0a74a5ba-9aae-4b22-87c5-80613d23591c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Entry">
+      <UniqueIdentifier>{5c57ee22-c542-4613-a94c-13b90bc281ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Entry">
+      <UniqueIdentifier>{36d3181b-c883-4973-a175-337055cc4527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Traits">
+      <UniqueIdentifier>{19a2e190-0959-41fb-89bc-f4955e30c8de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Models">
+      <UniqueIdentifier>{83687f70-8447-4a0b-bbd6-51d823c641c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Models\ObjectEventFactory">
+      <UniqueIdentifier>{ad535093-a5fd-4e65-b3f5-335081f1090b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Traits">
+      <UniqueIdentifier>{22c793eb-54ff-4a1c-8677-fc3c759d0ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Models">
+      <UniqueIdentifier>{58351787-a581-4342-9663-f4f1a5625d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Models\ObjectEventFactory">
+      <UniqueIdentifier>{87fd758d-1ee0-4ee8-9f88-08f942faa8b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Level">
+      <UniqueIdentifier>{ac969b9d-4322-4c91-8075-05e4e7aa011c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Objects">
+      <UniqueIdentifier>{71cd14f3-5d5f-41a5-9a78-6e672450de93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Objects\Level">
+      <UniqueIdentifier>{f58c1541-a741-409c-b588-ef8f35ea1f3a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -276,36 +303,6 @@
     <ClCompile Include="Event.cpp">
       <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
-    <ClCompile Include="EventEmitter.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="EventEmitterObserver.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="EventHandlerObserver.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="HasEventEmitter.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="HasEventHandler.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="myinputs.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyMap.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="BufferedEventEmitter.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
     <ClCompile Include="BasicCollision.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
     </ClCompile>
@@ -318,59 +315,11 @@
     <ClCompile Include="CollisionObserver.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="ControllerSpec.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="Controls.cpp">
-      <Filter>Source Files\Engine\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="ErrorLogger.cpp">
       <Filter>Source Files\Engine\Utils\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectEvent.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectEventCreator.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectEventFactory.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectFactoryManager.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectSpec.cpp">
-      <Filter>Source Files\Engine\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsModel.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsObserver.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="HasGraphics.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageGraphicsModel.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="UIObserver.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="gametimer.cpp">
       <Filter>Source Files\Engine\Utils\Engine</Filter>
@@ -378,47 +327,14 @@
     <ClCompile Include="HasCollision.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="HasPhys.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="HasUI.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysModel.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="PhysObserver.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="NewtonianPhysModel.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="mydrawengine.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="mysoundengine.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="TargettedEvent.cpp">
       <Filter>Source Files\Engine\Events</Filter>
     </ClCompile>
-    <ClCompile Include="winmain.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="vector2D.cpp">
       <Filter>Source Files\Engine\Utils\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>Source Files\Game\Bullet\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="BulletSpec.cpp">
-      <Filter>Source Files\Game\Bullet\Objects\Specs</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalUI.cpp">
-      <Filter>Source Files\Game\GlobalUI\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalUISpec.cpp">
-      <Filter>Source Files\Game\GlobalUI\Objects\Specs</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTreeUI.cpp">
       <Filter>Source Files\Game\Shared\UpgradeTree\Models</Filter>
@@ -432,37 +348,136 @@
     <ClCompile Include="HasUpgradeTree.cpp">
       <Filter>Source Files\Game\Shared\UpgradeTree\Traits</Filter>
     </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>Source Files\Game\Ship\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="ShipSpec.cpp">
-      <Filter>Source Files\Game\Ship\Objects\Specs</Filter>
-    </ClCompile>
     <ClCompile Include="Symbol.cpp">
       <Filter>Source Files\Engine\Utils\General</Filter>
     </ClCompile>
+    <ClCompile Include="HasPhys.cpp">
+      <Filter>Source Files\Engine\Physics\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysObserver.cpp">
+      <Filter>Source Files\Engine\Physics\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysModel.cpp">
+      <Filter>Source Files\Engine\Physics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="NewtonianPhysModel.cpp">
+      <Filter>Source Files\Engine\Physics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\Engine\Graphics\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObserver.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="HasGraphics.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="HasUI.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObserver.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mydrawengine.cpp">
+      <Filter>Source Files\Engine\Graphics\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\Engine\Events\Objects\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerSpec.cpp">
+      <Filter>Source Files\Engine\Events\Objects\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Game\Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSpec.cpp">
+      <Filter>Source Files\Game\Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUI.cpp">
+      <Filter>Source Files\Game\Objects\GlobalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUISpec.cpp">
+      <Filter>Source Files\Game\Objects\GlobalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferedEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models\BufferedEventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMap.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmitterObserver.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandlerObserver.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="HasEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="HasEventHandler.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Engine\Events\Models\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="myinputs.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactoryManager.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSpec.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Engine\Core\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="winmain.cpp">
+      <Filter>Source Files\Engine\Core\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Engine\Core\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEventCreator.cpp">
+      <Filter>Source Files\Engine\Core\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEvent.cpp">
+      <Filter>Source Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEventFactory.cpp">
+      <Filter>Source Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game\Objects\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSpec.cpp">
+      <Filter>Source Files\Engine\Core\Objects\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GlobalUI.h">
-      <Filter>Header Files\Game\GlobalUI\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalUISpec.h">
-      <Filter>Header Files\Game\GlobalUI\Objects\Specs</Filter>
-    </ClInclude>
     <ClInclude Include="AngledRectangle2D.h">
       <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>Header Files\Game\Bullet\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="BulletSpec.h">
-      <Filter>Header Files\Game\Bullet\Objects\Specs</Filter>
-    </ClInclude>
-    <ClInclude Include="ShipSpec.h">
-      <Filter>Header Files\Game\Ship\Objects\Specs</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Header Files\Game\Ship\Objects</Filter>
     </ClInclude>
     <ClInclude Include="BasicCollision.h">
       <Filter>Header Files\Engine\Collision\Hooks</Filter>
@@ -485,20 +500,11 @@
     <ClInclude Include="CollisionObserverOf.h">
       <Filter>Header Files\Engine\Collision\Traits</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Header Files\Engine\Events\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="ControllerSpec.h">
-      <Filter>Header Files\Engine\Events\Objects\Specs</Filter>
-    </ClInclude>
     <ClInclude Include="BufferedEventEmitter.h">
       <Filter>Header Files\Engine\Events\Models\BufferedEventEmitter</Filter>
     </ClInclude>
     <ClInclude Include="Controls.h">
       <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="EventEmitter.h">
       <Filter>Header Files\Engine\Events\Models</Filter>
@@ -517,9 +523,6 @@
     </ClInclude>
     <ClInclude Include="EventHandlerObserverOf.h">
       <Filter>Header Files\Engine\Events\Traits\EventHandler</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsModel.h">
       <Filter>Header Files\Engine\Graphics\Models</Filter>
@@ -590,25 +593,7 @@
     <ClInclude Include="Node.h">
       <Filter>Header Files\Game\Shared\UpgradeTree\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectEvent.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectEventCreator.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectEventFactory.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectFactory.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectFactoryManager.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectManager.h">
-      <Filter>Header Files\Engine\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectSpec.h">
       <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
     <ClInclude Include="PhysModel.h">
@@ -691,6 +676,60 @@
     </ClInclude>
     <ClInclude Include="vector2D.h">
       <Filter>Header Files\Engine\Utils\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerSpec.h">
+      <Filter>Header Files\Engine\Events\Objects\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Header Files\Engine\Events\Objects\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSpec.h">
+      <Filter>Header Files\Game\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalUISpec.h">
+      <Filter>Header Files\Game\GlobalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalUI.h">
+      <Filter>Header Files\Game\GlobalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipSpec.h">
+      <Filter>Header Files\Game\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Header Files\Game\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Engine\Core\Objects\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSpec.h">
+      <Filter>Header Files\Engine\Core\Objects\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Engine\Core\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Engine\Core\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventCreator.h">
+      <Filter>Header Files\Engine\Core\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventFactory.h">
+      <Filter>Header Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEvent.h">
+      <Filter>Header Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpec.h">
+      <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

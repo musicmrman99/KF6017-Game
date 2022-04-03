@@ -55,6 +55,8 @@
     <ClCompile Include="ImageGraphicsModel.cpp" />
     <ClCompile Include="IShape2D.cpp" />
     <ClCompile Include="KeyMap.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelSpec.cpp" />
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
     <ClCompile Include="mysoundengine.cpp" />
@@ -131,6 +133,8 @@
     <ClInclude Include="ImageGraphicsModel.h" />
     <ClInclude Include="IShape2D.h" />
     <ClInclude Include="KeyMap.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelSpec.h" />
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
     <ClInclude Include="mysoundengine.h" />
