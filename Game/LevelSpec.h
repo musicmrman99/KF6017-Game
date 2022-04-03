@@ -6,7 +6,7 @@
 
 class LevelSpec final : public ObjectSpec {
 private:
-	LevelSpec(ObjectManager::Ptr objectManager);
+	LevelSpec(ObjectManager::WPtr objectManager);
 
 public:
 	using Ptr = std::shared_ptr<LevelSpec>;
@@ -14,7 +14,7 @@ public:
 
 	static const ObjectType LEVEL_SPEC;
 
-	ObjectManager::Ptr objectManager;
+	ObjectManager::WPtr objectManager;
 
-	static UPtr create(ObjectManager::Ptr objectManager);
+	static UPtr create(ObjectManager::WPtr objectManager);
 };

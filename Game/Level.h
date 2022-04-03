@@ -25,7 +25,7 @@ class Level :
 private:
 	// Must depend more heavily on the object manager than just creating objects -
 	// it must register object event factories at least.
-	ObjectManager::Ptr objectManager;
+	ObjectManager::WPtr objectManager;
 
 	Level(LevelSpec::Ptr spec);
 

@@ -15,6 +15,9 @@ const ObjectFactory Level::factory = [](ObjectSpec::UPtr spec) {
 };
 
 void Level::afterCreate() {
+    // Lock the object manager for the whole function
+    ObjectManager::Ptr objectManager = this->objectManager.lock();
+
     /* Load Resources
     -------------------- */
 
