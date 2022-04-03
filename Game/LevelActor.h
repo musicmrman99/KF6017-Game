@@ -5,6 +5,11 @@
 class Level;
 
 class LevelActor {
+private:
+    using LevelPtr = std::shared_ptr<Level>;
+
+    LevelPtr _level;
+
 public:
     using Ptr = std::shared_ptr<LevelActor>;
     using UPtr = std::unique_ptr<LevelActor>;
@@ -12,5 +17,6 @@ public:
 
 	virtual ~LevelActor();
 
-	void updateLevel(Level& level);
+	void setLevel(LevelPtr level);
+    LevelPtr level();
 };

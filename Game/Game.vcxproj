@@ -61,6 +61,7 @@
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
     <ClCompile Include="mysoundengine.cpp" />
+    <ClCompile Include="NewGame.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="ObjectEvent.cpp" />
     <ClCompile Include="ObjectEventCreator.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
     <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="NewGame.h" />
     <ClInclude Include="NewtonianPhysModel.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObjectEvent.h" />

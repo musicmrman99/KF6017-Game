@@ -4,16 +4,13 @@
 
 #include <time.h>
 
-#include "ptrcast.h"
-
 #include "ErrorLogger.h"
 #include "MyDrawEngine.h"
 #include "MySoundEngine.h"
 #include "MyInputs.h"
 #include "GameTimer.h"
-#include "shapes.h"
 
-#include "Level.h"
+#include "NewGame.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
@@ -251,11 +248,7 @@ ErrorType Game::StartOfGame() {
 
     // Create the level and set it as a lifecycle point
     objectManager = ObjectManager::create();
-    objectManager->getObjectFactoryManager().registerFactory(LevelSpec::LEVEL_SPEC, Level::factory);
-    Level::Ptr level = std::static_pointer_cast<Level>(
-        objectManager->createObject(LevelSpec::create(objectManager))
-    );
-    objectManager->addLifecyclePoint(level);
+    NewGame::initialise(objectManager);
 
     return SUCCESS;
 }

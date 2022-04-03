@@ -2,4 +2,5 @@
 
 LevelActor::~LevelActor() {}
 
-void LevelActor::updateLevel(Level& level) {}
+LevelActor::LevelPtr LevelActor::level() { return _level;  }
+void LevelActor::setLevel(LevelPtr level) { _level = level;  }

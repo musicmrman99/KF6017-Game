@@ -19,15 +19,6 @@
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{01262ee5-8b20-4594-9789-26aac9b49894}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Bullet">
-      <UniqueIdentifier>{e3b3db32-97ec-4964-bd62-6e48fb3ab25d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Ship">
-      <UniqueIdentifier>{fb5861c0-d40a-407a-b49c-119e6807c379}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\GlobalUI">
-      <UniqueIdentifier>{bf38540e-46cf-4465-9305-3e5846662b1c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Shared">
       <UniqueIdentifier>{755054ef-32f4-4486-a5df-71de6524c70f}</UniqueIdentifier>
     </Filter>
@@ -241,12 +232,6 @@
     <Filter Include="Source Files\Engine\Events\Traits\EventHandler">
       <UniqueIdentifier>{2205de41-98b3-4934-99bc-e62402ec31d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Engine\Core\Objects">
-      <UniqueIdentifier>{013c5022-9fda-4cf9-963b-c9ee70f3160e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Engine\Core\Objects\Level">
-      <UniqueIdentifier>{0a74a5ba-9aae-4b22-87c5-80613d23591c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Core\Entry">
       <UniqueIdentifier>{5c57ee22-c542-4613-a94c-13b90bc281ab}</UniqueIdentifier>
     </Filter>
@@ -271,14 +256,41 @@
     <Filter Include="Source Files\Engine\Core\Models\ObjectEventFactory">
       <UniqueIdentifier>{87fd758d-1ee0-4ee8-9f88-08f942faa8b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Objects\Level">
-      <UniqueIdentifier>{ac969b9d-4322-4c91-8075-05e4e7aa011c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Core\Objects">
       <UniqueIdentifier>{71cd14f3-5d5f-41a5-9a78-6e672450de93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Engine\Core\Objects\Level">
+    <Filter Include="Header Files\Game\Level">
+      <UniqueIdentifier>{0a74a5ba-9aae-4b22-87c5-80613d23591c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Level\Objects">
+      <UniqueIdentifier>{a040aca5-23f0-4e5c-8ab8-d4e2396c585b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Level\Traits">
+      <UniqueIdentifier>{e8eab0f8-3fa7-4b2e-bdfb-6a6d5eaff45f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Level">
       <UniqueIdentifier>{f58c1541-a741-409c-b588-ef8f35ea1f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Level\Objects">
+      <UniqueIdentifier>{8ec6ee78-de60-4913-b0dc-6f7e8e496f25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Level\Traits">
+      <UniqueIdentifier>{3260a2b8-6b34-4ff6-8ba1-35ed1e7cbbfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects">
+      <UniqueIdentifier>{17d8b849-bab6-414a-af5d-ea91b4361722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\Ship">
+      <UniqueIdentifier>{fb5861c0-d40a-407a-b49c-119e6807c379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\GlobalUI">
+      <UniqueIdentifier>{bf38540e-46cf-4465-9305-3e5846662b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\Bullet">
+      <UniqueIdentifier>{e3b3db32-97ec-4964-bd62-6e48fb3ab25d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\LifecyclePoints">
+      <UniqueIdentifier>{a9a32ceb-0afa-4bcd-a9db-d1c8115ba3c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -453,12 +465,6 @@
     <ClCompile Include="ObjectEventFactory.cpp">
       <Filter>Source Files\Engine\Core\Models\ObjectEventFactory</Filter>
     </ClCompile>
-    <ClCompile Include="Level.cpp">
-      <Filter>Source Files\Game\Objects\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelSpec.cpp">
-      <Filter>Source Files\Engine\Core\Objects\Level</Filter>
-    </ClCompile>
     <ClCompile Include="LifecyclePoint.cpp">
       <Filter>Source Files\Engine\Core</Filter>
     </ClCompile>
@@ -477,8 +483,17 @@
     <ClCompile Include="HasCollision.cpp">
       <Filter>Source Files\Engine\Collision\Traits</Filter>
     </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game\Level\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSpec.cpp">
+      <Filter>Source Files\Game\Level\Objects</Filter>
+    </ClCompile>
     <ClCompile Include="LevelActor.cpp">
-      <Filter>Source Files\Engine\Core\Traits</Filter>
+      <Filter>Source Files\Game\Level\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="NewGame.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -690,28 +705,22 @@
       <Filter>Header Files\Engine\Events\Objects\Controller</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h">
-      <Filter>Header Files\Game\Bullet</Filter>
+      <Filter>Header Files\Game\Objects\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BulletSpec.h">
-      <Filter>Header Files\Game\Bullet</Filter>
+      <Filter>Header Files\Game\Objects\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="GlobalUISpec.h">
-      <Filter>Header Files\Game\GlobalUI</Filter>
+      <Filter>Header Files\Game\Objects\GlobalUI</Filter>
     </ClInclude>
     <ClInclude Include="GlobalUI.h">
-      <Filter>Header Files\Game\GlobalUI</Filter>
+      <Filter>Header Files\Game\Objects\GlobalUI</Filter>
     </ClInclude>
     <ClInclude Include="ShipSpec.h">
-      <Filter>Header Files\Game\Ship</Filter>
+      <Filter>Header Files\Game\Objects\Ship</Filter>
     </ClInclude>
     <ClInclude Include="Ship.h">
-      <Filter>Header Files\Game\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Header Files\Engine\Core\Objects\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelSpec.h">
-      <Filter>Header Files\Engine\Core\Objects\Level</Filter>
+      <Filter>Header Files\Game\Objects\Ship</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Engine\Core\Entry</Filter>
@@ -737,11 +746,20 @@
     <ClInclude Include="ObjectSpec.h">
       <Filter>Header Files\Engine\Core</Filter>
     </ClInclude>
-    <ClInclude Include="LifecyclePoint.h">
-      <Filter>Header Files\Engine\Core</Filter>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Game\Level\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSpec.h">
+      <Filter>Header Files\Game\Level\Objects</Filter>
     </ClInclude>
     <ClInclude Include="LevelActor.h">
-      <Filter>Header Files\Engine\Core\Traits</Filter>
+      <Filter>Header Files\Game\Level\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="LifecyclePoint.h">
+      <Filter>Header Files\Engine\Core\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="NewGame.h">
+      <Filter>Header Files\Engine\Core\Entry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,10 +8,7 @@
 #include "Bullet.h"
 #include "GlobalUI.h"
 
-Level::Level(LevelSpec::Ptr spec) :
-    HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())),
-    objectManager(spec->objectManager) {
-}
+Level::Level(LevelSpec::Ptr spec) : objectManager(spec->objectManager) {}
 
 const ObjectFactory Level::factory = [](ObjectSpec::UPtr spec) {
     return GameObject::Ptr(new Level(static_unique_pointer_cast<LevelSpec>(move(spec))));
@@ -56,25 +53,13 @@ void Level::afterCreate() {
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 }
 
-void Level::beforeFrame() {}
-void Level::afterFrame() {}
-void Level::beforeDestroy() {}
-
 // Implement LifecyclePoint
 
 void Level::objectCreated(GameObject::Ptr object) {
     if (auto levelActor = std::dynamic_pointer_cast<LevelActor>(object)) {
-        levelActors.push_back(levelActor);
+        levelActor->setLevel(ref().lock());
     }
 }
 
-void Level::objectDestroyed(GameObject::Ptr object) {
-    if (auto levelActor = std::dynamic_pointer_cast<LevelActor>(object)) {
-        levelActors.remove(levelActor);
-    }
-}
-
-void Level::run() {
-    // We can lock/deref the ref, as the Level must exist - this function is being run on it
-    for (LevelActor::Ptr& levelActor : levelActors) levelActor->updateLevel(*this);
-}
+void Level::objectDestroyed(GameObject::Ptr object) {}
+void Level::run() {}
