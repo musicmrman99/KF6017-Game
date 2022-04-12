@@ -5,7 +5,6 @@
 #include "BasicCollision.h"
 #include "Graphics.h"
 
-#include "Ship.h"
 #include "Bullet.h"
 #include "GlobalUI.h"
 
@@ -20,21 +19,28 @@ const ObjectFactory Level::factory = [](ObjectSpec::UPtr spec) {
 };
 
 void Level::afterCreate() {
-    // Lock the object manager for the whole function
+    MyDrawEngine* de = MyDrawEngine::GetInstance();
+
+    // Lock the object manager pointer for the whole function
     ObjectManager::Ptr objectManager = this->objectManager.lock();
 
     /* Register Factories
     -------------------- */
 
     ObjectFactoryManager& objectFactory = objectManager->getObjectFactoryManager();
-    // Lifecycle Points & Controllers
+    // Lifecycle Points & General Purpose
     objectFactory.registerFactory(BasicCollisionSpec::BASIC_COLLISION_SPEC, BasicCollision::factory);
     objectFactory.registerFactory(ControllerSpec::CONTROLLER, Controller::factory);
 
-    // Objects
-    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
-    objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
+    // UI & World
     objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
+    objectFactory.registerFactory(StarFieldSpec::STAR_FIELD, StarField::factory);
+
+    // Actors
+    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
+
+    // Objects
+    objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
 
     /* Define Lifecycle Points
     -------------------- */
@@ -53,8 +59,9 @@ void Level::afterCreate() {
     /* Load Resources
     -------------------- */
 
-    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-    PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
+    PictureIndex playerSprite = de->LoadPicture(L"assets\\basic.bmp");
+    PictureIndex bulletSprite = de->LoadPicture(L"assets\\bullet.bmp");
+    PictureIndex starSprite = de->LoadPicture(L"assets\\star.bmp");
 
     /* Game Setup
     -------------------- */
@@ -62,18 +69,20 @@ void Level::afterCreate() {
     // Global UI
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 
-    // Create player
-    GameObject::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
-        Vector2D(0.0f, 0.0f), // Centre of the world
-        Vector2D(0.0f, 1.0f), // Facing up
-        playerSprite,
-        bulletSprite
-    )));
+    // Player
+    player = std::static_pointer_cast<Ship>(
+        objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
+            Vector2D(0.0f, 0.0f), // Centre of the world
+            Vector2D(0.0f, 1.0f), // Facing up
+            playerSprite,
+            bulletSprite
+        )))
+    );
 
     setCameraFocus(std::dynamic_pointer_cast<HasPhysOf<NewtonianPhysModel>>(player));
-    MyDrawEngine::GetInstance()->UseCamera(true);
+    de->UseCamera(true);
 
-    // Create player controller (a key map)
+    // Player controller (a key map)
     KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
@@ -82,6 +91,17 @@ void Level::afterCreate() {
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
+
+    // Star field
+    starField = std::static_pointer_cast<StarField>(
+        objectManager->createObject(StarFieldSpec::create(
+            Vector2D(0.0f, 0.0f),
+            Vector2D(2000 * (de->GetScreenWidth() / (float) de->GetScreenHeight()), 2000),
+            0.000007f, // 7 / 1,000,000
+            starSprite
+        ))
+    );
+    starField->setNumLayers(5);
 }
 
 // Modifying global state
@@ -99,7 +119,11 @@ void Level::objectCreated(GameObject::Ptr object) {
 }
 
 void Level::run() {
+    // Camera focus (track player)
     latencyQueue.push(cameraFocusObject->physModel().pos());
     MyDrawEngine::GetInstance()->theCamera.PlaceAt(latencyQueue.front());
     if (latencyQueue.size() > LATENCY) latencyQueue.pop();
+
+    // Stars (track player)
+    starField->physModel().setPos(player->physModel().pos());
 }

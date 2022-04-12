@@ -151,6 +151,8 @@ private:
 	static constexpr int COLLISION_BREADTH = 50;
 
 public:
+	using Ptr = std::shared_ptr<Ship>;
+
 	// Lifecycle
 
 	Ship(ShipSpec::Ptr spec);

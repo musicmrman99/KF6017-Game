@@ -81,6 +81,8 @@
     <ClCompile Include="Segment2D.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="ShipSpec.cpp" />
+    <ClCompile Include="StarField.cpp" />
+    <ClCompile Include="StarFieldSpec.cpp" />
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="TargettedEvent.cpp" />
     <ClCompile Include="Timer.cpp" />
@@ -174,6 +176,8 @@
     <ClInclude Include="Shapes.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="ShipSpec.h" />
+    <ClInclude Include="StarField.h" />
+    <ClInclude Include="StarFieldSpec.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="TargettedEvent.h" />
     <ClInclude Include="Timer.h" />

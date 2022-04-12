@@ -4,6 +4,9 @@
 #include <queue>
 #include "Referencing.h"
 
+#include "Ship.h"
+#include "StarField.h"
+
 // Traits
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
@@ -29,12 +32,16 @@ private:
 	// Must depend more heavily on the object manager than just creating objects -
 	// it must register object event factories at least.
 	ObjectManager::WPtr objectManager;
+	Level(LevelSpec::Ptr spec);
 
+	// Camera
 	HasPhysOf<NewtonianPhysModel>::Ptr cameraFocusObject;
 	std::queue<Vector2D> latencyQueue;
 	static const int LATENCY = 30;
 
-	Level(LevelSpec::Ptr spec);
+	// Global entities
+	Ship::Ptr player;
+	StarField::Ptr starField;
 
 public:
 	using Ptr = std::shared_ptr<Level>;
