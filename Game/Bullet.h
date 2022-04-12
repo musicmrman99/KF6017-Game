@@ -1,25 +1,31 @@
 #pragma once
 
+// Dependencies
+  // Basic
 #include <functional>
-
 #include "Referencing.h"
 
+  // Objects
+#include "Timer.h"
+
+// Traits
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
 #include "HasEventHandlerOf.h"
 #include "HasCollisionOf.h"
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
-
 #include "ObjectEventCreator.h"
+
+// Models
 #include "BufferedEventEmitter.h"
 #include "BasicCollisionModel.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
 
+// Creation
 #include "ObjectFactory.h"
 #include "BulletSpec.h"
-#include "Timer.h"
 
 class Bullet;
 

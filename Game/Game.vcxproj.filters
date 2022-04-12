@@ -1,0 +1,813 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Engine">
+      <UniqueIdentifier>{5e182a0e-5e67-446c-9312-8b11b7b881d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{01262ee5-8b20-4594-9789-26aac9b49894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared">
+      <UniqueIdentifier>{755054ef-32f4-4486-a5df-71de6524c70f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\UpgradeTree">
+      <UniqueIdentifier>{dcf195cf-61d8-42bc-ae80-3e079c06505a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\UpgradeTree\Traits">
+      <UniqueIdentifier>{050422bb-1798-4bd9-a5fc-f5f79c9e2cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\UpgradeTree\Models">
+      <UniqueIdentifier>{7129b812-0583-4a4f-8c44-de39d58d8e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\UpgradeTree\Utils">
+      <UniqueIdentifier>{52f4c69c-1b60-46a3-94c9-3dc22f645661}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{e719a226-3f2a-4da0-b25f-fe0bd0ef430b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision">
+      <UniqueIdentifier>{d79bb07e-34ab-48bf-8f52-ecd92cea8e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Collision">
+      <UniqueIdentifier>{68188fd3-e674-47a2-87ce-2771f0c64ff5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Collision\Models">
+      <UniqueIdentifier>{992f9876-2d92-4a7b-83dc-2bf211228c57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Collision\Traits">
+      <UniqueIdentifier>{27a9606e-2796-47a6-9ce0-51e380736482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core">
+      <UniqueIdentifier>{08e651a4-9da9-44c2-a6e9-8896877e9ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics">
+      <UniqueIdentifier>{07217a61-613e-4de3-a42d-d43023c4133a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Utils">
+      <UniqueIdentifier>{908aa2d5-20ca-43f2-abb1-ef1864f613a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Models">
+      <UniqueIdentifier>{a4c2ee4f-a4c8-4780-a937-189b6b267b7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Traits">
+      <UniqueIdentifier>{c9d9188f-26b8-4f08-a332-8e7caa351d64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Traits\Graphics">
+      <UniqueIdentifier>{7a243815-db69-4386-8a2f-8dabcc13d2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Traits\UI">
+      <UniqueIdentifier>{d6fd887c-2f7b-4d3e-8ff2-36b5fdd8eed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics">
+      <UniqueIdentifier>{511bc0e0-47a9-4453-a614-f9df1e83ad09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics\Traits">
+      <UniqueIdentifier>{aba59366-4433-4fb5-8318-3ce456e2028d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics\Models">
+      <UniqueIdentifier>{b592486e-f91a-4ed0-b81f-cccea66bd999}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Utils">
+      <UniqueIdentifier>{ba7356e9-3b48-44b0-9de9-b3def439b67a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core">
+      <UniqueIdentifier>{997dd7e6-7f0a-422c-ad68-ceb3413de438}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics">
+      <UniqueIdentifier>{f2bf33c7-8d31-4bb7-a147-9485549c96b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events">
+      <UniqueIdentifier>{16d881d4-df78-404a-91c2-f0bc51c38cb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models">
+      <UniqueIdentifier>{fe9aa625-a645-4110-8cf3-95cb89f3bb4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\BufferedEventEmitter">
+      <UniqueIdentifier>{c538b64c-e074-4f71-92d9-6e0ead0b7304}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\KeyMap">
+      <UniqueIdentifier>{a45afecc-c131-4ed1-a83b-a465310f99ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\Timer">
+      <UniqueIdentifier>{b191dbbe-c1ae-4dd1-b987-0c1e99a636c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Objects">
+      <UniqueIdentifier>{267261cf-3ec3-4c97-95e7-22e239820015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Traits">
+      <UniqueIdentifier>{32159964-36bb-43e4-a156-8b5cd3809173}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Traits\EventEmitter">
+      <UniqueIdentifier>{08f18712-c8a1-4333-b468-b5d414002d27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Traits\EventHandler">
+      <UniqueIdentifier>{3ba4e937-ea80-4bb4-912c-2d0a3d0d71ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events">
+      <UniqueIdentifier>{c07762a8-550d-41e3-8c4f-88360c1b3f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics">
+      <UniqueIdentifier>{10ac292c-2ae8-4873-b697-5512c488cf71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utils">
+      <UniqueIdentifier>{e3da7eed-edcd-4d4a-b635-ad6dc847126e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision\Models">
+      <UniqueIdentifier>{bdfd97d4-80a5-48b5-bda8-8639b0073345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Collision\Traits">
+      <UniqueIdentifier>{5f225de5-6ecf-4da1-823d-a0e9c05a3a07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models">
+      <UniqueIdentifier>{695fd280-2ec4-4a74-93b3-7a504bff3976}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects">
+      <UniqueIdentifier>{37025a29-3d56-423b-bd17-312168ff11e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Traits">
+      <UniqueIdentifier>{a1956b0a-9db2-4eb9-a118-85ff7c320275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Models">
+      <UniqueIdentifier>{a1c25161-6471-4fd7-a184-b88a2f86cc04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Traits">
+      <UniqueIdentifier>{6f207e2d-7b7e-4ea7-aa80-a89324e01bdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Utils">
+      <UniqueIdentifier>{83384ec9-fd03-4e5c-9047-11357a1c1c09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics\Models">
+      <UniqueIdentifier>{3293add4-2532-4429-b75f-2d9632fc9711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics\Traits">
+      <UniqueIdentifier>{bc9b0071-fe47-4ba4-9b5e-16fa17d1c9dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Utils\Engine">
+      <UniqueIdentifier>{a6a88170-79b3-4b7e-8388-50784e4c27b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Utils\Engine\Shapes">
+      <UniqueIdentifier>{f3fa5872-6b7d-4009-9d24-440a7d91b53b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utils\Engine">
+      <UniqueIdentifier>{ce82d79f-c575-423e-906f-3e0eaeb81114}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utils\Engine\Shapes">
+      <UniqueIdentifier>{6cd09ab2-3132-4baa-908b-26ff727a00b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Utils\General">
+      <UniqueIdentifier>{e79241b5-2e84-46a4-8300-2c231e8a4863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{50354562-b173-4827-98b8-e73733bc7f1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared">
+      <UniqueIdentifier>{f9d43396-83b6-4a6a-a11a-ff45045a581d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\UpgradeTree">
+      <UniqueIdentifier>{33e777a6-5fdc-4f0b-8930-52beccddbf15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\UpgradeTree\Traits">
+      <UniqueIdentifier>{27cb7f0f-3ccb-435e-be4c-8af560f02dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\UpgradeTree\Models">
+      <UniqueIdentifier>{17b98b70-ce70-4c56-a2e6-eaef82517cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Utils\General">
+      <UniqueIdentifier>{34b2b48e-eaff-4d60-9b30-ac4f33b45540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Traits\Graphics">
+      <UniqueIdentifier>{975ba786-0cc3-49b9-804d-24906397d58a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Traits\UI">
+      <UniqueIdentifier>{bec468ea-bdf6-49db-bce2-ec33593486e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Objects\Controller">
+      <UniqueIdentifier>{0c6f5393-8365-4fd7-aee1-6fb46558e734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Objects\Controller">
+      <UniqueIdentifier>{2a8d3f3a-adc5-40bc-b3ff-6d60d4bd26c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects">
+      <UniqueIdentifier>{60642d90-2a05-4b26-bee8-6043ac9d3047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Ship">
+      <UniqueIdentifier>{b69dbcc3-abb6-461c-b44f-25fa9f97afa0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\BufferedEventEmitter">
+      <UniqueIdentifier>{b1b6bb71-7f57-4890-985c-dda50ec59473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\KeyMap">
+      <UniqueIdentifier>{1ae8374c-a357-49b8-96f8-bf5d123e3a7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\Timer">
+      <UniqueIdentifier>{424d4464-1946-4102-8e93-ac49163284ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Traits\EventEmitter">
+      <UniqueIdentifier>{ad98062a-a54d-4323-8ec2-af5dd92b35a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Traits\EventHandler">
+      <UniqueIdentifier>{2205de41-98b3-4934-99bc-e62402ec31d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Entry">
+      <UniqueIdentifier>{5c57ee22-c542-4613-a94c-13b90bc281ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Entry">
+      <UniqueIdentifier>{36d3181b-c883-4973-a175-337055cc4527}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Traits">
+      <UniqueIdentifier>{19a2e190-0959-41fb-89bc-f4955e30c8de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Models">
+      <UniqueIdentifier>{83687f70-8447-4a0b-bbd6-51d823c641c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\Models\ObjectEventFactory">
+      <UniqueIdentifier>{ad535093-a5fd-4e65-b3f5-335081f1090b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Traits">
+      <UniqueIdentifier>{22c793eb-54ff-4a1c-8677-fc3c759d0ebe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Models">
+      <UniqueIdentifier>{58351787-a581-4342-9663-f4f1a5625d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\Models\ObjectEventFactory">
+      <UniqueIdentifier>{87fd758d-1ee0-4ee8-9f88-08f942faa8b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Level">
+      <UniqueIdentifier>{0a74a5ba-9aae-4b22-87c5-80613d23591c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Level\Traits">
+      <UniqueIdentifier>{e8eab0f8-3fa7-4b2e-bdfb-6a6d5eaff45f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Level">
+      <UniqueIdentifier>{f58c1541-a741-409c-b588-ef8f35ea1f3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Level\Traits">
+      <UniqueIdentifier>{3260a2b8-6b34-4ff6-8ba1-35ed1e7cbbfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects">
+      <UniqueIdentifier>{17d8b849-bab6-414a-af5d-ea91b4361722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\Ship">
+      <UniqueIdentifier>{fb5861c0-d40a-407a-b49c-119e6807c379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\GlobalUI">
+      <UniqueIdentifier>{bf38540e-46cf-4465-9305-3e5846662b1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\Bullet">
+      <UniqueIdentifier>{e3b3db32-97ec-4964-bd62-6e48fb3ab25d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Core\LifecyclePoints">
+      <UniqueIdentifier>{a9a32ceb-0afa-4bcd-a9db-d1c8115ba3c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Core\LifecyclePoints">
+      <UniqueIdentifier>{cbc2fcd1-3667-4e42-881a-2a3a3186bfad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\LifecyclePoints">
+      <UniqueIdentifier>{9e0e42e0-3781-4efc-a105-a46ff6b04780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\LifecyclePoints">
+      <UniqueIdentifier>{798e10bb-9743-46db-a84c-bb3b3dfa96fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physics\LifecyclePoints">
+      <UniqueIdentifier>{92a6afcb-3d81-4a2c-a71b-6677a14d343a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physics\LifecyclePoints">
+      <UniqueIdentifier>{58699256-a287-4ab5-a8c5-0ccf90a32406}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Bullet">
+      <UniqueIdentifier>{5af281a7-bdbe-4cc6-848b-93db3cdf9744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\GlobalUI">
+      <UniqueIdentifier>{aeff6197-921f-471c-a0b2-e689d9c58156}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\LifecyclePoints">
+      <UniqueIdentifier>{8c452835-f858-4ff2-902f-a026179556df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\LifecyclePoints">
+      <UniqueIdentifier>{53704f31-2350-4b8d-be39-698f222ba91a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Star">
+      <UniqueIdentifier>{c98b0ba9-e22b-42fe-989c-baa32e3ee4e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\StarField">
+      <UniqueIdentifier>{53cd9268-2503-41ed-8ab4-c331cde37576}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AngledRectangle2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="IShape2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Point2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Segment2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files\Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorLogger.cpp">
+      <Filter>Source Files\Engine\Utils\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="gametimer.cpp">
+      <Filter>Source Files\Engine\Utils\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="mysoundengine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TargettedEvent.cpp">
+      <Filter>Source Files\Engine\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="vector2D.cpp">
+      <Filter>Source Files\Engine\Utils\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeTreeUI.cpp">
+      <Filter>Source Files\Game\Shared\UpgradeTree\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeTree.cpp">
+      <Filter>Source Files\Game\Shared\UpgradeTree\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="UpgradeTreeObserver.cpp">
+      <Filter>Source Files\Game\Shared\UpgradeTree\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="HasUpgradeTree.cpp">
+      <Filter>Source Files\Game\Shared\UpgradeTree\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="Symbol.cpp">
+      <Filter>Source Files\Engine\Utils\General</Filter>
+    </ClCompile>
+    <ClCompile Include="HasPhys.cpp">
+      <Filter>Source Files\Engine\Physics\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysObserver.cpp">
+      <Filter>Source Files\Engine\Physics\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysModel.cpp">
+      <Filter>Source Files\Engine\Physics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="NewtonianPhysModel.cpp">
+      <Filter>Source Files\Engine\Physics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>Source Files\Engine\Graphics\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsObserver.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="HasGraphics.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="HasUI.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageGraphicsModel.cpp">
+      <Filter>Source Files\Engine\Graphics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="UIObserver.cpp">
+      <Filter>Source Files\Engine\Graphics\Traits\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mydrawengine.cpp">
+      <Filter>Source Files\Engine\Graphics\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files\Engine\Events\Objects\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllerSpec.cpp">
+      <Filter>Source Files\Engine\Events\Objects\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files\Game\Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSpec.cpp">
+      <Filter>Source Files\Game\Objects\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUI.cpp">
+      <Filter>Source Files\Game\Objects\GlobalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalUISpec.cpp">
+      <Filter>Source Files\Game\Objects\GlobalUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandler.cpp">
+      <Filter>Source Files\Engine\Events\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferedEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Models\BufferedEventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyMap.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="EventEmitterObserver.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="EventHandlerObserver.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="HasEventEmitter.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClCompile>
+    <ClCompile Include="HasEventHandler.cpp">
+      <Filter>Source Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files\Engine\Events\Models\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="myinputs.cpp">
+      <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactoryManager.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectSpec.cpp">
+      <Filter>Source Files\Engine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files\Engine\Core\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="winmain.cpp">
+      <Filter>Source Files\Engine\Core\Entry</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\Engine\Core\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEventCreator.cpp">
+      <Filter>Source Files\Engine\Core\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEvent.cpp">
+      <Filter>Source Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectEventFactory.cpp">
+      <Filter>Source Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollisionModel.cpp">
+      <Filter>Source Files\Engine\Collision\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionModel.cpp">
+      <Filter>Source Files\Engine\Collision\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionObserver.cpp">
+      <Filter>Source Files\Engine\Collision\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="HasCollision.cpp">
+      <Filter>Source Files\Engine\Collision\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelActor.cpp">
+      <Filter>Source Files\Game\Level\Traits</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelSpec.cpp">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="LifecyclePoint.cpp">
+      <Filter>Source Files\Engine\Core\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollisionSpec.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicCollision.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>Source Files\Engine\Events\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics.cpp">
+      <Filter>Source Files\Engine\Physics\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics.cpp">
+      <Filter>Source Files\Engine\Graphics\LifecyclePoints</Filter>
+    </ClCompile>
+    <ClCompile Include="NewGame.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="StarField.cpp">
+      <Filter>Source Files\Game\Objects\Star</Filter>
+    </ClCompile>
+    <ClCompile Include="StarFieldSpec.cpp">
+      <Filter>Source Files\Game\Objects\Star</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AngledRectangle2D.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollisionModel.h">
+      <Filter>Header Files\Engine\Collision\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>Header Files\Engine\Graphics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle2D.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionModel.h">
+      <Filter>Header Files\Engine\Collision\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionObserver.h">
+      <Filter>Header Files\Engine\Collision\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionObserverOf.h">
+      <Filter>Header Files\Engine\Collision\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferedEventEmitter.h">
+      <Filter>Header Files\Engine\Events\Models\BufferedEventEmitter</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
+      <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitter.h">
+      <Filter>Header Files\Engine\Events\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>Header Files\Engine\Events\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitterObserver.h">
+      <Filter>Header Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClInclude>
+    <ClInclude Include="EventEmitterObserverOf.h">
+      <Filter>Header Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlerObserver.h">
+      <Filter>Header Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandlerObserverOf.h">
+      <Filter>Header Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsModel.h">
+      <Filter>Header Files\Engine\Graphics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObserver.h">
+      <Filter>Header Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsObserverOf.h">
+      <Filter>Header Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HasCollision.h">
+      <Filter>Header Files\Engine\Collision\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="HasCollisionOf.h">
+      <Filter>Header Files\Engine\Collision\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventEmitter.h">
+      <Filter>Header Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventEmitterOf.h">
+      <Filter>Header Files\Engine\Events\Traits\EventEmitter</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventHandler.h">
+      <Filter>Header Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="HasEventHandlerOf.h">
+      <Filter>Header Files\Engine\Events\Traits\EventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="HasGraphics.h">
+      <Filter>Header Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HasGraphicsOf.h">
+      <Filter>Header Files\Engine\Graphics\Traits\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HasPhys.h">
+      <Filter>Header Files\Engine\Physics\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="HasPhysOf.h">
+      <Filter>Header Files\Engine\Physics\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="HasUI.h">
+      <Filter>Header Files\Engine\Graphics\Traits\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HasUIOf.h">
+      <Filter>Header Files\Engine\Graphics\Traits\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HasUpgradeTree.h">
+      <Filter>Header Files\Game\Shared\UpgradeTree\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageGraphicsModel.h">
+      <Filter>Header Files\Engine\Graphics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="IShape2D.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyMap.h">
+      <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="mydrawengine.h">
+      <Filter>Header Files\Engine\Graphics\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="mysoundengine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="NewtonianPhysModel.h">
+      <Filter>Header Files\Engine\Physics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\Game\Shared\UpgradeTree\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactoryManager.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysModel.h">
+      <Filter>Header Files\Engine\Physics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysObserver.h">
+      <Filter>Header Files\Engine\Physics\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysObserverOf.h">
+      <Filter>Header Files\Engine\Physics\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2D.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle2D.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Segment2D.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes.h">
+      <Filter>Header Files\Engine\Utils\Engine\Shapes</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files\Engine\Events\Models\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="TargettedEvent.h">
+      <Filter>Header Files\Engine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeTreeObserver.h">
+      <Filter>Header Files\Game\Shared\UpgradeTree\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeTree.h">
+      <Filter>Header Files\Game\Shared\UpgradeTree\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="UpgradeTreeUI.h">
+      <Filter>Header Files\Game\Shared\UpgradeTree\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObserver.h">
+      <Filter>Header Files\Engine\Graphics\Traits\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIObserverOf.h">
+      <Filter>Header Files\Engine\Graphics\Traits\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="myinputs.h">
+      <Filter>Header Files\Engine\Events\Models\KeyMap</Filter>
+    </ClInclude>
+    <ClInclude Include="ptrcast.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Derived.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="QueueUtils.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="ReferenceWrapperUtils.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Referencing.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Tracker.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbol.h">
+      <Filter>Header Files\Engine\Utils\General</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorLogger.h">
+      <Filter>Header Files\Engine\Utils\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="errortype.h">
+      <Filter>Header Files\Engine\Utils\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="gametimer.h">
+      <Filter>Header Files\Engine\Utils\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="vector2D.h">
+      <Filter>Header Files\Engine\Utils\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ControllerSpec.h">
+      <Filter>Header Files\Engine\Events\Objects\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Header Files\Engine\Events\Objects\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files\Game\Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSpec.h">
+      <Filter>Header Files\Game\Objects\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalUISpec.h">
+      <Filter>Header Files\Game\Objects\GlobalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalUI.h">
+      <Filter>Header Files\Game\Objects\GlobalUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipSpec.h">
+      <Filter>Header Files\Game\Objects\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Header Files\Game\Objects\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files\Engine\Core\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\Engine\Core\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventCreator.h">
+      <Filter>Header Files\Engine\Core\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEventFactory.h">
+      <Filter>Header Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEvent.h">
+      <Filter>Header Files\Engine\Core\Models\ObjectEventFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectSpec.h">
+      <Filter>Header Files\Engine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelActor.h">
+      <Filter>Header Files\Game\Level\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="LifecyclePoint.h">
+      <Filter>Header Files\Engine\Core\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="NewGame.h">
+      <Filter>Header Files\Engine\Core\Entry</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Header Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSpec.h">
+      <Filter>Header Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollision.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicCollisionSpec.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Header Files\Engine\Events\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Physics.h">
+      <Filter>Header Files\Engine\Physics\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>Header Files\Engine\Graphics\LifecyclePoints</Filter>
+    </ClInclude>
+    <ClInclude Include="StarField.h">
+      <Filter>Header Files\Game\Objects\StarField</Filter>
+    </ClInclude>
+    <ClInclude Include="StarFieldSpec.h">
+      <Filter>Header Files\Game\Objects\StarField</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -4,22 +4,13 @@
 
 #include <time.h>
 
-#include "ptrcast.h"
-
 #include "ErrorLogger.h"
 #include "MyDrawEngine.h"
 #include "MySoundEngine.h"
 #include "MyInputs.h"
 #include "GameTimer.h"
-#include "shapes.h"
 
-#include "Ship.h"
-#include "Bullet.h"
-#include "GlobalUI.h"
-
-#include "Controller.h"
-#include "KeyMap.h"
-#include "BasicCollision.h"
+#include "NewGame.h"
 
 Game::Game() :
     m_currentState(GameState::MENU),
@@ -255,47 +246,9 @@ ErrorType Game::StartOfGame() {
     gt.mark();
     gt.mark();
 
-    // Game setup
-
-    // Load Resources
-    PictureIndex playerSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\basic.bmp");
-    PictureIndex bulletSprite = MyDrawEngine::GetInstance()->LoadPicture(L"assets\\bullet.bmp");
-
-    // Objects
+    // Create the level and set it as a lifecycle point
     objectManager = ObjectManager::create();
-
-      // Register Factories
-    ObjectFactoryManager& objectFactory = objectManager->getObjectFactoryManager();
-      // Controllers
-    objectFactory.registerFactory(ControllerSpec::CONTROLLER, Controller::factory);
-      // Objects
-    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
-    objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
-    objectFactory.registerFactory(GlobalUISpec::GLOBAL_UI, GlobalUI::factory);
-
-      // Create collision system
-    objectManager->createObject(ControllerSpec::create(BasicCollision::create(objectManager)));
-
-      // Create player
-    GameObject::Ptr player = objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
-        Vector2D(0.0f, 0.0f), // Centre of the world
-        Vector2D(0.0f, 1.0f), // Facing up
-        playerSprite,
-        bulletSprite
-    )));
-
-      // Player Keymap
-    KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new ShipEventHandler::TurnRightThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new ShipEventHandler::FireEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
-
-    objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
-
-      // Global UI
-    objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
+    NewGame::initialise(objectManager);
 
     return SUCCESS;
 }

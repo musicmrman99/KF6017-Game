@@ -22,6 +22,9 @@ private:
     using TDPhysModelWPtr = std::weak_ptr<TDPhysModel>;
 
 public:
+    using Ptr = std::shared_ptr<HasPhysOf<TDPhysModel>>;
+    using WPtr = std::weak_ptr<HasPhysOf<TDPhysModel>>;
+
     HasPhysOf(TDPhysModelPtr physModel) : HasPhys(physModel) {}
 
     // Note: Non-virtual hiding is intended.

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AngledRectangle2D.cpp" />
+    <ClCompile Include="BasicCollision.cpp" />
+    <ClCompile Include="BasicCollisionModel.cpp" />
+    <ClCompile Include="BasicCollisionSpec.cpp" />
+    <ClCompile Include="BufferedEventEmitter.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletSpec.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="Circle2D.cpp" />
+    <ClCompile Include="CollisionModel.cpp" />
+    <ClCompile Include="CollisionObserver.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="ControllerSpec.cpp" />
+    <ClCompile Include="Controls.cpp" />
+    <ClCompile Include="ErrorLogger.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventEmitter.cpp" />
+    <ClCompile Include="EventEmitterObserver.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventHandlerObserver.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="gametimer.cpp" />
+    <ClCompile Include="GlobalUI.cpp" />
+    <ClCompile Include="GlobalUISpec.cpp" />
+    <ClCompile Include="Graphics.cpp" />
+    <ClCompile Include="GraphicsModel.cpp" />
+    <ClCompile Include="GraphicsObserver.cpp" />
+    <ClCompile Include="HasCollision.cpp" />
+    <ClCompile Include="HasEventEmitter.cpp" />
+    <ClCompile Include="HasEventHandler.cpp" />
+    <ClCompile Include="HasGraphics.cpp" />
+    <ClCompile Include="HasPhys.cpp" />
+    <ClCompile Include="HasUI.cpp" />
+    <ClCompile Include="HasUpgradeTree.cpp" />
+    <ClCompile Include="ImageGraphicsModel.cpp" />
+    <ClCompile Include="IShape2D.cpp" />
+    <ClCompile Include="KeyMap.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelActor.cpp" />
+    <ClCompile Include="LevelSpec.cpp" />
+    <ClCompile Include="mydrawengine.cpp" />
+    <ClCompile Include="myinputs.cpp" />
+    <ClCompile Include="mysoundengine.cpp" />
+    <ClCompile Include="NewGame.cpp" />
+    <ClCompile Include="NewtonianPhysModel.cpp" />
+    <ClCompile Include="ObjectEvent.cpp" />
+    <ClCompile Include="ObjectEventCreator.cpp" />
+    <ClCompile Include="ObjectEventFactory.cpp" />
+    <ClCompile Include="ObjectFactoryManager.cpp" />
+    <ClCompile Include="LifecyclePoint.cpp" />
+    <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="ObjectSpec.cpp" />
+    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="PhysModel.cpp" />
+    <ClCompile Include="PhysObserver.cpp" />
+    <ClCompile Include="Point2D.cpp" />
+    <ClCompile Include="Rectangle2D.cpp" />
+    <ClCompile Include="Segment2D.cpp" />
+    <ClCompile Include="Ship.cpp" />
+    <ClCompile Include="ShipSpec.cpp" />
+    <ClCompile Include="StarField.cpp" />
+    <ClCompile Include="StarFieldSpec.cpp" />
+    <ClCompile Include="Symbol.cpp" />
+    <ClCompile Include="TargettedEvent.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="UIObserver.cpp" />
+    <ClCompile Include="UpgradeTree.cpp" />
+    <ClCompile Include="UpgradeTreeObserver.cpp" />
+    <ClCompile Include="UpgradeTreeUI.cpp" />
+    <ClCompile Include="vector2D.cpp" />
+    <ClCompile Include="winmain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AngledRectangle2D.h" />
+    <ClInclude Include="BasicCollision.h" />
+    <ClInclude Include="BasicCollisionModel.h" />
+    <ClInclude Include="BasicCollisionSpec.h" />
+    <ClInclude Include="BufferedEventEmitter.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletSpec.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="Circle2D.h" />
+    <ClInclude Include="CollisionModel.h" />
+    <ClInclude Include="CollisionObserver.h" />
+    <ClInclude Include="CollisionObserverOf.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="ControllerSpec.h" />
+    <ClInclude Include="Controls.h" />
+    <ClInclude Include="Derived.h" />
+    <ClInclude Include="ErrorLogger.h" />
+    <ClInclude Include="errortype.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventEmitter.h" />
+    <ClInclude Include="EventEmitterObserver.h" />
+    <ClInclude Include="EventEmitterObserverOf.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventHandlerObserver.h" />
+    <ClInclude Include="EventHandlerObserverOf.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="gametimer.h" />
+    <ClInclude Include="GlobalUI.h" />
+    <ClInclude Include="GlobalUISpec.h" />
+    <ClInclude Include="Graphics.h" />
+    <ClInclude Include="GraphicsModel.h" />
+    <ClInclude Include="GraphicsObserver.h" />
+    <ClInclude Include="GraphicsObserverOf.h" />
+    <ClInclude Include="HasCollision.h" />
+    <ClInclude Include="HasCollisionOf.h" />
+    <ClInclude Include="HasEventEmitter.h" />
+    <ClInclude Include="HasEventEmitterOf.h" />
+    <ClInclude Include="HasEventHandler.h" />
+    <ClInclude Include="HasEventHandlerOf.h" />
+    <ClInclude Include="HasGraphics.h" />
+    <ClInclude Include="HasGraphicsOf.h" />
+    <ClInclude Include="HasPhys.h" />
+    <ClInclude Include="HasPhysOf.h" />
+    <ClInclude Include="HasUI.h" />
+    <ClInclude Include="HasUIOf.h" />
+    <ClInclude Include="HasUpgradeTree.h" />
+    <ClInclude Include="ImageGraphicsModel.h" />
+    <ClInclude Include="IShape2D.h" />
+    <ClInclude Include="KeyMap.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelActor.h" />
+    <ClInclude Include="LevelSpec.h" />
+    <ClInclude Include="mydrawengine.h" />
+    <ClInclude Include="myinputs.h" />
+    <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="NewGame.h" />
+    <ClInclude Include="NewtonianPhysModel.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="ObjectEvent.h" />
+    <ClInclude Include="ObjectEventCreator.h" />
+    <ClInclude Include="ObjectEventFactory.h" />
+    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="ObjectFactoryManager.h" />
+    <ClInclude Include="LifecyclePoint.h" />
+    <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="ObjectSpec.h" />
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="Physics.h" />
+    <ClInclude Include="PhysModel.h" />
+    <ClInclude Include="PhysObserver.h" />
+    <ClInclude Include="PhysObserverOf.h" />
+    <ClInclude Include="Point2D.h" />
+    <ClInclude Include="ptrcast.h" />
+    <ClInclude Include="QueueUtils.h" />
+    <ClInclude Include="Rectangle2D.h" />
+    <ClInclude Include="ReferenceWrapperUtils.h" />
+    <ClInclude Include="Referencing.h" />
+    <ClInclude Include="Segment2D.h" />
+    <ClInclude Include="Shapes.h" />
+    <ClInclude Include="Ship.h" />
+    <ClInclude Include="ShipSpec.h" />
+    <ClInclude Include="StarField.h" />
+    <ClInclude Include="StarFieldSpec.h" />
+    <ClInclude Include="Symbol.h" />
+    <ClInclude Include="TargettedEvent.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Tracker.h" />
+    <ClInclude Include="UIObserver.h" />
+    <ClInclude Include="UIObserverOf.h" />
+    <ClInclude Include="UpgradeTree.h" />
+    <ClInclude Include="UpgradeTreeObserver.h" />
+    <ClInclude Include="UpgradeTreeUI.h" />
+    <ClInclude Include="vector2D.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{6cd193b4-fe78-468c-b9f2-a1add3ccae58}</ProjectGuid>
+    <RootNamespace>Game</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\Lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

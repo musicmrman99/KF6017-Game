@@ -1,9 +1,10 @@
 #pragma once
 
+// Dependencies
 #include <memory>
-
 #include "MyDrawEngine.h"
 
+// Traits
 #include "GameObject.h"
 #include "HasEventEmitterOf.h"
 #include "HasEventHandlerOf.h"
@@ -11,17 +12,18 @@
 #include "HasPhysOf.h"
 #include "HasGraphicsOf.h"
 #include "HasUIOf.h"
-
-#include "Event.h"
+#include "HasUpgradeTree.h"
 #include "ObjectEventCreator.h"
+
+// Models
+#include "Event.h"
 #include "BufferedEventEmitter.h"
 #include "BasicCollisionModel.h"
 #include "NewtonianPhysModel.h"
 #include "ImageGraphicsModel.h"
-
-#include "HasUpgradeTree.h"
 #include "UpgradeTreeUI.h"
 
+// Creation
 #include "ObjectFactory.h"
 #include "ShipSpec.h"
 
@@ -149,6 +151,8 @@ private:
 	static constexpr int COLLISION_BREADTH = 50;
 
 public:
+	using Ptr = std::shared_ptr<Ship>;
+
 	// Lifecycle
 
 	Ship(ShipSpec::Ptr spec);
@@ -156,7 +160,7 @@ public:
 
 	virtual void buildUpgradeTree(UpgradeTree& upgradeTree) override;
 
-	// Delegate event factory dependencies to components that need them.
+	// Delegate event factory dependency to components that need it.
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void beforeFrame() override;
