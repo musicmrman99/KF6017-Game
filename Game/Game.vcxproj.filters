@@ -298,11 +298,11 @@
     <Filter Include="Header Files\Engine\Graphics\LifecyclePoints">
       <UniqueIdentifier>{53704f31-2350-4b8d-be39-698f222ba91a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Objects\Star">
-      <UniqueIdentifier>{c98b0ba9-e22b-42fe-989c-baa32e3ee4e6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Objects\StarField">
       <UniqueIdentifier>{53cd9268-2503-41ed-8ab4-c331cde37576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\StarField">
+      <UniqueIdentifier>{c98b0ba9-e22b-42fe-989c-baa32e3ee4e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -520,10 +520,10 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="StarField.cpp">
-      <Filter>Source Files\Game\Objects\Star</Filter>
+      <Filter>Source Files\Game\Objects\StarField</Filter>
     </ClCompile>
     <ClCompile Include="StarFieldSpec.cpp">
-      <Filter>Source Files\Game\Objects\Star</Filter>
+      <Filter>Source Files\Game\Objects\StarField</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
