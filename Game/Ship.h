@@ -144,7 +144,7 @@ class Ship final :
 	public HasGraphicsOf<ImageGraphicsModel>,
 	public HasUpgradeTree,
 	public HasUIOf<UpgradeTreeUI>,
-	public ObjectEventCreator // FIXME: well, it's not really - but we need the reference, and ObjectManager will only give it to us if we are one of these.
+	public ObjectEventCreator
 {
 private:
 	static constexpr int COLLISION_LENGTH = 100;
