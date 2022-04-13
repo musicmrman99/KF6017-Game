@@ -35,9 +35,10 @@ private:
 	Level(LevelSpec::Ptr spec);
 
 	// Camera
+	Vector2D cameraOffset;
 	HasPhysOf<NewtonianPhysModel>::Ptr cameraFocusObject;
-	std::queue<Vector2D> latencyQueue;
-	static const int LATENCY = 30;
+	static const float CAMERA_SHIFT;
+	static const float CAMERA_ELASTICITY;
 
 	// Global entities
 	Ship::Ptr player;

@@ -12,10 +12,20 @@
 #include "KeyMap.h"
 #include "Game.h"
 
+// Multiplier for how much the camera focus object's acceleration shifts the camera away from it.
+const float Level::CAMERA_SHIFT = 40.0f;
+
+//      0 = completely elastic (camera doesn't 'pull' back to camera focus object)
+// (0, 1) = somewhat elastic   (camera 'pulls' back to camera focus object at given rate)
+//      1 = completely rigid   (camera 'pulls' back to camera focus object immediately)
+const float Level::CAMERA_ELASTICITY = 0.05f;
+
 Level::Level(LevelSpec::Ptr spec) : objectManager(spec->objectManager) {}
 
 const ObjectFactory Level::factory = [](ObjectSpec::UPtr spec) {
-    return GameObject::Ptr(new Level(static_unique_pointer_cast<LevelSpec>(move(spec))));
+    Level::Ptr level = Level::Ptr(new Level(static_unique_pointer_cast<LevelSpec>(move(spec))));
+    level->setRef(level);
+    return level;
 };
 
 void Level::afterCreate() {
@@ -53,6 +63,9 @@ void Level::afterCreate() {
         objectManager->createObject(BasicCollisionSpec::create())
     );
     objectManager->addLifecyclePoint(basicCollision);
+
+    // Also a GameObject and LifecyclePoint, but NewGame does the createObject() for us
+    objectManager->addLifecyclePoint(ref().lock());
 
     objectManager->addLifecyclePoint(Graphics::create());
 
@@ -120,9 +133,13 @@ void Level::objectCreated(GameObject::Ptr object) {
 
 void Level::run() {
     // Camera focus (track player)
-    latencyQueue.push(cameraFocusObject->physModel().pos());
-    MyDrawEngine::GetInstance()->theCamera.PlaceAt(latencyQueue.front());
-    if (latencyQueue.size() > LATENCY) latencyQueue.pop();
+    cameraOffset += (
+        -cameraOffset * CAMERA_ELASTICITY                       // Camera drag        > 0 <
+        - cameraFocusObject->physModel().accel() * CAMERA_SHIFT // Acceleration shift < 0 >
+    );
+    MyDrawEngine::GetInstance()->theCamera.PlaceAt(
+        cameraFocusObject->physModel().pos() + cameraOffset
+    );
 
     // Stars (track player)
     starField->physModel().setPos(player->physModel().pos());
