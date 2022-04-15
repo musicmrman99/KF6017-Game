@@ -5,8 +5,9 @@
 #include "BasicCollision.h"
 #include "Graphics.h"
 
-#include "Bullet.h"
 #include "GlobalUI.h"
+#include "FighterShip.h"
+#include "Bullet.h"
 
 #include "Controller.h"
 #include "KeyMap.h"
@@ -48,6 +49,7 @@ void Level::afterCreate() {
 
     // Actors
     objectFactory.registerFactory(PlayerShipSpec::PLAYER_SHIP, PlayerShip::factory);
+    objectFactory.registerFactory(FighterShipSpec::FIGHTER_SHIP, FighterShip::factory);
 
     // Objects
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
@@ -82,6 +84,17 @@ void Level::afterCreate() {
     // Global UI
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 
+    // Star field
+    starField = std::static_pointer_cast<StarField>(
+        objectManager->createObject(StarFieldSpec::create(
+            Vector2D(0.0f, 0.0f),
+            Vector2D(2000 * (de->GetScreenWidth() / (float) de->GetScreenHeight()), 2000),
+            0.000007f, // 7 / 1,000,000
+            starSprite
+        ))
+    );
+    starField->setNumLayers(5);
+
     // Player
     player = std::static_pointer_cast<PlayerShip>(
         objectManager->createObject(PlayerShipSpec::UPtr(new PlayerShipSpec(
@@ -105,16 +118,13 @@ void Level::afterCreate() {
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
-    // Star field
-    starField = std::static_pointer_cast<StarField>(
-        objectManager->createObject(StarFieldSpec::create(
-            Vector2D(0.0f, 0.0f),
-            Vector2D(2000 * (de->GetScreenWidth() / (float) de->GetScreenHeight()), 2000),
-            0.000007f, // 7 / 1,000,000
-            starSprite
-        ))
-    );
-    starField->setNumLayers(5);
+    // An enemy
+    objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
+        Vector2D(0.0f, 0.0f), // Centre of the world
+        Vector2D(0.0f, 1.0f), // Facing up
+        playerSprite,
+        bulletSprite
+    )));
 }
 
 // Modifying global state
@@ -134,8 +144,8 @@ void Level::objectCreated(GameObject::Ptr object) {
 void Level::run() {
     // Camera focus (track player)
     cameraOffset += (
-        -cameraOffset * CAMERA_ELASTICITY                       // Camera drag        > 0 <
-        - cameraFocusObject->physModel().accel() * CAMERA_SHIFT // Acceleration shift < 0 >
+        -cameraOffset * CAMERA_ELASTICITY                      // Camera drag        > 0 <
+        -cameraFocusObject->physModel().accel() * CAMERA_SHIFT // Acceleration shift < 0 >
     );
     MyDrawEngine::GetInstance()->theCamera.PlaceAt(
         cameraFocusObject->physModel().pos() + cameraOffset

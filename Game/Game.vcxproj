@@ -39,6 +39,8 @@
     <ClCompile Include="EventEmitterObserver.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventHandlerObserver.cpp" />
+    <ClCompile Include="FighterShip.cpp" />
+    <ClCompile Include="FighterShipSpec.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="gametimer.cpp" />
@@ -121,6 +123,8 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventHandlerObserver.h" />
     <ClInclude Include="EventHandlerObserverOf.h" />
+    <ClInclude Include="FighterShip.h" />
+    <ClInclude Include="FighterShipSpec.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="gametimer.h" />
