@@ -1,16 +1,17 @@
 #include "ShipSpec.h"
 
-const ObjectType ShipSpec::SHIP;
 const BasicCollisionType ShipSpec::SHIP_COLLISION;
 
 ShipSpec::ShipSpec(
+	const ObjectType& type,
 	const Vector2D pos,
 	const Vector2D rot,
-	const PictureIndex image,
-	const PictureIndex bulletImage
-) : ObjectSpec(SHIP),
+	const Vector2D& collisionSize,
+	const PictureIndex image
+) :
+	ObjectSpec(type),
 	pos(pos),
 	rot(rot),
-	image(image),
-	bulletImage(bulletImage) {
-}
+	collisionSize(collisionSize),
+	image(image)
+{}

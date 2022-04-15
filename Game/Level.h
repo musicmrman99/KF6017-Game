@@ -4,7 +4,7 @@
 #include <queue>
 #include "Referencing.h"
 
-#include "Ship.h"
+#include "PlayerShip.h"
 #include "StarField.h"
 
 // Traits
@@ -41,7 +41,7 @@ private:
 	static const float CAMERA_ELASTICITY;
 
 	// Global entities
-	Ship::Ptr player;
+	PlayerShip::Ptr player;
 	StarField::Ptr starField;
 
 public:

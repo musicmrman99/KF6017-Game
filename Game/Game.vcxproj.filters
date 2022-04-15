@@ -304,6 +304,12 @@
     <Filter Include="Source Files\Game\Objects\StarField">
       <UniqueIdentifier>{c98b0ba9-e22b-42fe-989c-baa32e3ee4e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Objects\Ship\PlayerShip">
+      <UniqueIdentifier>{2a78e817-2ad8-4a90-96ef-2258d7ea6d41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Ship\PlayerShip">
+      <UniqueIdentifier>{f035cd15-f9c4-4e8f-9bf1-473040f86315}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -414,12 +420,6 @@
     <ClCompile Include="GlobalUISpec.cpp">
       <Filter>Source Files\Game\Objects\GlobalUI</Filter>
     </ClCompile>
-    <ClCompile Include="ShipSpec.cpp">
-      <Filter>Source Files\Game\Objects\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>Source Files\Game\Objects\Ship</Filter>
-    </ClCompile>
     <ClCompile Include="Controls.cpp">
       <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
     </ClCompile>
@@ -524,6 +524,18 @@
     </ClCompile>
     <ClCompile Include="StarFieldSpec.cpp">
       <Filter>Source Files\Game\Objects\StarField</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShip.cpp">
+      <Filter>Source Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -743,12 +755,6 @@
     <ClInclude Include="GlobalUI.h">
       <Filter>Header Files\Game\Objects\GlobalUI</Filter>
     </ClInclude>
-    <ClInclude Include="ShipSpec.h">
-      <Filter>Header Files\Game\Objects\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Header Files\Game\Objects\Ship</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Engine\Core\Entry</Filter>
     </ClInclude>
@@ -808,6 +814,18 @@
     </ClInclude>
     <ClInclude Include="StarFieldSpec.h">
       <Filter>Header Files\Game\Objects\StarField</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShip.h">
+      <Filter>Header Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShipSpec.h">
+      <Filter>Header Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Header Files\Game\Objects\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipSpec.h">
+      <Filter>Header Files\Game\Objects\Ship</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

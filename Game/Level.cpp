@@ -47,7 +47,7 @@ void Level::afterCreate() {
     objectFactory.registerFactory(StarFieldSpec::STAR_FIELD, StarField::factory);
 
     // Actors
-    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
+    objectFactory.registerFactory(PlayerShipSpec::PLAYER_SHIP, PlayerShip::factory);
 
     // Objects
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
@@ -83,8 +83,8 @@ void Level::afterCreate() {
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 
     // Player
-    player = std::static_pointer_cast<Ship>(
-        objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
+    player = std::static_pointer_cast<PlayerShip>(
+        objectManager->createObject(PlayerShipSpec::UPtr(new PlayerShipSpec(
             Vector2D(0.0f, 0.0f), // Centre of the world
             Vector2D(0.0f, 1.0f), // Facing up
             playerSprite,
@@ -97,11 +97,11 @@ void Level::afterCreate() {
 
     // Player controller (a key map)
     KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new ShipEventHandler::TurnRightThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new ShipEventHandler::FireEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new PlayerShipEventHandler::MainThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new PlayerShipEventHandler::TurnLeftThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new PlayerShipEventHandler::TurnRightThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new PlayerShipEventHandler::FireEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(PlayerShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
