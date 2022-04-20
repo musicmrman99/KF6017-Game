@@ -7,87 +7,22 @@
 // Traits
 #include "Ship.h"
 #include "HasEventHandlerOf.h"
+#include "HasComponent.h"
+
+// Models
+#include "MultiEventHandler.h"
+#include "BasicMovement.h"
+#include "BulletAttack.h"
 
 // Creation
 #include "ObjectFactory.h"
 #include "FighterShipSpec.h"
 
-/* Event Handler
--------------------- */
-
-class FighterShipEventHandler final :
-	public EventHandler,
-	public PhysObserverOf<NewtonianPhysModel>,
-	public EventEmitterObserverOf<BufferedEventEmitter>,
-	public ObjectEventCreator
-{
-private:
-	// Gameplay
-	float engineThrust;
-	float rotateThrust;
-
-	PictureIndex bulletImage;
-
-public:
-	using UPtr = std::unique_ptr<FighterShipEventHandler>;
-
-	FighterShipEventHandler(FighterShipSpec::Ptr spec);
-
-	virtual void handle(const Event::Ptr e) override;
-
-	// Movement
-
-	class MainThrustEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		MainThrustEvent();
-	};
-	class TurnLeftThrustEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		TurnLeftThrustEvent();
-	};
-	class TurnRightThrustEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		TurnRightThrustEvent();
-	};
-
-	class MainThrustEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-	class TurnLeftThrustEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-	class TurnRightThrustEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-
-	void mainThrust();
-	void turnLeftThrust();
-	void turnRightThrust();
-
-	// Attack
-
-	class FireEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		FireEvent();
-	};
-
-	class FireEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-
-	void fire();
-};
-
-/* Player Ship
--------------------- */
-
 class FighterShip final :
 	public Ship,
-	public HasEventHandlerOf<FighterShipEventHandler>
+	public HasEventHandlerOf<MultiEventHandler>,
+	public HasComponent<BasicMovement>,
+	public HasComponent<BulletAttack>
 {
 public:
 	using Ptr = std::shared_ptr<FighterShip>;
