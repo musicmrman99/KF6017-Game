@@ -3,10 +3,9 @@
 #include <cmath>
 
 #include "HasComponent.h"
+#include "TargettedEvent.h"
 
-BasicMovement::MainThrustEventEmitter BasicMS::mainThrustEventEmitter;
-BasicMovement::TurnLeftThrustEventEmitter BasicMS::turnLeftThrustEventEmitter;
-BasicMovement::TurnRightThrustEventEmitter BasicMS::turnRightThrustEventEmitter;
+#include "mydrawengine.h"
 
 BasicMS::Ptr BasicMS::create() {
     return Ptr(new BasicMS());
@@ -30,19 +29,24 @@ void BasicMS::moveObjects(
         // by the time you finished?
         const Vector2D& curRot = controlledObjLock->physModel().rot();
         Vector2D newRot = curRot.rotatedBy( // Adjust for modular angles
-            controlledObjLock->physModel().rotVel() * controlledObjLock->physModel().rotVel()
+            controlledObjLock->physModel().rotVel() * abs(controlledObjLock->physModel().rotVel())
             / (2.0f * controlledObjMovement->rotationalThrust())
         );
 
-        // Is that too close or too far?
-        // newRot.angle() - toTarget.angle()
+        // Which way should we turn based on the final destination?
         if (newRot.rotatedBy(-toTarget.angle()).angle() < M_PI) {
-            turnLeftThrustEventEmitter.emit(events);
+            events.push(TargettedEvent::Ptr(new TargettedEvent(
+                BasicMovement::TurnLeftThrustEvent::Ptr(new BasicMovement::TurnLeftThrustEvent()),
+                std::dynamic_pointer_cast<EventHandler>(controlledObject.obj.lock())
+            )));
 
         // Technically, this should be <, not <=, but considering the target is likely
         // to be constantly moving, it won't make much difference.
         } else {
-            turnRightThrustEventEmitter.emit(events);
+            events.push(TargettedEvent::Ptr(new TargettedEvent(
+                BasicMovement::TurnRightThrustEvent::Ptr(new BasicMovement::TurnRightThrustEvent()),
+                std::dynamic_pointer_cast<EventHandler>(controlledObject.obj.lock())
+            )));
         }
 	}
 }
@@ -68,6 +72,9 @@ x = x[0] + v[0]/2 * (-v[0] / a)
   Simplify:
 x = x[0] - v[0]/2 * v[0]/a
 x = x[0] - v[0]^2 / 2a
+
+  For some reason in practice this doesn't work, as the sign of v[0] matters, so:
+x = x[0] - v[0]*abs(v[0]) / 2a
 
   Remember to adjust for modular angles in the range [0, 2pi).
 */

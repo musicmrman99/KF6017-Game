@@ -52,14 +52,12 @@ void BasicAI::emit(std::queue<Event::Ptr>& events) {
         controlledObjects,
         targetCandidates
     );
-    MyDrawEngine::GetInstance()->WriteInt(
-        Vector2D(0,0),
-        reinterpret_cast<unsigned long>(controlledObjects.begin()->currentTarget.obj.lock().get()),
-        MyDrawEngine::WHITE
-    );
 
     // 4. Try to face targets (so you can fire at them)
-    //
+    movementStrategy->moveObjects(
+        controlledObjects,
+        eventsBuffer
+    );
     
     // 5. Fire at targets
     // 
@@ -74,5 +72,5 @@ void BasicAI::emit(std::queue<Event::Ptr>& events) {
     */
 
     // Flush the buffer
-    //shiftInto(eventsBuffer, events);
+    shiftInto(eventsBuffer, events);
 }

@@ -7,11 +7,6 @@
 // 1. Face the target so it can fire at it.
 // 2. Avoid colliding with the target itself.
 class BasicMS final : public MovementStrategy {
-private:
-	static BasicMovement::MainThrustEventEmitter mainThrustEventEmitter;
-	static BasicMovement::TurnLeftThrustEventEmitter turnLeftThrustEventEmitter;
-	static BasicMovement::TurnRightThrustEventEmitter turnRightThrustEventEmitter;
-
 public:
 	static Ptr create();
 
