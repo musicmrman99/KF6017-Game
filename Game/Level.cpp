@@ -11,6 +11,10 @@
 
 #include "Controller.h"
 #include "KeyMap.h"
+#include "BasicAI.h"
+#include "NearestUntilDestroyedTS.h"
+#include "BasicMS.h"
+
 #include "Game.h"
 
 // Multiplier for how much the camera focus object's acceleration shifts the camera away from it.
@@ -119,12 +123,24 @@ void Level::afterCreate() {
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
     // An enemy
-    objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
-        Vector2D(0.0f, 0.0f), // Centre of the world
-        Vector2D(0.0f, 1.0f), // Facing up
-        playerSprite,
-        bulletSprite
-    )));
+    FighterShip::Ptr enemy = std::static_pointer_cast<FighterShip>(
+        objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
+            Vector2D(1000.0f, 400.0f),
+            Vector2D(0.0f, 1.0f),
+            playerSprite,
+            bulletSprite
+        )))
+    );
+
+    // A controller for the enemy
+    BasicAI::Ptr enemyAI = BasicAI::create(
+        NearestUntilDestroyedTS::create(),
+        BasicMS::create()
+    );
+    objectManager->createObject(ControllerSpec::create(enemyAI));
+
+    enemyAI->addControlledObject(enemy);
+    enemyAI->addTarget(player);
 }
 
 // Modifying global state

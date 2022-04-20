@@ -20,11 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp" />
+    <ClCompile Include="BasicAI.cpp" />
     <ClCompile Include="BasicCollision.cpp" />
     <ClCompile Include="BasicCollisionModel.cpp" />
     <ClCompile Include="BasicCollisionSpec.cpp" />
+    <ClCompile Include="BasicMovement.cpp" />
+    <ClCompile Include="BasicMS.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletAttack.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Circle2D.cpp" />
@@ -62,9 +66,12 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelActor.cpp" />
     <ClCompile Include="LevelSpec.cpp" />
+    <ClCompile Include="MovementStrategy.cpp" />
+    <ClCompile Include="MultiEventHandler.cpp" />
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
     <ClCompile Include="mysoundengine.cpp" />
+    <ClCompile Include="NearestUntilDestroyedTS.cpp" />
     <ClCompile Include="NewGame.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="ObjectEvent.cpp" />
@@ -89,6 +96,7 @@
     <ClCompile Include="StarFieldSpec.cpp" />
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="TargettedEvent.cpp" />
+    <ClCompile Include="TargettingStrategy.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIObserver.cpp" />
     <ClCompile Include="UpgradeTree.cpp" />
@@ -98,12 +106,17 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AITypes.h" />
     <ClInclude Include="AngledRectangle2D.h" />
+    <ClInclude Include="BasicAI.h" />
     <ClInclude Include="BasicCollision.h" />
     <ClInclude Include="BasicCollisionModel.h" />
     <ClInclude Include="BasicCollisionSpec.h" />
+    <ClInclude Include="BasicMovement.h" />
+    <ClInclude Include="BasicMS.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletAttack.h" />
     <ClInclude Include="BulletSpec.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="Circle2D.h" />
@@ -114,6 +127,7 @@
     <ClInclude Include="ControllerSpec.h" />
     <ClInclude Include="Controls.h" />
     <ClInclude Include="Derived.h" />
+    <ClInclude Include="DispatcherEventHandler.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="errortype.h" />
     <ClInclude Include="Event.h" />
@@ -136,6 +150,7 @@
     <ClInclude Include="GraphicsObserverOf.h" />
     <ClInclude Include="HasCollision.h" />
     <ClInclude Include="HasCollisionOf.h" />
+    <ClInclude Include="HasComponent.h" />
     <ClInclude Include="HasEventEmitter.h" />
     <ClInclude Include="HasEventEmitterOf.h" />
     <ClInclude Include="HasEventHandler.h" />
@@ -153,9 +168,12 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelActor.h" />
     <ClInclude Include="LevelSpec.h" />
+    <ClInclude Include="MovementStrategy.h" />
+    <ClInclude Include="MultiEventHandler.h" />
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
     <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="NearestUntilDestroyedTS.h" />
     <ClInclude Include="NewGame.h" />
     <ClInclude Include="NewtonianPhysModel.h" />
     <ClInclude Include="Node.h" />
@@ -188,6 +206,7 @@
     <ClInclude Include="StarFieldSpec.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="TargettedEvent.h" />
+    <ClInclude Include="TargettingStrategy.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="UIObserver.h" />
