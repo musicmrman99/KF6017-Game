@@ -6,9 +6,6 @@
 #include "BasicMovement.h"
 #include "BulletAttack.h"
 
-/* FighterShip
--------------------------------------------------- */
-
 FighterShip::FighterShip(FighterShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),

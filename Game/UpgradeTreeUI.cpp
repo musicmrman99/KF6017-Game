@@ -1,5 +1,9 @@
 #include "UpgradeTreeUI.h"
 
+UpgradeTreeUI::UPtr UpgradeTreeUI::create() {
+    return UPtr(new UpgradeTreeUI());
+}
+
 void UpgradeTreeUI::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
     MyDrawEngine::GetInstance()->WriteText(

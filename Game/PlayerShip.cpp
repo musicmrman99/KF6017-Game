@@ -123,14 +123,14 @@ void PlayerShipEventHandler::purchaseUpgrade(const Upgrade& upgrade) {
     upgradeTree().purchaseUpgrade(upgrade);
 }
 
-/* PlayerShip
+/* Player Ship
 -------------------------------------------------- */
 
 PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(PlayerShipEventHandler::UPtr(new PlayerShipEventHandler(spec))),
     HasUpgradeTree(PlayerShipUpgrade::SHIP),
-    HasUIOf(UpgradeTreeUI::UPtr(new UpgradeTreeUI()))
+    HasUIOf(UpgradeTreeUI::create())
 {
     // Thread dependencies
     trackPhysObserver(eventHandlerWPtr());
