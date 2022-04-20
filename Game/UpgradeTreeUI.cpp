@@ -8,7 +8,7 @@ void UpgradeTreeUI::draw() {
     MyDrawEngine* graphics = MyDrawEngine::GetInstance();
     MyDrawEngine::GetInstance()->WriteText(
         graphics->GetViewport().GetTopLeft(), 
-        formatTree(upgradeTree().getRootUpgrade()).c_str(),
+        formatTree(upgradeTree()->getRootUpgrade()).c_str(),
         MyDrawEngine::CYAN
     );
 }

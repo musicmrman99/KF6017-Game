@@ -114,10 +114,10 @@ void Level::afterCreate() {
 
     // Player controller (a key map)
     KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new PlayerShipEventHandler::MainThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new PlayerShipEventHandler::TurnLeftThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new PlayerShipEventHandler::TurnRightThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new PlayerShipEventHandler::FireEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicMovement::MainThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicMovement::TurnLeftThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicMovement::TurnRightThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new BulletAttack::FireEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(PlayerShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));

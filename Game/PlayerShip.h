@@ -7,18 +7,19 @@
 // Traits
 #include "Ship.h"
 #include "HasEventHandlerOf.h"
+#include "HasComponent.h"
+#include "HasUpgradeTree.h" // Has a fixed model (UpgradeTree)
 #include "HasUIOf.h"
-#include "HasUpgradeTree.h"
 
 // Models
+#include "MultiEventHandler.h"
+#include "BasicMovement.h"
+#include "BulletAttack.h"
 #include "UpgradeTreeUI.h"
 
 // Creation
 #include "ObjectFactory.h"
 #include "PlayerShipSpec.h"
-
-/* Static Definitions
--------------------- */
 
 // Define what upgrades are available.
 struct PlayerShipUpgrade {
@@ -45,89 +46,12 @@ struct PlayerShipUpgrade {
 	static const Upgrade FIGHTER_DRONE;
 };
 
-/* Event Handler
--------------------- */
-
-class PlayerShipEventHandler final :
-	public EventHandler,
-	public PhysObserverOf<NewtonianPhysModel>,
-	public EventEmitterObserverOf<BufferedEventEmitter>,
-	public UpgradeTreeObserver,
-	public ObjectEventCreator
-{
-private:
-	// Gameplay
-	float engineThrust;
-	float rotateThrust;
-
-	PictureIndex bulletImage;
-
-public:
-	using UPtr = std::unique_ptr<PlayerShipEventHandler>;
-
-	PlayerShipEventHandler(PlayerShipSpec::Ptr spec);
-
-	virtual void handle(const Event::Ptr e) override;
-
-	// Movement
-
-	class MainThrustEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		MainThrustEvent();
-	};
-	class TurnLeftThrustEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		TurnLeftThrustEvent();
-	};
-	class TurnRightThrustEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		TurnRightThrustEvent();
-	};
-
-	class MainThrustEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-	class TurnLeftThrustEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-	class TurnRightThrustEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-
-	void mainThrust();
-	void turnLeftThrust();
-	void turnRightThrust();
-
-	// Attack
-
-	class FireEvent final : public Event {
-	public:
-		static const EventType TYPE;
-		FireEvent();
-	};
-
-	class FireEventEmitter final : public EventEmitter {
-	public: virtual void emit(std::queue<Event::Ptr>& events) override;
-	};
-
-	void fire();
-
-	// Upgrades
-
-	// Use the generic UpgradeEvent type / UpgradeEventEmitter for PlayerShip upgrades.
-
-	void purchaseUpgrade(const Upgrade& upgrade);
-};
-
-/* Player Ship
--------------------- */
-
+// The player's ship.
 class PlayerShip final :
 	public Ship,
-	public HasEventHandlerOf<PlayerShipEventHandler>,
+	public HasEventHandlerOf<MultiEventHandler>,
+	public HasComponent<BasicMovement>,
+	public HasComponent<BulletAttack>,
 	public HasUpgradeTree,
 	public HasUIOf<UpgradeTreeUI>
 {

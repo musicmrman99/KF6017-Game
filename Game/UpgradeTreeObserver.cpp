@@ -1,7 +1,4 @@
 #include "UpgradeTreeObserver.h"
 
-UpgradeTree& UpgradeTreeObserver::upgradeTree() const { return *_upgradeTree; }
-
-void UpgradeTreeObserver::setUpgradeTree(UpgradeTree& upgradeTree) {
-    _upgradeTree = &upgradeTree;
-}
+UpgradeTree::Ptr UpgradeTreeObserver::upgradeTree() const { return _upgradeTree.lock(); }
+void UpgradeTreeObserver::setUpgradeTree(UpgradeTree::WPtr upgradeTree) { _upgradeTree = upgradeTree; }

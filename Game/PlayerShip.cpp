@@ -31,111 +31,28 @@ const Upgrade PlayerShipUpgrade::ARMOURED_DRONE(L"Armoured Drone");
 const Upgrade PlayerShipUpgrade::MINE(L"Mine");
 const Upgrade PlayerShipUpgrade::FIGHTER_DRONE(L"Fighter Drone");
 
-/* Event Handler
--------------------------------------------------- */
-
-/* Initialisation
--------------------- */
-
-PlayerShipEventHandler::PlayerShipEventHandler(PlayerShipSpec::Ptr spec)
-    : bulletImage(spec->bulletImage),
-    engineThrust(0.1f),  // Distance units / second^2
-    rotateThrust(0.008f) // Revolutions / second^2
-{}
-
-/* Dispatcher
--------------------- */
-
-void PlayerShipEventHandler::handle(const Event::Ptr e) {
-    if (e->type == MainThrustEvent::TYPE) mainThrust();
-    else if (e->type == TurnLeftThrustEvent::TYPE) turnLeftThrust();
-    else if (e->type == TurnRightThrustEvent::TYPE) turnRightThrust();
-
-    else if (e->type == FireEvent::TYPE) fire();
-
-    else if (e->type == UpgradeEvent::TYPE)
-        purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
-}
-
-/* Movement
--------------------- */
-
-// Events
-
-const EventType PlayerShipEventHandler::MainThrustEvent::TYPE;
-PlayerShipEventHandler::MainThrustEvent::MainThrustEvent() : Event(TYPE) {}
-void PlayerShipEventHandler::MainThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
-    events.push(MainThrustEvent::Ptr(new MainThrustEvent()));
-}
-
-const EventType PlayerShipEventHandler::TurnLeftThrustEvent::TYPE;
-PlayerShipEventHandler::TurnLeftThrustEvent::TurnLeftThrustEvent() : Event(TYPE) {}
-void PlayerShipEventHandler::TurnLeftThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
-    events.push(TurnLeftThrustEvent::Ptr(new TurnLeftThrustEvent()));
-}
-
-const EventType PlayerShipEventHandler::TurnRightThrustEvent::TYPE;
-PlayerShipEventHandler::TurnRightThrustEvent::TurnRightThrustEvent() : Event(TYPE) {}
-void PlayerShipEventHandler::TurnRightThrustEventEmitter::emit(std::queue<Event::Ptr>& events) {
-    events.push(TurnRightThrustEvent::Ptr(new TurnRightThrustEvent()));
-}
-
-// Actions
-
-void PlayerShipEventHandler::mainThrust() {
-    physModel().shiftAccel(physModel().rot() * engineThrust);
-};
-
-void PlayerShipEventHandler::turnLeftThrust() {
-    physModel().shiftRotAccel(-rotateThrust);
-};
-
-void PlayerShipEventHandler::turnRightThrust() {
-    physModel().shiftRotAccel(rotateThrust);
-};
-
-/* Attack
--------------------- */
-
-// Event
-
-const EventType PlayerShipEventHandler::FireEvent::TYPE;
-PlayerShipEventHandler::FireEvent::FireEvent() : Event(TYPE) {}
-void PlayerShipEventHandler::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
-    events.push(FireEvent::Ptr(new FireEvent()));
-}
-
-// Action
-
-void PlayerShipEventHandler::fire() {
-    static constexpr float DIST = 40.0f;
-    eventEmitter().enqueue(objectEventFactory()->createObject(
-        BulletSpec::UPtr(new BulletSpec(
-            physModel().pos() + DIST * physModel().rot(),
-            physModel().rot(),
-            physModel().vel(),
-            bulletImage
-        ))
-    ));
-}
-
-void PlayerShipEventHandler::purchaseUpgrade(const Upgrade& upgrade) {
-    upgradeTree().purchaseUpgrade(upgrade);
-}
-
 /* Player Ship
 -------------------------------------------------- */
 
 PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     Ship(spec),
-    HasEventHandlerOf(PlayerShipEventHandler::UPtr(new PlayerShipEventHandler(spec))),
+    HasEventHandlerOf(MultiEventHandler::create()),
+    HasComponent<BasicMovement>(BasicMovement::create()),
+    HasComponent<BulletAttack>(BulletAttack::create(spec->bulletImage)),
     HasUpgradeTree(PlayerShipUpgrade::SHIP),
     HasUIOf(UpgradeTreeUI::create())
 {
     // Thread dependencies
-    trackPhysObserver(eventHandlerWPtr());
-    trackEventEmitterObserver(eventHandlerWPtr());
-    trackUpgradeTreeObserver(eventHandlerWPtr());
+    trackPhysObserver(HasComponent<BasicMovement>::component());
+    trackPhysObserver(HasComponent<BulletAttack>::component());
+    trackEventEmitterObserver(HasComponent<BulletAttack>::component());
+    // Upgrade tree observers? What actually creates the upgrade events?
+
+    eventHandler().add(HasComponent<BasicMovement>::component());
+    eventHandler().add(HasComponent<BulletAttack>::component());
+    eventHandler().add(upgradeTreePtr());
+
+    // Thread dependencies
     trackUpgradeTreeObserver(uiModelWPtr());
 
     // Virtual method initialisation
@@ -147,8 +64,8 @@ const ObjectFactory PlayerShip::factory = [](ObjectSpec::UPtr spec) {
 };
 
 void PlayerShip::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
-    ObjectEventCreator::setObjectEventFactory(objectEventFactory);
-    eventHandler().setObjectEventFactory(objectEventFactory);
+    // Delegate to components that need it (this class doesn't need it)
+    HasComponent<BulletAttack>::component()->setObjectEventFactory(objectEventFactory);
 }
 
 // Organise the available upgrades into a tree.

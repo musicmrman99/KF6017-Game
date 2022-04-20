@@ -10,7 +10,7 @@
 // in the initialiser list and run initUpgradeTree() in the body.
 class HasUpgradeTree {
 private:
-	UpgradeTree _upgradeTree;
+	UpgradeTree::Ptr _upgradeTree;
 
 public:
 	HasUpgradeTree(const Upgrade& upgrade);
@@ -22,6 +22,8 @@ public:
 	// Make changing the EventEmitter reflected in the given EventEmitter-dependant object.
 	void trackUpgradeTreeObserver(UpgradeTreeObserver::WPtr eventEmitterObserver);
 
+	UpgradeTree::WPtr upgradeTreeWPtr();
+	UpgradeTree::Ptr upgradeTreePtr();
 	UpgradeTree& upgradeTree();
 	// No setter - HasUpgradeTree provides a constant upgrade tree for the life of the object.
 };
