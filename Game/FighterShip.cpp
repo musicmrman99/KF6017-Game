@@ -9,7 +9,7 @@
 FighterShip::FighterShip(FighterShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
-    HasComponent<BasicMovement>(BasicMovement::create()),
+    HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
     HasComponent<BulletAttack>(BulletAttack::create(spec->bulletImage))
 {
     trackPhysObserver(HasComponent<BasicMovement>::component());

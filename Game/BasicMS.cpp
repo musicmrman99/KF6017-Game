@@ -23,6 +23,9 @@ void BasicMS::moveObjects(
         Vector2D toTarget = targetObjLock->physModel().pos() - controlledObjLock->physModel().pos();
         const float toTargetAngle = controlledObjLock->physModel().fromRPS(toTarget.angle());
 
+        /* Rotation
+        -------------------- */
+
         // See Appendix 1 for the mathematical derivation of the following.
 
         // Given current rotational velocity, if you start decelerating now, where would you be
@@ -37,7 +40,7 @@ void BasicMS::moveObjects(
         if (newRot.rotatedBy(-toTarget.angle()).angle() < M_PI) {
             events.push(TargettedEvent::Ptr(new TargettedEvent(
                 BasicMovement::TurnLeftThrustEvent::Ptr(new BasicMovement::TurnLeftThrustEvent()),
-                std::dynamic_pointer_cast<EventHandler>(controlledObject.obj.lock())
+                std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
             )));
 
         // Technically, this should be <, not <=, but considering the target is likely
@@ -45,7 +48,49 @@ void BasicMS::moveObjects(
         } else {
             events.push(TargettedEvent::Ptr(new TargettedEvent(
                 BasicMovement::TurnRightThrustEvent::Ptr(new BasicMovement::TurnRightThrustEvent()),
+                std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
+            )));
+        }
+
+        // Dodge colliding with the enemy
+        /*if (toTarget.magnitude() < 2.0f) {
+            events.push(TargettedEvent::Ptr(new TargettedEvent(
+                BasicMovement::TurnRightThrustEvent::Ptr(new BasicMovement::TurnRightThrustEvent()),
                 std::dynamic_pointer_cast<EventHandler>(controlledObject.obj.lock())
+            )));
+        }*/
+
+        /* Movement
+        -------------------- */
+
+        Vector2D avgRot = (toTarget.unitVector() + controlledObjLock->physModel().rot().unitVector()) / 2;
+        Vector2D avgVel = (toTarget.unitVector() + controlledObjLock->physModel().vel().unitVector()) / 2;
+        MyDrawEngine::GetInstance()->DrawLine(
+            targetObjLock->physModel().pos()+Vector2D(100, 300),
+            targetObjLock->physModel().pos()+Vector2D(100, 300) + avgRot * 100,
+            MyDrawEngine::RED);
+        MyDrawEngine::GetInstance()->DrawLine(
+            targetObjLock->physModel().pos()+Vector2D(100, 200),
+            targetObjLock->physModel().pos()+Vector2D(100, 200) + avgVel * 100,
+            MyDrawEngine::RED);
+
+        // How close it must be facing the target before it will accellerate.
+        // The lower, the more 'slidey'.
+        static constexpr float focus = 0.8f;
+        
+        // How eager it is to turn, regardless of the direction it is facing.
+        // The lower, the more 'spiky' its movement will be, the higher, the more 'slidy'.
+        static constexpr float eagerness = 0.5f;
+
+        // How fast it's willing to move.
+        static constexpr float topSpeed = 3.0f;
+
+        // If you're facing the right direction, and moving in the wrong direction or too slowly, then accellerate
+        if (avgRot.magnitude() > focus && (avgVel.magnitude() <= eagerness || controlledObjLock->physModel().vel().magnitude() < topSpeed)) {
+            // Try to move
+            events.push(TargettedEvent::Ptr(new TargettedEvent(
+                BasicMovement::MainThrustEvent::Ptr(new BasicMovement::MainThrustEvent()),
+                std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
             )));
         }
 	}

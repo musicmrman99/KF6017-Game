@@ -13,13 +13,13 @@ private:
 	float _positionalThrust;
 	float _rotationalThrust;
 
-	BasicMovement();
+	BasicMovement(float posThrust, float rotThrust);
 
 public:
 	using Ptr = std::shared_ptr<BasicMovement>;
 	using UPtr = std::unique_ptr<BasicMovement>;
 
-	static UPtr create();
+	static UPtr create(float posThrust, float rotThrust);
 
 	float positionalThrust();
 	float rotationalThrust();

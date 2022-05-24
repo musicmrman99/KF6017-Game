@@ -37,7 +37,7 @@ const Upgrade PlayerShipUpgrade::FIGHTER_DRONE(L"Fighter Drone");
 PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
-    HasComponent<BasicMovement>(BasicMovement::create()),
+    HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
     HasComponent<BulletAttack>(BulletAttack::create(spec->bulletImage)),
     HasUpgradeTree(PlayerShipUpgrade::SHIP),
     HasUIOf(UpgradeTreeUI::create())

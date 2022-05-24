@@ -2,12 +2,12 @@
 
 // Creation
 
-BasicMovement::BasicMovement() :
-    _positionalThrust(0.1f),  // Distance units / second^2
-    _rotationalThrust(0.008f) // Revolutions / second^2
+BasicMovement::BasicMovement(float posThrust, float rotThrust) :
+    _positionalThrust(posThrust),  // Distance units / second^2
+    _rotationalThrust(rotThrust) // Revolutions / second^2
 {}
-BasicMovement::UPtr BasicMovement::create() {
-    return UPtr(new BasicMovement());
+BasicMovement::UPtr BasicMovement::create(float posThrust, float rotThrust) {
+    return UPtr(new BasicMovement(posThrust, rotThrust));
 }
 
 // Getters
