@@ -34,7 +34,8 @@ public:
 
     void add(
         HasPhysOf<NewtonianPhysModel>::WPtr object,
-        TargettingData::Ptr targettingData
+        TargettingData::Ptr targettingData,
+        MovementData::Ptr movementData
     );
 
     TargettingStrategy::Ptr targettingStrategy() const;

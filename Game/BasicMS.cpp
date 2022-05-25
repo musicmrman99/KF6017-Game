@@ -1,27 +1,28 @@
 #include "BasicMS.h"
 
 #include <cmath>
+#include "realmod.h"
 
 #include "HasComponent.h"
 #include "TargettedEvent.h"
 
 #include "ControlledObject.h"
 #include "NearestUntilDestroyedTD.h"
+#include "BasicMD.h"
 
 #include "mydrawengine.h"
 
-BasicMS::BasicMS(float targetDistance) : targetDistance(targetDistance) {}
-
-BasicMS::Ptr BasicMS::create(float targetDistance) {
-    return Ptr(new BasicMS(targetDistance));
+BasicMS::Ptr BasicMS::create() {
+    return Ptr(new BasicMS());
 }
 
 void BasicMS::moveObjects(
-	std::list<ControlledObject>& controlledObjects,
-	std::queue<Event::Ptr>& events
+    std::list<ControlledObject>& controlledObjects,
+    std::queue<Event::Ptr>& events
 ) {
-	for (ControlledObject& controlledObject : controlledObjects) {
+    for (ControlledObject& controlledObject : controlledObjects) {
         NearestUntilDestroyedTD::Ptr targettingData = std::static_pointer_cast<NearestUntilDestroyedTD>(controlledObject.targettingData);
+        BasicMD::Ptr movementData = std::static_pointer_cast<BasicMD>(controlledObject.movementData);
 
         HasPhysOf<NewtonianPhysModel>::Ptr controlledObjLock = controlledObject.obj.lock();
         HasPhysOf<NewtonianPhysModel>::Ptr targetObjLock = targettingData->objTarget.obj.lock();
@@ -34,8 +35,28 @@ void BasicMS::moveObjects(
         /* Movement Targetting
         -------------------- */
 
-        
+        // Rotate (and modulo it to keep it in bounds)
+        movementData->targetRot += movementData->targetRotVel;
+        if (movementData->targetRot > 2.0f * (float) M_PI) {
+            movementData->targetRot = realmod(movementData->targetRot, 2.0f * (float) M_PI);
+        }
 
+        // Calculate new target position
+        Vector2D toDistance;
+        toDistance.setBearing(movementData->targetRot, movementData->targetDistance);
+
+        // y = A sin(B(x + C)) + D
+        // We don't need C or D, so y = A sin(Bx)
+        Vector2D toOffset;
+        toOffset.setBearing(
+            movementData->targetRot,
+            movementData->targetOffsetAmplitude * sinf(movementData->targetOffsetFrequency * movementData->targetRot)
+        );
+
+        Vector2D targetPos = targetObjLock->physModel().pos() + toDistance + toOffset;
+
+        MyDrawEngine::GetInstance()->DrawPoint(targetPos, MyDrawEngine::RED);
+        
         /* Rotation
         -------------------- */
 
@@ -110,7 +131,7 @@ void BasicMS::moveObjects(
             )));
         }
         */
-	}
+    }
 }
 
 /*

@@ -9,6 +9,7 @@
 #include "NewtonianPhysModel.h"
 
 #include "TargettingData.h"
+#include "MovementData.h"
 
 struct ControlledObject {
 	using Ptr = std::shared_ptr<ControlledObject>;
@@ -18,4 +19,5 @@ struct ControlledObject {
 	HasPhysOf<NewtonianPhysModel>::WPtr obj;
 
 	TargettingData::Ptr targettingData;
+	MovementData::Ptr movementData;
 };

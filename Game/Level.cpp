@@ -11,10 +11,12 @@
 
 #include "Controller.h"
 #include "KeyMap.h"
+
 #include "BasicAI.h"
 #include "NearestUntilDestroyedTS.h"
 #include "NearestUntilDestroyedTD.h"
 #include "BasicMS.h"
+#include "BasicMD.h"
 
 #include "Game.h"
 
@@ -136,11 +138,20 @@ void Level::afterCreate() {
     // A controller for the enemy
     BasicAI::Ptr enemyAI = BasicAI::create(
         NearestUntilDestroyedTS::create(),
-        BasicMS::create(20.0f)
+        BasicMS::create()
     );
     objectManager->createObject(ControllerSpec::create(enemyAI));
 
-    enemyAI->add(enemy, TargettingData::Ptr(new NearestUntilDestroyedTD {}));
+    enemyAI->add(
+        enemy,
+        NearestUntilDestroyedTD::create(),
+        BasicMD::create(
+            200.0f, // optimal distance
+            0.05f,  // rotation velocity
+            40.0f,  // offset amplitude,
+            1.5f    // offset frequency (Hz)
+        )
+    );
     enemyAI->targettingStrategy()->addTarget(player);
 }
 

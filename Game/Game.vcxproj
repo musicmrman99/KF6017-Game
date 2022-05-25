@@ -24,6 +24,7 @@
     <ClCompile Include="BasicCollision.cpp" />
     <ClCompile Include="BasicCollisionModel.cpp" />
     <ClCompile Include="BasicCollisionSpec.cpp" />
+    <ClCompile Include="BasicMD.cpp" />
     <ClCompile Include="BasicMovement.cpp" />
     <ClCompile Include="BasicMS.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
@@ -71,6 +72,7 @@
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
     <ClCompile Include="mysoundengine.cpp" />
+    <ClCompile Include="NearestUntilDestroyedTD.cpp" />
     <ClCompile Include="NearestUntilDestroyedTS.cpp" />
     <ClCompile Include="NewGame.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
@@ -106,6 +108,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BasicMD.h" />
     <ClInclude Include="ControlledObject.h" />
     <ClInclude Include="AngledRectangle2D.h" />
     <ClInclude Include="BasicAI.h" />
@@ -163,6 +166,8 @@
     <ClInclude Include="HasUI.h" />
     <ClInclude Include="HasUIOf.h" />
     <ClInclude Include="HasUpgradeTree.h" />
+    <ClInclude Include="realmod.h" />
+    <ClInclude Include="MovementData.h" />
     <ClInclude Include="NearestUntilDestroyedTD.h" />
     <ClInclude Include="TargetObject.h" />
     <ClInclude Include="ImageGraphicsModel.h" />

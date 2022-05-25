@@ -28,12 +28,14 @@ BasicAI::UPtr BasicAI::create(
 }
 
 void BasicAI::add(
-        HasPhysOf<NewtonianPhysModel>::WPtr object,
-        TargettingData::Ptr targettingData
+    HasPhysOf<NewtonianPhysModel>::WPtr object,
+    TargettingData::Ptr targettingData,
+    MovementData::Ptr movementData
 ) {
     controlledObjects.push_back(ControlledObject {
         object,
-        targettingData
+        targettingData,
+        movementData
     });
 }
 

@@ -639,6 +639,12 @@
     <ClCompile Include="MultiEventHandler.cpp">
       <Filter>Source Files\Engine\Events\Models\MultiEventHandler</Filter>
     </ClCompile>
+    <ClCompile Include="NearestUntilDestroyedTD.cpp">
+      <Filter>Source Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicMD.cpp">
+      <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngledRectangle2D.h">
@@ -941,9 +947,6 @@
     <ClInclude Include="ControlledObject.h">
       <Filter>Header Files\Game\AIs\Components</Filter>
     </ClInclude>
-    <ClInclude Include="NearestUntilDestroyedTS.h">
-      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
-    </ClInclude>
     <ClInclude Include="TargettingStrategy.h">
       <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
     </ClInclude>
@@ -978,6 +981,18 @@
       <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
     </ClInclude>
     <ClInclude Include="DropExpiredFrom.h">
+      <Filter>Header Files\Game\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementData.h">
+      <Filter>Header Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMD.h">
+      <Filter>Header Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="NearestUntilDestroyedTS.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="realmod.h">
       <Filter>Header Files\Game\Utils</Filter>
     </ClInclude>
   </ItemGroup>
