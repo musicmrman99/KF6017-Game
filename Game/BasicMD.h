@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vector2D.h"
+
 #include "MovementData.h"
 
 class BasicMD : public MovementData {

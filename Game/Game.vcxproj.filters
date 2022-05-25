@@ -385,6 +385,9 @@
     <Filter Include="Header Files\Game\AIs\Components\AttackStrategies">
       <UniqueIdentifier>{483fa1e3-4b7f-4c32-8ee8-d5e0f4d8d509}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\AIs\Components\AttackStrategies">
+      <UniqueIdentifier>{9c85728a-6d68-4081-8a7e-f7fff2e77b49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -649,7 +652,13 @@
       <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
     </ClCompile>
     <ClCompile Include="AttackStrategy.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="SprayAD.cpp">
+      <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="SprayAS.cpp">
+      <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1002,6 +1011,15 @@
       <Filter>Header Files\Game\Utils</Filter>
     </ClInclude>
     <ClInclude Include="AttackStrategy.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="SprayAS.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="SprayAD.h">
       <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
     </ClInclude>
   </ItemGroup>

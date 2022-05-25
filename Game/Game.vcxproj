@@ -30,6 +30,8 @@
     <ClCompile Include="BasicMS.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="SprayAD.cpp" />
+    <ClCompile Include="SprayAS.cpp" />
     <ClCompile Include="SprayAttack.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="camera.cpp" />
@@ -109,6 +111,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackStrategy.h" />
     <ClInclude Include="BasicMD.h" />
     <ClInclude Include="ControlledObject.h" />
@@ -121,6 +124,8 @@
     <ClInclude Include="BasicMS.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="SprayAD.h" />
+    <ClInclude Include="SprayAS.h" />
     <ClInclude Include="SprayAttack.h" />
     <ClInclude Include="BulletSpec.h" />
     <ClInclude Include="camera.h" />

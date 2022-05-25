@@ -6,7 +6,6 @@
 #include "HasComponent.h"
 #include "TargettedEvent.h"
 
-#include "ControlledObject.h"
 #include "NearestUntilDestroyedTD.h"
 #include "BasicMD.h"
 
@@ -29,8 +28,6 @@ void BasicMS::moveObjects(
 
         BasicMovement::Ptr controlledObjMovement = std::dynamic_pointer_cast<HasComponent<BasicMovement>>(controlledObjLock)->component();
         if (!controlledObjMovement) continue; // If it can't move, don't try to move
-
-        Vector2D toTarget = targetObjLock->physModel().pos() - controlledObjLock->physModel().pos();
 
         /* Movement Targetting
         -------------------- */
@@ -66,16 +63,16 @@ void BasicMS::moveObjects(
         // See Appendix 1 for the mathematical derivation of the following (this + Rotation section).
 
         // Given current rotational velocity, if you start decelerating now, where would you be
-        // by the time you finished?
+        // by the time you finished (the predicted rotation)?
         const Vector2D& curRot = controlledObjLock->physModel().rot();
-        Vector2D newRot = curRot.rotatedBy( // Adjust for modular angles
+        Vector2D predRot = curRot.rotatedBy( // Adjust for modular angles
             controlledObjLock->physModel().rotVel() * abs(controlledObjLock->physModel().rotVel())
             / (2.0f * controlledObjMovement->rotationalThrust())
         );
 
         // Da = (Ea - Ta) % 2 PI
-        // The difference between expected final vector angle and the target vector angle
-        Vector2D expectedDiff = newRot.rotatedBy(-targetVelocity.angle());
+	    // The difference between expected final vector angle and the target vector angle.
+        Vector2D expectedDiff = predRot.rotatedBy(-targetVelocity.angle());
         float expectedAngleDiff = expectedDiff.angle();
 
         /* Rotation

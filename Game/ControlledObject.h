@@ -10,6 +10,7 @@
 
 #include "TargettingData.h"
 #include "MovementData.h"
+#include "AttackData.h"
 
 struct ControlledObject {
 	using Ptr = std::shared_ptr<ControlledObject>;
@@ -20,4 +21,5 @@ struct ControlledObject {
 
 	TargettingData::Ptr targettingData;
 	MovementData::Ptr movementData;
+	AttackData::Ptr attackData;
 };

@@ -12,35 +12,42 @@
 
 BasicAI::BasicAI(
     const TargettingStrategy::Ptr targettingStrategy,
-    const MovementStrategy::Ptr movementStrategy
+    const MovementStrategy::Ptr movementStrategy,
+    const AttackStrategy::Ptr attackStrategy
 ) :
     _targettingStrategy(targettingStrategy),
-    _movementStrategy(movementStrategy)
+    _movementStrategy(movementStrategy),
+    _attackStrategy(attackStrategy)
 {}
 BasicAI::UPtr BasicAI::create(
     const TargettingStrategy::Ptr targettingStrategy,
-    const MovementStrategy::Ptr movementStrategy
+    const MovementStrategy::Ptr movementStrategy,
+    const AttackStrategy::Ptr attackStrategy
 ) {
     return UPtr(new BasicAI(
         targettingStrategy,
-        movementStrategy
+        movementStrategy,
+        attackStrategy
     ));
 }
 
 void BasicAI::add(
     HasPhysOf<NewtonianPhysModel>::WPtr object,
     TargettingData::Ptr targettingData,
-    MovementData::Ptr movementData
+    MovementData::Ptr movementData,
+    AttackData::Ptr attackData
 ) {
     controlledObjects.push_back(ControlledObject {
         object,
         targettingData,
-        movementData
+        movementData,
+        attackData
     });
 }
 
 TargettingStrategy::Ptr BasicAI::targettingStrategy() const { return _targettingStrategy; }
 MovementStrategy::Ptr BasicAI::movementStrategy() const { return _movementStrategy; }
+AttackStrategy::Ptr BasicAI::attackStrategy() const { return _attackStrategy; }
 
 void BasicAI::emit(std::queue<Event::Ptr>& events) {
     static std::queue<Event::Ptr> eventsBuffer;
@@ -49,26 +56,10 @@ void BasicAI::emit(std::queue<Event::Ptr>& events) {
     // be useful information for the AI, but it isn't for now.
     dropExiredFrom(controlledObjects);
 
-    // 1. Avoid collidable targets
-    // 2. Stay ~N distance away from all targets
-
-    // 3. Select a target / Should switch target?
+    // Control objects and update AI data as needed
     _targettingStrategy->selectTargets(controlledObjects);
-
-    // 4. Try to face targets (so you can fire at them)
     _movementStrategy->moveObjects(controlledObjects, eventsBuffer);
-    
-    // 5. Fire at targets
-    // 
-
-    // 6. Avoid other collidable objects
-
-    /*
-    TargettedEvent::Ptr(new TargettedEvent(
-        EventEmitter->emit(eventsBuffer),
-        object
-    ))
-    */
+    _attackStrategy->attack(controlledObjects, eventsBuffer);
 
     // Flush the buffer
     shiftInto(eventsBuffer, events);

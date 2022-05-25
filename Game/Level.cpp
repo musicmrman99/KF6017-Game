@@ -17,6 +17,8 @@
 #include "NearestUntilDestroyedTD.h"
 #include "BasicMS.h"
 #include "BasicMD.h"
+#include "SprayAS.h"
+#include "SprayAD.h"
 
 #include "Game.h"
 
@@ -140,7 +142,8 @@ void Level::afterCreate() {
     // A controller for the enemy
     BasicAI::Ptr enemyAI = BasicAI::create(
         NearestUntilDestroyedTS::create(),
-        BasicMS::create()
+        BasicMS::create(),
+        SprayAS::create()
     );
     objectManager->createObject(ControllerSpec::create(enemyAI));
 
@@ -154,6 +157,11 @@ void Level::afterCreate() {
             0.03f,                     // rotation velocity
             60.0f,                     // offset amplitude,
             1.5f                       // offset frequency (Hz)
+        ),
+        SprayAD::create(
+            (1.0f / 72.0f) * 2 * M_PI, // max angle before fire = 1/72 2pi radians = 5 degrees
+            false,                     // can/cannot rotate its gun
+            0.0f                       // gun requested rotation speed
         )
     );
     enemyAI->targettingStrategy()->addTarget(player);
