@@ -5,6 +5,7 @@
 class BasicMD : public MovementData {
 private:
 	BasicMD(
+		float maximumSpeed,
 		float targetDistance,
 		float targetRotVel,
 		float targetOffsetAmplitude,
@@ -15,11 +16,14 @@ public:
 	using Ptr = std::shared_ptr<BasicMD>;
 
 	static Ptr create(
+		float maximumSpeed,
 		float targetDistance,
 		float targetRotVel,
 		float targetOffsetAmplitude,
 		float targetOffsetFrequency
 	);
+
+	float maximumSpeed;
 
 	/*
 				 |_

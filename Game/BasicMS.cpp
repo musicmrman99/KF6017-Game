@@ -54,14 +54,16 @@ void BasicMS::moveObjects(
         );
 
         Vector2D targetPos = targetObjLock->physModel().pos() + toDistance + toOffset;
+        Vector2D toTargetPos = targetPos - controlledObjLock->physModel().pos();
 
-        MyDrawEngine::GetInstance()->DrawPoint(targetPos, MyDrawEngine::RED);
-        
-        /* Rotation
+        MyDrawEngine::GetInstance()->FillCircle(targetPos, 5, MyDrawEngine::RED);
+
+        /* Rotation & Movement
         -------------------- */
 
-        /*
-        // See Appendix 1 for the mathematical derivation of the following.
+        Vector2D targetVelocity = toTargetPos.unitVector() * movementData->maximumSpeed - controlledObjLock->physModel().vel();
+
+        // See Appendix 1 for the mathematical derivation of the following (this + Rotation).
 
         // Given current rotational velocity, if you start decelerating now, where would you be
         // by the time you finished?
@@ -71,8 +73,15 @@ void BasicMS::moveObjects(
             / (2.0f * controlledObjMovement->rotationalThrust())
         );
 
+        // Da = (Ea - Ta) % 2 PI
+        // The difference between expected final vector angle and the target vector angle
+        float expectedAngleDiff = newRot.rotatedBy(-targetVelocity.angle()).angle();
+
+        /* Rotation
+        -------------------- */
+
         // Which way should we turn based on the final destination?
-        if (newRot.rotatedBy(-toTarget.angle()).angle() < M_PI) {
+        if (expectedAngleDiff < M_PI) {
             events.push(TargettedEvent::Ptr(new TargettedEvent(
                 BasicMovement::TurnLeftThrustEvent::Ptr(new BasicMovement::TurnLeftThrustEvent()),
                 std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
@@ -86,15 +95,6 @@ void BasicMS::moveObjects(
                 std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
             )));
         }
-        */
-
-        // Dodge colliding with the enemy
-        /*if (toTarget.magnitude() < 2.0f) {
-            events.push(TargettedEvent::Ptr(new TargettedEvent(
-                BasicMovement::TurnRightThrustEvent::Ptr(new BasicMovement::TurnRightThrustEvent()),
-                std::dynamic_pointer_cast<EventHandler>(controlledObject.obj.lock())
-            )));
-        }*/
 
         /* Movement
         -------------------- */

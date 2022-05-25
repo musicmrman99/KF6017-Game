@@ -146,9 +146,10 @@ void Level::afterCreate() {
         enemy,
         NearestUntilDestroyedTD::create(),
         BasicMD::create(
-            200.0f, // optimal distance
+            10.0f,  // maximum speed
+            300.0f, // optimal distance
             0.05f,  // rotation velocity
-            40.0f,  // offset amplitude,
+            60.0f,  // offset amplitude,
             1.5f    // offset frequency (Hz)
         )
     );
