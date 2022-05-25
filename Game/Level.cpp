@@ -146,11 +146,12 @@ void Level::afterCreate() {
         enemy,
         NearestUntilDestroyedTD::create(),
         BasicMD::create(
-            10.0f,  // maximum speed
-            300.0f, // optimal distance
-            0.05f,  // rotation velocity
-            60.0f,  // offset amplitude,
-            1.5f    // offset frequency (Hz)
+            5.0f,                      // maximum speed
+            (1.0f / 24.0f) * 2 * M_PI, // max angle before accel = 1/24 2pi radians = 15 degrees
+            300.0f,                    // optimal distance
+            0.03f,                     // rotation velocity
+            60.0f,                     // offset amplitude,
+            1.5f                       // offset frequency (Hz)
         )
     );
     enemyAI->targettingStrategy()->addTarget(player);

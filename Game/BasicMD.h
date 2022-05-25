@@ -6,6 +6,7 @@ class BasicMD : public MovementData {
 private:
 	BasicMD(
 		float maximumSpeed,
+		float accelMaxAngle,
 		float targetDistance,
 		float targetRotVel,
 		float targetOffsetAmplitude,
@@ -17,6 +18,7 @@ public:
 
 	static Ptr create(
 		float maximumSpeed,
+		float accelMaxAngle,
 		float targetDistance,
 		float targetRotVel,
 		float targetOffsetAmplitude,
@@ -24,6 +26,7 @@ public:
 	);
 
 	float maximumSpeed;
+	float accelMaxAngle;
 
 	/*
 				 |_

@@ -35,6 +35,8 @@ void BasicMS::moveObjects(
         /* Movement Targetting
         -------------------- */
 
+        // Thank you Chris!
+
         // Rotate (and modulo it to keep it in bounds)
         movementData->targetRot += movementData->targetRotVel;
         if (movementData->targetRot > 2.0f * (float) M_PI) {
@@ -45,8 +47,8 @@ void BasicMS::moveObjects(
         Vector2D toDistance;
         toDistance.setBearing(movementData->targetRot, movementData->targetDistance);
 
-        // y = A sin(B(x + C)) + D
-        // We don't need C or D, so y = A sin(Bx)
+        // y = A sin(B(x + C)) + D (from https://www.mathsisfun.com/algebra/amplitude-period-frequency-phase-shift.html)
+        // We don't need C or D, so y = A sin(Bx) = amp * sin(freq * rot)
         Vector2D toOffset;
         toOffset.setBearing(
             movementData->targetRot,
@@ -63,7 +65,7 @@ void BasicMS::moveObjects(
 
         Vector2D targetVelocity = toTargetPos.unitVector() * movementData->maximumSpeed - controlledObjLock->physModel().vel();
 
-        // See Appendix 1 for the mathematical derivation of the following (this + Rotation).
+        // See Appendix 1 for the mathematical derivation of the following (this + Rotation section).
 
         // Given current rotational velocity, if you start decelerating now, where would you be
         // by the time you finished?
@@ -75,7 +77,13 @@ void BasicMS::moveObjects(
 
         // Da = (Ea - Ta) % 2 PI
         // The difference between expected final vector angle and the target vector angle
-        float expectedAngleDiff = newRot.rotatedBy(-targetVelocity.angle()).angle();
+        Vector2D expectedDiff = newRot.rotatedBy(-targetVelocity.angle());
+        float expectedAngleDiff = expectedDiff.angle();
+
+        MyDrawEngine::GetInstance()->DrawLine(
+            targetObjLock->physModel().pos() + Vector2D(100, 200),
+            targetObjLock->physModel().pos() + Vector2D(100, 200) + expectedDiff * 100,
+            MyDrawEngine::RED);
 
         /* Rotation
         -------------------- */
@@ -99,38 +107,16 @@ void BasicMS::moveObjects(
         /* Movement
         -------------------- */
 
-        /*
-        Vector2D avgRot = (toTarget.unitVector() + controlledObjLock->physModel().rot().unitVector()) / 2;
-        Vector2D avgVel = (toTarget.unitVector() + controlledObjLock->physModel().vel().unitVector()) / 2;
-        MyDrawEngine::GetInstance()->DrawLine(
-            targetObjLock->physModel().pos()+Vector2D(100, 300),
-            targetObjLock->physModel().pos()+Vector2D(100, 300) + avgRot * 100,
-            MyDrawEngine::RED);
-        MyDrawEngine::GetInstance()->DrawLine(
-            targetObjLock->physModel().pos()+Vector2D(100, 200),
-            targetObjLock->physModel().pos()+Vector2D(100, 200) + avgVel * 100,
-            MyDrawEngine::RED);
-
-        // How close it must be facing the target before it will accellerate.
-        // The lower, the more 'slidey'.
-        static constexpr float focus = 0.8f;
-        
-        // How eager it is to turn, regardless of the direction it is facing.
-        // The lower, the more 'spiky' its movement will be, the higher, the more 'slidy'.
-        static constexpr float eagerness = 0.5f;
-
-        // How fast it's willing to move.
-        static constexpr float topSpeed = 3.0f;
-
-        // If you're facing the right direction, and moving in the wrong direction or too slowly, then accellerate
-        if (avgRot.magnitude() > focus && (avgVel.magnitude() <= eagerness || controlledObjLock->physModel().vel().magnitude() < topSpeed)) {
-            // Try to move
+        if (
+            expectedAngleDiff < movementData->accelMaxAngle ||
+            expectedAngleDiff > 2 * M_PI - movementData->accelMaxAngle
+        ) {
+            // Request to move
             events.push(TargettedEvent::Ptr(new TargettedEvent(
                 BasicMovement::MainThrustEvent::Ptr(new BasicMovement::MainThrustEvent()),
                 std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
             )));
         }
-        */
     }
 }
 
