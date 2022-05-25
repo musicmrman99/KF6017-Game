@@ -8,13 +8,7 @@
 #include "HasPhysOf.h"
 #include "NewtonianPhysModel.h"
 
-struct TargetObject {
-	using Ptr = std::shared_ptr<TargetObject>;
-	using UPtr = std::unique_ptr<TargetObject>;
-	using WPtr = std::weak_ptr<TargetObject>;
-
-	HasPhysOf<NewtonianPhysModel>::WPtr obj;
-};
+#include "TargettingData.h"
 
 struct ControlledObject {
 	using Ptr = std::shared_ptr<ControlledObject>;
@@ -22,5 +16,6 @@ struct ControlledObject {
 	using WPtr = std::weak_ptr<ControlledObject>;
 
 	HasPhysOf<NewtonianPhysModel>::WPtr obj;
-	TargetObject currentTarget;
+
+	TargettingData::Ptr targettingData;
 };

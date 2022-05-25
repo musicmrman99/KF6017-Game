@@ -106,7 +106,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AITypes.h" />
+    <ClInclude Include="ControlledObject.h" />
     <ClInclude Include="AngledRectangle2D.h" />
     <ClInclude Include="BasicAI.h" />
     <ClInclude Include="BasicCollision.h" />
@@ -128,6 +128,7 @@
     <ClInclude Include="Controls.h" />
     <ClInclude Include="Derived.h" />
     <ClInclude Include="DispatcherEventHandler.h" />
+    <ClInclude Include="DropExpiredFrom.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="errortype.h" />
     <ClInclude Include="Event.h" />
@@ -162,6 +163,8 @@
     <ClInclude Include="HasUI.h" />
     <ClInclude Include="HasUIOf.h" />
     <ClInclude Include="HasUpgradeTree.h" />
+    <ClInclude Include="NearestUntilDestroyedTD.h" />
+    <ClInclude Include="TargetObject.h" />
     <ClInclude Include="ImageGraphicsModel.h" />
     <ClInclude Include="IShape2D.h" />
     <ClInclude Include="KeyMap.h" />
@@ -207,6 +210,7 @@
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="TargettedEvent.h" />
     <ClInclude Include="TargettingStrategy.h" />
+    <ClInclude Include="TargettingData.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="UIObserver.h" />

@@ -8,9 +8,5 @@
 class NearestUntilDestroyedTS final : public TargettingStrategy {
 public:
 	static Ptr create();
-
-	virtual void selectTargets(
-		std::list<ControlledObject>& controlledObjects,
-		const std::list<TargetObject>& targetCandidates
-	) override;
+	virtual void selectTargets(std::list<ControlledObject>& controlledObjects) override;
 };

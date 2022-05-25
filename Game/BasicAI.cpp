@@ -1,6 +1,7 @@
 #include "BasicAI.h"
 
 #include "QueueUtils.h"
+#include "DropExpiredFrom.h"
 
 #include "HasEventHandler.h"
 #include "TargettedEvent.h"
@@ -13,8 +14,8 @@ BasicAI::BasicAI(
     const TargettingStrategy::Ptr targettingStrategy,
     const MovementStrategy::Ptr movementStrategy
 ) :
-    targettingStrategy(targettingStrategy),
-    movementStrategy(movementStrategy)
+    _targettingStrategy(targettingStrategy),
+    _movementStrategy(movementStrategy)
 {}
 BasicAI::UPtr BasicAI::create(
     const TargettingStrategy::Ptr targettingStrategy,
@@ -26,15 +27,18 @@ BasicAI::UPtr BasicAI::create(
     ));
 }
 
-void BasicAI::addControlledObject(HasPhysOf<NewtonianPhysModel>::WPtr object) {
-    // Track
-    controlledObjects.push_back(ControlledObject { object, TargetObject {} });
+void BasicAI::add(
+        HasPhysOf<NewtonianPhysModel>::WPtr object,
+        TargettingData::Ptr targettingData
+) {
+    controlledObjects.push_back(ControlledObject {
+        object,
+        targettingData
+    });
 }
 
-void BasicAI::addTarget(HasPhysOf<NewtonianPhysModel>::WPtr object) {
-    // Track
-    targetCandidates.push_back(TargetObject { object });
-}
+TargettingStrategy::Ptr BasicAI::targettingStrategy() const { return _targettingStrategy; }
+MovementStrategy::Ptr BasicAI::movementStrategy() const { return _movementStrategy; }
 
 void BasicAI::emit(std::queue<Event::Ptr>& events) {
     static std::queue<Event::Ptr> eventsBuffer;
@@ -42,22 +46,15 @@ void BasicAI::emit(std::queue<Event::Ptr>& events) {
     // Remove destroyed controlled and target objects. At some point, this may
     // be useful information for the AI, but it isn't for now.
     dropExiredFrom(controlledObjects);
-    dropExiredFrom(targetCandidates);
 
     // 1. Avoid collidable targets
     // 2. Stay ~N distance away from all targets
 
     // 3. Select a target / Should switch target?
-    targettingStrategy->selectTargets(
-        controlledObjects,
-        targetCandidates
-    );
+    _targettingStrategy->selectTargets(controlledObjects);
 
     // 4. Try to face targets (so you can fire at them)
-    movementStrategy->moveObjects(
-        controlledObjects,
-        eventsBuffer
-    );
+    _movementStrategy->moveObjects(controlledObjects, eventsBuffer);
     
     // 5. Fire at targets
     // 

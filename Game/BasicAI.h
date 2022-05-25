@@ -5,8 +5,7 @@
 
 #include "EventEmitter.h"
 
-#include "Tracker.h"
-#include "AITypes.h"
+#include "ControlledObject.h"
 
 #include "TargettingStrategy.h"
 #include "MovementStrategy.h"
@@ -14,13 +13,9 @@
 class BasicAI final : public EventEmitter {
 private:
     std::list<ControlledObject> controlledObjects;
-    std::list<TargetObject> targetCandidates;
 
-    template <class T>
-    void dropExiredFrom(std::list<T>& objects);
-
-    const TargettingStrategy::Ptr targettingStrategy;
-    const MovementStrategy::Ptr movementStrategy;
+    TargettingStrategy::Ptr _targettingStrategy;
+    MovementStrategy::Ptr _movementStrategy;
 
     BasicAI(
         const TargettingStrategy::Ptr targettingStrategy,
@@ -33,17 +28,17 @@ public:
     using WPtr = std::weak_ptr<BasicAI>;
 
     static UPtr create(
-        const TargettingStrategy::Ptr targettingStrategy,
-        const MovementStrategy::Ptr movementStrategy
+        TargettingStrategy::Ptr targettingStrategy,
+        MovementStrategy::Ptr movementStrategy
     );
 
-    void addControlledObject(HasPhysOf<NewtonianPhysModel>::WPtr object);
-    void addTarget(HasPhysOf<NewtonianPhysModel>::WPtr object);
+    void add(
+        HasPhysOf<NewtonianPhysModel>::WPtr object,
+        TargettingData::Ptr targettingData
+    );
+
+    TargettingStrategy::Ptr targettingStrategy() const;
+    MovementStrategy::Ptr movementStrategy() const;
 
     virtual void emit(std::queue<Event::Ptr>& events) override;
 };
-
-template <class T>
-inline void BasicAI::dropExiredFrom(std::list<T>& objects) {
-    objects.remove_if([](const T& object) { return object.obj.expired(); });
-}

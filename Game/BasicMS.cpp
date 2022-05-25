@@ -5,10 +5,15 @@
 #include "HasComponent.h"
 #include "TargettedEvent.h"
 
+#include "ControlledObject.h"
+#include "NearestUntilDestroyedTD.h"
+
 #include "mydrawengine.h"
 
-BasicMS::Ptr BasicMS::create() {
-    return Ptr(new BasicMS());
+BasicMS::BasicMS(float targetDistance) : targetDistance(targetDistance) {}
+
+BasicMS::Ptr BasicMS::create(float targetDistance) {
+    return Ptr(new BasicMS(targetDistance));
 }
 
 void BasicMS::moveObjects(
@@ -16,16 +21,25 @@ void BasicMS::moveObjects(
 	std::queue<Event::Ptr>& events
 ) {
 	for (ControlledObject& controlledObject : controlledObjects) {
+        NearestUntilDestroyedTD::Ptr targettingData = std::static_pointer_cast<NearestUntilDestroyedTD>(controlledObject.targettingData);
+
         HasPhysOf<NewtonianPhysModel>::Ptr controlledObjLock = controlledObject.obj.lock();
-        HasPhysOf<NewtonianPhysModel>::Ptr targetObjLock = controlledObject.currentTarget.obj.lock();
+        HasPhysOf<NewtonianPhysModel>::Ptr targetObjLock = targettingData->objTarget.obj.lock();
+
         BasicMovement::Ptr controlledObjMovement = std::dynamic_pointer_cast<HasComponent<BasicMovement>>(controlledObjLock)->component();
+        if (!controlledObjMovement) continue; // If it can't move, don't try to move
 
         Vector2D toTarget = targetObjLock->physModel().pos() - controlledObjLock->physModel().pos();
-        const float toTargetAngle = controlledObjLock->physModel().fromRPS(toTarget.angle());
+
+        /* Movement Targetting
+        -------------------- */
+
+        
 
         /* Rotation
         -------------------- */
 
+        /*
         // See Appendix 1 for the mathematical derivation of the following.
 
         // Given current rotational velocity, if you start decelerating now, where would you be
@@ -51,6 +65,7 @@ void BasicMS::moveObjects(
                 std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
             )));
         }
+        */
 
         // Dodge colliding with the enemy
         /*if (toTarget.magnitude() < 2.0f) {
@@ -63,6 +78,7 @@ void BasicMS::moveObjects(
         /* Movement
         -------------------- */
 
+        /*
         Vector2D avgRot = (toTarget.unitVector() + controlledObjLock->physModel().rot().unitVector()) / 2;
         Vector2D avgVel = (toTarget.unitVector() + controlledObjLock->physModel().vel().unitVector()) / 2;
         MyDrawEngine::GetInstance()->DrawLine(
@@ -93,6 +109,7 @@ void BasicMS::moveObjects(
                 std::dynamic_pointer_cast<EventHandler>(controlledObjLock)
             )));
         }
+        */
 	}
 }
 

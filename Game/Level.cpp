@@ -13,6 +13,7 @@
 #include "KeyMap.h"
 #include "BasicAI.h"
 #include "NearestUntilDestroyedTS.h"
+#include "NearestUntilDestroyedTD.h"
 #include "BasicMS.h"
 
 #include "Game.h"
@@ -135,12 +136,12 @@ void Level::afterCreate() {
     // A controller for the enemy
     BasicAI::Ptr enemyAI = BasicAI::create(
         NearestUntilDestroyedTS::create(),
-        BasicMS::create()
+        BasicMS::create(20.0f)
     );
     objectManager->createObject(ControllerSpec::create(enemyAI));
 
-    enemyAI->addControlledObject(enemy);
-    enemyAI->addTarget(player);
+    enemyAI->add(enemy, TargettingData::Ptr(new NearestUntilDestroyedTD {}));
+    enemyAI->targettingStrategy()->addTarget(player);
 }
 
 // Modifying global state

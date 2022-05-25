@@ -379,6 +379,9 @@
     <Filter Include="Source Files\Engine\Events\Models\MultiEventHandler">
       <UniqueIdentifier>{44e265ae-fabf-4f9a-b7d1-5296fd4fec39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Utils">
+      <UniqueIdentifier>{09e31cad-f8f3-4f8b-ba9c-ddbf133840f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -935,7 +938,7 @@
     <ClInclude Include="BasicAI.h">
       <Filter>Header Files\Game\AIs</Filter>
     </ClInclude>
-    <ClInclude Include="AITypes.h">
+    <ClInclude Include="ControlledObject.h">
       <Filter>Header Files\Game\AIs\Components</Filter>
     </ClInclude>
     <ClInclude Include="NearestUntilDestroyedTS.h">
@@ -964,6 +967,18 @@
     </ClInclude>
     <ClInclude Include="DispatcherEventHandler.h">
       <Filter>Header Files\Engine\Events\Models\DispatchEventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetObject.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="TargettingData.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="NearestUntilDestroyedTD.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="DropExpiredFrom.h">
+      <Filter>Header Files\Game\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

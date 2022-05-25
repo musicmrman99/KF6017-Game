@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AITypes.h"
+#include "ControlledObject.h"
 #include "Event.h"
 
 class MovementStrategy {
