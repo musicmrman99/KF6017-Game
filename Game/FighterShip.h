@@ -12,7 +12,7 @@
 // Models
 #include "MultiEventHandler.h"
 #include "BasicMovement.h"
-#include "BulletAttack.h"
+#include "SprayAttack.h"
 
 // Creation
 #include "ObjectFactory.h"
@@ -22,7 +22,7 @@ class FighterShip final :
 	public Ship,
 	public HasEventHandlerOf<MultiEventHandler>,
 	public HasComponent<BasicMovement>,
-	public HasComponent<BulletAttack>
+	public HasComponent<SprayAttack>
 {
 public:
 	using Ptr = std::shared_ptr<FighterShip>;

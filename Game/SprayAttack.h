@@ -12,7 +12,7 @@
 
 #include "mydrawengine.h"
 
-class BulletAttack final :
+class SprayAttack final :
 	public EventHandler,
 	public PhysObserverOf<NewtonianPhysModel>,
 	public EventEmitterObserverOf<BufferedEventEmitter>,
@@ -20,14 +20,35 @@ class BulletAttack final :
 {
 private:
 	PictureIndex bulletImage;
+	float _offsetAngle;
 
-	BulletAttack(PictureIndex bulletImage);
+	SprayAttack(PictureIndex bulletImage);
 
 public:
-	using Ptr = std::shared_ptr<BulletAttack>;
-	using UPtr = std::unique_ptr<BulletAttack>;
+	using Ptr = std::shared_ptr<SprayAttack>;
+	using UPtr = std::unique_ptr<SprayAttack>;
 
 	static UPtr create(PictureIndex bulletImage);
+
+	class RotateFiringAngleEvent final : public Event {
+	public:
+		static const EventType TYPE;
+		const float amount;
+
+		RotateFiringAngleEvent(const float amount);
+	};
+
+	class RotateFiringAngleEventEmitter final : public EventEmitter {
+	private:
+		float amount;
+
+	public:
+		RotateFiringAngleEventEmitter(float amount);
+		virtual void emit(std::queue<Event::Ptr>& events) override;
+	};
+
+	float offsetAngle() const;
+	void rotateOffsetAngle(float amount);
 
 	class FireEvent final : public Event {
 	public:

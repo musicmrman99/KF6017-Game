@@ -82,7 +82,9 @@ void Level::afterCreate() {
     -------------------- */
 
     PictureIndex playerSprite = de->LoadPicture(L"assets\\basic.bmp");
+    PictureIndex fighterSprite = de->LoadPicture(L"assets\\harrasser.bmp");
     PictureIndex bulletSprite = de->LoadPicture(L"assets\\bullet.bmp");
+    PictureIndex plasmaSprite = de->LoadPicture(L"assets\\plasma.bmp");
     PictureIndex starSprite = de->LoadPicture(L"assets\\star.bmp");
 
     /* Game Setup
@@ -120,7 +122,7 @@ void Level::afterCreate() {
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicMovement::MainThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicMovement::TurnLeftThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicMovement::TurnRightThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new BulletAttack::FireEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new SprayAttack::FireEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(PlayerShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
@@ -130,8 +132,8 @@ void Level::afterCreate() {
         objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
             Vector2D(1000.0f, 400.0f),
             Vector2D(0.0f, 1.0f),
-            playerSprite,
-            bulletSprite
+            fighterSprite,
+            plasmaSprite
         )))
     );
 

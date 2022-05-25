@@ -4,20 +4,20 @@
 #include "ptrcast.h"
 
 #include "BasicMovement.h"
-#include "BulletAttack.h"
+#include "SprayAttack.h"
 
 FighterShip::FighterShip(FighterShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
     HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
-    HasComponent<BulletAttack>(BulletAttack::create(spec->bulletImage))
+    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage))
 {
     trackPhysObserver(HasComponent<BasicMovement>::component());
-    trackPhysObserver(HasComponent<BulletAttack>::component());
-    trackEventEmitterObserver(HasComponent<BulletAttack>::component());
+    trackPhysObserver(HasComponent<SprayAttack>::component());
+    trackEventEmitterObserver(HasComponent<SprayAttack>::component());
 
     eventHandler().add(HasComponent<BasicMovement>::component());
-    eventHandler().add(HasComponent<BulletAttack>::component());
+    eventHandler().add(HasComponent<SprayAttack>::component());
 }
 
 const ObjectFactory FighterShip::factory = [](ObjectSpec::UPtr spec) {
@@ -26,5 +26,5 @@ const ObjectFactory FighterShip::factory = [](ObjectSpec::UPtr spec) {
 
 void FighterShip::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
     // Delegate to components that need it (this class doesn't need it)
-    HasComponent<BulletAttack>::component()->setObjectEventFactory(objectEventFactory);
+    HasComponent<SprayAttack>::component()->setObjectEventFactory(objectEventFactory);
 }

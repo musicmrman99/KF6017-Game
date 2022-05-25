@@ -38,18 +38,18 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
     HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
-    HasComponent<BulletAttack>(BulletAttack::create(spec->bulletImage)),
+    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage)),
     HasUpgradeTree(PlayerShipUpgrade::SHIP),
     HasUIOf(UpgradeTreeUI::create())
 {
     // Thread dependencies
     trackPhysObserver(HasComponent<BasicMovement>::component());
-    trackPhysObserver(HasComponent<BulletAttack>::component());
-    trackEventEmitterObserver(HasComponent<BulletAttack>::component());
+    trackPhysObserver(HasComponent<SprayAttack>::component());
+    trackEventEmitterObserver(HasComponent<SprayAttack>::component());
     // Upgrade tree observers? What actually creates the upgrade events?
 
     eventHandler().add(HasComponent<BasicMovement>::component());
-    eventHandler().add(HasComponent<BulletAttack>::component());
+    eventHandler().add(HasComponent<SprayAttack>::component());
     eventHandler().add(upgradeTreePtr());
 
     // Thread dependencies
@@ -65,7 +65,7 @@ const ObjectFactory PlayerShip::factory = [](ObjectSpec::UPtr spec) {
 
 void PlayerShip::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
     // Delegate to components that need it (this class doesn't need it)
-    HasComponent<BulletAttack>::component()->setObjectEventFactory(objectEventFactory);
+    HasComponent<SprayAttack>::component()->setObjectEventFactory(objectEventFactory);
 }
 
 // Organise the available upgrades into a tree.

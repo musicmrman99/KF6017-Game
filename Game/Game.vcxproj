@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp" />
+    <ClCompile Include="AttackStrategy.cpp" />
     <ClCompile Include="BasicAI.cpp" />
     <ClCompile Include="BasicCollision.cpp" />
     <ClCompile Include="BasicCollisionModel.cpp" />
@@ -29,7 +30,7 @@
     <ClCompile Include="BasicMS.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="BulletAttack.cpp" />
+    <ClCompile Include="SprayAttack.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Circle2D.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackStrategy.h" />
     <ClInclude Include="BasicMD.h" />
     <ClInclude Include="ControlledObject.h" />
     <ClInclude Include="AngledRectangle2D.h" />
@@ -119,7 +121,7 @@
     <ClInclude Include="BasicMS.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
-    <ClInclude Include="BulletAttack.h" />
+    <ClInclude Include="SprayAttack.h" />
     <ClInclude Include="BulletSpec.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="Circle2D.h" />

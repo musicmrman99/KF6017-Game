@@ -14,7 +14,7 @@
 // Models
 #include "MultiEventHandler.h"
 #include "BasicMovement.h"
-#include "BulletAttack.h"
+#include "SprayAttack.h"
 #include "UpgradeTreeUI.h"
 
 // Creation
@@ -51,7 +51,7 @@ class PlayerShip final :
 	public Ship,
 	public HasEventHandlerOf<MultiEventHandler>,
 	public HasComponent<BasicMovement>,
-	public HasComponent<BulletAttack>,
+	public HasComponent<SprayAttack>,
 	public HasUpgradeTree,
 	public HasUIOf<UpgradeTreeUI>
 {

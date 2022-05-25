@@ -382,6 +382,9 @@
     <Filter Include="Header Files\Game\Utils">
       <UniqueIdentifier>{09e31cad-f8f3-4f8b-ba9c-ddbf133840f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\AIs\Components\AttackStrategies">
+      <UniqueIdentifier>{483fa1e3-4b7f-4c32-8ee8-d5e0f4d8d509}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -633,7 +636,7 @@
     <ClCompile Include="BasicMovement.cpp">
       <Filter>Source Files\Game\Shared\Movement\Models</Filter>
     </ClCompile>
-    <ClCompile Include="BulletAttack.cpp">
+    <ClCompile Include="SprayAttack.cpp">
       <Filter>Source Files\Game\Shared\Attacking\Models</Filter>
     </ClCompile>
     <ClCompile Include="MultiEventHandler.cpp">
@@ -644,6 +647,9 @@
     </ClCompile>
     <ClCompile Include="BasicMD.cpp">
       <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackStrategy.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -962,7 +968,7 @@
     <ClInclude Include="BasicMovement.h">
       <Filter>Header Files\Game\Shared\Movement\Models</Filter>
     </ClInclude>
-    <ClInclude Include="BulletAttack.h">
+    <ClInclude Include="SprayAttack.h">
       <Filter>Header Files\Game\Shared\Attacking\Models</Filter>
     </ClInclude>
     <ClInclude Include="MultiEventHandler.h">
@@ -994,6 +1000,9 @@
     </ClInclude>
     <ClInclude Include="realmod.h">
       <Filter>Header Files\Game\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackStrategy.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
