@@ -3,6 +3,7 @@
 #include "ptrcast.h"
 
 #include "ShipSpec.h"
+#include "CollisionEvent.h"
 
 /* BulletEventHandler
 -------------------------------------------------- */
@@ -15,6 +16,10 @@ void BulletEventHandler::handle(const Event::Ptr e) {
         e->type == TimerEvent::TYPE &&
         std::static_pointer_cast<TimerEvent>(e)->timer.lock() == timer
     ) {
+        eventEmitter().enqueue(objectEventFactory()->destroyObject(ref()));
+    }
+
+    else if (e->type == CollisionEvent::TYPE) {
         eventEmitter().enqueue(objectEventFactory()->destroyObject(ref()));
     }
 }

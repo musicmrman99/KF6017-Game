@@ -246,6 +246,9 @@ ErrorType Game::StartOfGame() {
     gt.mark();
     gt.mark();
 
+    // Seed the RNG
+    srand(time(NULL));
+
     // Create the level and set it as a lifecycle point
     objectManager = ObjectManager::create();
     NewGame::initialise(objectManager);

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "ReferenceWrapperUtils.h"
 #include "TargettedEvent.h"
+#include "CollisionEvent.h"
 
 // Traits
 #include "HasCollisionOf.h"
@@ -11,9 +12,6 @@
 
 // Models
 #include "BasicCollisionModel.h"
-
-/* Basic Collision
--------------------------------------------------- */
 
 BasicCollision::BasicCollision(BasicCollisionSpec::UPtr spec)
 	: HasEventEmitterOf(BufferedEventEmitter::UPtr(new BufferedEventEmitter())) {
@@ -88,15 +86,4 @@ void BasicCollision::run() {
 			}
 		}
 	}
-}
-
-/* Collision Event
--------------------------------------------------- */
-
-const EventType CollisionEvent::COLLISION;
-
-CollisionEvent::CollisionEvent(GameObject::Ptr other) : Event(COLLISION), other(other) {}
-
-CollisionEvent::Ptr CollisionEvent::create(GameObject::Ptr other) {
-	return CollisionEvent::Ptr(new CollisionEvent(other));
 }

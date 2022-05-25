@@ -660,6 +660,9 @@
     <ClCompile Include="SprayAS.cpp">
       <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionEvent.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngledRectangle2D.h">
@@ -1021,6 +1024,9 @@
     </ClInclude>
     <ClInclude Include="SprayAD.h">
       <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEvent.h">
+      <Filter>Header Files\Engine\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

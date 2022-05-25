@@ -41,15 +41,3 @@ public:
 	virtual void objectDestroyed(GameObject::Ptr object) override;
 	virtual void run() override;
 };
-
-class CollisionEvent final : public Event {
-private:
-	CollisionEvent(GameObject::Ptr other);
-
-public:
-	static const EventType COLLISION;
-
-	GameObject::Ptr other;
-
-	static CollisionEvent::Ptr create(GameObject::Ptr other);
-};
