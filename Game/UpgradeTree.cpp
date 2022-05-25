@@ -43,32 +43,10 @@ void UpgradeEventEmitter::UpgradeEventEmitter::emit(std::queue<Event::Ptr>& even
 -------------------------------------------------- */
 
 UpgradeTree::UpgradeTree(const Upgrade& rootUpgrade)
-    : upgradeTree(Node<PurchasableUpgrade>::create(new PurchasableUpgrade { rootUpgrade, true})) {
+    : upgradeTree(Node<PurchasableUpgrade>::create(new PurchasableUpgrade { rootUpgrade, true })) {
 }
 
-// Try to add the upgrade this action is for.
-void UpgradeTree::purchaseUpgrade(const Upgrade& upgrade) {
-    // Get upgrade
-    std::optional<NodePtr> maybeUpgradeNode = findUpgrade(upgrade);
-    if (!maybeUpgradeNode) return; // Cannot purchase upgrade not in the tree
-    NodePtr upgradeNode = maybeUpgradeNode.value();
-
-    // Check parent
-    bool canPurchase = false;
-    std::optional<NodePtr> parentUpgradeNode = findParentUpgrade(upgrade);
-    // Note: parentUpgradeNode != std::nullopt, as we know the node exists.
-    if (
-        parentUpgradeNode.value() &&                      // If there is a parent node (you can always purchase the root node, which has no parent)
-        !parentUpgradeNode.value()->getValue()->purchased // and it isn't yet purchased
-    ) {
-        return; // Cannot purchase upgrade with unmet dependencies
-    }
-
-    // Purchase upgrade
-    upgradeNode->getValue()->purchased = true;
-}
-
-/* Get, Add, and Search
+/* Get, Add, Search
 -------------------- */
 
 const UpgradeTree::NodePtr& UpgradeTree::getRootUpgrade() const {
@@ -95,4 +73,35 @@ auto UpgradeTree::findParentUpgrade(const Upgrade& upgrade) -> std::optional<Nod
         upgradeTree,
         new PurchasableUpgrade { upgrade, false } // false is ignored
     );
+}
+
+/* Upgrade and Events
+-------------------- */
+
+// Try to add the upgrade this action is for.
+void UpgradeTree::purchaseUpgrade(const Upgrade& upgrade) {
+    // Get upgrade
+    std::optional<NodePtr> maybeUpgradeNode = findUpgrade(upgrade);
+    if (!maybeUpgradeNode) return; // Cannot purchase upgrade not in the tree
+    NodePtr upgradeNode = maybeUpgradeNode.value();
+
+    // Check parent
+    bool canPurchase = false;
+    std::optional<NodePtr> parentUpgradeNode = findParentUpgrade(upgrade);
+    // Note: parentUpgradeNode != std::nullopt, as we know the node exists.
+    if (
+        parentUpgradeNode.value() &&                      // If there is a parent node (you can always purchase the root node, which has no parent)
+        !parentUpgradeNode.value()->getValue()->purchased // and it isn't yet purchased
+        ) {
+        return; // Cannot purchase upgrade with unmet dependencies
+    }
+
+    // Purchase upgrade
+    upgradeNode->getValue()->purchased = true;
+}
+
+void UpgradeTree::handle(const Event::Ptr e) {
+    if (e->type == UpgradeEvent::TYPE) {
+        purchaseUpgrade(std::static_pointer_cast<UpgradeEvent>(e)->upgrade);
+    }
 }

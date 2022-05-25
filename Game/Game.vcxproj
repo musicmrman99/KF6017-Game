@@ -20,11 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp" />
+    <ClCompile Include="AttackStrategy.cpp" />
+    <ClCompile Include="BasicAI.cpp" />
     <ClCompile Include="BasicCollision.cpp" />
     <ClCompile Include="BasicCollisionModel.cpp" />
     <ClCompile Include="BasicCollisionSpec.cpp" />
+    <ClCompile Include="BasicMD.cpp" />
+    <ClCompile Include="BasicMovement.cpp" />
+    <ClCompile Include="BasicMS.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="SprayAD.cpp" />
+    <ClCompile Include="SprayAS.cpp" />
+    <ClCompile Include="SprayAttack.cpp" />
     <ClCompile Include="BulletSpec.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Circle2D.cpp" />
@@ -39,6 +47,8 @@
     <ClCompile Include="EventEmitterObserver.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="EventHandlerObserver.cpp" />
+    <ClCompile Include="FighterShip.cpp" />
+    <ClCompile Include="FighterShipSpec.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="gametimer.cpp" />
@@ -60,9 +70,13 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelActor.cpp" />
     <ClCompile Include="LevelSpec.cpp" />
+    <ClCompile Include="MovementStrategy.cpp" />
+    <ClCompile Include="MultiEventHandler.cpp" />
     <ClCompile Include="mydrawengine.cpp" />
     <ClCompile Include="myinputs.cpp" />
     <ClCompile Include="mysoundengine.cpp" />
+    <ClCompile Include="NearestUntilDestroyedTD.cpp" />
+    <ClCompile Include="NearestUntilDestroyedTS.cpp" />
     <ClCompile Include="NewGame.cpp" />
     <ClCompile Include="NewtonianPhysModel.cpp" />
     <ClCompile Include="ObjectEvent.cpp" />
@@ -76,6 +90,8 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="PhysModel.cpp" />
     <ClCompile Include="PhysObserver.cpp" />
+    <ClCompile Include="PlayerShip.cpp" />
+    <ClCompile Include="PlayerShipSpec.cpp" />
     <ClCompile Include="Point2D.cpp" />
     <ClCompile Include="Rectangle2D.cpp" />
     <ClCompile Include="Segment2D.cpp" />
@@ -85,6 +101,7 @@
     <ClCompile Include="StarFieldSpec.cpp" />
     <ClCompile Include="Symbol.cpp" />
     <ClCompile Include="TargettedEvent.cpp" />
+    <ClCompile Include="TargettingStrategy.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="UIObserver.cpp" />
     <ClCompile Include="UpgradeTree.cpp" />
@@ -94,12 +111,22 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AttackData.h" />
+    <ClInclude Include="AttackStrategy.h" />
+    <ClInclude Include="BasicMD.h" />
+    <ClInclude Include="ControlledObject.h" />
     <ClInclude Include="AngledRectangle2D.h" />
+    <ClInclude Include="BasicAI.h" />
     <ClInclude Include="BasicCollision.h" />
     <ClInclude Include="BasicCollisionModel.h" />
     <ClInclude Include="BasicCollisionSpec.h" />
+    <ClInclude Include="BasicMovement.h" />
+    <ClInclude Include="BasicMS.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="SprayAD.h" />
+    <ClInclude Include="SprayAS.h" />
+    <ClInclude Include="SprayAttack.h" />
     <ClInclude Include="BulletSpec.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="Circle2D.h" />
@@ -110,6 +137,8 @@
     <ClInclude Include="ControllerSpec.h" />
     <ClInclude Include="Controls.h" />
     <ClInclude Include="Derived.h" />
+    <ClInclude Include="DispatcherEventHandler.h" />
+    <ClInclude Include="DropExpiredFrom.h" />
     <ClInclude Include="ErrorLogger.h" />
     <ClInclude Include="errortype.h" />
     <ClInclude Include="Event.h" />
@@ -119,6 +148,8 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="EventHandlerObserver.h" />
     <ClInclude Include="EventHandlerObserverOf.h" />
+    <ClInclude Include="FighterShip.h" />
+    <ClInclude Include="FighterShipSpec.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="gametimer.h" />
@@ -130,6 +161,7 @@
     <ClInclude Include="GraphicsObserverOf.h" />
     <ClInclude Include="HasCollision.h" />
     <ClInclude Include="HasCollisionOf.h" />
+    <ClInclude Include="HasComponent.h" />
     <ClInclude Include="HasEventEmitter.h" />
     <ClInclude Include="HasEventEmitterOf.h" />
     <ClInclude Include="HasEventHandler.h" />
@@ -141,15 +173,22 @@
     <ClInclude Include="HasUI.h" />
     <ClInclude Include="HasUIOf.h" />
     <ClInclude Include="HasUpgradeTree.h" />
+    <ClInclude Include="realmod.h" />
+    <ClInclude Include="MovementData.h" />
+    <ClInclude Include="NearestUntilDestroyedTD.h" />
+    <ClInclude Include="TargetObject.h" />
     <ClInclude Include="ImageGraphicsModel.h" />
     <ClInclude Include="IShape2D.h" />
     <ClInclude Include="KeyMap.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelActor.h" />
     <ClInclude Include="LevelSpec.h" />
+    <ClInclude Include="MovementStrategy.h" />
+    <ClInclude Include="MultiEventHandler.h" />
     <ClInclude Include="mydrawengine.h" />
     <ClInclude Include="myinputs.h" />
     <ClInclude Include="mysoundengine.h" />
+    <ClInclude Include="NearestUntilDestroyedTS.h" />
     <ClInclude Include="NewGame.h" />
     <ClInclude Include="NewtonianPhysModel.h" />
     <ClInclude Include="Node.h" />
@@ -166,6 +205,8 @@
     <ClInclude Include="PhysModel.h" />
     <ClInclude Include="PhysObserver.h" />
     <ClInclude Include="PhysObserverOf.h" />
+    <ClInclude Include="PlayerShip.h" />
+    <ClInclude Include="PlayerShipSpec.h" />
     <ClInclude Include="Point2D.h" />
     <ClInclude Include="ptrcast.h" />
     <ClInclude Include="QueueUtils.h" />
@@ -180,6 +221,8 @@
     <ClInclude Include="StarFieldSpec.h" />
     <ClInclude Include="Symbol.h" />
     <ClInclude Include="TargettedEvent.h" />
+    <ClInclude Include="TargettingStrategy.h" />
+    <ClInclude Include="TargettingData.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Tracker.h" />
     <ClInclude Include="UIObserver.h" />

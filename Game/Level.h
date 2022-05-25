@@ -2,10 +2,14 @@
 
 // Dependencies
 #include <queue>
+#include <map>
+#include <string>
 #include "Referencing.h"
 
-#include "Ship.h"
+#include "PlayerShip.h"
 #include "StarField.h"
+
+#include "BasicAI.h"
 
 // Traits
 #include "GameObject.h"
@@ -35,12 +39,16 @@ private:
 	Level(LevelSpec::Ptr spec);
 
 	// Camera
+	Vector2D cameraOffset;
 	HasPhysOf<NewtonianPhysModel>::Ptr cameraFocusObject;
-	std::queue<Vector2D> latencyQueue;
-	static const int LATENCY = 30;
+	static const float CAMERA_SHIFT;
+	static const float CAMERA_ELASTICITY;
+
+	// Services owned by the level manager
+	std::map<std::string, PictureIndex> spriteMap;
 
 	// Global entities
-	Ship::Ptr player;
+	PlayerShip::Ptr player;
 	StarField::Ptr starField;
 
 public:
@@ -49,8 +57,13 @@ public:
 	static const ObjectFactory factory;
 
 	virtual void afterCreate() override;
+	
+	// Level Management
 
-	// Modifying global state
+	BasicAI::Ptr fighterAI;
+	void spawnFighter();
+
+	// Global State
 
 	void setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject);
 

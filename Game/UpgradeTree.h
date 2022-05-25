@@ -6,6 +6,7 @@
 #include "Node.h"
 
 #include "Event.h"
+#include "EventHandler.h"
 #include "EventEmitter.h"
 
 // An upgrade
@@ -39,7 +40,7 @@ public:
 };
 
 // A tree of upgrades
-class UpgradeTree final {
+class UpgradeTree final : public EventHandler {
 private:
 	// An upgrade and whether it has been purchased for this ship.
 	struct PurchasableUpgrade {
@@ -59,6 +60,10 @@ private:
 	NodePtr upgradeTree;
 
 public:
+	using Ptr = std::shared_ptr<UpgradeTree>;
+	using UPtr = std::unique_ptr<UpgradeTree>;
+	using WPtr = std::weak_ptr<UpgradeTree>;
+
 	// Constructor
 	UpgradeTree(const Upgrade& rootUpgrade);
 
@@ -73,4 +78,7 @@ public:
 
 	// Attempt to purchase the given upgrade.
 	void purchaseUpgrade(const Upgrade& upgrade);
+
+	// Handle an event to purchase an upgrade
+	virtual void handle(const Event::Ptr e) override;
 };

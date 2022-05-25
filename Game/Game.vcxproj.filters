@@ -304,6 +304,90 @@
     <Filter Include="Source Files\Game\Objects\StarField">
       <UniqueIdentifier>{c98b0ba9-e22b-42fe-989c-baa32e3ee4e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\Objects\Ship\PlayerShip">
+      <UniqueIdentifier>{2a78e817-2ad8-4a90-96ef-2258d7ea6d41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Ship\PlayerShip">
+      <UniqueIdentifier>{f035cd15-f9c4-4e8f-9bf1-473040f86315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Ship\FighterShip">
+      <UniqueIdentifier>{29091d74-6e48-4eb3-ba33-3d93666b73fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Objects\Ship\FighterShip">
+      <UniqueIdentifier>{42a8fd29-eef0-4c68-8e63-41f876416acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AIs">
+      <UniqueIdentifier>{96182310-5bfd-48f3-a567-1962ecd702d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\AIs">
+      <UniqueIdentifier>{2881c2d6-8873-4c0f-a0ed-ed1aec393f98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AIs\Components">
+      <UniqueIdentifier>{f782dc30-2484-4e90-b1e0-d97ce4c87f2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\AIs\Components">
+      <UniqueIdentifier>{8d0766b6-1dca-475d-a354-3d51992647d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\AIs\Components\TargettingStrategies">
+      <UniqueIdentifier>{efca8be6-9243-4ee8-8401-2742b0720a29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AIs\Components\TargettingStrategies">
+      <UniqueIdentifier>{783cae2b-c310-4782-93bb-72554cb19ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AIs\Components\MovementStrategies">
+      <UniqueIdentifier>{9dc60f24-4b2e-407b-aa29-851cd0b2d034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\AIs\Components\MovementStrategies">
+      <UniqueIdentifier>{338d9ec6-7f12-4d99-a040-e467565a2ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\HasComponent">
+      <UniqueIdentifier>{b823a733-b46d-4a40-a2ee-94c5c0bc704d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\HasComponent\Traits">
+      <UniqueIdentifier>{58fe29fc-5a2c-4573-9ce6-57aa9786b9ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\Movement">
+      <UniqueIdentifier>{a6bc77eb-2cb3-443e-b4f5-00f5040d804c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\Movement\Models">
+      <UniqueIdentifier>{08c7b6cf-2f0d-45fb-aac6-c329202aab59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\Attacking">
+      <UniqueIdentifier>{13fae994-b88e-4131-8582-a6f3d7d53702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\Attacking\Models">
+      <UniqueIdentifier>{7920f42a-8b13-4149-b9a8-af3ef21fb8a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\Movement">
+      <UniqueIdentifier>{1a251165-d930-40b6-8613-e941ff3b0b0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\Movement\Models">
+      <UniqueIdentifier>{fe5a2d0a-d97b-426e-a90d-8d2fb942ea2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\Attacking">
+      <UniqueIdentifier>{fa39e375-785d-4d01-a88b-b9ca21b2294b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\Attacking\Models">
+      <UniqueIdentifier>{8f82fa19-ac85-4ee5-adda-63c6c49d494d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\MultiEventHandler">
+      <UniqueIdentifier>{f38c7f75-e931-4311-95f3-68f5a221d5a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Events\Models\DispatchEventHandler">
+      <UniqueIdentifier>{b6116b20-614f-4db2-92e1-66afe267b450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Events\Models\MultiEventHandler">
+      <UniqueIdentifier>{44e265ae-fabf-4f9a-b7d1-5296fd4fec39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Utils">
+      <UniqueIdentifier>{09e31cad-f8f3-4f8b-ba9c-ddbf133840f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\AIs\Components\AttackStrategies">
+      <UniqueIdentifier>{483fa1e3-4b7f-4c32-8ee8-d5e0f4d8d509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AIs\Components\AttackStrategies">
+      <UniqueIdentifier>{9c85728a-6d68-4081-8a7e-f7fff2e77b49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp">
@@ -414,12 +498,6 @@
     <ClCompile Include="GlobalUISpec.cpp">
       <Filter>Source Files\Game\Objects\GlobalUI</Filter>
     </ClCompile>
-    <ClCompile Include="ShipSpec.cpp">
-      <Filter>Source Files\Game\Objects\Ship</Filter>
-    </ClCompile>
-    <ClCompile Include="Ship.cpp">
-      <Filter>Source Files\Game\Objects\Ship</Filter>
-    </ClCompile>
     <ClCompile Include="Controls.cpp">
       <Filter>Source Files\Engine\Events\Models\KeyMap</Filter>
     </ClCompile>
@@ -524,6 +602,63 @@
     </ClCompile>
     <ClCompile Include="StarFieldSpec.cpp">
       <Filter>Source Files\Game\Objects\StarField</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShip.cpp">
+      <Filter>Source Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClCompile>
+    <ClCompile Include="Ship.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="FighterShip.cpp">
+      <Filter>Source Files\Game\Objects\Ship\FighterShip</Filter>
+    </ClCompile>
+    <ClCompile Include="FighterShipSpec.cpp">
+      <Filter>Source Files\Game\Objects\Ship\FighterShip</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicAI.cpp">
+      <Filter>Source Files\Game\AIs</Filter>
+    </ClCompile>
+    <ClCompile Include="NearestUntilDestroyedTS.cpp">
+      <Filter>Source Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="TargettingStrategy.cpp">
+      <Filter>Source Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementStrategy.cpp">
+      <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicMS.cpp">
+      <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicMovement.cpp">
+      <Filter>Source Files\Game\Shared\Movement\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="SprayAttack.cpp">
+      <Filter>Source Files\Game\Shared\Attacking\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="MultiEventHandler.cpp">
+      <Filter>Source Files\Engine\Events\Models\MultiEventHandler</Filter>
+    </ClCompile>
+    <ClCompile Include="NearestUntilDestroyedTD.cpp">
+      <Filter>Source Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicMD.cpp">
+      <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackStrategy.cpp">
+      <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="SprayAD.cpp">
+      <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="SprayAS.cpp">
+      <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -743,12 +878,6 @@
     <ClInclude Include="GlobalUI.h">
       <Filter>Header Files\Game\Objects\GlobalUI</Filter>
     </ClInclude>
-    <ClInclude Include="ShipSpec.h">
-      <Filter>Header Files\Game\Objects\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="Ship.h">
-      <Filter>Header Files\Game\Objects\Ship</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Engine\Core\Entry</Filter>
     </ClInclude>
@@ -808,6 +937,90 @@
     </ClInclude>
     <ClInclude Include="StarFieldSpec.h">
       <Filter>Header Files\Game\Objects\StarField</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShip.h">
+      <Filter>Header Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerShipSpec.h">
+      <Filter>Header Files\Game\Objects\Ship\PlayerShip</Filter>
+    </ClInclude>
+    <ClInclude Include="Ship.h">
+      <Filter>Header Files\Game\Objects\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipSpec.h">
+      <Filter>Header Files\Game\Objects\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="FighterShip.h">
+      <Filter>Header Files\Game\Objects\Ship\FighterShip</Filter>
+    </ClInclude>
+    <ClInclude Include="FighterShipSpec.h">
+      <Filter>Header Files\Game\Objects\Ship\FighterShip</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicAI.h">
+      <Filter>Header Files\Game\AIs</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlledObject.h">
+      <Filter>Header Files\Game\AIs\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="TargettingStrategy.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementStrategy.h">
+      <Filter>Header Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMS.h">
+      <Filter>Header Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="HasComponent.h">
+      <Filter>Header Files\Game\Shared\HasComponent\Traits</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMovement.h">
+      <Filter>Header Files\Game\Shared\Movement\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="SprayAttack.h">
+      <Filter>Header Files\Game\Shared\Attacking\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="MultiEventHandler.h">
+      <Filter>Header Files\Engine\Events\Models\MultiEventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="DispatcherEventHandler.h">
+      <Filter>Header Files\Engine\Events\Models\DispatchEventHandler</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetObject.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="TargettingData.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="NearestUntilDestroyedTD.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="DropExpiredFrom.h">
+      <Filter>Header Files\Game\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementData.h">
+      <Filter>Header Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicMD.h">
+      <Filter>Header Files\Game\AIs\Components\MovementStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="NearestUntilDestroyedTS.h">
+      <Filter>Header Files\Game\AIs\Components\TargettingStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="realmod.h">
+      <Filter>Header Files\Game\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackStrategy.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="SprayAS.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackData.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="SprayAD.h">
+      <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

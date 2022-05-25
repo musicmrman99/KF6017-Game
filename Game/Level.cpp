@@ -5,17 +5,36 @@
 #include "BasicCollision.h"
 #include "Graphics.h"
 
-#include "Bullet.h"
 #include "GlobalUI.h"
+#include "FighterShip.h"
+#include "Bullet.h"
 
 #include "Controller.h"
 #include "KeyMap.h"
+
+#include "NearestUntilDestroyedTS.h"
+#include "NearestUntilDestroyedTD.h"
+#include "BasicMS.h"
+#include "BasicMD.h"
+#include "SprayAS.h"
+#include "SprayAD.h"
+
 #include "Game.h"
+
+// Multiplier for how much the camera focus object's acceleration shifts the camera away from it.
+const float Level::CAMERA_SHIFT = 40.0f;
+
+//      0 = completely elastic (camera doesn't 'pull' back to camera focus object)
+// (0, 1) = somewhat elastic   (camera 'pulls' back to camera focus object at given rate)
+//      1 = completely rigid   (camera 'pulls' back to camera focus object immediately)
+const float Level::CAMERA_ELASTICITY = 0.05f;
 
 Level::Level(LevelSpec::Ptr spec) : objectManager(spec->objectManager) {}
 
 const ObjectFactory Level::factory = [](ObjectSpec::UPtr spec) {
-    return GameObject::Ptr(new Level(static_unique_pointer_cast<LevelSpec>(move(spec))));
+    Level::Ptr level = Level::Ptr(new Level(static_unique_pointer_cast<LevelSpec>(move(spec))));
+    level->setRef(level);
+    return level;
 };
 
 void Level::afterCreate() {
@@ -37,7 +56,8 @@ void Level::afterCreate() {
     objectFactory.registerFactory(StarFieldSpec::STAR_FIELD, StarField::factory);
 
     // Actors
-    objectFactory.registerFactory(ShipSpec::SHIP, Ship::factory);
+    objectFactory.registerFactory(PlayerShipSpec::PLAYER_SHIP, PlayerShip::factory);
+    objectFactory.registerFactory(FighterShipSpec::FIGHTER_SHIP, FighterShip::factory);
 
     // Objects
     objectFactory.registerFactory(BulletSpec::BULLET, Bullet::factory);
@@ -54,14 +74,19 @@ void Level::afterCreate() {
     );
     objectManager->addLifecyclePoint(basicCollision);
 
+    // Also a GameObject and LifecyclePoint, but NewGame does the createObject() for us
+    objectManager->addLifecyclePoint(ref().lock());
+
     objectManager->addLifecyclePoint(Graphics::create());
 
     /* Load Resources
     -------------------- */
 
-    PictureIndex playerSprite = de->LoadPicture(L"assets\\basic.bmp");
-    PictureIndex bulletSprite = de->LoadPicture(L"assets\\bullet.bmp");
-    PictureIndex starSprite = de->LoadPicture(L"assets\\star.bmp");
+    spriteMap.insert({ "player", de->LoadPicture(L"assets\\basic.bmp") });
+    spriteMap.insert({ "fighter", de->LoadPicture(L"assets\\harrasser.bmp") });
+    spriteMap.insert({ "bullet", de->LoadPicture(L"assets\\bullet.bmp") });
+    spriteMap.insert({ "plasma", de->LoadPicture(L"assets\\plasma.bmp") });
+    spriteMap.insert({ "star", de->LoadPicture(L"assets\\star.bmp") });
 
     /* Game Setup
     -------------------- */
@@ -69,13 +94,24 @@ void Level::afterCreate() {
     // Global UI
     objectManager->createObject(GlobalUISpec::UPtr(new GlobalUISpec()));
 
+    // Star field
+    starField = std::static_pointer_cast<StarField>(
+        objectManager->createObject(StarFieldSpec::create(
+            Vector2D(0.0f, 0.0f),
+            Vector2D(2000 * (de->GetScreenWidth() / (float) de->GetScreenHeight()), 2000),
+            0.000007f, // 7 / 1,000,000
+            spriteMap["star"]
+        ))
+    );
+    starField->setNumLayers(5);
+
     // Player
-    player = std::static_pointer_cast<Ship>(
-        objectManager->createObject(ShipSpec::UPtr(new ShipSpec(
+    player = std::static_pointer_cast<PlayerShip>(
+        objectManager->createObject(PlayerShipSpec::UPtr(new PlayerShipSpec(
             Vector2D(0.0f, 0.0f), // Centre of the world
             Vector2D(0.0f, 1.0f), // Facing up
-            playerSprite,
-            bulletSprite
+            spriteMap["player"],
+            spriteMap["bullet"]
         )))
     );
 
@@ -84,27 +120,72 @@ void Level::afterCreate() {
 
     // Player controller (a key map)
     KeyMap::UPtr playerKeymap = KeyMap::create(std::dynamic_pointer_cast<HasEventHandler>(player));
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new ShipEventHandler::MainThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new ShipEventHandler::TurnLeftThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new ShipEventHandler::TurnRightThrustEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new ShipEventHandler::FireEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(ShipUpgrade::LOAD_OPTIMISATION));
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_W), new BasicMovement::MainThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicMovement::TurnLeftThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicMovement::TurnRightThrustEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new SprayAttack::FireEventEmitter());
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(PlayerShipUpgrade::LOAD_OPTIMISATION));
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
-    // Star field
-    starField = std::static_pointer_cast<StarField>(
-        objectManager->createObject(StarFieldSpec::create(
-            Vector2D(0.0f, 0.0f),
-            Vector2D(2000 * (de->GetScreenWidth() / (float) de->GetScreenHeight()), 2000),
-            0.000007f, // 7 / 1,000,000
-            starSprite
-        ))
+    // A controller for all fighters
+    // The strategies used do not implement flocking behaviour, but if they did, then multple AIs (flocks) would be needed.
+    fighterAI = BasicAI::create(
+        NearestUntilDestroyedTS::create(),
+        BasicMS::create(),
+        SprayAS::create()
     );
-    starField->setNumLayers(5);
+    objectManager->createObject(ControllerSpec::create(fighterAI));
+
+    spawnFighter();
+    spawnFighter();
+    spawnFighter();
 }
 
-// Modifying global state
+// Level Management
+
+void Level::spawnFighter() {
+    // Lock the object manager pointer for the whole function
+    ObjectManager::Ptr objectManager = this->objectManager.lock();
+
+    // An enemy
+    Vector2D offset;
+    offset.setBearing(
+        (rand() % 1000) * (2 * M_PI / 1000.0f),
+        1000.0f + rand() % 1000
+    );
+
+    FighterShip::Ptr enemy = std::static_pointer_cast<FighterShip>(
+        objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
+            player->physModel().pos() + offset,
+            Vector2D(0.0f, 1.0f),
+            spriteMap["fighter"],
+            spriteMap["plasma"]
+        )))
+    );
+
+    // Add it to the AI for its type with relevant parameters
+    fighterAI->add(
+        enemy,
+        NearestUntilDestroyedTD::create(),
+        BasicMD::create(
+            5.0f,                      // maximum speed
+            (1.0f / 24.0f) * 2 * M_PI, // max angle before accel = 1/24 2pi radians = 15 degrees
+            200.0f,                    // optimal distance
+            0.03f,                     // rotation velocity
+            60.0f,                     // offset amplitude,
+            1.5f                       // offset frequency (Hz)
+        ),
+        SprayAD::create(
+            (1.0f / 72.0f) * 2 * M_PI, // max angle before fire = 1/72 2pi radians = 5 degrees
+            false,                     // can/cannot rotate its gun
+            0.0f                       // gun requested rotation speed
+        )
+    );
+    fighterAI->targettingStrategy()->addTarget(player);
+}
+
+// Global state
 
 void Level::setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject) {
     if (physObject) cameraFocusObject = physObject;
@@ -120,9 +201,13 @@ void Level::objectCreated(GameObject::Ptr object) {
 
 void Level::run() {
     // Camera focus (track player)
-    latencyQueue.push(cameraFocusObject->physModel().pos());
-    MyDrawEngine::GetInstance()->theCamera.PlaceAt(latencyQueue.front());
-    if (latencyQueue.size() > LATENCY) latencyQueue.pop();
+    cameraOffset += (
+        -cameraOffset * CAMERA_ELASTICITY                      // Camera drag        > 0 <
+        -cameraFocusObject->physModel().accel() * CAMERA_SHIFT // Acceleration shift < 0 >
+    );
+    MyDrawEngine::GetInstance()->theCamera.PlaceAt(
+        cameraFocusObject->physModel().pos() + cameraOffset
+    );
 
     // Stars (track player)
     starField->physModel().setPos(player->physModel().pos());

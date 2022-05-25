@@ -15,6 +15,8 @@ public:
     using UPtr = std::unique_ptr<UpgradeTreeUI>;
     using WPtr = std::weak_ptr<UpgradeTreeUI>;
 
+    static UPtr create();
+
     virtual void draw() override;
     std::wstring formatTree(UpgradeTree::NodePtr node, int indent = 0) const;
 };
