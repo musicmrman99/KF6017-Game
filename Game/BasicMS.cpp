@@ -58,8 +58,6 @@ void BasicMS::moveObjects(
         Vector2D targetPos = targetObjLock->physModel().pos() + toDistance + toOffset;
         Vector2D toTargetPos = targetPos - controlledObjLock->physModel().pos();
 
-        MyDrawEngine::GetInstance()->FillCircle(targetPos, 5, MyDrawEngine::RED);
-
         /* Rotation & Movement
         -------------------- */
 
@@ -79,11 +77,6 @@ void BasicMS::moveObjects(
         // The difference between expected final vector angle and the target vector angle
         Vector2D expectedDiff = newRot.rotatedBy(-targetVelocity.angle());
         float expectedAngleDiff = expectedDiff.angle();
-
-        MyDrawEngine::GetInstance()->DrawLine(
-            targetObjLock->physModel().pos() + Vector2D(100, 200),
-            targetObjLock->physModel().pos() + Vector2D(100, 200) + expectedDiff * 100,
-            MyDrawEngine::RED);
 
         /* Rotation
         -------------------- */
