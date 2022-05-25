@@ -2,10 +2,14 @@
 
 // Dependencies
 #include <queue>
+#include <map>
+#include <string>
 #include "Referencing.h"
 
 #include "PlayerShip.h"
 #include "StarField.h"
+
+#include "BasicAI.h"
 
 // Traits
 #include "GameObject.h"
@@ -40,6 +44,9 @@ private:
 	static const float CAMERA_SHIFT;
 	static const float CAMERA_ELASTICITY;
 
+	// Services owned by the level manager
+	std::map<std::string, PictureIndex> spriteMap;
+
 	// Global entities
 	PlayerShip::Ptr player;
 	StarField::Ptr starField;
@@ -50,8 +57,13 @@ public:
 	static const ObjectFactory factory;
 
 	virtual void afterCreate() override;
+	
+	// Level Management
 
-	// Modifying global state
+	BasicAI::Ptr fighterAI;
+	void spawnFighter();
+
+	// Global State
 
 	void setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject);
 

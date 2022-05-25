@@ -12,7 +12,6 @@
 #include "Controller.h"
 #include "KeyMap.h"
 
-#include "BasicAI.h"
 #include "NearestUntilDestroyedTS.h"
 #include "NearestUntilDestroyedTD.h"
 #include "BasicMS.h"
@@ -83,11 +82,11 @@ void Level::afterCreate() {
     /* Load Resources
     -------------------- */
 
-    PictureIndex playerSprite = de->LoadPicture(L"assets\\basic.bmp");
-    PictureIndex fighterSprite = de->LoadPicture(L"assets\\harrasser.bmp");
-    PictureIndex bulletSprite = de->LoadPicture(L"assets\\bullet.bmp");
-    PictureIndex plasmaSprite = de->LoadPicture(L"assets\\plasma.bmp");
-    PictureIndex starSprite = de->LoadPicture(L"assets\\star.bmp");
+    spriteMap.insert({ "player", de->LoadPicture(L"assets\\basic.bmp") });
+    spriteMap.insert({ "fighter", de->LoadPicture(L"assets\\harrasser.bmp") });
+    spriteMap.insert({ "bullet", de->LoadPicture(L"assets\\bullet.bmp") });
+    spriteMap.insert({ "plasma", de->LoadPicture(L"assets\\plasma.bmp") });
+    spriteMap.insert({ "star", de->LoadPicture(L"assets\\star.bmp") });
 
     /* Game Setup
     -------------------- */
@@ -101,7 +100,7 @@ void Level::afterCreate() {
             Vector2D(0.0f, 0.0f),
             Vector2D(2000 * (de->GetScreenWidth() / (float) de->GetScreenHeight()), 2000),
             0.000007f, // 7 / 1,000,000
-            starSprite
+            spriteMap["star"]
         ))
     );
     starField->setNumLayers(5);
@@ -111,8 +110,8 @@ void Level::afterCreate() {
         objectManager->createObject(PlayerShipSpec::UPtr(new PlayerShipSpec(
             Vector2D(0.0f, 0.0f), // Centre of the world
             Vector2D(0.0f, 1.0f), // Facing up
-            playerSprite,
-            bulletSprite
+            spriteMap["player"],
+            spriteMap["bullet"]
         )))
     );
 
@@ -129,31 +128,50 @@ void Level::afterCreate() {
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
-    // An enemy
-    FighterShip::Ptr enemy = std::static_pointer_cast<FighterShip>(
-        objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
-            Vector2D(1000.0f, 400.0f),
-            Vector2D(0.0f, 1.0f),
-            fighterSprite,
-            plasmaSprite
-        )))
-    );
-
-    // A controller for the enemy
-    BasicAI::Ptr enemyAI = BasicAI::create(
+    // A controller for all fighters
+    // The strategies used do not implement flocking behaviour, but if they did, then multple AIs (flocks) would be needed.
+    fighterAI = BasicAI::create(
         NearestUntilDestroyedTS::create(),
         BasicMS::create(),
         SprayAS::create()
     );
-    objectManager->createObject(ControllerSpec::create(enemyAI));
+    objectManager->createObject(ControllerSpec::create(fighterAI));
 
-    enemyAI->add(
+    spawnFighter();
+    spawnFighter();
+    spawnFighter();
+}
+
+// Level Management
+
+void Level::spawnFighter() {
+    // Lock the object manager pointer for the whole function
+    ObjectManager::Ptr objectManager = this->objectManager.lock();
+
+    // An enemy
+    Vector2D offset;
+    offset.setBearing(
+        (rand() % 1000) * (2 * M_PI / 1000.0f),
+        1000.0f + rand() % 1000
+    );
+
+    FighterShip::Ptr enemy = std::static_pointer_cast<FighterShip>(
+        objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
+            player->physModel().pos() + offset,
+            Vector2D(0.0f, 1.0f),
+            spriteMap["fighter"],
+            spriteMap["plasma"]
+        )))
+    );
+
+    // Add it to the AI for its type with relevant parameters
+    fighterAI->add(
         enemy,
         NearestUntilDestroyedTD::create(),
         BasicMD::create(
             5.0f,                      // maximum speed
             (1.0f / 24.0f) * 2 * M_PI, // max angle before accel = 1/24 2pi radians = 15 degrees
-            300.0f,                    // optimal distance
+            200.0f,                    // optimal distance
             0.03f,                     // rotation velocity
             60.0f,                     // offset amplitude,
             1.5f                       // offset frequency (Hz)
@@ -164,10 +182,10 @@ void Level::afterCreate() {
             0.0f                       // gun requested rotation speed
         )
     );
-    enemyAI->targettingStrategy()->addTarget(player);
+    fighterAI->targettingStrategy()->addTarget(player);
 }
 
-// Modifying global state
+// Global state
 
 void Level::setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject) {
     if (physObject) cameraFocusObject = physObject;
