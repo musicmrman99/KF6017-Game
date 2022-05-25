@@ -46,24 +46,6 @@ void SprayAS::attack(
 
         // This is a 'vaguely aiming in the right direction' kind of AI - ie. not very clever.
         // It's a spray attack, though, so some shots are somewhat likely to hit.
-        Vector2D tmp;
-        tmp.setBearing(attackData->maxAttackAngle, 1.0f);
-        MyDrawEngine::GetInstance()->DrawLine(
-            targetObjLock->physModel().pos() + Vector2D(100, 200),
-            targetObjLock->physModel().pos() + Vector2D(100, 200) + tmp * 100,
-            MyDrawEngine::BLUE
-        );
-        tmp.setBearing(-attackData->maxAttackAngle, 1.0f);
-        MyDrawEngine::GetInstance()->DrawLine(
-            targetObjLock->physModel().pos() + Vector2D(100, 200),
-            targetObjLock->physModel().pos() + Vector2D(100, 200) + tmp * 100,
-            MyDrawEngine::BLUE
-        );
-        MyDrawEngine::GetInstance()->DrawLine(
-            targetObjLock->physModel().pos() + Vector2D(100, 200),
-            targetObjLock->physModel().pos() + Vector2D(100, 200) + diff * 100,
-            MyDrawEngine::RED
-        );
         if (
             angleDiff < attackData->maxAttackAngle ||
             angleDiff > 2 * M_PI - attackData->maxAttackAngle
