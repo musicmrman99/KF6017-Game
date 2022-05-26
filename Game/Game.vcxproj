@@ -31,6 +31,7 @@
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisionEvent.cpp" />
+    <ClCompile Include="Integrity.cpp" />
     <ClCompile Include="SprayAD.cpp" />
     <ClCompile Include="SprayAS.cpp" />
     <ClCompile Include="SprayAttack.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="BasicMS.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Integrity.h" />
     <ClInclude Include="SprayAD.h" />
     <ClInclude Include="SprayAS.h" />
     <ClInclude Include="SprayAttack.h" />

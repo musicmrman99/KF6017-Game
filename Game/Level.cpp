@@ -111,7 +111,9 @@ void Level::afterCreate() {
             Vector2D(0.0f, 0.0f), // Centre of the world
             Vector2D(0.0f, 1.0f), // Facing up
             spriteMap["player"],
-            spriteMap["bullet"]
+            1000.0f,              // Ship integrity
+            spriteMap["bullet"],
+            3.0f                  // Bullet damage
         )))
     );
 
@@ -151,16 +153,18 @@ void Level::spawnFighter() {
     // An enemy
     Vector2D offset;
     offset.setBearing(
-        (rand() % 1000) * (2 * M_PI / 1000.0f),
-        1000.0f + rand() % 1000
+        (rand() % 1000) * (2.0f * (float)M_PI / 1000.0f),
+        1200.0f + rand() % 1000
     );
 
     FighterShip::Ptr enemy = std::static_pointer_cast<FighterShip>(
         objectManager->createObject(FighterShipSpec::UPtr(new FighterShipSpec(
-            player->physModel().pos() + offset,
-            Vector2D(0.0f, 1.0f),
+            player->physModel().pos() + offset, // Random position just off-screen
+            Vector2D(0.0f, 1.0f),               // Facing up
             spriteMap["fighter"],
-            spriteMap["plasma"]
+            100.0f,                             // Ship integrity
+            spriteMap["plasma"],
+            5.0f                                // Plasma damage
         )))
     );
 
@@ -170,16 +174,16 @@ void Level::spawnFighter() {
         NearestUntilDestroyedTD::create(),
         BasicMD::create(
             5.0f,                                    // maximum speed
-            (1.0f / 24.0f) * 2 * M_PI,               // max angle before accel = 1/24 2pi radians = 15 degrees
+            (1.0f / 24.0f) * 2.0f * (float)M_PI,     // max angle before accel = 1/24 2pi radians = 15 degrees
             400.0f,                                  // optimal distance
             0.03f + (rand() % 100) / 100.0f * 0.12f, // rotation velocity
             60.0f,                                   // offset amplitude,
             1.5f                                     // offset frequency (Hz)
         ),
         SprayAD::create(
-            (1.0f / 72.0f) * 2 * M_PI,           // max angle before fire = 1/72 2pi radians = 5 degrees
-            false,                               // can/cannot rotate its gun
-            0.0f                                 // gun requested rotation speed
+            (1.0f / 72.0f) * 2.0f * (float)M_PI,     // max angle before fire = 1/72 2pi radians = 5 degrees
+            false,                                   // can/cannot rotate its gun
+            0.0f                                     // gun requested rotation speed
         )
     );
     fighterAI->targettingStrategy()->addTarget(player);

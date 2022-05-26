@@ -10,7 +10,8 @@ FighterShip::FighterShip(FighterShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
     HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
-    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage))
+    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage, spec->bulletDamage)),
+    HasComponent<Integrity>(Integrity::create(spec->bulletImage, spec->maxIntegrity)) // FIXME: Bullet image
 {
     trackPhysObserver(HasComponent<BasicMovement>::component());
     trackPhysObserver(HasComponent<SprayAttack>::component());
@@ -18,6 +19,7 @@ FighterShip::FighterShip(FighterShipSpec::Ptr spec) :
 
     eventHandler().add(HasComponent<BasicMovement>::component());
     eventHandler().add(HasComponent<SprayAttack>::component());
+    eventHandler().add(HasComponent<Integrity>::component());
 }
 
 const ObjectFactory FighterShip::factory = [](ObjectSpec::UPtr spec) {

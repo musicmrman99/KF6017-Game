@@ -38,7 +38,8 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
     HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
-    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage)),
+    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage, spec->bulletDamage)),
+    HasComponent<Integrity>(Integrity::create(spec->bulletImage, spec->maxIntegrity)), // FIXME: Bullet image
     HasUpgradeTree(PlayerShipUpgrade::SHIP),
     HasUIOf(UpgradeTreeUI::create())
 {
@@ -50,6 +51,7 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
 
     eventHandler().add(HasComponent<BasicMovement>::component());
     eventHandler().add(HasComponent<SprayAttack>::component());
+    eventHandler().add(HasComponent<Integrity>::component());
     eventHandler().add(upgradeTreePtr());
 
     // Thread dependencies

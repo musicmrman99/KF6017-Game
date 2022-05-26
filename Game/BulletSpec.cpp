@@ -7,5 +7,13 @@ BulletSpec::BulletSpec(
 	const Vector2D pos,
 	const Vector2D rot,
 	const Vector2D vel,
-	const PictureIndex image
-) : ObjectSpec(BULLET), pos(pos), rot(rot), vel(vel), image(image) {}
+	const PictureIndex image,
+	const float damage
+) :
+	ObjectSpec(BULLET),
+	pos(pos),
+	rot(rot),
+	vel(vel),
+	image(image),
+	damage(damage)
+{}

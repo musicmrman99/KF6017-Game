@@ -352,23 +352,11 @@
     <Filter Include="Source Files\Game\Shared\Movement\Models">
       <UniqueIdentifier>{08c7b6cf-2f0d-45fb-aac6-c329202aab59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Shared\Attacking">
-      <UniqueIdentifier>{13fae994-b88e-4131-8582-a6f3d7d53702}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\Attacking\Models">
-      <UniqueIdentifier>{7920f42a-8b13-4149-b9a8-af3ef21fb8a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Shared\Movement">
       <UniqueIdentifier>{1a251165-d930-40b6-8613-e941ff3b0b0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Shared\Movement\Models">
       <UniqueIdentifier>{fe5a2d0a-d97b-426e-a90d-8d2fb942ea2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Shared\Attacking">
-      <UniqueIdentifier>{fa39e375-785d-4d01-a88b-b9ca21b2294b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Shared\Attacking\Models">
-      <UniqueIdentifier>{8f82fa19-ac85-4ee5-adda-63c6c49d494d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\Events\Models\MultiEventHandler">
       <UniqueIdentifier>{f38c7f75-e931-4311-95f3-68f5a221d5a9}</UniqueIdentifier>
@@ -387,6 +375,18 @@
     </Filter>
     <Filter Include="Source Files\Game\AIs\Components\AttackStrategies">
       <UniqueIdentifier>{9c85728a-6d68-4081-8a7e-f7fff2e77b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\HealthAndDamage">
+      <UniqueIdentifier>{13fae994-b88e-4131-8582-a6f3d7d53702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Shared\HealthAndDamage\Models">
+      <UniqueIdentifier>{7920f42a-8b13-4149-b9a8-af3ef21fb8a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\HealthAndDamage">
+      <UniqueIdentifier>{fa39e375-785d-4d01-a88b-b9ca21b2294b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\HealthAndDamage\Models">
+      <UniqueIdentifier>{8f82fa19-ac85-4ee5-adda-63c6c49d494d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -640,7 +640,7 @@
       <Filter>Source Files\Game\Shared\Movement\Models</Filter>
     </ClCompile>
     <ClCompile Include="SprayAttack.cpp">
-      <Filter>Source Files\Game\Shared\Attacking\Models</Filter>
+      <Filter>Source Files\Game\Shared\HealthAndDamage\Models</Filter>
     </ClCompile>
     <ClCompile Include="MultiEventHandler.cpp">
       <Filter>Source Files\Engine\Events\Models\MultiEventHandler</Filter>
@@ -662,6 +662,9 @@
     </ClCompile>
     <ClCompile Include="CollisionEvent.cpp">
       <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Integrity.cpp">
+      <Filter>Source Files\Game\Shared\HealthAndDamage\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -981,7 +984,7 @@
       <Filter>Header Files\Game\Shared\Movement\Models</Filter>
     </ClInclude>
     <ClInclude Include="SprayAttack.h">
-      <Filter>Header Files\Game\Shared\Attacking\Models</Filter>
+      <Filter>Header Files\Game\Shared\HealthAndDamage\Models</Filter>
     </ClInclude>
     <ClInclude Include="MultiEventHandler.h">
       <Filter>Header Files\Engine\Events\Models\MultiEventHandler</Filter>
@@ -1027,6 +1030,9 @@
     </ClInclude>
     <ClInclude Include="CollisionEvent.h">
       <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Integrity.h">
+      <Filter>Header Files\Game\Shared\HealthAndDamage\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

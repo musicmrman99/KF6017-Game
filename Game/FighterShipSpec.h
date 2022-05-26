@@ -17,12 +17,16 @@ public:
 
 	static const ObjectType FIGHTER_SHIP;
 
+	const float maxIntegrity;
 	const PictureIndex bulletImage;
+	const float bulletDamage;
 
 	FighterShipSpec(
 		const Vector2D pos,
 		const Vector2D rot,
 		const PictureIndex image,
-		const PictureIndex bulletImage
+		const float maxIntegrity,
+		const PictureIndex bulletImage,
+		const float bulletDamage
 	);
 };

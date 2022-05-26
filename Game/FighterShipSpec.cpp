@@ -7,12 +7,16 @@ FighterShipSpec::FighterShipSpec(
 	const Vector2D pos,
 	const Vector2D rot,
 	const PictureIndex image,
-	const PictureIndex bulletImage
+	const float maxIntegrity,
+	const PictureIndex bulletImage,
+	const float bulletDamage
 ) : ShipSpec(
 		FIGHTER_SHIP,
 		pos, rot,
 		COLLISION_SIZE,
 		image
 	),
-	bulletImage(bulletImage)
+	maxIntegrity(maxIntegrity),
+	bulletImage(bulletImage),
+	bulletDamage(bulletDamage)
 {}

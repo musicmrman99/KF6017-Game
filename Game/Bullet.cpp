@@ -4,6 +4,7 @@
 
 #include "ShipSpec.h"
 #include "CollisionEvent.h"
+#include "Integrity.h"
 
 /* BulletEventHandler
 -------------------------------------------------- */
@@ -20,7 +21,23 @@ void BulletEventHandler::handle(const Event::Ptr e) {
     }
 
     else if (e->type == CollisionEvent::TYPE) {
+        // Destroy yourself
         eventEmitter().enqueue(objectEventFactory()->destroyObject(ref()));
+
+        // Damage the other thing (if it can handle events; the recipient will ignore
+        // the event if it can handle events, but doesn't have ship integrity)
+        GameObject::Ptr& targetRaw = std::static_pointer_cast<CollisionEvent>(e)->other;
+        HasEventHandler::Ptr target = std::dynamic_pointer_cast<HasEventHandler>(targetRaw);
+        if (target) {
+            eventEmitter().enqueue(
+                TargettedEvent::Ptr(new TargettedEvent(
+                    Integrity::ShiftIntegrityEvent::Ptr(new Integrity::ShiftIntegrityEvent(
+                        -ref().lock()->damage() // Cannot collide with an object that doesn't exist
+                    )),
+                    target
+                ))
+            );
+        }
     }
 }
 
@@ -42,12 +59,15 @@ Bullet::Bullet(BulletSpec::UPtr spec) :
         0.0f
     ))),
     HasGraphicsOf(ImageGraphicsModel::UPtr(new ImageGraphicsModel(spec->image))),
+    _damage(spec->damage),
     timer(nullptr)
 {
     trackPhysObserver(graphicsModelWPtr());
     trackPhysObserver(collisionModelWPtr());
     trackEventEmitterObserver(eventHandlerWPtr());            // DEPENDS: EventEmitter
 }
+
+float Bullet::damage() const { return _damage; }
 
 const ObjectFactory Bullet::factory = [](ObjectSpec::UPtr spec) {
     Bullet::Ptr bullet = Bullet::Ptr(new Bullet(static_unique_pointer_cast<BulletSpec>(move(spec))));

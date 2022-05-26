@@ -64,6 +64,7 @@ private:
 	static constexpr int COLLISION_RADIUS = 20;
 
 	Timer::Ptr timer;
+	float _damage;
 
 	Bullet(BulletSpec::UPtr spec);
 
@@ -71,6 +72,8 @@ public:
 	using Ptr = std::shared_ptr<Bullet>;
 	using UPtr = std::unique_ptr<Bullet>;
 	using WPtr = std::weak_ptr<Bullet>;
+
+	float damage() const;
 
 	// Lifecycle
 
