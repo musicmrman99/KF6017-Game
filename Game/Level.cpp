@@ -126,7 +126,7 @@ void Level::afterCreate() {
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_A), new BasicMovement::TurnLeftThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_D), new BasicMovement::TurnRightThrustEventEmitter());
     playerKeymap->bind(new KeyboardControl(ControlType::HOLD, DIK_SPACE), new SprayAttack::FireEventEmitter());
-    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(PlayerShipUpgrade::HEAVY_SHELLS));
+    playerKeymap->bind(new KeyboardControl(ControlType::PRESS, DIK_P), new UpgradeEventEmitter(PlayerShipUpgrade::HEAVY_SHELLS)); // Debugging
 
     objectManager->createObject(ControllerSpec::create(move(playerKeymap)));
 
