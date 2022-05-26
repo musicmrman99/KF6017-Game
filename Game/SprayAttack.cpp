@@ -55,7 +55,7 @@ void SprayAttack::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 // Action
 
 void SprayAttack::fire() {
-    static constexpr float DIST = 40.0f;
+    static constexpr float DIST = 70.0f;
 
     Vector2D rot;
     rot.setBearing(physModel().rot().angle() + _offsetAngle, 1);

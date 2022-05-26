@@ -1,6 +1,6 @@
 #include "FighterShipSpec.h"
 
-const Vector2D FighterShipSpec::COLLISION_SIZE(100, 50);
+const Vector2D FighterShipSpec::COLLISION_SIZE(150, 100);
 const ObjectType FighterShipSpec::FIGHTER_SHIP;
 
 FighterShipSpec::FighterShipSpec(

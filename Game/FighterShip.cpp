@@ -41,17 +41,17 @@ void FighterShip::afterFrame() {
 
     int lineLength = 100;
     MyDrawEngine::GetInstance()->DrawLine(
-        physModel().pos() + Vector2D(50, lineLength / 2),
-        physModel().pos() + Vector2D(50, lineLength / 2),
+        physModel().pos() + Vector2D(100, lineLength / 2),
+        physModel().pos() + Vector2D(100, lineLength / 2),
         MyDrawEngine::GREY
     );
     MyDrawEngine::GetInstance()->DrawLine(
-        physModel().pos() + Vector2D(50, lineLength / 2),
-        physModel().pos() + Vector2D(50, (lineLength / 2) * (1 - percent)),
+        physModel().pos() + Vector2D(100, lineLength / 2),
+        physModel().pos() + Vector2D(100, (lineLength / 2) * (1 - percent)),
         MyDrawEngine::BLUE
     );
     MyDrawEngine::GetInstance()->WriteDouble(
-        physModel().pos() + Vector2D(50, 0),
+        physModel().pos() + Vector2D(100, 0),
         (int) (percent * 100.0f),
         MyDrawEngine::GREY
     );

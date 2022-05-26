@@ -140,8 +140,21 @@ void Level::afterCreate() {
     objectManager->createObject(ControllerSpec::create(fighterAI));
 
     spawnFighter();
-    spawnFighter();
-    spawnFighter();
+    spawnTimer = Timer::create(10.0f, ref());
+    objectManager->createObject(ControllerSpec::create(spawnTimer));
+}
+
+// Implement EventHandler
+
+void Level::handle(const Event::Ptr e) {
+    if (
+        e->type == TimerEvent::TYPE &&
+        std::static_pointer_cast<TimerEvent>(e)->timer.lock() == spawnTimer
+        ) {
+        spawnFighter();
+        spawnTimer = Timer::create(10.0f, ref());
+        this->objectManager.lock()->createObject(ControllerSpec::create(spawnTimer));
+    }
 }
 
 // Level Management
@@ -154,7 +167,7 @@ void Level::spawnFighter() {
     Vector2D offset;
     offset.setBearing(
         (rand() % 1000) * (2.0f * (float)M_PI / 1000.0f),
-        1200.0f + rand() % 1000
+        2200.0f + (rand() % 1000)
     );
 
     FighterShip::Ptr enemy = std::static_pointer_cast<FighterShip>(
