@@ -17,18 +17,13 @@ std::wstring UpgradeTreeUI::formatTree(UpgradeTree::NodePtr node, int indent) co
     // Open
     const std::wstring& upgradeName = node->getValue()->upgrade.getName();
     std::wstring purchased = node->getValue()->purchased ? L"Purchased" : L"Not Purchased";
-    std::wstring ret = upgradeName + L" (" + purchased + L") {";
+    std::wstring ret = std::wstring(indent, ' ') + upgradeName + L" (" + purchased + L")\n";
 
     // Children
     auto children = node->getChildren();
-    if (!children.empty()) ret += L"\n";
     for (const UpgradeTree::NodePtr& subNode : children) {
-        ret += formatTree(subNode);
+        ret += formatTree(subNode, indent + 4);
     }
-    if (!children.empty()) ret += L"\n";
-
-    // Close
-    ret += L"},\n";
 
     // Return
     return ret;

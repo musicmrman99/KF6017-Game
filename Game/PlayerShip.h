@@ -26,25 +26,10 @@
 struct PlayerShipUpgrade {
 	static const Upgrade SHIP; // Root Upgrade
 
-	static const Upgrade LOAD_OPTIMISATION;
-	static const Upgrade SPACIAL_COMPRESSION;
-	static const Upgrade COOPERATION;
-	static const Upgrade OPTIMAL_SELECTION;
-
-	static const Upgrade FRONT_THRUSTERS;
-	static const Upgrade REAR_THRUSTERS;
-	static const Upgrade OVERDRIVE;
-	static const Upgrade HYPER_JUMP;
-
 	static const Upgrade HEAVY_SHELLS;
-	static const Upgrade FRONT_AUTO_CANNONS;
-	static const Upgrade REAR_AUTO_CANNONS;
-	static const Upgrade IONIC_SHELLS;
-
-	static const Upgrade WORKER_DRONE;
-	static const Upgrade ARMOURED_DRONE;
-	static const Upgrade MINE;
-	static const Upgrade FIGHTER_DRONE;
+	static const Upgrade PLASMA_CANNON;
+	static const Upgrade ARMOURED_HULL;
+	static const Upgrade SHIELDING;
 };
 
 // The player's ship.
