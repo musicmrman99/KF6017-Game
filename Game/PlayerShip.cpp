@@ -1,10 +1,10 @@
 #include "PlayerShip.h"
 
 #include <string>
-
 #include "ptrcast.h"
 
 #include "BulletSpec.h"
+#include "GameOverEvent.h"
 
 /* Upgrades
 -------------------------------------------------- */
@@ -97,4 +97,8 @@ void PlayerShip::afterFrame() {
     } else if (diff > 0) {
         HasComponent<Integrity>::component()->shiftIntegrity(diff);
     }
+}
+
+void PlayerShip::beforeDestroy() {
+    eventEmitter().enqueue(GameOverEvent::create());
 }

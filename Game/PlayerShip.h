@@ -56,4 +56,5 @@ public:
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
 
 	virtual void afterFrame() override;
+	virtual void beforeDestroy() override;
 };

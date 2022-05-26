@@ -669,6 +669,9 @@
     <ClCompile Include="Integrity.cpp">
       <Filter>Source Files\Game\Components\HealthAndDamage\Models</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverEvent.cpp">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngledRectangle2D.h">
@@ -1036,6 +1039,9 @@
     </ClInclude>
     <ClInclude Include="Integrity.h">
       <Filter>Header Files\Game\Shared\HealthAndDamage\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverEvent.h">
+      <Filter>Header Files\Game\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
