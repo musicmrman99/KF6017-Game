@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Referencing.h"
+
 #include "EventHandler.h"
 #include "EventEmitter.h"
 
@@ -14,11 +16,12 @@
 class Integrity :
 	public EventHandler,
 	public EventEmitterObserverOf<BufferedEventEmitter>,
-	public ObjectEventCreator
+	public ObjectEventCreator,
+	public Referencing<GameObject>
 {
 private:
 	PictureIndex explosionImage;
-	float maxIntegrity;
+	float _maxIntegrity;
 	float _integrity;
 
 	Integrity(PictureIndex explosionImage, float maxIntegrity);
@@ -46,6 +49,7 @@ public:
 		virtual void emit(std::queue<Event::Ptr>& events) override;
 	};
 
+	float maxIntegrity() const;
 	float integrity() const;
 	void shiftIntegrity(float amount);
 

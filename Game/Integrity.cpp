@@ -10,7 +10,7 @@ Integrity::Integrity(
     float maxIntegrity
 ) :
     explosionImage(explosionImage),
-    maxIntegrity(maxIntegrity),
+    _maxIntegrity(maxIntegrity),
     _integrity(maxIntegrity)
 {}
 
@@ -35,9 +35,13 @@ void Integrity::ShiftIntegrityEventEmitter::emit(std::queue<Event::Ptr>& events)
 
 // Action (and getter)
 
+float Integrity::maxIntegrity() const { return _maxIntegrity; }
 float Integrity::integrity() const { return _integrity; }
 void Integrity::shiftIntegrity(float amount) {
-    _integrity += _integrity;
+    _integrity += amount;
+    if (_integrity < 0) {
+        eventEmitter().enqueue(objectEventFactory()->destroyObject(ref()));
+    }
 }
 
 /* Event Handling

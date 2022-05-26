@@ -32,6 +32,7 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     trackPhysObserver(HasComponent<BasicMovement>::component());
     trackPhysObserver(HasComponent<SprayAttack>::component());
     trackEventEmitterObserver(HasComponent<SprayAttack>::component());
+    trackEventEmitterObserver(HasComponent<Integrity>::component());
     // Upgrade tree observers? What actually creates the upgrade events?
 
     eventHandler().add(HasComponent<BasicMovement>::component());
@@ -39,7 +40,6 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     eventHandler().add(HasComponent<Integrity>::component());
     eventHandler().add(upgradeTreePtr());
 
-    // Thread dependencies
     trackUpgradeTreeObserver(uiModelWPtr());
 
     // Virtual method initialisation
@@ -47,12 +47,15 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
 }
 
 const ObjectFactory PlayerShip::factory = [](ObjectSpec::UPtr spec) {
-    return GameObject::Ptr(new PlayerShip(static_unique_pointer_cast<PlayerShipSpec>(move(spec))));
+    GameObject::Ptr ship = GameObject::Ptr(new PlayerShip(static_unique_pointer_cast<PlayerShipSpec>(move(spec))));
+    std::dynamic_pointer_cast<HasComponent<Integrity>>(ship)->component()->setRef(ship);
+    return ship;
 };
 
 void PlayerShip::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
     // Delegate to components that need it (this class doesn't need it)
     HasComponent<SprayAttack>::component()->setObjectEventFactory(objectEventFactory);
+    HasComponent<Integrity>::component()->setObjectEventFactory(objectEventFactory);
 }
 
 // Organise the available upgrades into a tree.
@@ -62,4 +65,36 @@ void PlayerShip::buildUpgradeTree(UpgradeTree& upgradeTree) {
     upgradeTree.addUpgrade(heavyShells, PlayerShipUpgrade::PLASMA_CANNON);
     const auto& armouredHull = upgradeTree.addUpgrade(PlayerShipUpgrade::ARMOURED_HULL);
     upgradeTree.addUpgrade(armouredHull, PlayerShipUpgrade::SHIELDING);
+}
+
+void PlayerShip::afterFrame() {
+    // This should be in a UI graphics model, but ... I'm out of time.
+    float percent = HasComponent<Integrity>::component()->integrity() / HasComponent<Integrity>::component()->maxIntegrity();
+
+    int lineLength = 100;
+    MyDrawEngine::GetInstance()->DrawLine(
+        physModel().pos() + Vector2D(50, lineLength / 2),
+        physModel().pos() + Vector2D(50, lineLength / 2),
+        MyDrawEngine::GREY
+    );
+    MyDrawEngine::GetInstance()->DrawLine(
+        physModel().pos() + Vector2D(50, lineLength / 2),
+        physModel().pos() + Vector2D(50, (lineLength / 2) * (1 - percent)),
+        MyDrawEngine::BLUE
+    );
+    MyDrawEngine::GetInstance()->WriteDouble(
+        physModel().pos() + Vector2D(50, 0),
+        (int) (percent * 100.0f),
+        MyDrawEngine::GREY
+    );
+
+    // This should be in Integrity + spec, but ... I'm out of time.
+    float diff = HasComponent<Integrity>::component()->maxIntegrity() - HasComponent<Integrity>::component()->integrity();
+
+    float repairRate = 0.1f;
+    if (diff >= repairRate) {
+        HasComponent<Integrity>::component()->shiftIntegrity(repairRate);
+    } else if (diff > 0) {
+        HasComponent<Integrity>::component()->shiftIntegrity(diff);
+    }
 }

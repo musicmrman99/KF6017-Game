@@ -36,4 +36,6 @@ public:
 
 	// Delegate event factory dependency to components that need it.
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
+
+	virtual void afterFrame() override;
 };
