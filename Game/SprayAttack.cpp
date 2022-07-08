@@ -7,9 +7,16 @@
 /* Initialisation
 ---------------------- */
 
-SprayAttack::SprayAttack(PictureIndex bulletImage) : bulletImage(bulletImage) {}
-SprayAttack::UPtr SprayAttack::create(PictureIndex bulletImage) {
-    return UPtr(new SprayAttack(bulletImage));
+SprayAttack::SprayAttack(
+    PictureIndex bulletImage,
+    float bulletDamage
+) :
+    bulletImage(bulletImage),
+    bulletDamage(bulletDamage),
+    _offsetAngle(0.0f)
+{}
+SprayAttack::UPtr SprayAttack::create(PictureIndex bulletImage, float bulletDamage) {
+    return UPtr(new SprayAttack(bulletImage, bulletDamage));
 }
 
 /* Rotate Firing Angle Event
@@ -48,13 +55,18 @@ void SprayAttack::FireEventEmitter::emit(std::queue<Event::Ptr>& events) {
 // Action
 
 void SprayAttack::fire() {
-    static constexpr float DIST = 40.0f;
+    static constexpr float DIST = 70.0f;
+
+    Vector2D rot;
+    rot.setBearing(physModel().rot().angle() + _offsetAngle, 1);
+
     eventEmitter().enqueue(objectEventFactory()->createObject(
         BulletSpec::UPtr(new BulletSpec(
-            physModel().pos() + DIST * physModel().rot(),
-            physModel().rot(),
+            physModel().pos() + DIST * rot,
+            rot,
             physModel().vel(),
-            bulletImage
+            bulletImage,
+            bulletDamage
         ))
     ));
 }
@@ -64,4 +76,7 @@ void SprayAttack::fire() {
 
 void SprayAttack::handle(const Event::Ptr e) {
     if (e->type == FireEvent::TYPE) fire();
+    else if (e->type == RotateFiringAngleEvent::TYPE) {
+        rotateOffsetAngle(std::static_pointer_cast<RotateFiringAngleEvent>(e)->amount);
+    }
 }

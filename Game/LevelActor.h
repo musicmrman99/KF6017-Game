@@ -4,6 +4,12 @@
 
 class Level;
 
+// Allows bi-directional communication with the level manager.
+// 
+// This should be avoided unless absolutely necessary, as it creates
+// a bi-directional dependency between a game object and the level,
+// which creates a lot of coupling (game objects shouldn't know about
+// the level). If possible, use broadcast events instead.
 class LevelActor {
 private:
     using LevelPtr = std::shared_ptr<Level>;

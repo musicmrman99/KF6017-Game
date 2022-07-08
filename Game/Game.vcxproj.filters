@@ -172,18 +172,6 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{50354562-b173-4827-98b8-e73733bc7f1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Shared">
-      <UniqueIdentifier>{f9d43396-83b6-4a6a-a11a-ff45045a581d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\UpgradeTree">
-      <UniqueIdentifier>{33e777a6-5fdc-4f0b-8930-52beccddbf15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\UpgradeTree\Traits">
-      <UniqueIdentifier>{27cb7f0f-3ccb-435e-be4c-8af560f02dc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\UpgradeTree\Models">
-      <UniqueIdentifier>{17b98b70-ce70-4c56-a2e6-eaef82517cef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Engine\Utils\General">
       <UniqueIdentifier>{34b2b48e-eaff-4d60-9b30-ac4f33b45540}</UniqueIdentifier>
     </Filter>
@@ -346,29 +334,11 @@
     <Filter Include="Header Files\Game\Shared\HasComponent\Traits">
       <UniqueIdentifier>{58fe29fc-5a2c-4573-9ce6-57aa9786b9ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Shared\Movement">
-      <UniqueIdentifier>{a6bc77eb-2cb3-443e-b4f5-00f5040d804c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\Movement\Models">
-      <UniqueIdentifier>{08c7b6cf-2f0d-45fb-aac6-c329202aab59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\Attacking">
-      <UniqueIdentifier>{13fae994-b88e-4131-8582-a6f3d7d53702}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Game\Shared\Attacking\Models">
-      <UniqueIdentifier>{7920f42a-8b13-4149-b9a8-af3ef21fb8a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Shared\Movement">
       <UniqueIdentifier>{1a251165-d930-40b6-8613-e941ff3b0b0b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Shared\Movement\Models">
       <UniqueIdentifier>{fe5a2d0a-d97b-426e-a90d-8d2fb942ea2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Shared\Attacking">
-      <UniqueIdentifier>{fa39e375-785d-4d01-a88b-b9ca21b2294b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Shared\Attacking\Models">
-      <UniqueIdentifier>{8f82fa19-ac85-4ee5-adda-63c6c49d494d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Engine\Events\Models\MultiEventHandler">
       <UniqueIdentifier>{f38c7f75-e931-4311-95f3-68f5a221d5a9}</UniqueIdentifier>
@@ -387,6 +357,39 @@
     </Filter>
     <Filter Include="Source Files\Game\AIs\Components\AttackStrategies">
       <UniqueIdentifier>{9c85728a-6d68-4081-8a7e-f7fff2e77b49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\HealthAndDamage">
+      <UniqueIdentifier>{fa39e375-785d-4d01-a88b-b9ca21b2294b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Shared\HealthAndDamage\Models">
+      <UniqueIdentifier>{8f82fa19-ac85-4ee5-adda-63c6c49d494d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Objects\Explosion">
+      <UniqueIdentifier>{235dd8ab-1cb5-4785-a35e-a38bbbec9e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components">
+      <UniqueIdentifier>{f9d43396-83b6-4a6a-a11a-ff45045a581d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\UpgradeTree">
+      <UniqueIdentifier>{33e777a6-5fdc-4f0b-8930-52beccddbf15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\UpgradeTree\Traits">
+      <UniqueIdentifier>{27cb7f0f-3ccb-435e-be4c-8af560f02dc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\UpgradeTree\Models">
+      <UniqueIdentifier>{17b98b70-ce70-4c56-a2e6-eaef82517cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\Movement">
+      <UniqueIdentifier>{a6bc77eb-2cb3-443e-b4f5-00f5040d804c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\Movement\Models">
+      <UniqueIdentifier>{08c7b6cf-2f0d-45fb-aac6-c329202aab59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\HealthAndDamage">
+      <UniqueIdentifier>{13fae994-b88e-4131-8582-a6f3d7d53702}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Components\HealthAndDamage\Models">
+      <UniqueIdentifier>{7920f42a-8b13-4149-b9a8-af3ef21fb8a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -430,16 +433,16 @@
       <Filter>Source Files\Engine\Utils\Engine</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTreeUI.cpp">
-      <Filter>Source Files\Game\Shared\UpgradeTree\Models</Filter>
+      <Filter>Source Files\Game\Components\UpgradeTree\Models</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTree.cpp">
-      <Filter>Source Files\Game\Shared\UpgradeTree\Models</Filter>
+      <Filter>Source Files\Game\Components\UpgradeTree\Models</Filter>
     </ClCompile>
     <ClCompile Include="UpgradeTreeObserver.cpp">
-      <Filter>Source Files\Game\Shared\UpgradeTree\Traits</Filter>
+      <Filter>Source Files\Game\Components\UpgradeTree\Traits</Filter>
     </ClCompile>
     <ClCompile Include="HasUpgradeTree.cpp">
-      <Filter>Source Files\Game\Shared\UpgradeTree\Traits</Filter>
+      <Filter>Source Files\Game\Components\UpgradeTree\Traits</Filter>
     </ClCompile>
     <ClCompile Include="Symbol.cpp">
       <Filter>Source Files\Engine\Utils\General</Filter>
@@ -637,10 +640,10 @@
       <Filter>Source Files\Game\AIs\Components\MovementStrategies</Filter>
     </ClCompile>
     <ClCompile Include="BasicMovement.cpp">
-      <Filter>Source Files\Game\Shared\Movement\Models</Filter>
+      <Filter>Source Files\Game\Components\Movement\Models</Filter>
     </ClCompile>
     <ClCompile Include="SprayAttack.cpp">
-      <Filter>Source Files\Game\Shared\Attacking\Models</Filter>
+      <Filter>Source Files\Game\Components\HealthAndDamage\Models</Filter>
     </ClCompile>
     <ClCompile Include="MultiEventHandler.cpp">
       <Filter>Source Files\Engine\Events\Models\MultiEventHandler</Filter>
@@ -659,6 +662,15 @@
     </ClCompile>
     <ClCompile Include="SprayAS.cpp">
       <Filter>Source Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionEvent.cpp">
+      <Filter>Source Files\Engine\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Integrity.cpp">
+      <Filter>Source Files\Game\Components\HealthAndDamage\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverEvent.cpp">
+      <Filter>Source Files\Game\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -978,7 +990,7 @@
       <Filter>Header Files\Game\Shared\Movement\Models</Filter>
     </ClInclude>
     <ClInclude Include="SprayAttack.h">
-      <Filter>Header Files\Game\Shared\Attacking\Models</Filter>
+      <Filter>Header Files\Game\Shared\HealthAndDamage\Models</Filter>
     </ClInclude>
     <ClInclude Include="MultiEventHandler.h">
       <Filter>Header Files\Engine\Events\Models\MultiEventHandler</Filter>
@@ -1021,6 +1033,15 @@
     </ClInclude>
     <ClInclude Include="SprayAD.h">
       <Filter>Header Files\Game\AIs\Components\AttackStrategies</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEvent.h">
+      <Filter>Header Files\Engine\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Integrity.h">
+      <Filter>Header Files\Game\Shared\HealthAndDamage\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverEvent.h">
+      <Filter>Header Files\Game\Level</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

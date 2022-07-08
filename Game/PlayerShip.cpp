@@ -1,35 +1,20 @@
 #include "PlayerShip.h"
 
 #include <string>
-
 #include "ptrcast.h"
 
 #include "BulletSpec.h"
+#include "GameOverEvent.h"
 
 /* Upgrades
 -------------------------------------------------- */
 
 const Upgrade PlayerShipUpgrade::SHIP(L"Ship"); // Root Upgrade
 
-const Upgrade PlayerShipUpgrade::LOAD_OPTIMISATION(L"Load Optimisation");
-const Upgrade PlayerShipUpgrade::SPACIAL_COMPRESSION(L"Spacial Compression");
-const Upgrade PlayerShipUpgrade::COOPERATION(L"Cooperation");
-const Upgrade PlayerShipUpgrade::OPTIMAL_SELECTION(L"Optimal Selection");
-
-const Upgrade PlayerShipUpgrade::FRONT_THRUSTERS(L"Front Thrusters");
-const Upgrade PlayerShipUpgrade::REAR_THRUSTERS(L"Rear Thrusters");
-const Upgrade PlayerShipUpgrade::OVERDRIVE(L"Overdrive");
-const Upgrade PlayerShipUpgrade::HYPER_JUMP(L"Hyper Jump");
-
 const Upgrade PlayerShipUpgrade::HEAVY_SHELLS(L"Heavy Shells");
-const Upgrade PlayerShipUpgrade::FRONT_AUTO_CANNONS(L"Front Auto-Cannons");
-const Upgrade PlayerShipUpgrade::REAR_AUTO_CANNONS(L"Rear Auto-Cannons");
-const Upgrade PlayerShipUpgrade::IONIC_SHELLS(L"Ionic Shells");
-
-const Upgrade PlayerShipUpgrade::WORKER_DRONE(L"Worker Drone");
-const Upgrade PlayerShipUpgrade::ARMOURED_DRONE(L"Armoured Drone");
-const Upgrade PlayerShipUpgrade::MINE(L"Mine");
-const Upgrade PlayerShipUpgrade::FIGHTER_DRONE(L"Fighter Drone");
+const Upgrade PlayerShipUpgrade::PLASMA_CANNON(L"Plasma Cannon");
+const Upgrade PlayerShipUpgrade::ARMOURED_HULL(L"Armoured Hull");
+const Upgrade PlayerShipUpgrade::SHIELDING(L"Shielding");
 
 /* Player Ship
 -------------------------------------------------- */
@@ -38,7 +23,8 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     Ship(spec),
     HasEventHandlerOf(MultiEventHandler::create()),
     HasComponent<BasicMovement>(BasicMovement::create(0.1f, 0.008f)),
-    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage)),
+    HasComponent<SprayAttack>(SprayAttack::create(spec->bulletImage, spec->bulletDamage)),
+    HasComponent<Integrity>(Integrity::create(spec->bulletImage, spec->maxIntegrity)), // FIXME: Bullet image
     HasUpgradeTree(PlayerShipUpgrade::SHIP),
     HasUIOf(UpgradeTreeUI::create())
 {
@@ -46,13 +32,14 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
     trackPhysObserver(HasComponent<BasicMovement>::component());
     trackPhysObserver(HasComponent<SprayAttack>::component());
     trackEventEmitterObserver(HasComponent<SprayAttack>::component());
+    trackEventEmitterObserver(HasComponent<Integrity>::component());
     // Upgrade tree observers? What actually creates the upgrade events?
 
     eventHandler().add(HasComponent<BasicMovement>::component());
     eventHandler().add(HasComponent<SprayAttack>::component());
+    eventHandler().add(HasComponent<Integrity>::component());
     eventHandler().add(upgradeTreePtr());
 
-    // Thread dependencies
     trackUpgradeTreeObserver(uiModelWPtr());
 
     // Virtual method initialisation
@@ -60,34 +47,58 @@ PlayerShip::PlayerShip(PlayerShipSpec::Ptr spec) :
 }
 
 const ObjectFactory PlayerShip::factory = [](ObjectSpec::UPtr spec) {
-    return GameObject::Ptr(new PlayerShip(static_unique_pointer_cast<PlayerShipSpec>(move(spec))));
+    GameObject::Ptr ship = GameObject::Ptr(new PlayerShip(static_unique_pointer_cast<PlayerShipSpec>(move(spec))));
+    std::dynamic_pointer_cast<HasComponent<Integrity>>(ship)->component()->setRef(ship);
+    return ship;
 };
 
 void PlayerShip::setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) {
     // Delegate to components that need it (this class doesn't need it)
     HasComponent<SprayAttack>::component()->setObjectEventFactory(objectEventFactory);
+    HasComponent<Integrity>::component()->setObjectEventFactory(objectEventFactory);
 }
 
 // Organise the available upgrades into a tree.
 void PlayerShip::buildUpgradeTree(UpgradeTree& upgradeTree) {
     // Formatted the same as tree itself for ease of reading
-    const auto& loadOptimisation = upgradeTree.addUpgrade(PlayerShipUpgrade::LOAD_OPTIMISATION);
-    upgradeTree.addUpgrade(loadOptimisation, PlayerShipUpgrade::SPACIAL_COMPRESSION);
-    const auto& cooperation = upgradeTree.addUpgrade(loadOptimisation, PlayerShipUpgrade::COOPERATION);
-    upgradeTree.addUpgrade(cooperation, PlayerShipUpgrade::OPTIMAL_SELECTION);
-
-    const auto& rearThrusters = upgradeTree.addUpgrade(PlayerShipUpgrade::REAR_THRUSTERS);
-    upgradeTree.addUpgrade(rearThrusters, PlayerShipUpgrade::FRONT_THRUSTERS);
-    const auto& overdrive = upgradeTree.addUpgrade(rearThrusters, PlayerShipUpgrade::OVERDRIVE);
-    upgradeTree.addUpgrade(overdrive, PlayerShipUpgrade::HYPER_JUMP);
-
     const auto& heavyShells = upgradeTree.addUpgrade(PlayerShipUpgrade::HEAVY_SHELLS);
-    upgradeTree.addUpgrade(heavyShells, PlayerShipUpgrade::IONIC_SHELLS);
-    const auto& frontAutoCannons = upgradeTree.addUpgrade(heavyShells, PlayerShipUpgrade::FRONT_AUTO_CANNONS);
-    upgradeTree.addUpgrade(frontAutoCannons, PlayerShipUpgrade::REAR_AUTO_CANNONS);
+    upgradeTree.addUpgrade(heavyShells, PlayerShipUpgrade::PLASMA_CANNON);
+    const auto& armouredHull = upgradeTree.addUpgrade(PlayerShipUpgrade::ARMOURED_HULL);
+    upgradeTree.addUpgrade(armouredHull, PlayerShipUpgrade::SHIELDING);
+}
 
-    const auto& workerDrone = upgradeTree.addUpgrade(PlayerShipUpgrade::WORKER_DRONE);
-    upgradeTree.addUpgrade(workerDrone, PlayerShipUpgrade::ARMOURED_DRONE);
-    const auto& mine = upgradeTree.addUpgrade(workerDrone, PlayerShipUpgrade::MINE);
-    upgradeTree.addUpgrade(mine, PlayerShipUpgrade::FIGHTER_DRONE);
+void PlayerShip::afterFrame() {
+    // This should be in a UI graphics model, but ... I'm out of time.
+    float percent = HasComponent<Integrity>::component()->integrity() / HasComponent<Integrity>::component()->maxIntegrity();
+
+    int lineLength = 100;
+    MyDrawEngine::GetInstance()->DrawLine(
+        physModel().pos() + Vector2D(50, lineLength / 2),
+        physModel().pos() + Vector2D(50, lineLength / 2),
+        MyDrawEngine::GREY
+    );
+    MyDrawEngine::GetInstance()->DrawLine(
+        physModel().pos() + Vector2D(50, lineLength / 2),
+        physModel().pos() + Vector2D(50, (lineLength / 2) * (1 - percent)),
+        MyDrawEngine::BLUE
+    );
+    MyDrawEngine::GetInstance()->WriteDouble(
+        physModel().pos() + Vector2D(50, 0),
+        (int) (percent * 100.0f),
+        MyDrawEngine::GREY
+    );
+
+    // This should be in Integrity + spec, but ... I'm out of time.
+    float diff = HasComponent<Integrity>::component()->maxIntegrity() - HasComponent<Integrity>::component()->integrity();
+
+    float repairRate = 0.1f;
+    if (diff >= repairRate) {
+        HasComponent<Integrity>::component()->shiftIntegrity(repairRate);
+    } else if (diff > 0) {
+        HasComponent<Integrity>::component()->shiftIntegrity(diff);
+    }
+}
+
+void PlayerShip::beforeDestroy() {
+    eventEmitter().enqueue(GameOverEvent::create());
 }

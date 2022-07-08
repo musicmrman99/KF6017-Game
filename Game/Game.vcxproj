@@ -30,6 +30,9 @@
     <ClCompile Include="BasicMS.cpp" />
     <ClCompile Include="BufferedEventEmitter.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CollisionEvent.cpp" />
+    <ClCompile Include="Integrity.cpp" />
+    <ClCompile Include="GameOverEvent.cpp" />
     <ClCompile Include="SprayAD.cpp" />
     <ClCompile Include="SprayAS.cpp" />
     <ClCompile Include="SprayAttack.cpp" />
@@ -114,6 +117,7 @@
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackStrategy.h" />
     <ClInclude Include="BasicMD.h" />
+    <ClInclude Include="CollisionEvent.h" />
     <ClInclude Include="ControlledObject.h" />
     <ClInclude Include="AngledRectangle2D.h" />
     <ClInclude Include="BasicAI.h" />
@@ -124,6 +128,8 @@
     <ClInclude Include="BasicMS.h" />
     <ClInclude Include="BufferedEventEmitter.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Integrity.h" />
+    <ClInclude Include="GameOverEvent.h" />
     <ClInclude Include="SprayAD.h" />
     <ClInclude Include="SprayAS.h" />
     <ClInclude Include="SprayAttack.h" />

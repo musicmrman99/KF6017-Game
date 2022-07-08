@@ -6,10 +6,11 @@
 #include <string>
 #include "Referencing.h"
 
+#include "Timer.h"
+#include "BasicAI.h"
+
 #include "PlayerShip.h"
 #include "StarField.h"
-
-#include "BasicAI.h"
 
 // Traits
 #include "GameObject.h"
@@ -30,7 +31,8 @@
 class Level :
 	public LifecyclePoint,
 	public GameObject,
-	public Referencing<Level>
+	public Referencing<Level>,
+	public EventHandler
 {
 private:
 	// Must depend more heavily on the object manager than just creating objects -
@@ -57,7 +59,7 @@ public:
 	static const ObjectFactory factory;
 
 	virtual void afterCreate() override;
-	
+
 	// Level Management
 
 	BasicAI::Ptr fighterAI;
@@ -66,6 +68,11 @@ public:
 	// Global State
 
 	void setCameraFocus(HasPhysOf<NewtonianPhysModel>::Ptr physObject);
+
+	// Implement EventHandler
+
+	Timer::Ptr spawnTimer;
+	virtual void handle(const Event::Ptr e) override;
 
 	// Implement LifecyclePoint
 

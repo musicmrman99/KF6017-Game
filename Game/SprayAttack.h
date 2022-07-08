@@ -20,15 +20,16 @@ class SprayAttack final :
 {
 private:
 	PictureIndex bulletImage;
+	float bulletDamage;
 	float _offsetAngle;
 
-	SprayAttack(PictureIndex bulletImage);
+	SprayAttack(PictureIndex bulletImage, float bulletDamage);
 
 public:
 	using Ptr = std::shared_ptr<SprayAttack>;
 	using UPtr = std::unique_ptr<SprayAttack>;
 
-	static UPtr create(PictureIndex bulletImage);
+	static UPtr create(PictureIndex bulletImage, float bulletDamage);
 
 	class RotateFiringAngleEvent final : public Event {
 	public:

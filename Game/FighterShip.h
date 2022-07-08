@@ -13,6 +13,7 @@
 #include "MultiEventHandler.h"
 #include "BasicMovement.h"
 #include "SprayAttack.h"
+#include "Integrity.h"
 
 // Creation
 #include "ObjectFactory.h"
@@ -22,7 +23,8 @@ class FighterShip final :
 	public Ship,
 	public HasEventHandlerOf<MultiEventHandler>,
 	public HasComponent<BasicMovement>,
-	public HasComponent<SprayAttack>
+	public HasComponent<SprayAttack>,
+	public HasComponent<Integrity>
 {
 public:
 	using Ptr = std::shared_ptr<FighterShip>;
@@ -34,4 +36,6 @@ public:
 
 	// Delegate event factory dependency to components that need it.
 	virtual void setObjectEventFactory(ObjectEventFactory::Ptr objectEventFactory) override;
+
+	virtual void afterFrame() override;
 };
