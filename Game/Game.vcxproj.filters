@@ -672,6 +672,9 @@
     <ClCompile Include="GameOverEvent.cpp">
       <Filter>Source Files\Game\Level</Filter>
     </ClCompile>
+    <ClCompile Include="Arguments.cpp">
+      <Filter>Source Files\Engine\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AngledRectangle2D.h">
@@ -1042,6 +1045,9 @@
     </ClInclude>
     <ClInclude Include="GameOverEvent.h">
       <Filter>Header Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Arguments.h">
+      <Filter>Header Files\Engine\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

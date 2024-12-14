@@ -29,7 +29,7 @@ Process Lifecycle
 */
 
 /*
- * Starts the game engines - Draw Engine, Sound Engine, Input Engine - singletons
+ * Starts the game engines - Draw Engine, Sound Engine, Input Engine (all singletons).
  * This is called soon after the program runs.
  */
 ErrorType Game::Setup(bool bFullScreen, HWND hwnd, HINSTANCE hinstance) {
@@ -64,7 +64,7 @@ void Game::Shutdown() {
 }
 
 /*
- * This is repeated, called every frame.
+ * This is called every frame.
  * It will run either Update(), MainMenu() or PauseMenu() depending on the
  * game state.
  */

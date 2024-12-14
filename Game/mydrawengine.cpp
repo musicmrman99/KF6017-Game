@@ -229,8 +229,7 @@ ErrorType MyDrawEngine::ResetDevice()
 	// Need to release all bitmaps and fonts
 	ReleaseBitmaps();
 	ReleaseFonts();
-	if(m_lpSprite)
-		m_lpSprite->Release();
+	if (m_lpSprite) m_lpSprite->Release();
 	m_lpSprite = nullptr;
 
 	// Reset the device
@@ -249,7 +248,7 @@ ErrorType MyDrawEngine::ResetDevice()
 	ReloadFonts();
 
 	HRESULT err2 = D3DXCreateSprite(m_lpD3DDevice, &m_lpSprite );
-	if(FAILED(err2))
+	if (FAILED(err2))
 	{
 		ErrorLogger::Writeln(L"Failed to create sprite on device reset");
 		ErrorLogger::Writeln(ERRORSTRING(err2));
@@ -262,11 +261,11 @@ ErrorType MyDrawEngine::ResetDevice()
                      m_ScreenHeight,
                      SWP_SHOWWINDOW);
 
-	if(FAILED(err))
+	if (FAILED(err))
 		return FAILURE;
 	else
 		return SUCCESS;
-}		// ResetDevice
+}
 
 // ****************************************************************
 
@@ -334,7 +333,7 @@ void MyDrawEngine::ReloadFonts()
 	std::map<FontIndex, MyFont>::iterator fit = m_MyFontList.begin();
 
 	// Loop through fonts
-	for(;fit!=m_MyFontList.end();fit++)
+	for(; fit != m_MyFontList.end(); fit++)
 	{
 		MyFont& currentFont = fit->second;
 

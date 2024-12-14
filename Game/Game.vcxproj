@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AngledRectangle2D.cpp" />
+    <ClCompile Include="Arguments.cpp" />
     <ClCompile Include="AttackStrategy.cpp" />
     <ClCompile Include="BasicAI.cpp" />
     <ClCompile Include="BasicCollision.cpp" />
@@ -114,6 +115,7 @@
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arguments.h" />
     <ClInclude Include="AttackData.h" />
     <ClInclude Include="AttackStrategy.h" />
     <ClInclude Include="BasicMD.h" />

@@ -1,363 +1,296 @@
-// camera.h
-// Shell engine version 2023
-// Chris Rook
-// Last modified 06/09/2019
-//		Updating to const wchar_t to support string literals in parameters
-//	Added assumption of windowed when in DEBUG config, using _DEBUG macro in WinMain
+/*
+ * This file was originally written by Chris Rook, last modified by him 2019-09-06.
+ * 
+ * It has been further modified in the following ways, with permission:
+ * - reformatted
+ */
 
-#define _CRTDBG_MAP_ALLOC
+/* Includes
+-------------------------------------------------- */
+
 #include <stdlib.h>
-#include <crtdbg.h>
+#define _CRTDBG_MAP_ALLOC // Turn on debug mode for <crtdbg.h>
+#include <crtdbg.h> // For memory leak detection
 
+/* Graphics: Windows
+-------------------- */
+
+#include <ddraw.h>    // DirectX
+#define WIN32_LEAN_AND_MEAN // Excludes various unnecessary things from <windows.h>
+#include <windows.h>  // Windows headers all-in-one
+#include <windowsx.h> // Windows macros
+
+/* Engine
+-------------------- */
+
+#include "Arguments.h"
 #include "ErrorType.h"
 #include "ErrorLogger.h"
 #include "Game.h"
 
+/* Globals
+-------------------------------------------------- */
 
-// Includes *************************************************************************************
+// Constants
 
-#define WIN32_LEAN_AND_MEAN		// Gives you SDK windows
+constexpr const wchar_t* WINDOW_CLASS_NAME = L"WINCLASS1";
 
-//#include "mytools.h"
+// Variables
 
-
-#include <ddraw.h>
-#include <stdio.h>				// IO stuff
-#include <windows.h>			   // Windows headers all-in-one
-#include <iostream>			   // IO stuff
-#include <windowsx.h>			// Windows macros
-
-
-// Defines **************************************************************************************
-
-#define WINDOW_CLASS_NAME L"WINCLASS1"	
-								// Defines the name of the window class I am going to use
-
-
-// Globals ************************************************************************************
-
-bool g_WindowClosed;			// A variable that records whether or not the window has been asked to close
-bool g_ApplicationActive;		// A variable that is true if the application is active (i.e. foreground) false otherwise
-HWND g_hWnd = NULL;
 HINSTANCE g_hInstance = NULL;
+HWND g_hWnd = NULL;
 
+bool g_ApplicationRunning; // Whether the application is running or stopped
+bool g_ApplicationActive;  // Whether the application is active (foreground) or inactive (background)
 
-// Function Declarations **********************************************************************************
+/* Function Declarations
+-------------------------------------------------- */
+
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 ErrorType CreateDXWindow(const wchar_t* title, int width, int height);
-void KillDXWindow();
-bool CheckCommandLineFor(const char* flag, const char* cmdLine);
+void DestroyDXWindow();
 
-// Window proc **********************************************************************************
-// Remember -- all the windows will use this winproc!!!
-// The window proc handles all windows event messages
-// In this case, it mostly ignores them or runs the defaul behaviour
-// The default behaviour is often to ignore them too.
-// Note that multiple messages could happen in a single frame - this will be called each time
-LRESULT CALLBACK WindowProc(	// The event handler. It's a callback function
-							HWND hwnd,		// The handle to the window that called
-							UINT msg,		// The message sent
-							WPARAM wparam,
-							LPARAM lparam)	// These further subclass the message sent,
-											// but I don't plan to use them
-{
-	PAINTSTRUCT ps;				// Use by WM_PAINT
-	HDC hdc;					      // A handle to a device context. May be used by WM_PAINT,
-								      // but not right now.
+/* Entry Point
+-------------------------------------------------- */
 
-	// Decide what the message is
-	switch(msg)
-	{
-	case WM_CREATE:				// If window has been created
-		{
-								      // Do any initialisation
-			return(0);			   // Return success
-		}
-		break;
+int WINAPI WinMain(
+    HINSTANCE hInstance,     // A number that represents the instance of this program
+    HINSTANCE hPrevInstance, // Not used in W95+ (null)
+    LPSTR lpCmdLine,         // Pointer to the full command line as a string
+    int nCmdShow             // Integer that tells how the window is to appear, eg. active, maximized, etc.
+) {
+    /* Activate Memory Leak Detection
+    -------------------- */ 
 
-	case WM_ACTIVATEAPP:
-		if(wparam==TRUE)	      // Window going active
-		{
-			g_ApplicationActive=true;
-		}
-		else
-		{
-			g_ApplicationActive=false;			
-		}
+    // This will report in visual studio when program exits.
+    // Requires debug configuration.
+    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	case WM_SETCURSOR:
-		SetCursor(NULL);
-		return (0);
-		break;
+    /* Parse Arguments
+    -------------------- */
 
-	case WM_PAINT:
-		{
-			hdc=BeginPaint(hwnd, &ps);		// Validate the window
-			EndPaint(hwnd, &ps);
+    Arguments args(lpCmdLine);
 
-			// I havn't really done much here - just did a standard paint-job to pretend
-			// the window has been properly painted.
-			// hwnd tells it what to paint - the window, of course
-			// ps is the address of a structure holding the rectangle to bve drawn
-			// hdc is a graphics context that describes the video system
-         // For this program, drawing is actually handled by Direct3D
+    /* Set Globals
+    -------------------- */ 
 
-			return (0);//DefWindowProc(hwnd, msg, wparam, lparam);			// return success
-		}
-		break;
+    g_hInstance = hInstance;
 
-	case WM_CHAR:                    // A button press. I will actually handle input with DirectInput
-		{
-			return (0);
-		}
-		break;
-
-	case WM_DESTROY:        			// Something wants to kill the application
-		{
-
-			PostQuitMessage(0);	      // Sends a quit message onto the windows queue
-
-			return(0);			         // return success
-		}
-		break;
-
-	default:
-		break;
-
-	}	// End the switch
-
-	// Any messages not handled are done by the default handler
-	return (DefWindowProc(hwnd, msg, wparam, lparam));
-					// Ever feel like switching round wparam and lparam,
-					// just to see what happens?
-               // We programmers know how to make our own excitement
-
-}	// End of WinProc
-
-
-// Winmain **************************************************************************************
-
-int WINAPI WinMain(HINSTANCE hInstance,			// A number that registers the instance of this program
-				   HINSTANCE hPrevInstance,		// Not used in W95+. Null
-				   LPSTR lpCmdLine,				// Pointer to a string that started this whole thing off
-				   int nCmdShow)				// Integer that tells how the window is to appear. Active/maximized, etc
-{
-	// Activate memory leak detection - will report in visual studio when program exits
-	// Requires debug configuration
-	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );
-	
-	MSG			msg;					// A general message
-	memset(&msg,0, sizeof(msg));
-
-	// Set global instance
-	g_hInstance = hInstance;
-
-	//Find out if the user wants the game windowed or full screen
-	bool bFullScreen = true;
-
-	// Assume windowed if debugging
+    bool bFullScreen = true; // Default to fullscreen
 #ifdef _DEBUG
-	bFullScreen = false;
-#endif // _DEBUG
+    bFullScreen = false;     // Set windowed if debugging
+#endif
+    if (args.contains("--no-fulscreen")) {
+        bFullScreen = false; // Set windowed if specified on the command line
+    }
 
+    /* Create Window
+    -------------------- */
 
-	if(CheckCommandLineFor("windowed", lpCmdLine)==true)
-		bFullScreen = false;
+    if (CreateDXWindow(L"Shell Engine", 800, 600) != SUCCESS) {
+        return 0; // Terminate the app immediately
+    }
+    g_ApplicationRunning = true;
 
-	if(CreateDXWindow(L"Shell Engine", 800, 600) == SUCCESS)
-	{
-		// The event loop
-		
-		g_WindowClosed=false;
-		int gameError=Game::instance.Setup(bFullScreen, g_hWnd, g_hInstance);			// Initialise the game
-		g_ApplicationActive=true;							// Window is now foreground
+    /* Initialise Game
+    -------------------- */
 
-		if (gameError == FAILURE)							// If game failed to initialise
-			g_WindowClosed = true;
-		else
-		while(!g_WindowClosed)
-		{												         // Infinite loop
-			while(PeekMessage(&msg, NULL, 0,0,PM_REMOVE))	// If there is a message in the queue, remove it and....
-			{
-				TranslateMessage(&msg);					   // Translate the message - it's voodoo
+    int gameStatus = Game::instance.Setup(bFullScreen, g_hWnd, g_hInstance); // Initialise the game
+    if (gameStatus == FAILURE) g_ApplicationRunning = false; // If game failed to initialise
+    g_ApplicationActive = true; // Set window to active
 
-				DispatchMessage(&msg);					   // And send it to the Window proc
+    /* Run Game Loop
+    -------------------- */
 
-				if (msg.message == WM_QUIT)				// If is is "quit"
-				{
-					g_WindowClosed = true;
-				}
-			}
+    int returnValue = 0;
+    MSG msg; // Holder for each received message
+    memset(&msg, 0, sizeof(msg));
 
-			if (!g_WindowClosed && g_ApplicationActive)		// Check I'm not already dead
-			{
-				gameError=Game::instance.Main();					// Play the real game stuff
-				if(gameError==FAILURE)
-					g_WindowClosed = true;
-			}
+    while (g_ApplicationRunning) {
+        // Pop each window message and dispatch it
+        while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+            TranslateMessage(&msg); // Doesn't do what you might expect
+            DispatchMessage(&msg);
+            if (msg.message == WM_QUIT) {
+                returnValue = (int) msg.wParam;
+                g_ApplicationRunning = false;
+            }
+        }
 
-		}		// End infinite loop
+        // If it's still running and has focus
+        if (g_ApplicationRunning && g_ApplicationActive) {
+            gameStatus = Game::instance.Main();
+            if (gameStatus == FAILURE) {
+                // Something considered failure - try to avoid this overlapping with common
+                // Windows error codes.
+                returnValue = 1;
+                g_ApplicationRunning = false;
+            }
+        }
+    }
 
-		Game::instance.Shutdown();									// Clear up the game
+    /* Shutdown Game
+    -------------------- */
 
-	}	// End if window created
-
-	return((int)msg.wParam);								      // Return to windows
-
-}	// End WinMain
-
-ErrorType CreateDXWindow(const wchar_t* title, int width, int height)
-{
-	WNDCLASS	wc;						// Windows Class Structure
-	DWORD		dwExStyle;				// Window Extended Style
-	DWORD		dwStyle;				   // Window Style
-	RECT		WindowRect;				// Grabs Rectangle Upper Left / Lower Right Values
-
-	WindowRect.left		= (long)0;		// Set Left Value To 0
-	WindowRect.right	= (long)width;	   // Set Right Value To Requested Width
-	WindowRect.top		= (long)0;		   // Set Top Value To 0
-	WindowRect.bottom	= (long)height;	// Set Bottom Value To Requested Height
-
-	g_hInstance			= GetModuleHandle(NULL);				// Grab An Instance For Our Window
-	ZeroMemory(&wc, sizeof(WNDCLASS));
-
-	wc.style			= CS_HREDRAW | CS_VREDRAW | CS_OWNDC;	// Redraw On Size, And Own DC For Window.
-	wc.lpfnWndProc		= (WNDPROC) WindowProc;					// WndProc Handles Messages
-	wc.cbClsExtra		= 0;									      // No Extra Window Data
-	wc.cbWndExtra		= 0;									      // No Extra Window Data
-	wc.hInstance		= g_hInstance;							   // Set The Instance
-	wc.hIcon			= LoadIcon(NULL, IDI_WINLOGO);			// Load The Default Icon
-	wc.hCursor			= LoadCursor(NULL, IDC_ARROW);		// Load The Arrow Pointer
-	wc.hbrBackground	= NULL;									   // No Background Required For GL
-	wc.lpszMenuName		= nullptr;								// We Don't Want A Menu
-	wc.lpszClassName	= WINDOW_CLASS_NAME;					   // Set The Class Name
-
-	if (!RegisterClass(&wc))									   // Attempt To Register The Window Class
-	{
-		ErrorLogger::Writeln(L"Failed to register the window class.");
-		return FAILURE;
-	}
-
-
-	dwExStyle=WS_EX_APPWINDOW;			                  // Window Extended Style
-	dwStyle=WS_POPUP;										      // Windows Style
-	ShowCursor(true);											   // Don't Hide Mouse Pointer
-	WindowRect.left = 0;
-	WindowRect.right=width;
-	WindowRect.top = 0;
-	WindowRect.bottom=height;
-
-
-	AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);		// Adjust Window To True Requested Size
-
-	// Create The Window
-	if (!(g_hWnd=CreateWindowEx(dwExStyle,							// Extended Style For The Window
-								WINDOW_CLASS_NAME,					   // Class Name
-								title,								      // Window Title
-								dwStyle,							         // Required Window Style
-								0, 0,								         // Window Position
-								WindowRect.right-WindowRect.left,	// Calculate Window Width
-								WindowRect.bottom-WindowRect.top,	// Calculate Window Height
-								NULL,								// No Parent Window
-								NULL,								// No Menu
-								g_hInstance,					// Instance
-								NULL)))							// Dont Pass Anything To WM_CREATE
-	{
-		KillDXWindow();								// Reset The Display
-		ErrorLogger::Writeln(L"Failed to create the window.");
-		return FAILURE;
-	}
-
-	ShowWindow(g_hWnd, SW_SHOW);
-
-	return SUCCESS;									// Success
-	// Caution! Early returns
+    Game::instance.Shutdown(); // Clear up the game
+    return returnValue;        // Terminate the app
 }
 
-// Kill The Window Properly
-void KillDXWindow()								
-{
+/* Window Lifecycle
+-------------------------------------------------- */
 
-	// Switch Back To The Desktop
-	ChangeDisplaySettings(NULL, 0);
+/**
+ * Handle all window event messages.
+ *
+ * Most messages are ignored for this app. If not ignored, delegate the
+ * message to the default handler.
+ *
+ * Note:
+ * - All windows will use this winproc.
+ * - This is called once for each message on each frame.
+ * - There is no default behaviour (by the default handler) for most messages.
+ */
+LRESULT CALLBACK WindowProc(
+    HWND hwnd,     // The target window
+    UINT msg,      // The message sent
+    WPARAM wparam, // Parameters of the message
+    LPARAM lparam
+) {
+    switch (msg) {
+    /* Core Lifecycle
+    ---------- */
 
-	// Show Mouse Pointer
-	ShowCursor(TRUE);
+    // App is Opening
+    case WM_CREATE: {
+        // No initialisation to do
+        return 0; // Success
 
-	if (g_hWnd && !DestroyWindow(g_hWnd))				// Are We Able To Destroy The Window?
-	{
-		ErrorLogger::Writeln(L"Could Not Release gHwnd.");
-		g_hWnd=NULL;									// Set m_hWnd To NULL
-	}
+    // Focus was Acquired/Lost
+    } case WM_ACTIVATEAPP: {
+        g_ApplicationActive = (wparam == TRUE) ? true : false;
+        [[fallthrough]];
+    } case WM_SETCURSOR: {
+        // No mouse cursor while mouse is over the app, even in windowed mode.
+        // If you need a cursor, create one yourself as a GameObject.
+        SetCursor(NULL);
+        return 0; // Success
 
-	if (!UnregisterClass(WINDOW_CLASS_NAME, g_hInstance))			// Are We Able To Unregister Class
-	{
-		ErrorLogger::Writeln(L"Could Not Unregister Class.");
-		g_hInstance=NULL;									// Set m_hInstance To NULL
-	}
+    // App is Closing
+    } case WM_DESTROY: {
+        PostQuitMessage(0); // Sends a quit message to the app's message queue
+        return 0;  // Success
+
+    /* Graphics & Input - handled elsewhere
+    ---------- */
+
+    } case WM_PAINT: {
+        // Open/close the Windows API paint operation, but don't paint anything.
+        // Drawing is done by the Graphics subsystem using D3D.
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hwnd, &ps); // Validate the window
+        EndPaint(hwnd, &ps);
+        return 0; // Success
+
+    } case WM_CHAR: {
+        // Input is done by the input components in the Events subsystem using
+        // DirectInput.
+        return 0; // Success
+
+    /* Other Messages - use default behaviour
+    ---------- */
+
+    } default: {
+        break;
+    }
+    }
+
+    // Delegated all messages not handled here to the default handler
+    return (DefWindowProc(hwnd, msg, wparam, lparam));
 }
 
-// Function that checks the "LPSTR lpCmdLine" parameter for the presence of a specific flag
-bool CheckCommandLineFor(const char* flag, const char* pCmdLine)
-{
-	int numArguments			= 0;
+/**
+ * Create the window.
+ */
+ErrorType CreateDXWindow(const wchar_t* title, int width, int height) {
+    // Configure window class
+    WNDCLASS wc;
+    ZeroMemory(&wc, sizeof(WNDCLASS));
 
-	//Initialise our point in the command line string
-	int wordStart	= 0;
+    wc.hInstance     = g_hInstance;                        // Use the instance for this program
+    wc.lpszClassName = WINDOW_CLASS_NAME;                  // Use the class name we defined earlier
+    wc.lpfnWndProc   = (WNDPROC) WindowProc;               // WndProc handles messages
+    wc.style         = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; // Redraw on size, and own DC for window
+    wc.cbClsExtra    = 0;                                  // No extra class data
+    wc.cbWndExtra    = 0;                                  // No extra window data
+    wc.hIcon         = LoadIcon(NULL, IDI_WINLOGO);        // Use the default icon
+    wc.hCursor       = LoadCursor(NULL, IDC_ARROW);        // Use the arrow pointer
+    wc.hbrBackground = NULL;                               // No background (transparent before opening)
+    wc.lpszMenuName  = nullptr;                            // No menu
 
-	// Store the total length of the command line string
-	int length = (int)strlen(pCmdLine);
+    // Register window class
+    if (!RegisterClass(&wc)) {
+        ErrorLogger::Writeln(L"Failed to register the window class.");
+        return FAILURE;
+    }
 
-	//Is the length of the command line string greater than one?
-	if(length > 1)
-	{
-		//Yes it is, we have a string, lets count how many arguments it has
-		for(int x = 0;x<length;++x)
-		{
-			//Is the current character a space, or have we run off the end of the string?
-			if(pCmdLine[x] == ' ' || x == length - 1)
-			{
-				//Yep! increment our number of command line arguments
-				++numArguments;
-			}
-		}
+    // Set window size
+    RECT WindowRect;
+    WindowRect.left   = (long) 0;
+    WindowRect.right  = (long) width;
+    WindowRect.top    = (long) 0;
+    WindowRect.bottom = (long) height;
 
-		//Lets start checking the line
-		//Loop through the command line 
-		for(int x = 0;x<length;++x)
-		{
-			if(x == length - 1) ++x;
+    // Set window style
+    DWORD dwStyle = WS_POPUP;          // Windows Style - remove all window borders
+    DWORD dwExStyle = WS_EX_APPWINDOW; // Window Extended Style
 
-			//are we at the end of the current word?
-			if(pCmdLine[x] == ' ' || x == length)
-			{
-				//Yes, get the length of the argument
-				int argLen = (x - wordStart) + 1;
+    // Adjust window size based on style
+    AdjustWindowRectEx(&WindowRect, dwStyle, FALSE, dwExStyle);
 
-				//Create a new character array for the string in the ArgV array
-				char* argument = new char[argLen];
+    // Create window
+    g_hWnd = CreateWindowEx(
+        dwExStyle,                          // Extended Window Style
+        WINDOW_CLASS_NAME,                  // Class Name
+        title,                              // Window Title
+        dwStyle,                            // Window Style
+        WindowRect.left, WindowRect.top,    // Window Position - must be (0, 0) in fullscreen
+        WindowRect.right - WindowRect.left, // Window Width (Calculate)
+        WindowRect.bottom - WindowRect.top, // Window Height (Calculate)
+        NULL,                               // No Parent Window
+        NULL,                               // No Menu
+        g_hInstance,                        // Instance
+        NULL                                // Dont pass anything to WM_CREATE
+    );
+    if (!g_hWnd) {
+        DestroyDXWindow(); // Reset the display
+        ErrorLogger::Writeln(L"Failed to create the window.");
+        return FAILURE;
+    }
 
-				//Copy the word into the newly created string
-				int z = 0;
-				for(int y=wordStart;z<argLen;++y)
-				{
-					argument[z] = pCmdLine[y];
-					++z;
-				}
+    ShowWindow(g_hWnd, SW_SHOW);
 
-				//Null terminate the string
-				argument[z-1] = '\0';
+    return SUCCESS;
+}
 
-				if(_stricmp(argument, flag)==0)
-				{
-					delete[] argument;
-					return true;
-				}
+/**
+ * Destroy the window cleanly.
+ */
+void DestroyDXWindow() {
+    // Switch back to the desktop
+    ChangeDisplaySettings(NULL, 0);
 
-				delete[] argument;
-				//Record where the next word will start in the array
-				wordStart = x + 1;
-			}
-		}
-	}
-	return false;
+    // Show mouse pointer
+    ShowCursor(TRUE);
+
+    // Are we able to destroy the window?
+    if (g_hWnd && !DestroyWindow(g_hWnd)) {
+        ErrorLogger::Writeln(L"Could Not Destroy Window.");
+        g_hWnd = NULL; // Set m_hWnd To NULL
+    }
+
+    // Are we able to unregister the class?
+    if (!UnregisterClass(WINDOW_CLASS_NAME, g_hInstance)) {
+        ErrorLogger::Writeln(L"Could Not Unregister Class.");
+        g_hInstance = NULL;
+    }
 }
